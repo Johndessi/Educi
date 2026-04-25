@@ -1,0 +1,1686 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#F77F00">
+<meta name="description" content="EduCI - Plateforme éducative pour élèves ivoiriens">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>EduCI - Réussis ton Bac</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --orange: #F77F00;
+  --green: #009A44;
+  --dark: #0D1117;
+  --card: #161B22;
+  --card2: #21262D;
+  --text: #E6EDF3;
+  --muted: #8B949E;
+  --border: #30363D;
+  --white: #FFFFFF;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--dark);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+h1,h2,h3 { font-family: 'Syne', sans-serif; }
+
+/* APP */
+
+
+/* HEADER */
+.header {
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 20px;
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; gap: 12px;
+}
+.header-logo {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, var(--orange), #ff6b00);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+}
+.header-title { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; }
+.header-classe {
+  margin-left: auto;
+  background: rgba(247,127,0,0.15);
+  color: var(--orange);
+  border: 1px solid rgba(247,127,0,0.3);
+  padding: 6px 12px; border-radius: 20px;
+  font-size: 13px; font-weight: 600; cursor: pointer;
+}
+
+/* NAV */
+.nav {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+  background: var(--card);
+  border-top: 1px solid var(--border);
+  display: flex;
+}
+.nav-item {
+  flex: 1; padding: 10px 0;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 4px;
+  cursor: pointer; transition: all 0.2s;
+  color: var(--muted); font-size: 11px;
+  border: none; background: none;
+}
+.nav-item.active { color: var(--orange); }
+.nav-icon { font-size: 22px; }
+
+/* PAGES */
+.page { display: none; padding: 20px 16px 90px; }
+.page.active { display: block; }
+
+/* HOME PAGE */
+.welcome-card {
+  background: linear-gradient(135deg, rgba(247,127,0,0.15), rgba(0,154,68,0.1));
+  border: 1px solid rgba(247,127,0,0.2);
+  border-radius: 20px; padding: 24px; margin-bottom: 24px;
+}
+.welcome-greeting { color: var(--muted); font-size: 14px; margin-bottom: 4px; }
+.welcome-name { font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 700; }
+.welcome-badge {
+  display: inline-block; margin-top: 8px;
+  background: var(--orange); color: white;
+  padding: 4px 14px; border-radius: 20px; font-size: 13px; font-weight: 600;
+}
+
+.section-title {
+  font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700;
+  margin-bottom: 14px; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 1px;
+}
+
+.classe-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 28px; }
+.classe-card {
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: 16px; padding: 20px 16px;
+  cursor: pointer; transition: all 0.2s;
+  text-align: center;
+}
+.classe-card:hover, .classe-card.selected {
+  border-color: var(--orange);
+  background: rgba(247,127,0,0.08);
+}
+.classe-emoji { font-size: 32px; margin-bottom: 8px; }
+.classe-name { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; }
+.classe-desc { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+.stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
+.stat-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 16px; text-align: center;
+}
+.stat-num { font-family: 'Syne', sans-serif; font-size: 26px; font-weight: 800; color: var(--orange); }
+.stat-label { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+/* MATIÈRES PAGE */
+.matiere-list { display: flex; flex-direction: column; gap: 10px; }
+.matiere-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 16px;
+  display: flex; align-items: center; gap: 14px;
+  cursor: pointer; transition: all 0.2s;
+}
+.matiere-card:active { transform: scale(0.98); }
+.matiere-icon {
+  width: 48px; height: 48px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; flex-shrink: 0;
+}
+.matiere-info { flex: 1; }
+.matiere-name { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; }
+.matiere-count { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.matiere-arrow { color: var(--muted); font-size: 18px; }
+
+/* LEÇONS */
+.lesson-header {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
+}
+.back-btn {
+  width: 36px; height: 36px; background: var(--card);
+  border: 1px solid var(--border); border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 18px; flex-shrink: 0;
+}
+.lesson-list { display: flex; flex-direction: column; gap: 10px; }
+.lesson-item {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 16px;
+  cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center; gap: 12px;
+}
+.lesson-item:active { transform: scale(0.98); }
+.lesson-num {
+  width: 36px; height: 36px;
+  background: rgba(247,127,0,0.15);
+  border-radius: 10px; display: flex; align-items: center; justify-content: center;
+  font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; color: var(--orange);
+  flex-shrink: 0;
+}
+.lesson-text { flex: 1; }
+.lesson-title-text { font-weight: 600; font-size: 14px; }
+.lesson-subtitle { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+/* AI LESSON VIEWER */
+#lesson-viewer {
+  display: none; position: fixed; inset: 0; z-index: 200;
+  background: var(--dark); overflow-y: auto;
+}
+.viewer-header {
+  background: var(--card); border-bottom: 1px solid var(--border);
+  padding: 16px 20px; position: sticky; top: 0; z-index: 1;
+  display: flex; align-items: center; gap: 12px;
+}
+.viewer-content { padding: 20px; }
+.ai-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 16px; padding: 20px; margin-bottom: 16px;
+}
+.ai-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(247,127,0,0.15); border: 1px solid rgba(247,127,0,0.3);
+  color: var(--orange); padding: 6px 12px; border-radius: 20px;
+  font-size: 12px; font-weight: 600; margin-bottom: 16px;
+}
+.ai-text { line-height: 1.7; font-size: 15px; white-space: pre-wrap; }
+.ai-loading {
+  display: flex; align-items: center; gap: 10px;
+  color: var(--muted); font-size: 14px;
+}
+.dots span {
+  display: inline-block; width: 6px; height: 6px;
+  background: var(--orange); border-radius: 50%;
+  animation: bounce 1.2s ease-in-out infinite;
+}
+.dots span:nth-child(2) { animation-delay: 0.2s; }
+.dots span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes bounce {
+  0%,80%,100% { transform: scale(0); }
+  40% { transform: scale(1); }
+}
+
+.ask-form { display: flex; gap: 10px; margin-top: 20px; }
+.ask-input {
+  flex: 1; background: var(--card2); border: 1px solid var(--border);
+  border-radius: 12px; padding: 12px 16px; color: var(--text);
+  font-family: 'DM Sans', sans-serif; font-size: 14px;
+  outline: none;
+}
+.ask-input:focus { border-color: var(--orange); }
+.ask-btn {
+  background: var(--orange); color: white; border: none;
+  border-radius: 12px; padding: 12px 18px; cursor: pointer;
+  font-size: 20px;
+}
+
+/* PLANNING PAGE */
+.planning-grid { display: flex; flex-direction: column; gap: 12px; }
+.day-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+}
+.day-header {
+  padding: 14px 16px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.day-name { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; }
+.day-date { font-size: 12px; color: var(--muted); }
+.day-slots { padding: 12px 16px; display: flex; flex-direction: column; gap: 8px; }
+.slot {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 12px; border-radius: 10px;
+}
+.slot-time { font-size: 12px; color: var(--muted); min-width: 55px; }
+.slot-subject {
+  flex: 1; font-size: 13px; font-weight: 500;
+  padding: 6px 12px; border-radius: 8px;
+}
+
+/* PAIEMENT PAGE */
+.plan-cards { display: flex; flex-direction: column; gap: 14px; margin-bottom: 28px; }
+.plan-card {
+  background: var(--card); border: 2px solid var(--border);
+  border-radius: 18px; padding: 20px;
+  cursor: pointer; transition: all 0.2s;
+}
+.plan-card.popular { border-color: var(--orange); }
+.popular-badge {
+  background: var(--orange); color: white;
+  font-size: 11px; font-weight: 700; padding: 3px 10px;
+  border-radius: 10px; display: inline-block; margin-bottom: 10px;
+}
+.plan-name { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; }
+.plan-price {
+  font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800;
+  color: var(--orange); margin: 8px 0;
+}
+.plan-price span { font-size: 14px; font-weight: 400; color: var(--muted); }
+.plan-features { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.plan-features li { font-size: 13px; color: var(--muted); }
+.plan-features li::before { content: "✓ "; color: var(--green); font-weight: 700; }
+
+.pay-btn {
+  width: 100%; padding: 16px; border: none; border-radius: 14px;
+  font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700;
+  cursor: pointer; transition: all 0.2s; margin-bottom: 14px;
+  background: linear-gradient(135deg, var(--orange), #ff6b00);
+  color: white;
+}
+.pay-btn:active { transform: scale(0.98); }
+
+.payment-methods { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.pm-card {
+  background: var(--card); border: 2px solid var(--border);
+  border-radius: 14px; padding: 16px; cursor: pointer;
+  text-align: center; transition: all 0.2s;
+}
+.pm-card.selected { border-color: var(--orange); background: rgba(247,127,0,0.08); }
+.pm-logo { font-size: 28px; margin-bottom: 6px; }
+.pm-name { font-size: 13px; font-weight: 600; }
+
+/* MODAL PAIEMENT */
+#pay-modal {
+  display: none; position: fixed; inset: 0; z-index: 300;
+  background: rgba(0,0,0,0.85);
+  align-items: flex-end; justify-content: center;
+}
+#pay-modal.show { display: flex; }
+.modal-box {
+  background: var(--card); border-radius: 24px 24px 0 0;
+  padding: 28px 24px; width: 100%;
+  animation: slideUp 0.3s ease;
+}
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+.modal-title { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+.modal-amount { font-size: 14px; color: var(--muted); margin-bottom: 24px; }
+.modal-input {
+  width: 100%; background: var(--card2); border: 1px solid var(--border);
+  border-radius: 12px; padding: 14px 16px; color: var(--text);
+  font-family: 'DM Sans', sans-serif; font-size: 16px; outline: none;
+  margin-bottom: 14px;
+}
+.modal-input:focus { border-color: var(--orange); }
+.modal-confirm {
+  width: 100%; padding: 16px; border: none; border-radius: 14px;
+  background: linear-gradient(135deg, var(--orange), #ff6b00);
+  color: white; font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700;
+  cursor: pointer; margin-bottom: 10px;
+}
+.modal-cancel {
+  width: 100%; padding: 14px; border: 1px solid var(--border);
+  background: transparent; color: var(--muted);
+  font-family: 'DM Sans', sans-serif; font-size: 14px;
+  border-radius: 14px; cursor: pointer;
+}
+
+/* SUCCESS */
+#success-modal {
+  display: none; position: fixed; inset: 0; z-index: 400;
+  background: rgba(0,0,0,0.9);
+  align-items: center; justify-content: center;
+}
+#success-modal.show { display: flex; }
+.success-box {
+  background: var(--card); border-radius: 24px;
+  padding: 40px 32px; margin: 20px; text-align: center;
+  animation: scaleIn 0.3s ease;
+}
+@keyframes scaleIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.success-icon { font-size: 64px; margin-bottom: 16px; }
+.success-title { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+.success-msg { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+.success-btn {
+  padding: 14px 32px; background: var(--green);
+  color: white; border: none; border-radius: 14px;
+  font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700;
+  cursor: pointer;
+}
+
+.plan-card.selected-plan {
+  border-color: var(--orange) !important;
+  background: rgba(247,127,0,0.1);
+  transform: scale(1.02);
+}
+.plan-card { cursor: pointer; transition: all 0.2s; }
+  display: inline-block; padding: 4px 10px;
+  border-radius: 8px; font-size: 11px; font-weight: 600;
+}
+</style>
+</head>
+<body>
+
+<!-- APP -->
+<div id="app" style="display:block">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-logo">📚</div>
+    <div class="header-title">EduCI</div>
+    <div class="header-classe" id="classe-badge" onclick="goHome()">Choisir classe</div>
+  </div>
+
+  <!-- PAGE: ACCUEIL -->
+  <div class="page active" id="page-home">
+    <div class="welcome-card">
+      <div class="welcome-greeting">Bienvenue sur</div>
+      <div class="welcome-name">EduCI 🇨🇮</div>
+      <span class="welcome-badge" id="welcome-classe">Choisis ta classe</span>
+    </div>
+
+    <div class="section-title">Ta Classe</div>
+    <div class="classe-grid">
+      <div class="classe-card" onclick="selectClasse('3ème')">
+        <div class="classe-emoji">📗</div>
+        <div class="classe-name">3ème</div>
+        <div class="classe-desc">Brevet des Collèges</div>
+      </div>
+      <div class="classe-card" onclick="selectClasse('Tle A')">
+        <div class="classe-emoji">📘</div>
+        <div class="classe-name">Tle A</div>
+        <div class="classe-desc">Lettres & Philo</div>
+      </div>
+      <div class="classe-card" onclick="selectClasse('Tle C')">
+        <div class="classe-emoji">📙</div>
+        <div class="classe-name">Tle C</div>
+        <div class="classe-desc">Maths & Physique</div>
+      </div>
+      <div class="classe-card" onclick="selectClasse('Tle D')">
+        <div class="classe-emoji">📕</div>
+        <div class="classe-name">Tle D</div>
+        <div class="classe-desc">SVT & Maths</div>
+      </div>
+    </div>
+
+    <div class="section-title">Statistiques</div>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-num" id="stat-matieres">0</div>
+        <div class="stat-label">Matières</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="stat-lecons">0</div>
+        <div class="stat-label">Leçons</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">🤖</div>
+        <div class="stat-label">IA Active</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE: MATIÈRES -->
+  <div class="page" id="page-matieres">
+    <div class="section-title" id="matieres-title">Mes Matières</div>
+    <div class="matiere-list" id="matiere-list"></div>
+  </div>
+
+  <!-- PAGE: LEÇONS (liste) -->
+  <div class="page" id="page-lecons">
+    <div class="lesson-header">
+      <div class="back-btn" onclick="showPage('matieres')">←</div>
+      <div>
+        <div id="lecon-matiere-title" style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;"></div>
+        <div style="font-size:12px;color:var(--muted)" id="lecon-count"></div>
+      </div>
+    </div>
+    <div class="lesson-list" id="lesson-list"></div>
+  </div>
+
+  <!-- PAGE: PLANNING -->
+  <div class="page" id="page-planning">
+    <div class="section-title">Planning Semaine</div>
+    <div class="planning-grid" id="planning-grid"></div>
+  </div>
+
+  <!-- PAGE: PAIEMENT -->
+  <div class="page" id="page-paiement">
+    <div class="section-title">Abonnement</div>
+    <div class="plan-cards">
+      <div class="plan-card" id="plan-mensuel" onclick="selectPlan(this,'Mensuel','500 FCFA')">
+        <div class="plan-name">Mensuel</div>
+        <div class="plan-price">500 FCFA <span>/ mois</span></div>
+        <ul class="plan-features">
+          <li>Toutes les leçons</li>
+          <li>Explications IA illimitées</li>
+          <li>Planning hebdomadaire</li>
+        </ul>
+      </div>
+      <div class="plan-card popular selected-plan" id="plan-trimestriel" onclick="selectPlan(this,'Trimestriel','1200 FCFA')">
+        <div class="popular-badge">⭐ POPULAIRE</div>
+        <div class="plan-name">Trimestriel</div>
+        <div class="plan-price">1200 FCFA <span>/ 3 mois</span></div>
+        <ul class="plan-features">
+          <li>Tout du plan mensuel</li>
+          <li>Exercices corrigés</li>
+          <li>Annales BAC</li>
+          <li>Économisez 300 FCFA</li>
+        </ul>
+      </div>
+      <div class="plan-card" id="plan-annuel" onclick="selectPlan(this,'Annuel','4000 FCFA')">
+        <div class="plan-name">Annuel</div>
+        <div class="plan-price">4000 FCFA <span>/ an</span></div>
+        <ul class="plan-features">
+          <li>Tout inclus</li>
+          <li>Accès prioritaire IA</li>
+          <li>Corrections personnalisées</li>
+          <li>Économisez 2000 FCFA</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-title">Moyen de paiement</div>
+    <div class="payment-methods" id="payment-methods">
+      <div class="pm-card selected" onclick="selectPM(this,'Orange Money')" data-pm="Orange Money">
+        <div class="pm-logo"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Orange_logo.svg/120px-Orange_logo.svg.png" style="width:40px;height:40px;object-fit:contain;border-radius:8px;" onerror="this.parentNode.innerHTML='🟠'"></div>
+        <div class="pm-name">Orange Money</div>
+      </div>
+      <div class="pm-card" onclick="selectPM(this,'MTN MoMo')" data-pm="MTN MoMo">
+        <div class="pm-logo"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/New-mtn-logo.jpg/120px-New-mtn-logo.jpg" style="width:40px;height:40px;object-fit:contain;border-radius:8px;" onerror="this.parentNode.innerHTML='🟡'"></div>
+        <div class="pm-name">MTN MoMo</div>
+      </div>
+      <div class="pm-card" onclick="selectPM(this,'Moov Money')" data-pm="Moov Money">
+        <div class="pm-logo"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Moov_Africa_logo.svg/120px-Moov_Africa_logo.svg.png" style="width:40px;height:40px;object-fit:contain;border-radius:8px;" onerror="this.parentNode.innerHTML='🔵'"></div>
+        <div class="pm-name">Moov Money</div>
+      </div>
+      <div class="pm-card" onclick="selectPM(this,'Wave')" data-pm="Wave">
+        <div class="pm-logo"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Wave_logo_2022.svg/120px-Wave_logo_2022.svg.png" style="width:40px;height:40px;object-fit:contain;border-radius:8px;" onerror="this.parentNode.innerHTML='🌊'"></div>
+        <div class="pm-name">Wave</div>
+      </div>
+    </div>
+
+    <br>
+    <div id="selected-plan-summary" style="background:rgba(247,127,0,0.1);border:1px solid rgba(247,127,0,0.3);border-radius:14px;padding:14px 16px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;">
+      <div>
+        <div style="font-size:12px;color:var(--muted)">Plan sélectionné</div>
+        <div id="summary-plan" style="font-family:'Syne',sans-serif;font-weight:700;font-size:16px;">Trimestriel</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:12px;color:var(--muted)">Montant</div>
+        <div id="summary-price" style="font-family:'Syne',sans-serif;font-weight:800;font-size:20px;color:var(--orange);">1200 FCFA</div>
+      </div>
+    </div>
+    <button class="pay-btn" onclick="openPayModal()">Payer maintenant →</button>
+  </div>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <button class="nav-item active" onclick="showPage('home')" id="nav-home">
+      <span class="nav-icon">🏠</span>Accueil
+    </button>
+    <button class="nav-item" onclick="showPage('matieres')" id="nav-matieres">
+      <span class="nav-icon">📚</span>Matières
+    </button>
+    <button class="nav-item" onclick="showPage('planning')" id="nav-planning">
+      <span class="nav-icon">📅</span>Planning
+    </button>
+    <button class="nav-item" onclick="showPage('paiement')" id="nav-paiement">
+      <span class="nav-icon">💳</span>Abonnement
+    </button>
+  </nav>
+</div>
+
+<!-- LESSON VIEWER -->
+<div id="lesson-viewer">
+  <div class="viewer-header">
+    <div class="back-btn" onclick="closeViewer()">←</div>
+    <div style="flex:1">
+      <div id="viewer-title" style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;"></div>
+      <div id="viewer-sub" style="font-size:12px;color:var(--muted)"></div>
+    </div>
+  </div>
+  <div class="viewer-content">
+    <div class="ai-card">
+      <div class="ai-badge">🤖 Professeur IA</div>
+      <div id="ai-content">
+        <div class="ai-loading">
+          <span>Chargement de l'explication</span>
+          <div class="dots"><span></span><span></span><span></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="ai-card">
+      <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:6px;">📋 Fiche de Révision</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:14px;">Génère une fiche de révision structurée et condensée de cette leçon.</div>
+      <button onclick="genResume()" id="resume-btn" style="width:100%;padding:13px;border:none;border-radius:12px;background:linear-gradient(135deg,#009A44,#00c853);color:white;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:14px;">📝 Générer la fiche de révision</button>
+      <div id="resume-content"></div>
+    </div>
+
+    <div class="ai-card">
+      <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:12px;">❓ Pose une question</div>
+      <div class="ask-form">
+        <input class="ask-input" id="ask-input" placeholder="Ex: Explique-moi mieux..." />
+        <button class="ask-btn" onclick="askQuestion()">➤</button>
+      </div>
+      <div id="ask-response" style="margin-top:16px;line-height:1.7;font-size:14px;"></div>
+    </div>
+
+    <div class="ai-card">
+      <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:6px;">📝 Exercices & Corrections</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:14px;">L'IA génère des exercices adaptés à ton niveau avec les corrections détaillées.</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">
+        <button onclick="genExercice('facile')" style="flex:1;padding:10px;border:1px solid var(--border);background:rgba(0,154,68,0.1);color:#00c853;border-radius:10px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;cursor:pointer;">🟢 Facile</button>
+        <button onclick="genExercice('moyen')" style="flex:1;padding:10px;border:1px solid var(--border);background:rgba(247,127,0,0.1);color:var(--orange);border-radius:10px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;cursor:pointer;">🟠 Moyen</button>
+        <button onclick="genExercice('difficile')" style="flex:1;padding:10px;border:1px solid var(--border);background:rgba(239,68,68,0.1);color:#ef4444;border-radius:10px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;cursor:pointer;">🔴 Difficile</button>
+      </div>
+      <div id="exercice-content"></div>
+      <div id="correction-btn-container" style="display:none;margin-top:14px;">
+        <button onclick="showCorrection()" style="width:100%;padding:12px;border:none;border-radius:12px;background:linear-gradient(135deg,var(--green),#00c853);color:white;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">✅ Voir la correction</button>
+      </div>
+      <div id="correction-content" style="margin-top:14px;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL PAIEMENT -->
+<div id="pay-modal" onclick="closePayModal(event)">
+  <div class="modal-box">
+    <div class="modal-title">💳 Confirmer le paiement</div>
+    <div class="modal-amount" id="modal-amount">Plan Mensuel • 500 FCFA via Orange Money</div>
+    <input class="modal-input" id="phone-input" placeholder="Numéro de téléphone (ex: 07 XX XX XX XX)" type="tel" />
+    <button class="modal-confirm" onclick="confirmPay()">Confirmer le paiement</button>
+    <button class="modal-cancel" onclick="closePayModal()">Annuler</button>
+  </div>
+</div>
+
+<!-- SUCCESS MODAL -->
+<div id="success-modal">
+  <div class="success-box">
+    <div class="success-icon">✅</div>
+    <div class="success-title">Paiement réussi !</div>
+    <div class="success-msg" id="success-msg">Votre abonnement est activé. Bonne révision !</div>
+    <button class="success-btn" onclick="closeSuccess()">Continuer</button>
+  </div>
+</div>
+
+<script>
+// === DATA ===
+const DATA = {
+  '3ème': {
+    matieres: [
+      { icon: '🔢', name: 'Mathématiques', color: '#3B82F6', bg: 'rgba(59,130,246,0.15)',
+        lecons: [
+          { title: 'Calcul littéral', sub: '1er trimestre – Septembre (7h)' },
+          { title: 'Propriétés de Thalès dans un triangle', sub: '1er trimestre – Septembre/Octobre (7h)' },
+          { title: 'Racines carrées', sub: '1er trimestre – Octobre (7h)' },
+          { title: 'Triangle rectangle', sub: '1er trimestre – Octobre/Novembre (11h)' },
+          { title: 'Calcul numérique', sub: '1er trimestre – Novembre (9h)' },
+          { title: 'Angles inscrits', sub: '2ème trimestre – Décembre (5h)' },
+          { title: 'Vecteurs', sub: '2ème trimestre – Décembre/Janvier (7h)' },
+          { title: 'Équations et inéquations dans ℝ', sub: '2ème trimestre – Janvier (5h)' },
+          { title: 'Coordonnées de vecteurs', sub: '2ème trimestre – Janvier/Février (7h)' },
+          { title: 'Équations de droites', sub: '2ème trimestre – Février (7h)' },
+          { title: 'Statistique', sub: '3ème trimestre – Février/Mars (7h)' },
+          { title: 'Équations et inéquations dans ℝ × ℝ', sub: '3ème trimestre – Mars (7h)' },
+          { title: 'Applications affines', sub: '3ème trimestre – Mars/Avril (5h)' },
+          { title: 'Pyramides et cônes', sub: '3ème trimestre – Avril (7h)' },
+        ]
+      },
+      { icon: '📖', name: 'Français', color: '#EC4899', bg: 'rgba(236,72,153,0.15)',
+        lecons: [
+          { title: 'L\'expression de la cause et de la conséquence', sub: 'Grammaire – 1er trimestre' },
+          { title: 'L\'expression du but dans la phrase complexe', sub: 'Grammaire – 1er trimestre' },
+          { title: 'L\'expression du temps et de la comparaison', sub: 'Grammaire – 1er trimestre' },
+          { title: 'L\'expression de la condition et de l\'opposition', sub: 'Grammaire – 1er trimestre' },
+          { title: 'Orthographe lexicale : participes passés adjectivaux', sub: 'Adhérant/adhérent, convaincant/convaincante' },
+          { title: 'La coordination : les coordonnants', sub: 'Grammaire – 2ème trimestre' },
+          { title: 'Le groupe nominal : la pronominalisation', sub: 'Grammaire – 2ème trimestre' },
+          { title: 'Orthographe lexicale : homophones non homographes', sub: 'quoique/qui que, quelque/quel que…' },
+          { title: 'Le verbe : l\'infinitif et ses emplois', sub: 'Mode infinitif, noyau de proposition' },
+          { title: 'Le participe passé et le participe présent', sub: 'Grammaire – 2ème trimestre' },
+          { title: 'Orthographe lexicale : les paronymes', sub: 'éminent/éminant, éruption/irruption…' },
+          { title: 'L\'adverbe et le groupe adverbial', sub: 'Grammaire – 2ème trimestre' },
+          { title: 'Le comparatif et le superlatif de l\'adverbe', sub: 'Grammaire – 3ème trimestre' },
+          { title: 'Orthographe grammaticale : même, tout, tel', sub: 'Accord et emplois' },
+          { title: 'La communication : marques de l\'oral et de l\'écrit', sub: 'Grammaire – 3ème trimestre' },
+          { title: 'Les registres de langue', sub: 'Grammaire – 3ème trimestre' },
+          { title: 'Orthographe grammaticale : accord de l\'adjectif qualificatif', sub: 'Cas du masculin dans une énumération' },
+          { title: 'Orthographe grammaticale : accord des participes passés avec avoir', sub: 'Précédés de «en»' },
+          { title: 'Expression écrite : Le texte argumentatif – étayer un point de vue', sub: 'Expression écrite – 1er trimestre' },
+          { title: 'Expression écrite : Le texte argumentatif – réfuter un point de vue', sub: 'Expression écrite – 1er trimestre' },
+          { title: 'Expression écrite : Le résumé du texte argumentatif', sub: 'Expression écrite – 2ème trimestre' },
+          { title: 'Expression écrite : L\'article de journal', sub: 'Rédiger un article sur un fait dont on a été témoin' },
+        ]
+      },
+      { icon: '🌍', name: 'Histoire-Géo', color: '#10B981', bg: 'rgba(16,185,129,0.15)',
+        lecons: [
+          { title: 'Histoire – Le mouvement impérialiste et la colonisation en Côte d\'Ivoire', sub: 'Thème 1 : Évolution sociopolitique de la CI et de l\'Afrique • Septembre' },
+          { title: 'Histoire – L\'accession de la Côte d\'Ivoire à l\'indépendance', sub: 'Thème 1 : Évolution sociopolitique • Octobre' },
+          { title: 'Histoire – Causes et caractères des crises sociopolitiques de l\'Afrique indépendante', sub: 'Thème 1 : Évolution sociopolitique • Novembre' },
+          { title: 'Histoire – La crise rwandaise : de la guerre au génocide des Tutsi (1990-1994)', sub: 'Thème 1 : Évolution sociopolitique • Décembre' },
+          { title: 'Histoire – Les causes, caractères et conséquences de la 2ème guerre mondiale', sub: 'Thème 2 : De la 2ème guerre mondiale aux efforts de construction du monde • Janvier' },
+          { title: 'Histoire – L\'Organisation des Nations Unies (ONU)', sub: 'Thème 2 : Construction du monde et de l\'Afrique • Février' },
+          { title: 'Histoire – L\'Union Africaine (UA)', sub: 'Thème 2 : Construction du monde et de l\'Afrique • Mars' },
+          { title: 'Géographie – Les atouts naturels et humains du développement économique de la Côte d\'Ivoire', sub: 'Thème 1 : Étude économique de la Côte d\'Ivoire • Septembre' },
+          { title: 'Géographie – Les secteurs d\'activités économiques de la Côte d\'Ivoire', sub: 'Thème 1 : Étude économique de la Côte d\'Ivoire • Novembre' },
+          { title: 'Géographie – Les problèmes du développement économique de la Côte d\'Ivoire', sub: 'Thème 1 : Étude économique de la Côte d\'Ivoire • Décembre/Janvier' },
+          { title: 'Géographie – Étude économique de l\'Afrique', sub: 'Thème 2 : L\'Afrique face à la mondialisation • Février' },
+          { title: 'Géographie – La place de l\'Afrique dans la mondialisation', sub: 'Thème 2 : L\'Afrique face à la mondialisation • Avril' },
+        ]
+      },
+      { icon: '🔬', name: 'SVT', color: '#8B5CF6', bg: 'rgba(139,92,246,0.15)',
+        lecons: [
+          { title: 'Les grossesses précoces et les moyens de prévention', sub: 'Compétence 2 – Reproduction humaine • Septembre' },
+          { title: 'L\'infection au VIH', sub: 'Compétence 2 – Reproduction humaine • Octobre' },
+          { title: 'Les aliments et l\'Homme', sub: 'Compétence 1 – Nutrition chez l\'Homme • Novembre' },
+          { title: 'La digestion des aliments', sub: 'Compétence 1 – Nutrition chez l\'Homme • Novembre/Décembre' },
+          { title: 'Le sang', sub: 'Compétence 1 – Nutrition chez l\'Homme • Décembre' },
+          { title: 'La transfusion sanguine', sub: 'Compétence 1 – Nutrition chez l\'Homme • Janvier' },
+          { title: 'La circulation sanguine', sub: 'Compétence 1 – Nutrition chez l\'Homme • Janvier' },
+          { title: 'Les caractéristiques d\'un sol', sub: 'Compétence 3 – Relations sols-plantes • Février' },
+          { title: 'Les relations sols-plantes', sub: 'Compétence 3 – Relations sols-plantes • Mars' },
+          { title: 'La dégradation des sols', sub: 'Compétence 4 – Protection des sols • Avril' },
+          { title: 'La protection et l\'amélioration des sols', sub: 'Compétence 4 – Protection des sols • Avril/Mai' },
+        ]
+      },
+      { icon: '⚗️', name: 'Physique-Chimie', color: '#F59E0B', bg: 'rgba(245,158,11,0.15)',
+        lecons: [
+          { title: 'Masse et poids d\'un corps', sub: 'Physique – Mécanique • Septembre' },
+          { title: 'Les forces', sub: 'Physique – Mécanique • Septembre' },
+          { title: 'Équilibre d\'un solide soumis à deux forces', sub: 'Physique – Mécanique • Octobre' },
+          { title: 'Travail et puissance mécaniques', sub: 'Physique – Mécanique • Octobre' },
+          { title: 'Énergie mécanique', sub: 'Physique – Mécanique • Octobre' },
+          { title: 'Électrolyse et synthèse de l\'eau', sub: 'Chimie – Réactions chimiques • Novembre' },
+          { title: 'Les alcanes', sub: 'Chimie – Réactions chimiques • Novembre/Décembre' },
+          { title: 'Les lentilles', sub: 'Physique – Optique • Janvier' },
+          { title: 'Les défauts de l\'œil et leurs corrections', sub: 'Physique – Optique • Janvier' },
+          { title: 'Oxydation des corps purs simples', sub: 'Chimie – Réactions chimiques • Février' },
+          { title: 'Réduction des oxydes / Oxydation des corps purs simples (suite)', sub: 'Chimie – Réactions chimiques • Février/Mars' },
+          { title: 'Solutions acides, basiques et neutres', sub: 'Chimie – Réactions chimiques • Mars' },
+          { title: 'Puissance et énergie électriques', sub: 'Physique – Électricité • Avril' },
+          { title: 'Le conducteur ohmique', sub: 'Physique – Électricité • Avril/Mai' },
+        ]
+      },
+      { icon: '🎵', name: 'Musique', color: '#A855F7', bg: 'rgba(168,85,247,0.15)',
+        lecons: [
+          { title: 'La tonalité de La mineur harmonique', sub: 'Compétence I – Solfège • Septembre' },
+          { title: 'Les mines anti-personnel', sub: 'Compétence III – Éducation civique par la musique • Octobre' },
+          { title: 'La musique des masques Wè, Dan et Gouro', sub: 'Compétence II – Audition/Culture musicale • Octobre' },
+          { title: 'Le demi-soupir croche : étude rythmique et mélodique', sub: 'Compétence I – Solfège • Octobre' },
+          { title: 'Rôle et importance de l\'impôt', sub: 'Compétence III – Éducation civique par la musique • Décembre' },
+          { title: 'La tonalité de Mi mineur harmonique', sub: 'Compétence I – Solfège • Décembre' },
+          { title: 'La musique des fêtes de générations (fokwé, low, poro)', sub: 'Compétence II – Audition/Culture musicale • Janvier' },
+          { title: 'Chanson populaire', sub: 'Compétence III – Éducation civique par la musique • Janvier' },
+          { title: 'Les quatre doubles croches : étude rythmique et mélodique', sub: 'Compétence I – Solfège • Janvier' },
+          { title: 'Lutte contre les drogues et l\'alcool dans la communauté', sub: 'Compétence III – Éducation civique par la musique • Mars' },
+          { title: 'La tonalité de Ré mineur harmonique', sub: 'Compétence I – Solfège • Mars' },
+          { title: 'La musique rituelle et la préservation des valeurs traditionnelles', sub: 'Compétence II – Audition/Culture musicale • Avril' },
+          { title: 'Chanson populaire (2)', sub: 'Compétence III – Éducation civique par la musique • Avril' },
+        ]
+      },
+      { icon: '🎨', name: 'Arts Plastiques', color: '#F77F00', bg: 'rgba(247,127,0,0.15)',
+        lecons: [
+          { title: 'Images séquentielles : la Bande Dessinée', sub: 'Thème 1 – Communication par le langage plastique • Septembre' },
+          { title: 'Relation Texte/Image : la polysémie et la fonction de relais', sub: 'Thème 1 – Communication par le langage plastique • Octobre' },
+          { title: 'Conception d\'un dépliant', sub: 'Thème 1 – Communication par le langage plastique • Novembre' },
+          { title: 'Équipements socioculturels', sub: 'Thème 2 – Actions sur l\'environnement immédiat • Décembre' },
+          { title: 'Gestion et protection de l\'eau', sub: 'Thème 2 – Actions sur l\'environnement immédiat • Janvier' },
+          { title: 'Beauté corporelle et scarification', sub: 'Thème 3 – Promotion des valeurs socioculturelles • Janvier/Février' },
+          { title: 'Artisanat d\'art', sub: 'Thème 3 – Promotion des valeurs socioculturelles • Février/Mars' },
+          { title: 'Art nègre et cubisme', sub: 'Thème 3 – Promotion des valeurs socioculturelles • Mars' },
+          { title: 'Création plastique de l\'Afrique moderne', sub: 'Thème 3 – Promotion des valeurs socioculturelles • Mars/Avril' },
+          { title: 'Art abstrait', sub: 'Thème 3 – Promotion des valeurs socioculturelles • Avril/Mai' },
+        ]
+      },
+      { icon: '🏛️', name: 'EDHC', color: '#009A44', bg: 'rgba(0,154,68,0.15)',
+        lecons: [
+          { title: 'Les devoirs de parents', sub: 'Compétence 1 – Droits de l\'homme et DIH' },
+          { title: 'Les organisations humanitaires', sub: 'Compétence 1 – Droits de l\'homme et DIH' },
+          { title: 'Les instruments de protection contre les violences faites aux personnes vulnérables', sub: 'Compétence 1 – Droits de l\'homme et DIH' },
+          { title: 'Les partis politiques', sub: 'Compétence 2 – Droits et devoirs du citoyen / Démocratie' },
+          { title: 'Les institutions juridictionnelles', sub: 'Compétence 2 – Droits et devoirs du citoyen / Démocratie' },
+          { title: 'Le scrutin électoral', sub: 'Compétence 2 – Droits et devoirs du citoyen / Démocratie' },
+          { title: 'Le civisme fiscal', sub: 'Compétence 2 – Droits et devoirs du citoyen / Démocratie' },
+          { title: 'La gestion des biens publics', sub: 'Compétence 3 – Gestion des ressources et entrepreneuriat' },
+          { title: 'Le projet d\'entreprise', sub: 'Compétence 3 – Gestion des ressources et entrepreneuriat' },
+          { title: 'Les alliances interethniques : les Mandé et les Gour', sub: 'Compétence 3 – Vie communautaire' },
+          { title: 'Les maladies endémiques, l\'automédication et les centres de santé', sub: 'Compétence 4 – Préservation de la santé' },
+          { title: 'Le test de dépistage du VIH', sub: 'Compétence 4 – Préservation de la santé' },
+          { title: 'Les parcs nationaux et les réserves forestières', sub: 'Compétence 5 – Préservation de l\'environnement' },
+          { title: 'La gestion de l\'eau', sub: 'Compétence 5 – Préservation de l\'environnement' },
+        ]
+      },
+      { icon: '🇩🇪', name: 'Allemand', color: '#6B7280', bg: 'rgba(107,114,128,0.15)',
+        lecons: [
+          { title: 'Thème 1 – Einstiegsseite (mise en route)', sub: 'Terminale – 1er trimestre • Septembre/Octobre' },
+          { title: 'Thème 1 – Leçon 1', sub: 'Terminale – 1er trimestre • Octobre/Novembre (12 séances)' },
+          { title: 'Thème 1 – Leçon 2', sub: 'Terminale – 1er trimestre • Novembre (12 séances)' },
+          { title: 'Thème 2 – Einstiegsseite (mise en route)', sub: 'Terminale – 2ème trimestre • Novembre/Décembre' },
+          { title: 'Thème 2 – Leçon 1', sub: 'Terminale – 2ème trimestre • Décembre/Janvier (12 séances)' },
+          { title: 'Thème 2 – Leçon 2', sub: 'Terminale – 2ème trimestre • Janvier (12 séances)' },
+          { title: 'Thème 3 – Einstiegsseite (mise en route)', sub: 'Terminale – 3ème trimestre • Février/Mars' },
+          { title: 'Thème 3 – Leçon 1', sub: 'Terminale – 3ème trimestre • Mars (12 séances)' },
+          { title: 'Thème 3 – Leçon 2', sub: 'Terminale – 3ème trimestre • Avril (12 séances)' },
+        ]
+      },
+      { icon: '🇪🇸', name: 'Espagnol', color: '#EF4444', bg: 'rgba(239,68,68,0.15)',
+        lecons: [
+          { title: 'La découverte du monde hispanique', sub: 'Leçon 1 – Présenter l\'Espagne, l\'Amérique hispanique, la Guinée Équatoriale' },
+          { title: 'La présentation des civilités : se présenter', sub: 'Leçon 2 – Se présenter / présenter quelqu\'un' },
+          { title: 'La présentation des civilités : inviter et féliciter', sub: 'Leçon 2 – Inviter / accepter / refuser • Féliciter / remercier' },
+          { title: 'L\'échange d\'information : poser des questions', sub: 'Leçon 3 – Poser des questions / répondre' },
+          { title: 'L\'échange d\'information : décrire et raconter', sub: 'Leçon 3 – Décrire une personne • Raconter un fait' },
+          { title: 'L\'expression de l\'opinion', sub: 'Leçon 4 – Exprimer / approuver / argumenter une opinion' },
+          { title: 'L\'expression des goûts et des préférences', sub: 'Leçon 5 – Exprimer les goûts, préférences et intentions' },
+          { title: 'L\'expression des sentiments', sub: 'Leçon 6 – Joie/peine • Excuses • Sensations physiques' },
+          { title: 'L\'expression de l\'ordre', sub: 'Leçon 7 – Donner un ordre • Conseiller • Interdire' },
+        ]
+      },
+      { icon: '🌐', name: 'Anglais', color: '#06B6D4', bg: 'rgba(6,182,212,0.15)',
+        lecons: [
+          { title: 'My first holidays in my village', sub: 'Unit 1 – Life at School • Souvenirs de vacances' },
+          { title: 'Memories of school', sub: 'Unit 1 – Life at School • Souvenirs d\'école' },
+          { title: 'School work', sub: 'Unit 1 – Life at School • Le travail à l\'école' },
+          { title: 'Village women activities', sub: 'Unit 2 – Women at Work • La femme rurale' },
+          { title: 'What are women\'s rights and duties?', sub: 'Unit 2 – Women at Work • Droits et devoirs de la femme' },
+          { title: 'Girls at school', sub: 'Unit 2 – Women at Work • La jeune fille à l\'école' },
+          { title: 'Different means of transport', sub: 'Unit 3 – Travelling • Les moyens de transport' },
+          { title: 'Travelling by plane', sub: 'Unit 3 – Travelling • A l\'aéroport' },
+          { title: 'Visiting the USA', sub: 'Unit 3 – Travelling • A la découverte des États-Unis' },
+          { title: 'Modern and traditional clothes', sub: 'Unit 4 – Fashion • Vêtements modernes et traditionnels' },
+          { title: 'Fashion show', sub: 'Unit 4 – Fashion • Défilé de mode' },
+          { title: 'Cosmetics', sub: 'Unit 4 – Fashion • Produits cosmétiques' },
+          { title: 'In the city', sub: 'Unit 5 – City or Village • A la ville' },
+          { title: 'Village life', sub: 'Unit 5 – City or Village • Au village' },
+          { title: 'Rural exodus', sub: 'Unit 5 – City or Village • L\'exode rural' },
+          { title: 'My rights', sub: 'Unit 6 – Human Rights • Les droits du citoyen' },
+          { title: 'My duties', sub: 'Unit 6 – Human Rights • Les devoirs du citoyen' },
+          { title: 'Tolerance', sub: 'Unit 6 – Human Rights • La tolérance' },
+          { title: 'Is it an epidemic or a pandemic?', sub: 'Unit 7 – Hygiene and Health • Les maladies endémiques' },
+          { title: 'Promoting hygiene at school', sub: 'Unit 7 – Hygiene and Health • L\'hygiène à l\'école' },
+          { title: 'HIV-free Generation', sub: 'Unit 7 – Hygiene and Health • Génération sans SIDA' },
+          { title: 'The computer revolution', sub: 'Unit 8 – ICTs • L\'ordinateur' },
+          { title: 'The cellphone', sub: 'Unit 8 – ICTs • Le téléphone' },
+          { title: 'The magic of the Internet', sub: 'Unit 8 – ICTs • L\'Internet' },
+        ]
+      },
+    ],
+    planning: [
+      { day: 'Lundi', slots: [{time:'7h-9h',sub:'Mathématiques',color:'#3B82F6'},{time:'9h-11h',sub:'Français',color:'#EC4899'},{time:'14h-16h',sub:'SVT',color:'#8B5CF6'}] },
+      { day: 'Mardi', slots: [{time:'7h-9h',sub:'Physique-Chimie',color:'#F59E0B'},{time:'9h-11h',sub:'Anglais',color:'#06B6D4'},{time:'14h-16h',sub:'Histoire-Géo',color:'#10B981'}] },
+      { day: 'Mercredi', slots: [{time:'7h-9h',sub:'Mathématiques',color:'#3B82F6'},{time:'9h-11h',sub:'Français',color:'#EC4899'}] },
+      { day: 'Jeudi', slots: [{time:'7h-9h',sub:'SVT',color:'#8B5CF6'},{time:'9h-11h',sub:'Histoire-Géo',color:'#10B981'},{time:'14h-16h',sub:'Physique-Chimie',color:'#F59E0B'}] },
+      { day: 'Vendredi', slots: [{time:'7h-9h',sub:'Anglais',color:'#06B6D4'},{time:'9h-11h',sub:'Mathématiques',color:'#3B82F6'},{time:'14h-16h',sub:'Révisions',color:'#F77F00'}] },
+    ]
+  },
+  'Tle A': {
+    matieres: [
+      { icon: '🔢', name: 'Mathématiques', color: '#3B82F6', bg: 'rgba(59,130,246,0.15)',
+        lecons: [
+          { title: 'Étude de fonctions polynômes et de fonctions rationnelles', sub: 'Tle A1: 27h • Tle A2: 27h • 1er trimestre' },
+          { title: 'Probabilité et variable aléatoire', sub: 'Tle A1: 23h • Tle A2: 19h • 1er trimestre' },
+          { title: 'Primitives et calcul intégral', sub: 'Tle A1: 15h • 2ème trimestre' },
+          { title: 'Fonction logarithme népérien', sub: 'Tle A1: 13h • Tle A2: 15h • 2ème trimestre' },
+          { title: 'Fonction exponentielle népérienne', sub: 'Tle A1: 13h • Tle A2: 15h • 2ème trimestre' },
+          { title: 'Statistique à deux variables', sub: 'Tle A1: 19h • Tle A2: 11h • 3ème trimestre' },
+          { title: 'Suites numériques', sub: 'Tle A1: 13h • Tle A2: 13h • 3ème trimestre' },
+          { title: 'Systèmes d\'équations linéaires dans ℝ × ℝ', sub: 'Tle A1: 9h • Tle A2: 5h • Avril' },
+        ]
+      },
+      { icon: '📖', name: 'Français', color: '#EC4899', bg: 'rgba(236,72,153,0.15)',
+        lecons: [
+          { title: 'La dissertation littéraire : analyser le sujet et rechercher les idées', sub: 'Expression écrite – 1er trimestre' },
+          { title: 'La dissertation littéraire : élaborer un plan et rédiger le développement', sub: 'Expression écrite – 1er trimestre' },
+          { title: 'La dissertation littéraire : rédiger l\'introduction et la conclusion', sub: 'Expression écrite – 1er trimestre' },
+          { title: 'La dissertation littéraire : rédaction complète', sub: 'Expression écrite – 1er trimestre' },
+          { title: 'Le commentaire composé : introduction + centre d\'intérêt + conclusion', sub: 'Expression écrite – 2ème trimestre' },
+          { title: 'Le commentaire composé : rédaction complète', sub: 'Expression écrite – 2ème trimestre' },
+          { title: 'Le résumé du texte argumentatif : répondre aux questions', sub: 'Expression écrite – 2ème trimestre' },
+          { title: 'Le résumé du texte argumentatif : identifier et reformuler les idées essentielles', sub: 'Expression écrite – 2ème/3ème trimestre' },
+          { title: 'Le résumé du texte argumentatif : rédiger le résumé', sub: 'Expression écrite – 3ème trimestre' },
+          { title: 'La production écrite : analyser le sujet et organiser l\'argumentation', sub: 'Expression écrite – 3ème trimestre' },
+          { title: 'La production écrite : rédiger un texte argumentatif', sub: 'Expression écrite – 3ème trimestre' },
+          { title: 'Savoir-faire : Préparation à l\'oral du BAC', sub: 'Savoir-faire – Tout au long de l\'année' },
+          { title: 'Leçon 1 – Œuvre narrative : Connaître le genre romanesque (S.1)', sub: 'Étude de l\'œuvre intégrale – 1er trimestre' },
+          { title: 'Leçon 1 – Œuvre narrative : Connaître le genre romanesque (S.2)', sub: 'Étude de l\'œuvre intégrale – 1er trimestre' },
+          { title: 'Leçon 2 – Groupement de textes théâtraux : Connaître les genres dramatiques (S.1)', sub: 'Étude de l\'œuvre intégrale – 2ème trimestre' },
+          { title: 'Leçon 2 – Groupement de textes théâtraux : Connaître le drame moderne et le théâtre de l\'absurde (S.2)', sub: 'Étude de l\'œuvre intégrale – 2ème trimestre' },
+          { title: 'Leçon 3 – Œuvre poétique : Connaître les genres poétiques (S.1)', sub: 'Étude de l\'œuvre intégrale – 3ème trimestre' },
+          { title: 'Leçon 3 – Œuvre poétique : Connaître les genres politiques et engagés (S.2)', sub: 'Étude de l\'œuvre intégrale – 3ème trimestre' },
+        ]
+      },
+      { icon: '💭', name: 'Philosophie', color: '#8B5CF6', bg: 'rgba(139,92,246,0.15)',
+        lecons: [
+          { title: 'La dissertation philosophique', sub: 'Compétence I – Dissertation et commentaire • 1er trimestre' },
+          { title: 'Le commentaire de texte philosophique', sub: 'Compétence I – Dissertation et commentaire • 1er trimestre' },
+          { title: 'La connaissance de l\'homme', sub: 'Compétence II – L\'homme dans la société • Octobre/Novembre' },
+          { title: 'La vie en société', sub: 'Compétence II – L\'homme dans la société • Novembre' },
+          { title: 'Dieu et la religion', sub: 'Compétence II – L\'homme dans la société • Novembre' },
+          { title: 'L\'histoire et l\'humanité', sub: 'Compétence III – Épanouissement de l\'homme • Décembre/Janvier' },
+          { title: 'La valeur de la philosophie', sub: 'Compétence III – Question au choix • Janvier/Février' },
+          { title: 'Progrès et bonheur', sub: 'Compétence III – Étude d\'œuvres • Février/Mars' },
+          { title: 'Langage et vérité', sub: 'Compétence IV – La connaissance • Mars/Avril' },
+          { title: 'La connaissance scientifique', sub: 'Compétence IV – La connaissance • Avril/Mai' },
+        ]
+      },
+      { icon: '🔬', name: 'SVT', color: '#8B5CF6', bg: 'rgba(139,92,246,0.15)',
+        lecons: [
+          { title: 'L\'origine de la vie', sub: 'Compétence 2 – Thème 1 : Origine de la vie et évolution • Septembre' },
+          { title: 'L\'évolution de la lignée humaine', sub: 'Compétence 2 – Thème 1 : Origine de la vie et évolution • Octobre' },
+          { title: 'L\'hérédité du sexe et du groupe sanguin chez l\'Homme', sub: 'Compétence 2 – Thème 2 : Transmission des caractères héréditaires • Novembre' },
+          { title: 'Les prévisions génétiques', sub: 'Compétence 2 – Thème 2 : Transmission des caractères héréditaires • Décembre' },
+          { title: 'Les réactions émotionnelles chez l\'Homme', sub: 'Compétence 1 – Thème : La communication dans l\'organisme • Janvier/Février' },
+          { title: 'L\'activité cérébrale chez l\'Homme', sub: 'Compétence 1 – Thème : La communication dans l\'organisme • Février/Mars' },
+          { title: 'L\'utilisation des nutriments : la biosynthèse des protéines', sub: 'Compétence 3 – Thème : Le devenir des nutriments • Avril' },
+        ]
+      },
+      { icon: '🌍', name: 'Histoire-Géo', color: '#10B981', bg: 'rgba(16,185,129,0.15)',
+        lecons: [
+          { title: 'Histoire – L\'ONU', sub: 'Thème 1 : Les relations internationales de 1945 à nos jours • Septembre' },
+          { title: 'Histoire – L\'ère de la bipolarisation de 1947 à 1991', sub: 'Thème 1 : Les relations internationales • Octobre/Novembre' },
+          { title: 'Histoire – De la fin de la guerre froide vers un monde multipolaire', sub: 'Thème 1 : Les relations internationales • Novembre/Décembre' },
+          { title: 'Histoire – La montée des nationalismes en Afrique', sub: 'Thème 2 : De la décolonisation aux efforts d\'organisation • Janvier' },
+          { title: 'Histoire – L\'accession de la Côte d\'Ivoire à l\'indépendance', sub: 'Thème 2 : Décolonisation • Janvier/Février' },
+          { title: 'Histoire – L\'accession de l\'Algérie à l\'indépendance', sub: 'Thème 2 : Décolonisation • Février' },
+          { title: 'Histoire – L\'Union Africaine', sub: 'Thème 2 : Organisation de l\'Afrique • Février/Mars' },
+          { title: 'Histoire – Croyances et valeurs dominantes dans le monde occidental', sub: 'Thème 3 : Croyances et valeurs dans le monde • Avril' },
+          { title: 'Histoire – Les mutations contemporaines de la civilisation négro-africaine', sub: 'Thème 3 : Croyances et valeurs dans le monde • Avril/Mai' },
+          { title: 'Géographie – Les fondements du développement économique de la Côte d\'Ivoire', sub: 'Thème 1 : La Côte d\'Ivoire – Étude économique • Septembre' },
+          { title: 'Géographie – Les secteurs d\'activités économiques de la Côte d\'Ivoire', sub: 'Thème 1 : La Côte d\'Ivoire – Étude économique • Novembre' },
+          { title: 'Géographie – Les problèmes de développement économique de la Côte d\'Ivoire', sub: 'Thème 1 : La Côte d\'Ivoire – Étude économique • Décembre/Janvier' },
+          { title: 'Géographie – Les fondements du développement économique de la Corée du Sud', sub: 'Thème 2 : La Corée du Sud – Pays émergent • Février' },
+          { title: 'Géographie – La Corée du Sud : une puissance économique émergente', sub: 'Thème 2 : La Corée du Sud – Pays émergent • Février/Mars' },
+          { title: 'Géographie – La CEDEAO : une organisation régionale à caractère économique', sub: 'Thème 3 : Regroupement et coopération économique • Avril' },
+          { title: 'Géographie – Les relations UE/ACP : une forme de coopération Nord-Sud', sub: 'Thème 3 : Regroupement et coopération économique • Avril/Mai' },
+        ]
+      },
+      { icon: '🇩🇪', name: 'Allemand', color: '#6B7280', bg: 'rgba(107,114,128,0.15)',
+        lecons: [
+          { title: 'Thème 1 – Einstiegsseite (mise en route)', sub: 'Terminale – 1er trimestre • Septembre/Octobre' },
+          { title: 'Thème 1 – Leçon 1', sub: 'Terminale – 1er trimestre • Octobre/Novembre (12 séances)' },
+          { title: 'Thème 1 – Leçon 2', sub: 'Terminale – 1er trimestre • Novembre (12 séances)' },
+          { title: 'Thème 2 – Einstiegsseite (mise en route)', sub: 'Terminale – 2ème trimestre • Novembre/Décembre' },
+          { title: 'Thème 2 – Leçon 1', sub: 'Terminale – 2ème trimestre • Décembre/Janvier (12 séances)' },
+          { title: 'Thème 2 – Leçon 2', sub: 'Terminale – 2ème trimestre • Janvier (12 séances)' },
+          { title: 'Thème 3 – Einstiegsseite (mise en route)', sub: 'Terminale – 3ème trimestre • Février/Mars' },
+          { title: 'Thème 3 – Leçon 1', sub: 'Terminale – 3ème trimestre • Mars (12 séances)' },
+          { title: 'Thème 3 – Leçon 2', sub: 'Terminale – 3ème trimestre • Avril (12 séances)' },
+        ]
+      },
+      { icon: '🇪🇸', name: 'Espagnol', color: '#EF4444', bg: 'rgba(239,68,68,0.15)',
+        lecons: [
+          { title: 'La connaissance des réalités du monde hispanique et de l\'Afrique', sub: 'Leçon 1 – Présenter l\'Espagne, l\'Amérique hispanique, la Guinée Équatoriale • Octobre' },
+          { title: 'L\'échange d\'information', sub: 'Leçon 2 – Décrire, raconter un fait, résumer • Novembre' },
+          { title: 'L\'expression de l\'opinion', sub: 'Leçon 3 – Exprimer/approuver/désapprouver une opinion, probabilité, obligation • Décembre/Janvier' },
+          { title: 'L\'expression des états d\'âme', sub: 'Leçon 4 – Crainte, colère, indignation, surprise, étonnement • Février' },
+          { title: 'L\'expression de l\'ordre', sub: 'Leçon 5 – Donner un ordre, conseiller, déconseiller, interdire • Mars' },
+          { title: 'La technique d\'expression orale ou écrite', sub: 'Leçon 6 – Rédaction, exposé, commenter un texte/image • Avril' },
+        ]
+      },
+      { icon: '🌐', name: 'Anglais', color: '#06B6D4', bg: 'rgba(6,182,212,0.15)',
+        lecons: [
+          { title: 'Unit 1 – Lifestyles: Moving with the Times', sub: 'Speaking, Reading, Listening, Writing • Septembre' },
+          { title: 'Unit 2 – Freedom and Civil Rights', sub: 'Speaking, Reading, Listening, Writing • Octobre' },
+          { title: 'Unit 3 – Development Issues', sub: 'Speaking, Reading, Listening, Writing • Octobre/Novembre' },
+          { title: 'Unit 4 – What the Future Holds', sub: 'Speaking, Reading, Listening, Writing • Novembre/Décembre' },
+          { title: 'Unit 5 – Managing Resources', sub: 'Reading, Listening, Writing • Décembre/Janvier' },
+          { title: 'Unit 6 – Contemporary Africa', sub: 'Speaking, Reading, Listening, Writing • Janvier' },
+          { title: 'Unit 7 – International Issues', sub: 'Speaking, Reading, Listening, Writing • Février' },
+          { title: 'Unit 8 – Cultural Differences', sub: 'Speaking, Reading, Listening, Writing • Mars' },
+          { title: 'Unit 9 – Justice', sub: 'Speaking, Reading, Listening, Writing • Avril' },
+          { title: 'Unit 10 – Demography', sub: 'Speaking, Reading, Listening, Writing • Mai' },
+        ]
+      },
+      { icon: '🎨', name: 'Arts Plastiques', color: '#F77F00', bg: 'rgba(247,127,0,0.15)',
+        lecons: [
+          { title: 'Processus de réalisation d\'une image photographique', sub: 'Thème 1 – Communication par le langage plastique • Septembre' },
+          { title: 'Présentation de produits manufacturés', sub: 'Thème 1 – Communication par le langage plastique • Octobre' },
+          { title: 'Sensibilisation sur les dangers liés au VIH', sub: 'Thème 1 – Communication par le langage plastique • Novembre' },
+          { title: 'Impact de l\'urbanisation sur un cadre de vie', sub: 'Thème 2 – Actions sur l\'environnement immédiat • Novembre' },
+          { title: 'Bienfaits de l\'architecture paysagère', sub: 'Thème 2 – Actions sur l\'environnement immédiat • Décembre' },
+          { title: 'Préservation des valeurs socioculturelles de la statuaire', sub: 'Thème 3 – Promotion des valeurs socioculturelles • Janvier' },
+          { title: 'Apports de la création plastique africaine au Cubisme', sub: 'Thème 3 – Promotion des valeurs socioculturelles • Février' },
+          { title: 'Création plastique contemporaine d\'influence primitive', sub: 'Thème 3 – Promotion des valeurs socioculturelles • Mars' },
+          { title: 'Caractéristiques de la production plastique des aires culturelles de Côte d\'Ivoire', sub: 'Thème 3 – Promotion des valeurs socioculturelles • Mars/Avril' },
+          { title: 'Foisonnement de mouvements artistiques au 20ème siècle', sub: 'Thème 3 – Promotion des valeurs socioculturelles • Avril/Mai' },
+        ]
+      },
+      { icon: '🎵', name: 'Musique', color: '#A855F7', bg: 'rgba(168,85,247,0.15)',
+        lecons: [
+          { title: 'La tonalité de La mineur', sub: 'Compétence I – Solfège • Octobre' },
+          { title: 'La mesure 6/8 : étude rythmique et mélodique', sub: 'Compétence I – Solfège • Octobre' },
+          { title: 'La drummologie', sub: 'Compétence II – Audition/Culture musicale • Octobre' },
+          { title: 'Les natures d\'impôt', sub: 'Compétence III – Éducation civique par la musique • Octobre' },
+          { title: 'Croche – deux doubles croches : étude rythmique et mélodique', sub: 'Compétence I – Solfège • Novembre' },
+          { title: 'La musique de la Chine et du Japon', sub: 'Compétence II – Audition/Culture musicale • Janvier' },
+          { title: 'L\'impact du VIH/SIDA sur la population', sub: 'Compétence III – Éducation civique par la musique • Janvier' },
+          { title: 'La tonalité de Ré mineur', sub: 'Compétence I – Solfège • Janvier' },
+          { title: 'Le lied et le poème symphonique', sub: 'Compétence II – Audition/Culture musicale • Février' },
+          { title: 'Deux doubles croches – croche : étude rythmique et mélodique', sub: 'Compétence I – Solfège • Février' },
+          { title: 'Frantz Schubert et L. Hector Berlioz', sub: 'Compétence II – Audition/Culture musicale • Mars' },
+          { title: 'La tonalité de Mi mineur', sub: 'Compétence I – Solfège • Avril' },
+          { title: 'Chant au choix de l\'enseignant', sub: 'Compétence III – Éducation civique par la musique • Avril' },
+          { title: 'La musique afro-américaine : le jazz', sub: 'Compétence II – Audition/Culture musicale • Avril' },
+          { title: 'La musique électronique', sub: 'Compétence II – Audition/Culture musicale • Avril/Mai' },
+        ]
+      },
+    ],
+    planning: [
+      { day: 'Lundi', slots: [{time:'7h-9h',sub:'Philosophie',color:'#8B5CF6'},{time:'9h-11h',sub:'Français',color:'#EC4899'},{time:'14h-16h',sub:'Anglais',color:'#06B6D4'}] },
+      { day: 'Mardi', slots: [{time:'7h-9h',sub:'Histoire-Géo',color:'#10B981'},{time:'9h-11h',sub:'Français',color:'#EC4899'}] },
+      { day: 'Mercredi', slots: [{time:'7h-9h',sub:'Philosophie',color:'#8B5CF6'},{time:'9h-11h',sub:'Anglais',color:'#06B6D4'}] },
+      { day: 'Jeudi', slots: [{time:'7h-9h',sub:'Français',color:'#EC4899'},{time:'14h-16h',sub:'Histoire-Géo',color:'#10B981'}] },
+      { day: 'Vendredi', slots: [{time:'7h-9h',sub:'Révisions',color:'#F77F00'},{time:'9h-11h',sub:'Philosophie',color:'#8B5CF6'}] },
+    ]
+  },
+  'Tle C': {
+    matieres: [
+      { icon: '🔢', name: 'Mathématiques', color: '#3B82F6', bg: 'rgba(59,130,246,0.15)',
+        lecons: [
+          { title: 'Barycentre et lignes de niveaux', sub: '1er trimestre – Septembre (9h)' },
+          { title: 'Limites et continuité', sub: '1er trimestre – Septembre (11h)' },
+          { title: 'Divisibilité dans ℤ', sub: '1er trimestre – Octobre (11h)' },
+          { title: 'Dérivabilité et étude de fonctions', sub: '1er trimestre – Octobre (11h)' },
+          { title: 'Géométrie analytique de l\'espace', sub: '1er trimestre – Octobre (9h)' },
+          { title: 'Primitives', sub: '1er trimestre – Novembre (7h)' },
+          { title: 'Fonctions logarithmes', sub: '1er trimestre – Novembre (11h)' },
+          { title: 'Coniques', sub: '1er trimestre – Novembre (9h)' },
+          { title: 'Fonctions exponentielles et fonctions puissances', sub: '2ème trimestre – Décembre (15h)' },
+          { title: 'Nombres complexes', sub: '2ème trimestre – Décembre/Janvier (11h)' },
+          { title: 'PPCM et PGCD de deux entiers relatifs', sub: '2ème trimestre – Janvier (11h)' },
+          { title: 'Suites numériques', sub: '2ème trimestre – Janvier (13h)' },
+          { title: 'Isométries du plan', sub: '2ème trimestre – Février (15h)' },
+          { title: 'Calcul intégral', sub: '3ème trimestre – Février/Mars (15h)' },
+          { title: 'Similitudes directes du plan', sub: '3ème trimestre – Mars (13h)' },
+          { title: 'Probabilité conditionnelle et variable aléatoire', sub: '3ème trimestre – Mars/Avril (13h)' },
+          { title: 'Nombres complexes et géométrie du plan', sub: '3ème trimestre – Avril (9h)' },
+          { title: 'Statistique à deux variables', sub: '3ème trimestre – Avril (7h)' },
+          { title: 'Équations différentielles', sub: '3ème trimestre – Avril/Mai (5h)' },
+        ]
+      },
+      { icon: '⚡', name: 'Physique', color: '#F59E0B', bg: 'rgba(245,158,11,0.15)',
+        lecons: [
+          { title: 'Cinématique du point', sub: 'Mécanique • Septembre (10h)' },
+          { title: 'Mouvement du centre d\'inertie d\'un solide', sub: 'Mécanique • Octobre (6h)' },
+          { title: 'Interaction gravitationnelle', sub: 'Mécanique • Octobre (5h)' },
+          { title: 'Mouvements dans les champs (g⃗ et E⃗)', sub: 'Mécanique • Octobre (8h)' },
+          { title: 'Oscillations mécaniques libres', sub: 'Électromagnétisme • Novembre (6h)' },
+          { title: 'Champ magnétique', sub: 'Électromagnétisme • Novembre (4h)' },
+          { title: 'Mouvement d\'une particule chargée dans un champ magnétique uniforme', sub: 'Électromagnétisme • Décembre (6h)' },
+          { title: 'Loi de Laplace', sub: 'Électromagnétisme • Décembre (4h)' },
+          { title: 'Induction électromagnétique', sub: 'Électromagnétisme • Décembre/Janvier (10h)' },
+          { title: 'Auto-induction', sub: 'Électromagnétisme • Janvier (4h)' },
+          { title: 'Montages dérivateur et intégrateur', sub: 'Électricité • Février (2h)' },
+          { title: 'Oscillations électriques libres dans un circuit LC', sub: 'Électricité • Février (6h)' },
+          { title: 'Circuit RLC en régime sinusoïdal forcé', sub: 'Électricité • Février/Mars (4h)' },
+          { title: 'Résonance d\'intensité d\'un circuit RLC série', sub: 'Électricité • Mars (4h)' },
+          { title: 'Puissance en courant alternatif', sub: 'Électricité • Mars (2h)' },
+          { title: 'Modèle ondulatoire de la lumière', sub: 'Physique Nucléaire • Mars (4h)' },
+          { title: 'Modèle corpusculaire de la lumière', sub: 'Physique Nucléaire • Avril (3h)' },
+          { title: 'Réactions nucléaires spontanées', sub: 'Physique Nucléaire • Avril (6h)' },
+          { title: 'Réactions nucléaires provoquées', sub: 'Physique Nucléaire • Avril/Mai (4h)' },
+        ]
+      },
+      { icon: '⚗️', name: 'Chimie', color: '#10B981', bg: 'rgba(16,185,129,0.15)',
+        lecons: [
+          { title: 'Les alcools', sub: 'Chimie Organique • Septembre/Octobre (8h)' },
+          { title: 'Composés carbonylés : aldéhydes et cétones', sub: 'Chimie Organique • Octobre (3h)' },
+          { title: 'Acides carboxyliques et dérivés', sub: 'Chimie Organique • Novembre (4h)' },
+          { title: 'Fabrication d\'un savon', sub: 'Chimie Organique • Novembre (2h)' },
+          { title: 'Solutions aqueuses – Notion de pH', sub: 'Chimie Générale • Décembre (4h)' },
+          { title: 'Acide fort – Base forte', sub: 'Chimie Générale • Décembre/Janvier (6h)' },
+          { title: 'Acide faible – Base faible', sub: 'Chimie Générale • Janvier (4h)' },
+          { title: 'Couples acide/base – Classification', sub: 'Chimie Générale • Février (3h)' },
+          { title: 'Réactions acido-basiques – Solutions tampons', sub: 'Chimie Générale • Mars/Avril (10h)' },
+          { title: 'Dosage acido-basique', sub: 'Chimie Générale • Avril/Mai (2h)' },
+        ]
+      },
+      { icon: '📖', name: 'Français', color: '#EC4899', bg: 'rgba(236,72,153,0.15)',
+        lecons: [
+          { title: 'La dissertation littéraire : analyser le sujet et rechercher les idées', sub: 'Expression écrite – 1er trimestre' },
+          { title: 'La dissertation littéraire : élaborer un plan et rédiger le développement', sub: 'Expression écrite – 1er trimestre' },
+          { title: 'La dissertation littéraire : rédiger une introduction et une conclusion', sub: 'Expression écrite – 1er trimestre' },
+          { title: 'La dissertation littéraire : rédaction partielle et complète', sub: 'Expression écrite – 1er trimestre' },
+          { title: 'Le commentaire composé : introduction + centre d\'intérêt + conclusion', sub: 'Expression écrite – 2ème trimestre' },
+          { title: 'Le commentaire composé : rédaction complète', sub: 'Expression écrite – 2ème trimestre' },
+          { title: 'Le résumé du texte argumentatif : répondre aux questions', sub: 'Expression écrite – 2ème trimestre' },
+          { title: 'Le résumé du texte argumentatif : identifier et reformuler les idées essentielles', sub: 'Expression écrite – 2ème trimestre' },
+          { title: 'Le résumé du texte argumentatif : rédiger le résumé', sub: 'Expression écrite – 3ème trimestre' },
+          { title: 'La production écrite : analyser le sujet et organiser l\'argumentation', sub: 'Expression écrite – 3ème trimestre' },
+          { title: 'La production écrite : rédiger un texte argumentatif', sub: 'Expression écrite – 3ème trimestre' },
+          { title: 'Savoir-faire : Préparation à l\'oral du BAC', sub: 'Savoir-faire – Tout au long de l\'année' },
+          { title: 'Leçon 1 – Œuvre narrative : Connaître le genre romanesque (S.1)', sub: 'Étude de l\'œuvre intégrale – 1er trimestre' },
+          { title: 'Leçon 2 – Groupement de textes théâtraux : Connaître les genres dramatiques (S.1)', sub: 'Étude de l\'œuvre intégrale – 2ème trimestre' },
+        ]
+      },
+      { icon: '🇩🇪', name: 'Allemand', color: '#6B7280', bg: 'rgba(107,114,128,0.15)',
+        lecons: [
+          { title: 'Thème 1 – Einstiegsseite (mise en route)', sub: 'Terminale – 1er trimestre • Septembre/Octobre' },
+          { title: 'Thème 1 – Leçon 1', sub: 'Terminale – 1er trimestre • Octobre/Novembre (12 séances)' },
+          { title: 'Thème 1 – Leçon 2', sub: 'Terminale – 1er trimestre • Novembre (12 séances)' },
+          { title: 'Thème 2 – Einstiegsseite (mise en route)', sub: 'Terminale – 2ème trimestre • Novembre/Décembre' },
+          { title: 'Thème 2 – Leçon 1', sub: 'Terminale – 2ème trimestre • Décembre/Janvier (12 séances)' },
+          { title: 'Thème 2 – Leçon 2', sub: 'Terminale – 2ème trimestre • Janvier (12 séances)' },
+          { title: 'Thème 3 – Einstiegsseite (mise en route)', sub: 'Terminale – 3ème trimestre • Février/Mars' },
+          { title: 'Thème 3 – Leçon 1', sub: 'Terminale – 3ème trimestre • Mars (12 séances)' },
+          { title: 'Thème 3 – Leçon 2', sub: 'Terminale – 3ème trimestre • Avril (12 séances)' },
+        ]
+      },
+      { icon: '🇪🇸', name: 'Espagnol', color: '#EF4444', bg: 'rgba(239,68,68,0.15)',
+        lecons: [
+          { title: 'La connaissance des réalités du monde hispanique et de l\'Afrique', sub: 'Leçon 1 – Présenter l\'Espagne, l\'Amérique hispanique, la Guinée Équatoriale • Octobre' },
+          { title: 'L\'échange d\'information', sub: 'Leçon 2 – Décrire, raconter un fait, résumer • Novembre' },
+          { title: 'L\'expression de l\'opinion', sub: 'Leçon 3 – Exprimer/approuver/désapprouver une opinion, probabilité, obligation • Décembre/Janvier' },
+          { title: 'L\'expression des états d\'âme', sub: 'Leçon 4 – Crainte, colère, indignation, surprise, étonnement • Février' },
+          { title: 'L\'expression de l\'ordre', sub: 'Leçon 5 – Donner un ordre, conseiller, déconseiller, interdire • Mars' },
+          { title: 'La technique d\'expression orale ou écrite', sub: 'Leçon 6 – Rédaction, exposé, commenter un texte/image • Avril' },
+        ]
+      },
+      { icon: '🌐', name: 'Anglais', color: '#06B6D4', bg: 'rgba(6,182,212,0.15)',
+        lecons: [
+          { title: 'Unit 1 – Lifestyles: Moving with the Times', sub: 'Speaking, Reading, Listening, Writing • Septembre' },
+          { title: 'Unit 2 – Freedom and Civil Rights', sub: 'Speaking, Reading, Listening, Writing • Octobre/Novembre' },
+          { title: 'Unit 3 – Development Issues', sub: 'Speaking, Reading, Listening, Writing • Novembre/Décembre' },
+          { title: 'Unit 4 – What the Future Holds', sub: 'Speaking, Reading, Listening, Writing • Janvier/Février' },
+          { title: 'Unit 5 – Managing Resources', sub: 'Speaking, Reading, Listening, Writing • Mars' },
+          { title: 'Unit 6 – Contemporary Africa', sub: 'Speaking, Reading, Listening, Writing • Avril/Mai' },
+        ]
+      },
+      { icon: '💭', name: 'Philosophie', color: '#8B5CF6', bg: 'rgba(139,92,246,0.15)',
+        lecons: [
+          { title: 'La dissertation philosophique', sub: 'Compétence I – Dissertation et commentaire • Septembre/Octobre' },
+          { title: 'Le commentaire de texte philosophique', sub: 'Compétence I – Dissertation et commentaire • Octobre' },
+          { title: 'La connaissance de l\'homme', sub: 'Compétence II – L\'homme dans la société • Octobre/Novembre' },
+          { title: 'La vie en société', sub: 'Compétence II – L\'homme dans la société • Novembre' },
+          { title: 'Dieu et la religion', sub: 'Compétence II – L\'homme dans la société • Novembre/Décembre' },
+          { title: 'La valeur de la philosophie', sub: 'Compétence III – Les conditions du progrès • Décembre/Janvier' },
+          { title: 'Progrès et bonheur', sub: 'Compétence III – Les conditions du progrès • Janvier/Février' },
+          { title: 'Progrès et bonheur – Étude d\'œuvres', sub: 'Compétence III – Les conditions du progrès • Février' },
+          { title: 'Langage et vérité – Étude d\'œuvres', sub: 'Compétence IV – La connaissance • Mars' },
+          { title: 'La connaissance scientifique – Étude d\'œuvres', sub: 'Compétence IV – La connaissance • Avril/Mai' },
+        ]
+      },
+      { icon: '🌍', name: 'Histoire-Géo', color: '#10B981', bg: 'rgba(16,185,129,0.15)',
+        lecons: [
+          { title: 'Histoire – L\'ONU', sub: 'Thème 1 : Les relations internationales de 1945 à nos jours • Septembre' },
+          { title: 'Histoire – L\'ère de la bipolarisation de 1947 à 1991', sub: 'Thème 1 : Les relations internationales • Octobre/Novembre' },
+          { title: 'Histoire – De la fin de la guerre froide vers un monde multipolaire', sub: 'Thème 1 : Les relations internationales • Novembre/Décembre' },
+          { title: 'Histoire – La montée des nationalismes en Afrique', sub: 'Thème 2 : Décolonisation • Janvier' },
+          { title: 'Histoire – L\'accession de la Côte d\'Ivoire à l\'indépendance', sub: 'Thème 2 : Décolonisation • Janvier/Février' },
+          { title: 'Histoire – L\'accession de l\'Algérie à l\'indépendance', sub: 'Thème 2 : Décolonisation • Février' },
+          { title: 'Histoire – L\'Union Africaine', sub: 'Thème 2 : Organisation de l\'Afrique • Février/Mars' },
+          { title: 'Histoire – Croyances et valeurs dominantes dans le monde occidental', sub: 'Thème 3 : Croyances et valeurs • Avril' },
+          { title: 'Histoire – Les mutations contemporaines de la civilisation négro-africaine', sub: 'Thème 3 : Croyances et valeurs • Avril/Mai' },
+          { title: 'Géographie – Les fondements du développement économique de la Côte d\'Ivoire', sub: 'Thème 1 : La Côte d\'Ivoire – Étude économique • Septembre' },
+          { title: 'Géographie – Les secteurs d\'activités économiques de la Côte d\'Ivoire', sub: 'Thème 1 : La Côte d\'Ivoire – Étude économique • Novembre' },
+          { title: 'Géographie – Les problèmes de développement économique de la Côte d\'Ivoire', sub: 'Thème 1 : La Côte d\'Ivoire – Étude économique • Décembre/Janvier' },
+          { title: 'Géographie – Les fondements du développement économique de la Corée du Sud', sub: 'Thème 2 : La Corée du Sud – Pays émergent • Février' },
+          { title: 'Géographie – La Corée du Sud : une puissance économique émergente', sub: 'Thème 2 : La Corée du Sud – Pays émergent • Février/Mars' },
+          { title: 'Géographie – La CEDEAO : une organisation régionale à caractère économique', sub: 'Thème 3 : Regroupement et coopération économique • Avril' },
+          { title: 'Géographie – Les relations UE/ACP : une forme de coopération Nord-Sud', sub: 'Thème 3 : Regroupement et coopération économique • Avril/Mai' },
+        ]
+      },
+      { icon: '🎨', name: 'Arts Plastiques', color: '#F77F00', bg: 'rgba(247,127,0,0.15)',
+        lecons: [
+          { title: 'Processus de réalisation d\'une image photographique', sub: 'Thème 1 – Communication par le langage plastique • Septembre' },
+          { title: 'Présentation de produits manufacturés', sub: 'Thème 1 – Communication par le langage plastique • Octobre' },
+          { title: 'Sensibilisation sur les dangers liés au VIH', sub: 'Thème 1 – Communication par le langage plastique • Novembre' },
+          { title: 'Impact de l\'urbanisation sur un cadre de vie', sub: 'Thème 2 – Actions sur l\'environnement immédiat • Novembre' },
+          { title: 'Bienfaits de l\'architecture paysagère', sub: 'Thème 2 – Actions sur l\'environnement immédiat • Décembre' },
+          { title: 'Préservation des valeurs socioculturelles de la statuaire', sub: 'Thème 3 – Promotion des valeurs socioculturelles • Janvier' },
+          { title: 'Apports de la création plastique africaine au Cubisme', sub: 'Thème 3 – Promotion des valeurs socioculturelles • Février' },
+          { title: 'Création plastique contemporaine d\'influence primitive', sub: 'Thème 3 – Promotion des valeurs socioculturelles • Mars' },
+          { title: 'Caractéristiques de la production plastique des aires culturelles de Côte d\'Ivoire', sub: 'Thème 3 – Promotion des valeurs socioculturelles • Mars/Avril' },
+          { title: 'Foisonnement de mouvements artistiques au 20ème siècle', sub: 'Thème 3 – Promotion des valeurs socioculturelles • Avril/Mai' },
+        ]
+      },
+      { icon: '🎵', name: 'Musique', color: '#A855F7', bg: 'rgba(168,85,247,0.15)',
+        lecons: [
+          { title: 'La tonalité de La mineur', sub: 'Compétence I – Solfège • Octobre' },
+          { title: 'La mesure 6/8 : étude rythmique et mélodique', sub: 'Compétence I – Solfège • Octobre' },
+          { title: 'La drummologie', sub: 'Compétence II – Audition/Culture musicale • Octobre' },
+          { title: 'Les natures d\'impôt', sub: 'Compétence III – Éducation civique par la musique • Octobre' },
+          { title: 'Croche – deux doubles croches : étude rythmique et mélodique', sub: 'Compétence I – Solfège • Novembre' },
+          { title: 'La musique de la Chine et du Japon', sub: 'Compétence II – Audition/Culture musicale • Janvier' },
+          { title: 'L\'impact du VIH/SIDA sur la population', sub: 'Compétence III – Éducation civique par la musique • Janvier' },
+          { title: 'La tonalité de Ré mineur', sub: 'Compétence I – Solfège • Janvier' },
+          { title: 'Le lied et le poème symphonique', sub: 'Compétence II – Audition/Culture musicale • Février' },
+          { title: 'Deux doubles croches – croche : étude rythmique et mélodique', sub: 'Compétence I – Solfège • Février' },
+          { title: 'Frantz Schubert et L. Hector Berlioz', sub: 'Compétence II – Audition/Culture musicale • Mars' },
+          { title: 'La tonalité de Mi mineur', sub: 'Compétence I – Solfège • Avril' },
+          { title: 'Chant au choix de l\'enseignant', sub: 'Compétence III – Éducation civique par la musique • Avril' },
+          { title: 'La musique afro-américaine : le jazz', sub: 'Compétence II – Audition/Culture musicale • Avril' },
+          { title: 'La musique électronique', sub: 'Compétence II – Audition/Culture musicale • Avril/Mai' },
+        ]
+      },
+    ],
+    planning: [
+      { day: 'Lundi', slots: [{time:'7h-9h',sub:'Mathématiques',color:'#3B82F6'},{time:'9h-11h',sub:'Physique',color:'#F59E0B'},{time:'14h-16h',sub:'Chimie',color:'#10B981'}] },
+      { day: 'Mardi', slots: [{time:'7h-9h',sub:'Mathématiques',color:'#3B82F6'},{time:'9h-11h',sub:'Anglais',color:'#06B6D4'},{time:'14h-16h',sub:'Philosophie',color:'#8B5CF6'}] },
+      { day: 'Mercredi', slots: [{time:'7h-9h',sub:'Physique',color:'#F59E0B'},{time:'9h-11h',sub:'Chimie',color:'#10B981'}] },
+      { day: 'Jeudi', slots: [{time:'7h-9h',sub:'Mathématiques',color:'#3B82F6'},{time:'9h-11h',sub:'Physique',color:'#F59E0B'},{time:'14h-16h',sub:'Philosophie',color:'#8B5CF6'}] },
+      { day: 'Vendredi', slots: [{time:'7h-9h',sub:'Révisions',color:'#F77F00'},{time:'9h-11h',sub:'Mathématiques',color:'#3B82F6'}] },
+    ]
+  },
+  'Tle D': {
+    matieres: [
+      { icon: '🔢', name: 'Mathématiques', color: '#3B82F6', bg: 'rgba(59,130,246,0.15)',
+        lecons: [
+          { title: 'Limites et continuité', sub: '1er trimestre – Septembre (15h)' },
+          { title: 'Probabilité conditionnelle et variable aléatoire', sub: '1er trimestre – Octobre (17h)' },
+          { title: 'Dérivabilité et étude de fonctions', sub: '1er trimestre – Octobre/Novembre (13h)' },
+          { title: 'Primitives', sub: '1er trimestre – Novembre (7h)' },
+          { title: 'Fonctions logarithmes', sub: '1er trimestre – Novembre/Décembre (15h)' },
+          { title: 'Fonctions exponentielles et fonctions puissances', sub: '2ème trimestre – Décembre/Janvier (19h)' },
+          { title: 'Nombres complexes', sub: '2ème trimestre – Janvier/Février (17h)' },
+          { title: 'Calcul intégral', sub: '2ème trimestre – Février (13h)' },
+          { title: 'Nombres complexes et géométrie du plan', sub: '3ème trimestre – Mars (13h)' },
+          { title: 'Suites numériques', sub: '3ème trimestre – Mars/Avril (13h)' },
+          { title: 'Statistique à deux variables', sub: '3ème trimestre – Avril (9h)' },
+          { title: 'Équations différentielles', sub: '3ème trimestre – Avril/Mai (5h)' },
+        ]
+      },
+      { icon: '🔬', name: 'SVT', color: '#8B5CF6', bg: 'rgba(139,92,246,0.15)',
+        lecons: [
+          { title: 'Le réflexe conditionnel', sub: 'Compétence 2 – Communication dans l\'organisme • Septembre' },
+          { title: 'Le fonctionnement du tissu nerveux', sub: 'Compétence 2 – Communication dans l\'organisme • Septembre/Octobre' },
+          { title: 'Le fonctionnement du muscle strié squelettique', sub: 'Compétence 2 – Communication dans l\'organisme • Octobre' },
+          { title: 'Le fonctionnement du cœur', sub: 'Compétence 2 – Communication dans l\'organisme • Octobre' },
+          { title: 'Le devenir des cellules sexuelles chez les mammifères', sub: 'Compétence 3 – Thème 1 : Reproduction chez les mammifères et spermaphytes • Novembre' },
+          { title: 'Le fonctionnement des organes sexuels chez l\'Homme', sub: 'Compétence 3 – Thème 1 : Reproduction • Novembre' },
+          { title: 'La reproduction chez les spermaphytes', sub: 'Compétence 3 – Thème 1 : Reproduction • Décembre' },
+          { title: 'La transmission d\'un caractère héréditaire chez l\'Homme', sub: 'Compétence 3 – Thème 2 : Transmission des caractères héréditaires • Janvier' },
+          { title: 'La transmission de deux caractères héréditaires chez les êtres vivants', sub: 'Compétence 3 – Thème 2 : Transmission des caractères héréditaires • Janvier' },
+          { title: 'Le maintien de la constance du milieu intérieur', sub: 'Compétence 4 – Thème 1 : Le milieu intérieur • Février' },
+          { title: 'Le système de défense de l\'organisme', sub: 'Compétence 4 – Thème 2 : Défense de l\'organisme • Mars' },
+          { title: 'L\'infection de l\'organisme par le VIH', sub: 'Compétence 4 – Thème 2 : Défense de l\'organisme • Mars' },
+          { title: 'La mise en place des gisements miniers en Côte d\'Ivoire', sub: 'Compétence 1 – Thème 1 : Ressources minières • Avril' },
+          { title: 'L\'exploitation des gisements miniers en Côte d\'Ivoire', sub: 'Compétence 1 – Thème 1 : Ressources minières • Avril' },
+          { title: 'L\'amélioration et la protection des sols', sub: 'Compétence 1 – Thème 2 : Gestion des sols • Avril/Mai' },
+        ]
+      },
+      { icon: '⚗️', name: 'Physique-Chimie', color: '#F59E0B', bg: 'rgba(245,158,11,0.15)',
+        lecons: [
+          { title: 'Cinématique du point', sub: 'Physique – Mécanique • Septembre (10h)' },
+          { title: 'Mouvement du centre d\'inertie d\'un solide', sub: 'Physique – Mécanique • Octobre (6h)' },
+          { title: 'Mouvements dans les champs (g⃗ et E⃗) uniformes', sub: 'Physique – Mécanique • Octobre/Novembre (7h)' },
+          { title: 'Oscillations mécaniques libres', sub: 'Physique – Mécanique • Novembre (6h)' },
+          { title: 'Champ magnétique', sub: 'Physique – Électromagnétisme • Décembre (4h)' },
+          { title: 'Mouvement d\'une particule chargée dans un champ magnétique uniforme', sub: 'Physique – Électromagnétisme • Décembre (6h)' },
+          { title: 'Loi de Laplace', sub: 'Physique – Électromagnétisme • Janvier (4h)' },
+          { title: 'Auto-induction', sub: 'Physique – Électromagnétisme • Janvier (4h)' },
+          { title: 'Montages dérivateur et intégrateur', sub: 'Physique – Électricité • Février (2h)' },
+          { title: 'Oscillations électriques libres dans un circuit LC', sub: 'Physique – Électricité • Février (6h)' },
+          { title: 'Circuit RLC en régime sinusoïdal forcé', sub: 'Physique – Électricité • Mars (4h)' },
+          { title: 'Résonance d\'intensité d\'un circuit RLC série', sub: 'Physique – Électricité • Mars (4h)' },
+          { title: 'Puissance en courant alternatif', sub: 'Physique – Électricité • Mars (2h)' },
+          { title: 'Réactions nucléaires spontanées', sub: 'Physique – Réactions Nucléaires • Avril (6h)' },
+          { title: 'Réactions nucléaires provoquées', sub: 'Physique – Réactions Nucléaires • Avril (4h)' },
+          { title: 'Les alcools', sub: 'Chimie Organique • Septembre/Octobre (8h)' },
+          { title: 'Composés carbonylés : aldéhydes et cétones', sub: 'Chimie Organique • Octobre (3h)' },
+          { title: 'Les amines', sub: 'Chimie Organique • Octobre (2h)' },
+          { title: 'Acides carboxyliques et dérivés', sub: 'Chimie Organique • Octobre/Novembre (4h)' },
+          { title: 'Fabrication d\'un savon', sub: 'Chimie Organique • Novembre (2h)' },
+          { title: 'Les acides α-aminés', sub: 'Chimie Organique • Novembre (2h)' },
+          { title: 'Solutions aqueuses – Notion de pH', sub: 'Chimie Générale • Décembre (4h)' },
+          { title: 'Acide fort – Base forte', sub: 'Chimie Générale • Décembre/Janvier (4h)' },
+          { title: 'Acide faible – Base faible', sub: 'Chimie Générale • Janvier (4h)' },
+          { title: 'Couples acide/base – Classification', sub: 'Chimie Générale • Février/Mars (5h)' },
+          { title: 'Réactions acido-basiques – Solutions tampons', sub: 'Chimie Générale • Mars/Avril (10h)' },
+          { title: 'Dosage acido-basique', sub: 'Chimie Générale • Avril/Mai (2h)' },
+        ]
+      },
+      { icon: '💭', name: 'Philosophie', color: '#EC4899', bg: 'rgba(236,72,153,0.15)',
+        lecons: [
+          { title: 'La dissertation philosophique', sub: 'Compétence I – Dissertation et commentaire • Septembre/Octobre' },
+          { title: 'Le commentaire de texte philosophique', sub: 'Compétence I – Dissertation et commentaire • Octobre' },
+          { title: 'La connaissance de l\'homme', sub: 'Compétence II – L\'homme dans la société • Octobre/Novembre' },
+          { title: 'La vie en société', sub: 'Compétence II – L\'homme dans la société • Novembre' },
+          { title: 'Dieu et la religion', sub: 'Compétence II – L\'homme dans la société • Novembre/Décembre' },
+          { title: 'La valeur de la philosophie', sub: 'Compétence III – Les conditions du progrès • Décembre/Janvier' },
+          { title: 'Progrès et bonheur', sub: 'Compétence III – Les conditions du progrès • Janvier/Février' },
+          { title: 'Progrès et bonheur – Étude d\'œuvres', sub: 'Compétence III – Les conditions du progrès • Février' },
+          { title: 'Langage et vérité – Étude d\'œuvres', sub: 'Compétence IV – La connaissance • Mars' },
+          { title: 'La connaissance scientifique – Étude d\'œuvres', sub: 'Compétence IV – La connaissance • Avril/Mai' },
+        ]
+      },
+      { icon: '🇩🇪', name: 'Allemand', color: '#6B7280', bg: 'rgba(107,114,128,0.15)',
+        lecons: [
+          { title: 'Thème 1 – Einstiegsseite (mise en route)', sub: 'Terminale – 1er trimestre • Septembre/Octobre' },
+          { title: 'Thème 1 – Leçon 1', sub: 'Terminale – 1er trimestre • Octobre/Novembre (12 séances)' },
+          { title: 'Thème 1 – Leçon 2', sub: 'Terminale – 1er trimestre • Novembre (12 séances)' },
+          { title: 'Thème 2 – Einstiegsseite (mise en route)', sub: 'Terminale – 2ème trimestre • Novembre/Décembre' },
+          { title: 'Thème 2 – Leçon 1', sub: 'Terminale – 2ème trimestre • Décembre/Janvier (12 séances)' },
+          { title: 'Thème 2 – Leçon 2', sub: 'Terminale – 2ème trimestre • Janvier (12 séances)' },
+          { title: 'Thème 3 – Einstiegsseite (mise en route)', sub: 'Terminale – 3ème trimestre • Février/Mars' },
+          { title: 'Thème 3 – Leçon 1', sub: 'Terminale – 3ème trimestre • Mars (12 séances)' },
+          { title: 'Thème 3 – Leçon 2', sub: 'Terminale – 3ème trimestre • Avril (12 séances)' },
+        ]
+      },
+      { icon: '🇪🇸', name: 'Espagnol', color: '#EF4444', bg: 'rgba(239,68,68,0.15)',
+        lecons: [
+          { title: 'La connaissance des réalités du monde hispanique et de l\'Afrique', sub: 'Leçon 1 – Présenter l\'Espagne, l\'Amérique hispanique, la Guinée Équatoriale • Octobre' },
+          { title: 'L\'échange d\'information', sub: 'Leçon 2 – Décrire, raconter un fait, résumer • Novembre' },
+          { title: 'L\'expression de l\'opinion', sub: 'Leçon 3 – Exprimer/approuver/désapprouver une opinion, probabilité, obligation • Décembre/Janvier' },
+          { title: 'L\'expression des états d\'âme', sub: 'Leçon 4 – Crainte, colère, indignation, surprise, étonnement • Février' },
+          { title: 'L\'expression de l\'ordre', sub: 'Leçon 5 – Donner un ordre, conseiller, déconseiller, interdire • Mars' },
+          { title: 'La technique d\'expression orale ou écrite', sub: 'Leçon 6 – Rédaction, exposé, commenter un texte/image • Avril' },
+        ]
+      },
+      { icon: '🌐', name: 'Anglais', color: '#06B6D4', bg: 'rgba(6,182,212,0.15)',
+        lecons: [
+          { title: 'Unit 1 – Lifestyles: Moving with the Times', sub: 'Speaking, Reading, Listening, Writing • Septembre' },
+          { title: 'Unit 2 – Freedom and Civil Rights', sub: 'Speaking, Reading, Listening, Writing • Octobre/Novembre' },
+          { title: 'Unit 3 – Development Issues', sub: 'Speaking, Reading, Listening, Writing • Novembre/Décembre' },
+          { title: 'Unit 4 – What the Future Holds', sub: 'Speaking, Reading, Listening, Writing • Janvier/Février' },
+          { title: 'Unit 5 – Managing Resources', sub: 'Speaking, Reading, Listening, Writing • Mars' },
+          { title: 'Unit 6 – Contemporary Africa', sub: 'Speaking, Reading, Listening, Writing • Avril/Mai' },
+        ]
+      },
+      { icon: '🌍', name: 'Histoire-Géo', color: '#10B981', bg: 'rgba(16,185,129,0.15)',
+        lecons: [
+          { title: 'Histoire – L\'ONU', sub: 'Thème 1 : Les relations internationales de 1945 à nos jours • Septembre' },
+          { title: 'Histoire – L\'ère de la bipolarisation de 1947 à 1991', sub: 'Thème 1 : Les relations internationales • Octobre/Novembre' },
+          { title: 'Histoire – De la fin de la guerre froide vers un monde multipolaire', sub: 'Thème 1 : Les relations internationales • Novembre/Décembre' },
+          { title: 'Histoire – La montée des nationalismes en Afrique', sub: 'Thème 2 : Décolonisation • Janvier' },
+          { title: 'Histoire – L\'accession de la Côte d\'Ivoire à l\'indépendance', sub: 'Thème 2 : Décolonisation • Janvier/Février' },
+          { title: 'Histoire – L\'accession de l\'Algérie à l\'indépendance', sub: 'Thème 2 : Décolonisation • Février' },
+          { title: 'Histoire – L\'Union Africaine', sub: 'Thème 2 : Organisation de l\'Afrique • Février/Mars' },
+          { title: 'Histoire – Croyances et valeurs dominantes dans le monde occidental', sub: 'Thème 3 : Croyances et valeurs • Avril' },
+          { title: 'Histoire – Les mutations contemporaines de la civilisation négro-africaine', sub: 'Thème 3 : Croyances et valeurs • Avril/Mai' },
+          { title: 'Géographie – Les fondements du développement économique de la Côte d\'Ivoire', sub: 'Thème 1 : La Côte d\'Ivoire – Étude économique • Septembre' },
+          { title: 'Géographie – Les secteurs d\'activités économiques de la Côte d\'Ivoire', sub: 'Thème 1 : La Côte d\'Ivoire – Étude économique • Novembre' },
+          { title: 'Géographie – Les problèmes de développement économique de la Côte d\'Ivoire', sub: 'Thème 1 : La Côte d\'Ivoire – Étude économique • Décembre/Janvier' },
+          { title: 'Géographie – Les fondements du développement économique de la Corée du Sud', sub: 'Thème 2 : La Corée du Sud – Pays émergent • Février' },
+          { title: 'Géographie – La Corée du Sud : une puissance économique émergente', sub: 'Thème 2 : La Corée du Sud – Pays émergent • Février/Mars' },
+          { title: 'Géographie – La CEDEAO : une organisation régionale à caractère économique', sub: 'Thème 3 : Regroupement et coopération économique • Avril' },
+          { title: 'Géographie – Les relations UE/ACP : une forme de coopération Nord-Sud', sub: 'Thème 3 : Regroupement et coopération économique • Avril/Mai' },
+        ]
+      },
+      { icon: '📖', name: 'Français', color: '#EC4899', bg: 'rgba(236,72,153,0.15)',
+        lecons: [
+          { title: 'La dissertation littéraire : analyser le sujet et rechercher les idées', sub: 'Expression écrite – 1er trimestre' },
+          { title: 'La dissertation littéraire : élaborer un plan et rédiger le développement', sub: 'Expression écrite – 1er trimestre' },
+          { title: 'La dissertation littéraire : rédiger une introduction et une conclusion', sub: 'Expression écrite – 1er trimestre' },
+          { title: 'La dissertation littéraire : rédaction partielle et complète', sub: 'Expression écrite – 1er trimestre' },
+          { title: 'Le commentaire composé : introduction + centre d\'intérêt + conclusion', sub: 'Expression écrite – 2ème trimestre' },
+          { title: 'Le commentaire composé : rédaction complète', sub: 'Expression écrite – 2ème trimestre' },
+          { title: 'Le résumé du texte argumentatif : répondre aux questions', sub: 'Expression écrite – 2ème trimestre' },
+          { title: 'Le résumé du texte argumentatif : identifier et reformuler les idées essentielles', sub: 'Expression écrite – 2ème trimestre' },
+          { title: 'Le résumé du texte argumentatif : rédiger le résumé', sub: 'Expression écrite – 3ème trimestre' },
+          { title: 'La production écrite : analyser le sujet et organiser l\'argumentation', sub: 'Expression écrite – 3ème trimestre' },
+          { title: 'La production écrite : rédiger un texte argumentatif', sub: 'Expression écrite – 3ème trimestre' },
+          { title: 'Savoir-faire : Préparation à l\'oral du BAC', sub: 'Savoir-faire – Tout au long de l\'année' },
+          { title: 'Leçon 1 – Œuvre narrative : Connaître le genre romanesque (S.1)', sub: 'Étude de l\'œuvre intégrale – 1er trimestre' },
+          { title: 'Leçon 2 – Groupement de textes théâtraux : Connaître les genres dramatiques (S.1)', sub: 'Étude de l\'œuvre intégrale – 2ème trimestre' },
+        ]
+      },
+      { icon: '🎨', name: 'Arts Plastiques', color: '#F77F00', bg: 'rgba(247,127,0,0.15)',
+        lecons: [
+          { title: 'Processus de réalisation d\'une image photographique', sub: 'Thème 1 – Communication par le langage plastique • Septembre' },
+          { title: 'Présentation de produits manufacturés', sub: 'Thème 1 – Communication par le langage plastique • Octobre' },
+          { title: 'Sensibilisation sur les dangers liés au VIH', sub: 'Thème 1 – Communication par le langage plastique • Novembre' },
+          { title: 'Impact de l\'urbanisation sur un cadre de vie', sub: 'Thème 2 – Actions sur l\'environnement immédiat • Novembre' },
+          { title: 'Bienfaits de l\'architecture paysagère', sub: 'Thème 2 – Actions sur l\'environnement immédiat • Décembre' },
+          { title: 'Préservation des valeurs socioculturelles de la statuaire', sub: 'Thème 3 – Promotion des valeurs socioculturelles • Janvier' },
+          { title: 'Apports de la création plastique africaine au Cubisme', sub: 'Thème 3 – Promotion des valeurs socioculturelles • Février' },
+          { title: 'Création plastique contemporaine d\'influence primitive', sub: 'Thème 3 – Promotion des valeurs socioculturelles • Mars' },
+          { title: 'Caractéristiques de la production plastique des aires culturelles de Côte d\'Ivoire', sub: 'Thème 3 – Promotion des valeurs socioculturelles • Mars/Avril' },
+          { title: 'Foisonnement de mouvements artistiques au 20ème siècle', sub: 'Thème 3 – Promotion des valeurs socioculturelles • Avril/Mai' },
+        ]
+      },
+      { icon: '🎵', name: 'Musique', color: '#A855F7', bg: 'rgba(168,85,247,0.15)',
+        lecons: [
+          { title: 'La tonalité de La mineur', sub: 'Compétence I – Solfège • Octobre' },
+          { title: 'La mesure 6/8 : étude rythmique et mélodique', sub: 'Compétence I – Solfège • Octobre' },
+          { title: 'La drummologie', sub: 'Compétence II – Audition/Culture musicale • Octobre' },
+          { title: 'Les natures d\'impôt', sub: 'Compétence III – Éducation civique par la musique • Octobre' },
+          { title: 'Croche – deux doubles croches : étude rythmique et mélodique', sub: 'Compétence I – Solfège • Novembre' },
+          { title: 'La musique de la Chine et du Japon', sub: 'Compétence II – Audition/Culture musicale • Janvier' },
+          { title: 'L\'impact du VIH/SIDA sur la population', sub: 'Compétence III – Éducation civique par la musique • Janvier' },
+          { title: 'La tonalité de Ré mineur', sub: 'Compétence I – Solfège • Janvier' },
+          { title: 'Le lied et le poème symphonique', sub: 'Compétence II – Audition/Culture musicale • Février' },
+          { title: 'Deux doubles croches – croche : étude rythmique et mélodique', sub: 'Compétence I – Solfège • Février' },
+          { title: 'Frantz Schubert et L. Hector Berlioz', sub: 'Compétence II – Audition/Culture musicale • Mars' },
+          { title: 'La tonalité de Mi mineur', sub: 'Compétence I – Solfège • Avril' },
+          { title: 'Chant au choix de l\'enseignant', sub: 'Compétence III – Éducation civique par la musique • Avril' },
+          { title: 'La musique afro-américaine : le jazz', sub: 'Compétence II – Audition/Culture musicale • Avril' },
+          { title: 'La musique électronique', sub: 'Compétence II – Audition/Culture musicale • Avril/Mai' },
+        ]
+      },
+    ],
+    planning: [
+      { day: 'Lundi', slots: [{time:'7h-9h',sub:'Mathématiques',color:'#3B82F6'},{time:'9h-11h',sub:'SVT',color:'#8B5CF6'},{time:'14h-16h',sub:'Physique-Chimie',color:'#F59E0B'}] },
+      { day: 'Mardi', slots: [{time:'7h-9h',sub:'SVT',color:'#8B5CF6'},{time:'9h-11h',sub:'Anglais',color:'#06B6D4'},{time:'14h-16h',sub:'Philosophie',color:'#EC4899'}] },
+      { day: 'Mercredi', slots: [{time:'7h-9h',sub:'Mathématiques',color:'#3B82F6'},{time:'9h-11h',sub:'SVT',color:'#8B5CF6'}] },
+      { day: 'Jeudi', slots: [{time:'7h-9h',sub:'Physique-Chimie',color:'#F59E0B'},{time:'9h-11h',sub:'Philosophie',color:'#EC4899'},{time:'14h-16h',sub:'Mathématiques',color:'#3B82F6'}] },
+      { day: 'Vendredi', slots: [{time:'7h-9h',sub:'Révisions',color:'#F77F00'},{time:'9h-11h',sub:'SVT',color:'#8B5CF6'}] },
+    ]
+  }
+};
+
+// === STATE ===
+let currentClasse = localStorage.getItem('classe') || null;
+let currentMatiere = null;
+let selectedPM = 'Orange Money';
+let selectedPlan = 'Mensuel • 500 FCFA';
+
+// === INIT ===
+function startApp() {
+  if (currentClasse) applyClasse(currentClasse);
+}
+document.addEventListener('DOMContentLoaded', startApp);
+
+// === NAVIGATION ===
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  const nav = document.getElementById('nav-' + name);
+  if (nav) nav.classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function goHome() { showPage('home'); }
+
+// === CLASSE ===
+function selectClasse(classe) {
+  currentClasse = classe;
+  localStorage.setItem('classe', classe);
+  applyClasse(classe);
+  showPage('matieres');
+}
+
+function applyClasse(classe) {
+  document.getElementById('classe-badge').textContent = classe;
+  document.getElementById('welcome-classe').textContent = classe;
+  const data = DATA[classe];
+  if (!data) return;
+  const total = data.matieres.reduce((a,m) => a + m.lecons.length, 0);
+  document.getElementById('stat-matieres').textContent = data.matieres.length;
+  document.getElementById('stat-lecons').textContent = total;
+  document.getElementById('matieres-title').textContent = `Matières – ${classe}`;
+  renderMatieres(data.matieres);
+  renderPlanning(data.planning);
+  highlightClasse(classe);
+}
+
+function highlightClasse(classe) {
+  document.querySelectorAll('.classe-card').forEach(c => c.classList.remove('selected'));
+  document.querySelectorAll('.classe-card').forEach(c => {
+    if (c.querySelector('.classe-name').textContent === classe) c.classList.add('selected');
+  });
+}
+
+// === MATIÈRES ===
+function renderMatieres(matieres) {
+  const list = document.getElementById('matiere-list');
+  list.innerHTML = matieres.map((m, i) => `
+    <div class="matiere-card" onclick="openMatiere(${i})">
+      <div class="matiere-icon" style="background:${m.bg}">${m.icon}</div>
+      <div class="matiere-info">
+        <div class="matiere-name">${m.name}</div>
+        <div class="matiere-count">${m.lecons.length} leçon${m.lecons.length>1?'s':''}</div>
+      </div>
+      <div class="matiere-arrow" style="color:${m.color}">›</div>
+    </div>
+  `).join('');
+}
+
+function openMatiere(i) {
+  const data = DATA[currentClasse];
+  currentMatiere = data.matieres[i];
+  document.getElementById('lecon-matiere-title').textContent = currentMatiere.icon + ' ' + currentMatiere.name;
+  document.getElementById('lecon-count').textContent = currentMatiere.lecons.length + ' leçons disponibles';
+  renderLecons(currentMatiere.lecons);
+  showPage('lecons');
+}
+
+// === LEÇONS ===
+function renderLecons(lecons) {
+  const list = document.getElementById('lesson-list');
+  list.innerHTML = lecons.map((l, i) => `
+    <div class="lesson-item" onclick="openLesson(${i})">
+      <div class="lesson-num">${i+1}</div>
+      <div class="lesson-text">
+        <div class="lesson-title-text">${l.title}</div>
+        <div class="lesson-subtitle">${l.sub}</div>
+      </div>
+      <span style="color:var(--muted);font-size:16px">🤖</span>
+    </div>
+  `).join('');
+}
+
+function openLesson(i) {
+  const lecon = currentMatiere.lecons[i];
+  document.getElementById('viewer-title').textContent = lecon.title;
+  document.getElementById('viewer-sub').textContent = currentMatiere.name + ' • ' + currentClasse;
+  document.getElementById('ai-content').innerHTML = `
+    <div class="ai-loading">
+      <span>L'IA prépare ton explication</span>
+      <div class="dots"><span></span><span></span><span></span></div>
+    </div>`;
+  document.getElementById('ask-response').innerHTML = '';
+  document.getElementById('ask-input').value = '';
+  document.getElementById('exercice-content').innerHTML = '';
+  document.getElementById('correction-content').innerHTML = '';
+  document.getElementById('correction-btn-container').style.display = 'none';
+  document.getElementById('resume-content').innerHTML = '';
+  document.getElementById('resume-btn').textContent = '📝 Générer la fiche de révision';
+  document.getElementById('resume-btn').disabled = false;
+  document.getElementById('lesson-viewer').style.display = 'block';
+  explainLesson(currentMatiere.name, lecon.title, currentClasse);
+}
+
+function closeViewer() {
+  document.getElementById('lesson-viewer').style.display = 'none';
+}
+
+// === CLAUDE API ===
+async function explainLesson(matiere, titre, classe) {
+  try {
+    const resp = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 1000,
+        system: `Tu es un professeur ivoirien expérimenté. Tu expliques les cours selon le programme officiel DPFC de Côte d'Ivoire. Adapte ton langage au niveau ${classe}. Structure tes réponses avec: une introduction simple, les points clés numérotés, et un exemple concret tiré du contexte ivoirien si possible.`,
+        messages: [{ role: "user", content: `Explique-moi la leçon "${titre}" en ${matiere} pour la classe de ${classe}.` }]
+      })
+    });
+    const data = await resp.json();
+    const text = data.content?.[0]?.text || "Désolé, une erreur s'est produite.";
+    document.getElementById('ai-content').innerHTML = `<div class="ai-text">${text.replace(/\n/g,'<br>')}</div>`;
+  } catch(e) {
+    document.getElementById('ai-content').innerHTML = `<div style="color:var(--muted)">⚠️ Connexion requise pour l'IA.</div>`;
+  }
+}
+
+// === RÉSUMÉ / FICHE DE RÉVISION ===
+async function genResume() {
+  const lecon = document.getElementById('viewer-title').textContent;
+  const btn = document.getElementById('resume-btn');
+  const el = document.getElementById('resume-content');
+  btn.disabled = true;
+  btn.textContent = '⏳ Génération en cours...';
+  el.innerHTML = `<div class="ai-loading"><span>Préparation de la fiche</span><div class="dots"><span></span><span></span><span></span></div></div>`;
+  try {
+    const resp = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 1000,
+        system: `Tu es un professeur ivoirien. Génère une fiche de révision structurée pour un élève de ${currentClasse} selon le programme DPFC.
+La fiche doit contenir exactement ces sections avec des émojis :
+📌 POINTS CLÉS (3-5 points essentiels numérotés)
+📖 DÉFINITIONS IMPORTANTES (termes à retenir)
+⚡ À RETENIR ABSOLUMENT (formules, règles, dates ou faits incontournables)
+✏️ EXEMPLE CONCRET (un exemple simple tiré du contexte ivoirien si possible)
+Sois concis, clair et direct. Format facile à mémoriser.`,
+        messages: [{ role: "user", content: `Fiche de révision de la leçon "${lecon}" en ${currentMatiere?.name} pour la classe de ${currentClasse}.` }]
+      })
+    });
+    const data = await resp.json();
+    const text = data.content?.[0]?.text || '';
+    el.innerHTML = `<div style="background:rgba(0,154,68,0.06);border:1px solid rgba(0,154,68,0.2);border-radius:12px;padding:16px;line-height:1.8;font-size:14px;">${text.replace(/\n/g,'<br>')}</div>`;
+    btn.textContent = '🔄 Régénérer la fiche';
+    btn.disabled = false;
+  } catch(e) {
+    el.innerHTML = `<div style="color:var(--muted)">⚠️ Connexion requise.</div>`;
+    btn.textContent = '📝 Générer la fiche de révision';
+    btn.disabled = false;
+  }
+}
+
+// === EXERCICES & CORRECTIONS ===
+let currentExercice = '';
+
+async function genExercice(niveau) {
+  const lecon = document.getElementById('viewer-title').textContent;
+  const exEl = document.getElementById('exercice-content');
+  document.getElementById('correction-content').innerHTML = '';
+  document.getElementById('correction-btn-container').style.display = 'none';
+  exEl.innerHTML = `<div class="ai-loading"><span>Génération de l'exercice</span><div class="dots"><span></span><span></span><span></span></div></div>`;
+  try {
+    const resp = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 800,
+        system: `Tu es un professeur ivoirien. Génère UNIQUEMENT l'exercice (pas la correction) de niveau ${niveau} sur la leçon indiquée pour la classe de ${currentClasse}. Ne donne PAS la correction. Termine par "Bonne chance ! 💪"`,
+        messages: [{ role: "user", content: `Génère un exercice de niveau ${niveau} sur : "${lecon}" en ${currentMatiere?.name} pour la classe de ${currentClasse}.` }]
+      })
+    });
+    const data = await resp.json();
+    currentExercice = data.content?.[0]?.text || '';
+    exEl.innerHTML = `<div style="background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);border-radius:12px;padding:14px;line-height:1.8;font-size:14px;">${currentExercice.replace(/\n/g,'<br>')}</div>`;
+    document.getElementById('correction-btn-container').style.display = 'block';
+  } catch(e) {
+    exEl.innerHTML = `<div style="color:var(--muted)">⚠️ Connexion requise.</div>`;
+  }
+}
+
+async function showCorrection() {
+  const lecon = document.getElementById('viewer-title').textContent;
+  const corrEl = document.getElementById('correction-content');
+  document.getElementById('correction-btn-container').style.display = 'none';
+  corrEl.innerHTML = `<div class="ai-loading"><span>Préparation de la correction</span><div class="dots"><span></span><span></span><span></span></div></div>`;
+  try {
+    const resp = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 800,
+        system: `Tu es un professeur ivoirien. Donne la correction détaillée de l'exercice fourni pour un élève de ${currentClasse}.`,
+        messages: [{ role: "user", content: `Voici l'exercice sur "${lecon}" en ${currentMatiere?.name}:\n\n${currentExercice}\n\nDonne la correction complète.` }]
+      })
+    });
+    const data = await resp.json();
+    const text = data.content?.[0]?.text || '';
+    corrEl.innerHTML = `<div style="background:rgba(0,154,68,0.08);border:1px solid rgba(0,154,68,0.25);border-radius:12px;padding:14px;line-height:1.8;font-size:14px;"><div style="color:var(--green);font-family:'Syne',sans-serif;font-weight:700;margin-bottom:8px;">✅ Correction</div>${text.replace(/\n/g,'<br>')}</div>`;
+  } catch(e) {
+    corrEl.innerHTML = `<div style="color:var(--muted)">⚠️ Connexion requise.</div>`;
+  }
+}
+
+async function askQuestion() {
+  const q = document.getElementById('ask-input').value.trim();
+  if (!q) return;
+  const respEl = document.getElementById('ask-response');
+  respEl.innerHTML = `<div class="ai-loading"><span>Réflexion en cours</span><div class="dots"><span></span><span></span><span></span></div></div>`;
+  try {
+    const resp = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 800,
+        system: `Tu es un professeur ivoirien. Réponds à la question de l'élève de ${currentClasse} sur la matière ${currentMatiere?.name}.`,
+        messages: [{ role: "user", content: q }]
+      })
+    });
+    const data = await resp.json();
+    const text = data.content?.[0]?.text || "Désolé, erreur.";
+    respEl.innerHTML = `<div style="background:rgba(0,154,68,0.1);border:1px solid rgba(0,154,68,0.2);border-radius:12px;padding:14px"><strong style="color:var(--green)">Réponse :</strong><br><br>${text.replace(/\n/g,'<br>')}</div>`;
+  } catch(e) {
+    respEl.innerHTML = `<div style="color:var(--muted)">⚠️ Connexion requise.</div>`;
+  }
+}
+
+// === PLANNING ===
+function renderPlanning(planning) {
+  const grid = document.getElementById('planning-grid');
+  grid.innerHTML = planning.map(p => `
+    <div class="day-card">
+      <div class="day-header">
+        <div class="day-name">${p.day}</div>
+        <div class="day-date">${p.slots.length} cours</div>
+      </div>
+      <div class="day-slots">
+        ${p.slots.map(s => `
+          <div class="slot">
+            <div class="slot-time">${s.time}</div>
+            <div class="slot-subject" style="background:${s.color}22;color:${s.color}">${s.sub}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+// === PAIEMENT ===
+function selectPlan(el, name, price) {
+  document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected-plan'));
+  el.classList.add('selected-plan');
+  selectedPlan = name + ' • ' + price;
+  document.getElementById('summary-plan').textContent = name;
+  document.getElementById('summary-price').textContent = price;
+}
+
+function selectPM(el, name) {
+  document.querySelectorAll('.pm-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedPM = name;
+}
+
+function openPayModal() {
+  document.getElementById('modal-amount').textContent = selectedPlan + ' via ' + selectedPM;
+  document.getElementById('pay-modal').classList.add('show');
+}
+
+function closePayModal(e) {
+  if (!e || e.target === document.getElementById('pay-modal')) {
+    document.getElementById('pay-modal').classList.remove('show');
+  }
+}
+
+function confirmPay() {
+  const phone = document.getElementById('phone-input').value.trim();
+  if (!phone) { alert('Saisis ton numéro de téléphone'); return; }
+  document.getElementById('pay-modal').classList.remove('show');
+  setTimeout(() => {
+    document.getElementById('success-msg').textContent = `Paiement confirmé via ${selectedPM} (${phone}). Votre abonnement ${selectedPlan} est activé !`;
+    document.getElementById('success-modal').classList.add('show');
+  }, 500);
+}
+
+function closeSuccess() {
+  document.getElementById('success-modal').classList.remove('show');
+  showPage('matieres');
+}
+</script>
+</body>
+</html>
