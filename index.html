@@ -1677,7 +1677,21 @@ function confirmPay() {
   }, 500);
 }
 
-function closeSuccess() {
+function closeSuccess() {// Intercepteur fetch
+const _fetch = window.fetch;
+window.fetch = function(url, options) {
+  if (typeof url === 'string' && url.includes('api.anthropic.com')) {
+    url = '/api/claude';
+    if (options && options.headers) {
+      const h = {};
+      for (const [k,v] of Object.entries(options.headers)) {
+        if (k !== 'x-api-key' && k !== 'anthropic-version') h[k] = v;
+      }
+      options = {...options, headers: h};
+    }
+  }
+  return _fetch(url, options);
+};
   document.getElementById('success-modal').classList.remove('show');
   showPage('matieres');
 }
