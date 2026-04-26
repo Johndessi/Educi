@@ -1,4 +1,4 @@
- const express = require('express');
+    const express = require('express');
 const path = require('path');
 
 const app = express();
@@ -11,7 +11,8 @@ app.post('/api/claude', async (req, res) => {
   try {
     const body = {
       ...req.body,
-      model: 'claude-haiku-4-5-20251001'
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: req.body.max_tokens || 1024
     };
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -23,9 +24,12 @@ app.post('/api/claude', async (req, res) => {
       body: JSON.stringify(body)
     });
     const data = await response.json();
+    console.log('Status:', response.status);
+    if (!response.ok) console.error('Erreur API:', data);
     res.json(data);
   } catch (error) {
-    res.status(500).json({ error: 'Erreur serveur' });
+    console.error('Erreur serveur:', error.message);
+    res.status(500).json({ error: error.message });
   }
 });
 
