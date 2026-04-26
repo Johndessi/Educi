@@ -1669,7 +1669,7 @@ function closePayModal(e) {
 
 function confirmPay() {
   const phone = document.getElementById('phone-input').value.trim();
-  if (!phone) { alert('Saisis ton numéro de téléphone'); return; }
+  if (!phone) { alert('Saisis ton numéro de téléphone'); return; }localStorage.setItem('educi_subscribed','true');
   document.getElementById('pay-modal').classList.remove('show');
   setTimeout(() => {
     document.getElementById('success-msg').textContent = `Paiement confirmé via ${selectedPM} (${phone}). Votre abonnement ${selectedPlan} est activé !`;
