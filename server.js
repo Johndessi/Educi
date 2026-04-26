@@ -1,4 +1,4 @@
-const express = require('express');
+ const express = require('express');
 const path = require('path');
 
 const app = express();
@@ -9,6 +9,10 @@ app.use(express.static(__dirname));
 
 app.post('/api/claude', async (req, res) => {
   try {
+    const body = {
+      ...req.body,
+      model: 'claude-haiku-4-5-20251001'
+    };
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
@@ -16,7 +20,7 @@ app.post('/api/claude', async (req, res) => {
         'x-api-key': process.env.ANTHROPIC_API_KEY,
         'anthropic-version': '2023-06-01'
       },
-      body: JSON.stringify(req.body)
+      body: JSON.stringify(body)
     });
     const data = await response.json();
     res.json(data);
