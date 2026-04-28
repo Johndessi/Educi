@@ -1501,7 +1501,7 @@ async function explainLesson(matiere, titre, classe) {
     });
     const data = await resp.json();
     const text = data.content?.[0]?.text || "Désolé, une erreur s'est produite.";
-    document.getElementById('ai-content').innerHTML = `<div class="ai-text">${text.replace(/\n/g,'<br>')}</div>`;
+    document.getElementById('ai-content').innerHTML = `<div class="ai-text">${marked.parse(text)}</div>`;
   } catch(e) {
     document.getElementById('ai-content').innerHTML = `<div style="color:var(--muted)">⚠️ Connexion requise pour l'IA.</div>`;
   }
