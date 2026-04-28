@@ -1535,7 +1535,7 @@ Sois concis, clair et direct. Format facile à mémoriser.`,
     });
     const data = await resp.json();
     const text = data.content?.[0]?.text || '';
-    el.innerHTML = `<div style="background:rgba(0,154,68,0.06);border:1px solid rgba(0,154,68,0.2);border-radius:12px;padding:16px;line-height:1.8;font-size:14px;">${text.replace(/\n/g,'<br>')}</div>`;
+    el.innerHTML = `<div style="background:rgba(0,154,68,0.06);border:1px solid rgba(0,154,68,0.2);border-radius:12px;padding:16px;line-height:1.8;font-size:14px;">${marked.parse(text) }</div>`;
     btn.textContent = '🔄 Régénérer la fiche';
     btn.disabled = false;
   } catch(e) {
@@ -1567,7 +1567,7 @@ async function genExercice(niveau) {
     });
     const data = await resp.json();
     currentExercice = data.content?.[0]?.text || '';
-    exEl.innerHTML = `<div style="background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);border-radius:12px;padding:14px;line-height:1.8;font-size:14px;">${currentExercice.replace(/\n/g,'<br>')}</div>`;
+    exEl.innerHTML = `<div style="background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);border-radius:12px;padding:14px;line-height:1.8;font-size:14px;">${marked.parse(currentExercice)}</div>`;
     document.getElementById('correction-btn-container').style.display = 'block';
   } catch(e) {
     exEl.innerHTML = `<div style="color:var(--muted)">⚠️ Connexion requise.</div>`;
@@ -1592,7 +1592,7 @@ async function showCorrection() {
     });
     const data = await resp.json();
     const text = data.content?.[0]?.text || '';
-    corrEl.innerHTML = `<div style="background:rgba(0,154,68,0.08);border:1px solid rgba(0,154,68,0.25);border-radius:12px;padding:14px;line-height:1.8;font-size:14px;"><div style="color:var(--green);font-family:'Syne',sans-serif;font-weight:700;margin-bottom:8px;">✅ Correction</div>${text.replace(/\n/g,'<br>')}</div>`;
+    corrEl.innerHTML = `<div style="background:rgba(0,154,68,0.08);border:1px solid rgba(0,154,68,0.25);border-radius:12px;padding:14px;line-height:1.8;font-size:14px;"><div style="color:var(--green);font-family:'Syne',sans-serif;font-weight:700;margin-bottom:8px;">✅ Correction</div>${marked.parse(text)}</div>`;
   } catch(e) {
     corrEl.innerHTML = `<div style="color:var(--muted)">⚠️ Connexion requise.</div>`;
   }
