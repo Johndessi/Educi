@@ -2146,6 +2146,10 @@ async function askQuestion() {
 
 // === PLANNING ===
 function renderPlanning(planning) {
+  if (!planning || !planning.length) {
+    document.getElementById('planning-grid').innerHTML = '<div style="padding:20px;color:var(--muted)">Aucun planning disponible.</div>';
+    return;
+  }
   const grid = document.getElementById('planning-grid');
   grid.innerHTML = planning.map(p => `
     <div class="day-card">
