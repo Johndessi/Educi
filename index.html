@@ -624,10 +624,12 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
   </div>
 </div>
 <script>
-  window.onerror = function(msg, src, line) {
+window.onerror = function(msg, src, line) {
   document.body.innerHTML = '<div style="color:red;padding:20px;font-size:16px"><b>ERREUR ligne ' + line + ':</b><br>' + msg + '</div>';
   return true;
 };
+</script>
+<script>
 // === DATA ===
 const DATA = {'5ème': {
   matieres: [
