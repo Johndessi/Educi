@@ -396,11 +396,16 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
         <div class="classe-name">3ème</div>
         <div class="classe-desc">Brevet des Collèges</div>
       </div>
-      <div class="classe-card" onclick="selectClasse('Tle A')">
-        <div class="classe-emoji">📘</div>
-        <div class="classe-name">Tle A</div>
-        <div class="classe-desc">Lettres & Philo</div>
-      </div>
+      <div class="classe-card" onclick="selectClasse('Tle A1')">
+  <div class="classe-emoji">📘</div>
+  <div class="classe-name">Tle A1</div>
+  <div class="classe-desc">Lettres & Sciences</div>
+</div>
+<div class="classe-card" onclick="selectClasse('Tle A2')">
+  <div class="classe-emoji">📗</div>
+  <div class="classe-name">Tle A2</div>
+  <div class="classe-desc">Lettres & Philo</div>
+</div>
       <div class="classe-card" onclick="selectClasse('Tle C')">
         <div class="classe-emoji">📙</div>
         <div class="classe-name">Tle C</div>
@@ -2144,7 +2149,7 @@ const DATA = {'5ème': {
       { day: 'Vendredi', slots: [{time:'7h-9h',sub:'Anglais',color:'#06B6D4'},{time:'9h-11h',sub:'Mathématiques',color:'#3B82F6'},{time:'14h-16h',sub:'Révisions',color:'#F77F00'}] },
     ]
   },
-  'Tle A': {
+  'Tle A1': {
     matieres: [
       { icon: '🔢', name: 'Mathématiques', color: '#3B82F6', bg: 'rgba(59,130,246,0.15)',
         lecons: [
@@ -2295,7 +2300,121 @@ const DATA = {'5ème': {
           { title: 'La musique électronique', sub: 'Compétence II – Audition/Culture musicale • Avril/Mai' },
         ]
       },
-    ],
+    ]
+},
+  'Tle A2': {
+  matieres: [
+    { icon: '🔢', name: 'Mathématiques', color: '#3B82F6', bg: 'rgba(59,130,246,0.15)',
+      lecons: [
+        { title: 'Étude de fonctions polynômes et de fonctions rationnelles', sub: 'Tle A2 – 1er trimestre (27h)' },
+        { title: 'Probabilité', sub: 'Tle A2 – 1er trimestre (19h)' },
+        { title: 'Fonction logarithme népérien', sub: 'Tle A2 – 2ème trimestre (15h)' },
+        { title: 'Fonction exponentielle népérienne', sub: 'Tle A2 – 2ème trimestre (15h)' },
+        { title: 'Statistique à deux variables', sub: 'Tle A2 – 3ème trimestre (11h)' },
+        { title: 'Suites numériques', sub: 'Tle A2 – 3ème trimestre (13h)' },
+        { title: 'Systèmes d\'équations linéaires dans ℝ × ℝ', sub: 'Tle A2 – Avril (5h)' },
+      ]
+    },
+    { icon: '📖', name: 'Français', color: '#EC4899', bg: 'rgba(236,72,153,0.15)',
+      lecons: [
+        { title: 'La dissertation littéraire : analyser le sujet et rechercher les idées', sub: 'Expression écrite – 1er trimestre' },
+        { title: 'La dissertation littéraire : élaborer un plan et rédiger le développement', sub: 'Expression écrite – 1er trimestre' },
+        { title: 'La dissertation littéraire : rédiger l\'introduction et la conclusion', sub: 'Expression écrite – 1er trimestre' },
+        { title: 'La dissertation littéraire : rédaction complète', sub: 'Expression écrite – 1er trimestre' },
+        { title: 'Le commentaire composé : introduction + centre d\'intérêt + conclusion', sub: 'Expression écrite – 2ème trimestre' },
+        { title: 'Le commentaire composé : rédaction complète', sub: 'Expression écrite – 2ème trimestre' },
+        { title: 'Le résumé du texte argumentatif : répondre aux questions', sub: 'Expression écrite – 2ème trimestre' },
+        { title: 'Le résumé du texte argumentatif : identifier et reformuler les idées essentielles', sub: 'Expression écrite – 2ème trimestre' },
+        { title: 'Le résumé du texte argumentatif : rédiger le résumé', sub: 'Expression écrite – 3ème trimestre' },
+        { title: 'La production écrite : analyser le sujet et organiser l\'argumentation', sub: 'Expression écrite – 3ème trimestre' },
+        { title: 'La production écrite : rédiger un texte argumentatif', sub: 'Expression écrite – 3ème trimestre' },
+        { title: 'Savoir-faire : Préparation à l\'oral du BAC', sub: 'Savoir-faire – Tout au long de l\'année' },
+        { title: 'Leçon 1 – Œuvre narrative : Connaître le genre romanesque (S.1)', sub: 'Étude de l\'œuvre intégrale – 1er trimestre' },
+        { title: 'Leçon 1 – Œuvre narrative : Connaître le genre romanesque (S.2)', sub: 'Étude de l\'œuvre intégrale – 1er trimestre' },
+        { title: 'Leçon 2 – Groupement de textes théâtraux : Connaître les genres dramatiques (S.1)', sub: 'Étude de l\'œuvre intégrale – 2ème trimestre' },
+        { title: 'Leçon 2 – Groupement de textes théâtraux : Connaître le drame moderne et le théâtre de l\'absurde (S.2)', sub: 'Étude de l\'œuvre intégrale – 2ème trimestre' },
+        { title: 'Leçon 3 – Œuvre poétique : Connaître les genres poétiques (S.1)', sub: 'Étude de l\'œuvre intégrale – 3ème trimestre' },
+        { title: 'Leçon 3 – Œuvre poétique : Connaître les genres politiques et engagés (S.2)', sub: 'Étude de l\'œuvre intégrale – 3ème trimestre' },
+      ]
+    },
+    { icon: '💭', name: 'Philosophie', color: '#8B5CF6', bg: 'rgba(139,92,246,0.15)',
+      lecons: [
+        { title: 'La dissertation philosophique', sub: 'Compétence I – Dissertation et commentaire – 1er trimestre' },
+        { title: 'Le commentaire de texte philosophique', sub: 'Compétence I – Dissertation et commentaire – 1er trimestre' },
+        { title: 'La connaissance de l\'homme', sub: 'Compétence II – L\'homme dans la société – Octobre/Novembre' },
+        { title: 'La vie en société', sub: 'Compétence II – L\'homme dans la société – Novembre' },
+        { title: 'Dieu et la religion', sub: 'Compétence II – L\'homme dans la société – Novembre' },
+        { title: 'L\'histoire et l\'humanité', sub: 'Compétence III – Épanouissement de l\'homme – Décembre/Janvier' },
+        { title: 'La valeur de la philosophie', sub: 'Compétence III – Question au choix – Janvier/Février' },
+        { title: 'Progrès et bonheur', sub: 'Compétence III – Étude d\'œuvres – Février/Mars' },
+        { title: 'Langage et vérité', sub: 'Compétence IV – La connaissance – Mars/Avril' },
+        { title: 'La connaissance scientifique', sub: 'Compétence IV – La connaissance – Avril/Mai' },
+      ]
+    },
+    { icon: '🔬', name: 'SVT', color: '#8B5CF6', bg: 'rgba(139,92,246,0.15)',
+      lecons: [
+        { title: 'L\'origine de la vie', sub: 'Compétence 2 – Thème 1 : Origine de la vie et évolution – Septembre' },
+        { title: 'L\'évolution de la lignée humaine', sub: 'Compétence 2 – Thème 1 – Octobre' },
+        { title: 'L\'hérédité du sexe et du groupe sanguin chez l\'Homme', sub: 'Compétence 2 – Thème 2 – Transmission' },
+        { title: 'Les prévisions génétiques', sub: 'Compétence 2 – Thème 2 – Transmission des caractères héréditaires' },
+        { title: 'Les réactions émotionnelles chez l\'Homme', sub: 'Compétence 1 – Thème : La communication dans l\'organisme' },
+        { title: 'L\'activité cérébrale chez l\'Homme', sub: 'Compétence 1 – Thème : La communication dans l\'organisme' },
+        { title: 'L\'utilisation des nutriments : la biosynthèse des protéines', sub: 'Compétence 3 – Thème : Le devenir des nutriments' },
+      ]
+    },
+    { icon: '🌍', name: 'Histoire-Géo', color: '#10D981', bg: 'rgba(16,185,129,0.15)',
+      lecons: [
+        { title: 'Histoire – L\'ONU', sub: 'Thème 1 : Les relations internationales de 1945 à nos jours – Septembre' },
+        { title: 'Histoire – L\'ère de la bipolarisation de 1947 à 1991', sub: 'Thème 1 – Les relations internationales' },
+        { title: 'Histoire – De la fin de la guerre froide vers un monde multipolaire', sub: 'Thème 1 – Les relations internationales' },
+        { title: 'Histoire – La montée des nationalismes en Afrique', sub: 'Thème 2 : De la décolonisation aux efforts de construction' },
+        { title: 'Histoire – L\'accession de la Côte d\'Ivoire à l\'indépendance', sub: 'Thème 2 – Décolonisation – Janvier' },
+        { title: 'Histoire – L\'accession de l\'Algérie à l\'indépendance', sub: 'Thème 2 – Décolonisation – Février' },
+        { title: 'Histoire – L\'Union Africaine', sub: 'Thème 2 : Organisation de l\'Afrique – Février/Mars' },
+        { title: 'Histoire – Croyances et valeurs dominantes dans le monde occidental', sub: 'Thème 3 – Croyances et valeurs' },
+        { title: 'Histoire – Les mutations contemporaines de la civilisation négro-africaine', sub: 'Thème 3 – Croyances et valeurs' },
+        { title: 'Géographie – Les fondements du développement économique de la Côte d\'Ivoire', sub: 'Thème 1 : La Côte d\'Ivoire' },
+        { title: 'Géographie – Les secteurs d\'activités économiques de la Côte d\'Ivoire', sub: 'Thème 1 : La Côte d\'Ivoire' },
+        { title: 'Géographie – Les problèmes du développement économique de la Côte d\'Ivoire', sub: 'Thème 1 : La Côte d\'Ivoire' },
+        { title: 'Géographie – Étude économique de l\'Afrique', sub: 'Thème 2 : L\'Afrique face à la mondialisation' },
+        { title: 'Géographie – La place de l\'Afrique dans la mondialisation', sub: 'Thème 2 : L\'Afrique face à la mondialisation' },
+      ]
+    },
+    { icon: '🎨', name: 'Arts Plastiques', color: '#F77F00', bg: 'rgba(247,127,0,0.15)',
+      lecons: [
+        { title: 'Processus de réalisation d\'une image photographique', sub: 'Thème 1 – Communication par le langage plastique' },
+        { title: 'Présentation de produits manufacturés', sub: 'Thème 1 – Communication par le langage plastique – Octobre' },
+        { title: 'Sensibilisation sur les dangers liés au VIH', sub: 'Thème 1 – Communication par le langage plastique' },
+        { title: 'Impact de l\'urbanisation sur un cadre de vie', sub: 'Thème 2 – Actions sur l\'environnement immédiat' },
+        { title: 'Bienfaits de l\'architecture paysagère', sub: 'Thème 2 – Actions sur l\'environnement immédiat – Décembre' },
+        { title: 'Préservation des valeurs socioculturelles de la statuaire', sub: 'Thème 3 – Promotion des valeurs socioculturelles' },
+        { title: 'Apports de la création plastique africaine au Cubisme', sub: 'Thème 3 – Promotion des valeurs socioculturelles' },
+        { title: 'Création plastique contemporaine d\'influence primitive', sub: 'Thème 3 – Promotion des valeurs socioculturelles' },
+        { title: 'Caractéristiques de la production plastique des aires culturelles de Côte d\'Ivoire', sub: 'Thème 3 – Promotion des valeurs socioculturelles' },
+        { title: 'Foisonnement de mouvements artistiques au 20ème siècle', sub: 'Thème 3 – Promotion des valeurs socioculturelles' },
+      ]
+    },
+    { icon: '🎵', name: 'Musique', color: '#A855F7', bg: 'rgba(168,85,247,0.15)',
+      lecons: [
+        { title: 'La tonalité de La mineur', sub: 'Compétence I – Solfège – Octobre' },
+        { title: 'La mesure 6/8 : étude rythmique et mélodique', sub: 'Compétence I – Solfège – Octobre' },
+        { title: 'La drummologie', sub: 'Compétence II – Audition/Culture musicale – Octobre' },
+        { title: 'Les natures d\'impôt', sub: 'Compétence III – Éducation civique par la musique – Octobre' },
+        { title: 'Croche – deux doubles croches : étude rythmique et mélodique', sub: 'Compétence I – Solfège – Novembre' },
+        { title: 'La musique de la Chine et du Japon', sub: 'Compétence II – Audition/Culture musicale – Janvier' },
+        { title: 'L\'impact du VIH/SIDA sur la population', sub: 'Compétence III – Éducation civique par la musique – Janvier' },
+        { title: 'La tonalité de Ré mineur', sub: 'Compétence I – Solfège – Janvier' },
+        { title: 'Le lied et le poème symphonique', sub: 'Compétence II – Audition/Culture musicale – Février' },
+        { title: 'Deux doubles croches – croche : étude rythmique et mélodique', sub: 'Compétence I – Solfège – Février' },
+        { title: 'Frantz Schubert et L. Hector Berlioz', sub: 'Compétence II – Audition/Culture musicale – Mars' },
+        { title: 'La tonalité de Mi mineur', sub: 'Compétence I – Solfège – Avril' },
+        { title: 'Chant au choix de l\'enseignant', sub: 'Compétence III – Éducation civique par la musique – Avril' },
+        { title: 'La musique afro-américaine : le jazz', sub: 'Compétence II – Audition/Culture musicale – Avril' },
+        { title: 'La musique électronique', sub: 'Compétence II – Audition/Culture musicale – Avril/Mai' },
+      ]
+    },
+  ]
+},
     planning: [
       { day: 'Lundi', slots: [{time:'7h-9h',sub:'Philosophie',color:'#8B5CF6'},{time:'9h-11h',sub:'Français',color:'#EC4899'},{time:'14h-16h',sub:'Anglais',color:'#06B6D4'}] },
       { day: 'Mardi', slots: [{time:'7h-9h',sub:'Histoire-Géo',color:'#10B981'},{time:'9h-11h',sub:'Français',color:'#EC4899'}] },
