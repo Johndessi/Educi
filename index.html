@@ -3189,7 +3189,7 @@ const DATA = {'5ème': {
     { icon: '🎵', name: 'Musique', color: '#A855F7', bg: 'rgba(168,85,247,0.15)',
       lecons: [
         { title: 'Leçon 1 : La tonalité de SOL M', sub: 'Compétence I – Solfège – Septembre' },
-        { title: 'Leçon 2 : La musique Yorouba du Bénin et du Nigéria', sub: 'Compétence II – Audition/Culture musicale – Septembre' },
+         { title: 'Leçon 2 : La musique Yorouba du Bénin et du Nigéria', sub: 'Compétence II – Audition/Culture musicale – Septembre' },
         { title: 'Leçon 3 : La notion de contribuable', sub: 'Compétence III – Éducation civique par la musique – Octobre' },
         { title: 'Leçon 4 : La musique d\'initiation et la musique sacrée en C.I. (les komians)', sub: 'Compétence II – Audition/Culture musicale – Octobre' },
         { title: 'Leçon 5 : Chanson populaire', sub: 'Compétence III – Éducation civique – Novembre' },
@@ -3209,7 +3209,7 @@ const DATA = {'5ème': {
     { day: 'Lundi', slots: [{time:'7h-9h',sub:'Mathématiques',color:'#3B82F6'},{time:'9h-11h',sub:'SVT',color:'#10B981'}]},
     { day: 'Mardi', slots: [{time:'7h-9h',sub:'Français',color:'#EC4899'},{time:'9h-11h',sub:'Anglais',color:'#06B6D4'}]},
     { day: 'Mercredi', slots: [{time:'7h-9h',sub:'Histoire-Géo',color:'#10D981'},{time:'9h-11h',sub:'Physique-Chimie',color:'#F59E0B'}]},
-    { day: 'Jeudi', slots: [{time:'7h-9h',sub:'Français',color:'#EC4899'},{time:'9h-11h',sub:'Philosophie',color:'#8B5CF6'}]},
+    { day: 'Jeudi', slots: [{time:'7h-9h',sub:'Français',color:'#E C4899'},{time:'9h-11h',sub:'Philosophie',color:'#8B5CF6'}]},
     { day: 'Vendredi', slots: [{time:'7h-9h',sub:'Révisions',color:'#F77F00'},{time:'9h-11h',sub:'SVT',color:'#10B981'}]},
   ]
 },
@@ -3218,7 +3218,9 @@ const DATA = {'5ème': {
     {
       icon: '📐',
       name: 'Mathématiques',
-      lessons: [
+      color: '#3B82F6',
+      bg: 'rgba(59,130,246,0.15)',
+      lecons: [
         { title: 'Équations et inéquations du second degré dans ℝ', trimestre: '1er trimestre', heures: 9 },
         { title: 'Angles orientés et trigonométrie', trimestre: '1er trimestre', heures: 11 },
         { title: 'Généralités sur les fonctions', trimestre: '1er trimestre', heures: 9 },
@@ -3228,22 +3230,24 @@ const DATA = {'5ème': {
         { title: 'Extension de la notion de limite', trimestre: '2ème trimestre', heures: 9 },
         { title: 'Composées de transformations du plan', trimestre: '2ème trimestre', heures: 11 },
         { title: 'Dérivation', trimestre: '2ème trimestre', heures: 9 },
-        { title: 'Orthogonalité dans l\'espace', trimestre: '2ème trimestre', heures: 9 },
-        { title: 'Étude et représentation graphique d\'une fonction', trimestre: '2ème trimestre', heures: 11 },
+        { title: "Orthogonalité dans l'espace", trimestre: '2ème trimestre', heures: 9 },
+        { title: "Étude et représentation graphique d'une fonction", trimestre: '2ème trimestre', heures: 11 },
         { title: 'Probabilité', trimestre: '2ème trimestre', heures: 7 },
-        { title: 'Systèmes d\'équations linéaires dans ℝ² et dans ℝ³', trimestre: '3ème trimestre', heures: 3 },
+        { title: "Systèmes d'équations linéaires dans ℝ² et dans ℝ³", trimestre: '3ème trimestre', heures: 3 },
         { title: 'Géométrie analytique du plan', trimestre: '3ème trimestre', heures: 7 },
         { title: 'Suites numériques', trimestre: '3ème trimestre', heures: 9 },
-        { title: 'Vecteurs de l\'espace', trimestre: '3ème trimestre', heures: 11 },
+        { title: "Vecteurs de l'espace", trimestre: '3ème trimestre', heures: 11 },
         { title: 'Statistique à une variable', trimestre: '3ème trimestre', heures: 7 }
       ]
     },
     {
       icon: '⚗️',
       name: 'Physique-Chimie',
-      lessons: [
+      color: '#F59E0B',
+      bg: 'rgba(245,158,11,0.15)',
+      lecons: [
         { title: 'Travail et puissance — mouvement de translation', trimestre: '1er trimestre', heures: 6 },
-        { title: 'Travail et puissance — mouvement de rotation autour d\'un axe fixe', trimestre: '1er trimestre', heures: 6 },
+        { title: "Travail et puissance — mouvement de rotation autour d'un axe fixe", trimestre: '1er trimestre', heures: 6 },
         { title: 'Énergie cinétique', trimestre: '1er trimestre', heures: 8 },
         { title: 'Énergie potentielle', trimestre: '1er trimestre', heures: 2 },
         { title: 'Énergie mécanique', trimestre: '1er trimestre', heures: 6 },
@@ -3251,8 +3255,8 @@ const DATA = {'5ème': {
         { title: 'Énergie potentielle électrostatique', trimestre: '2ème trimestre', heures: 3 },
         { title: 'Puissance et énergie électriques', trimestre: '2ème trimestre', heures: 6 },
         { title: 'Le condensateur', trimestre: '2ème trimestre', heures: 6 },
-        { title: 'L\'amplificateur opérationnel', trimestre: '2ème trimestre', heures: 8 },
-        { title: 'Introduction à l\'optique géométrique', trimestre: '3ème trimestre', heures: 2 },
+        { title: "L'amplificateur opérationnel", trimestre: '2ème trimestre', heures: 8 },
+        { title: "Introduction à l'optique géométrique", trimestre: '3ème trimestre', heures: 2 },
         { title: 'Réflexion et réfraction de la lumière blanche', trimestre: '3ème trimestre', heures: 8 },
         { title: 'Les lentilles minces', trimestre: '3ème trimestre', heures: 8 },
         { title: 'Généralités sur les composés organiques', trimestre: '1er trimestre', heures: 4 },
@@ -3261,9 +3265,9 @@ const DATA = {'5ème': {
         { title: 'Le benzène', trimestre: '1er trimestre', heures: 2 },
         { title: 'Pétrole et gaz naturels', trimestre: '1er trimestre', heures: 1 },
         { title: 'Quelques composés oxygénés', trimestre: '2ème trimestre', heures: 4 },
-        { title: 'L\'éthanol', trimestre: '2ème trimestre', heures: 2 },
-        { title: 'Estérification et hydrolyse d\'un ester', trimestre: '2ème trimestre', heures: 4 },
-        { title: 'Réactions d\'oxydoréduction en solution aqueuse', trimestre: '2ème trimestre', heures: 4 },
+        { title: "L'éthanol", trimestre: '2ème trimestre', heures: 2 },
+        { title: "Estérification et hydrolyse d'un ester", trimestre: '2ème trimestre', heures: 4 },
+        { title: "Réactions d'oxydoréduction en solution aqueuse", trimestre: '2ème trimestre', heures: 4 },
         { title: 'Classification qualitative des couples oxydant/réducteur', trimestre: '3ème trimestre', heures: 5 },
         { title: 'Classification quantitative des couples oxydant/réducteur', trimestre: '3ème trimestre', heures: 3 },
         { title: 'Couples oxydant/réducteur en solution aqueuse — Dosage', trimestre: '3ème trimestre', heures: 4 },
@@ -3275,56 +3279,62 @@ const DATA = {'5ème': {
     {
       icon: '🧬',
       name: 'SVT',
-      lessons: [
+      color: '#10B981',
+      bg: 'rgba(16,185,129,0.15)',
+      lecons: [
         { title: 'Le rôle et la structure des gonades des mammifères', trimestre: '1er trimestre', heures: 6 },
         { title: 'La division méiotique', trimestre: '1er trimestre', heures: 3 },
         { title: 'La gamétogenèse chez les mammifères', trimestre: '1er trimestre', heures: 3 },
         { title: 'La fécondation chez les mammifères', trimestre: '1er trimestre', heures: 6 },
         { title: 'La synthèse des protéines', trimestre: '1er trimestre', heures: 9 },
-        { title: 'La transmission d\'un caractère héréditaire', trimestre: '1er trimestre', heures: 9 },
+        { title: "La transmission d'un caractère héréditaire", trimestre: '1er trimestre', heures: 9 },
         { title: 'La structure interne du globe terrestre', trimestre: '2ème trimestre', heures: 9 },
         { title: 'Les mouvements des plaques lithosphériques', trimestre: '2ème trimestre', heures: 6 },
-        { title: 'Les échanges d\'ions au niveau du sol', trimestre: '2ème trimestre', heures: 6 },
+        { title: "Les échanges d'ions au niveau du sol", trimestre: '2ème trimestre', heures: 6 },
         { title: 'La photosynthèse', trimestre: '3ème trimestre', heures: 9 },
-        { title: 'L\'écosystème naturel et l\'écosystème agro-industriel', trimestre: '3ème trimestre', heures: 9 }
+        { title: "L'écosystème naturel et l'écosystème agro-industriel", trimestre: '3ème trimestre', heures: 9 }
       ]
     },
     {
       icon: '📖',
       name: 'Français',
-      lessons: [
-        { title: 'L\'œuvre poétique', trimestre: '1er trimestre', heures: 8 },
+      color: '#EC4899',
+      bg: 'rgba(236,72,153,0.15)',
+      lecons: [
+        { title: "L'œuvre poétique", trimestre: '1er trimestre', heures: 8 },
         { title: 'Le commentaire composé', trimestre: '1er trimestre', heures: 8 },
         { title: 'Le rythme dans le texte poétique', trimestre: '1er trimestre', heures: 8 },
         { title: 'Le résumé du texte argumentatif', trimestre: '1er trimestre', heures: 8 },
         { title: 'Les tonalités littéraires', trimestre: '1er trimestre', heures: 4 },
         { title: 'La focalisation', trimestre: '2ème trimestre', heures: 4 },
-        { title: 'L\'argumentation', trimestre: '2ème trimestre', heures: 8 },
-        { title: 'L\'implicite', trimestre: '2ème trimestre', heures: 4 },
+        { title: "L'argumentation", trimestre: '2ème trimestre', heures: 8 },
+        { title: "L'implicite", trimestre: '2ème trimestre', heures: 4 },
         { title: 'Les valeurs des temps verbaux', trimestre: '2ème trimestre', heures: 4 },
         { title: 'Le groupement de textes romanesques', trimestre: '3ème trimestre', heures: 8 },
-        { title: 'Initiation à l\'oral du Baccalauréat', trimestre: '3ème trimestre', heures: 4 },
+        { title: "Initiation à l'oral du Baccalauréat", trimestre: '3ème trimestre', heures: 4 },
         { title: 'La dissertation littéraire', trimestre: '3ème trimestre', heures: 8 }
       ]
     },
     {
       icon: '🌍',
       name: 'Histoire-Géographie',
-      lessons: [
-        { title: 'L\'essor du capitalisme et ses conséquences', trimestre: '1er trimestre', heures: 4 },
+      color: '#10D981',
+      bg: 'rgba(16,217,129,0.15)',
+      lecons: [
+        { title: "L'essor du capitalisme et ses conséquences", trimestre: '1er trimestre', heures: 4 },
         { title: 'Les révolutions industrielles', trimestre: '1er trimestre', heures: 3 },
         { title: 'Le mouvement impérialiste et le congrès de Berlin', trimestre: '1er trimestre', heures: 3 },
-        { title: 'Les résistances aux conquêtes territoriales : la Côte d\'Ivoire 1848-1920', trimestre: '1er trimestre', heures: 4 },
-        { title: 'La colonisation et les résistances en Côte d\'Ivoire 1893-1946', trimestre: '2ème trimestre', heures: 4 },
+        { title: "Les résistances aux conquêtes territoriales : la Côte d'Ivoire 1848-1920", trimestre: '1er trimestre', heures: 4 },
+        { title: "La colonisation et les résistances en Côte d'Ivoire 1893-1946", trimestre: '2ème trimestre', heures: 4 },
         { title: 'La première Guerre Mondiale : Causes et Conséquences', trimestre: '2ème trimestre', heures: 4 },
         { title: 'La deuxième Guerre Mondiale : Causes et Conséquences', trimestre: '3ème trimestre', heures: 4 },
         { title: 'Les violences de masse : Les génocides du XXe siècle à nos jours', trimestre: '3ème trimestre', heures: 3 },
-        { title: 'Dynamisme démographique et qualité de la vie en Côte d\'Ivoire', trimestre: '1er trimestre', heures: 6 },
+        { title: "Dynamisme démographique et qualité de la vie en Côte d'Ivoire", trimestre: '1er trimestre', heures: 6 },
         { title: 'La croissance démographique mondiale et ses conséquences', trimestre: '1er trimestre', heures: 4 },
-        { title: 'L\'urbanisation dans les PED : l\'exemple de la Côte d\'Ivoire', trimestre: '2ème trimestre', heures: 4 },
-        { title: 'L\'urbanisation dans les pays développés : l\'exemple de la France', trimestre: '2ème trimestre', heures: 3 },
-        { title: 'L\'organisation administrative de la Côte d\'Ivoire', trimestre: '2ème trimestre', heures: 3 },
-        { title: 'L\'aménagement du territoire ivoirien', trimestre: '2ème trimestre', heures: 4 },
+        { title: "L'urbanisation dans les PED : l'exemple de la Côte d'Ivoire", trimestre: '2ème trimestre', heures: 4 },
+        { title: "L'urbanisation dans les pays développés : l'exemple de la France", trimestre: '2ème trimestre', heures: 3 },
+        { title: "L'organisation administrative de la Côte d'Ivoire", trimestre: '2ème trimestre', heures: 3 },
+        { title: "L'aménagement du territoire ivoirien", trimestre: '2ème trimestre', heures: 4 },
         { title: 'La mondialisation : facteurs et acteurs', trimestre: '3ème trimestre', heures: 3 },
         { title: 'La mondialisation : manifestations et conséquences', trimestre: '3ème trimestre', heures: 2 }
       ]
@@ -3332,7 +3342,9 @@ const DATA = {'5ème': {
     {
       icon: '🌐',
       name: 'Anglais',
-      lessons: [
+      color: '#06B6D4',
+      bg: 'rgba(6,182,212,0.15)',
+      lecons: [
         { title: 'Unit 1 — Travel and World Tourism', trimestre: '1er trimestre', heures: 9 },
         { title: 'Unit 2 — Natural Resources', trimestre: '1er trimestre', heures: 9 },
         { title: 'Unit 3 — Deadly Viruses and Diseases', trimestre: '1er trimestre', heures: 9 },
@@ -3345,14 +3357,16 @@ const DATA = {'5ème': {
     {
       icon: '🇩🇪',
       name: 'Allemand',
-      lessons: [
-        { title: 'Thème 1 — Entrée en matière (Einstiegsseite)', trimestre: '1er trimestre', heures: 2 },
+      color: '#6B7280',
+      bg: 'rgba(107,114,128,0.15)',
+      lecons: [
+        { title: "Thème 1 — Entrée en matière (Einstiegsseite)", trimestre: '1er trimestre', heures: 2 },
         { title: 'Thème 1 — Leçon 1', trimestre: '1er trimestre', heures: 8 },
         { title: 'Thème 1 — Leçon 2', trimestre: '1er trimestre', heures: 8 },
-        { title: 'Thème 2 — Entrée en matière (Einstiegsseite)', trimestre: '2ème trimestre', heures: 2 },
+        { title: "Thème 2 — Entrée en matière (Einstiegsseite)", trimestre: '2ème trimestre', heures: 2 },
         { title: 'Thème 2 — Leçon 1', trimestre: '2ème trimestre', heures: 8 },
         { title: 'Thème 2 — Leçon 2', trimestre: '2ème trimestre', heures: 8 },
-        { title: 'Thème 3 — Entrée en matière (Einstiegsseite)', trimestre: '3ème trimestre', heures: 2 },
+        { title: "Thème 3 — Entrée en matière (Einstiegsseite)", trimestre: '3ème trimestre', heures: 2 },
         { title: 'Thème 3 — Leçon 1', trimestre: '3ème trimestre', heures: 8 },
         { title: 'Thème 3 — Leçon 2', trimestre: '3ème trimestre', heures: 8 }
       ]
@@ -3360,26 +3374,30 @@ const DATA = {'5ème': {
     {
       icon: '🇪🇸',
       name: 'Espagnol',
-      lessons: [
-        { title: 'La connaissance des réalités du monde hispanique et de l\'Afrique', trimestre: '1er trimestre', heures: 18 },
-        { title: 'L\'échange d\'information', trimestre: '1er trimestre', heures: 12 },
-        { title: 'L\'expression de l\'opinion', trimestre: '2ème trimestre', heures: 12 },
-        { title: 'L\'expression des états d\'âme', trimestre: '2ème trimestre', heures: 9 },
-        { title: 'L\'expression de l\'ordre', trimestre: '3ème trimestre', heures: 9 },
-        { title: 'La technique d\'expression orale ou écrite', trimestre: '3ème trimestre', heures: 9 }
+      color: '#EF4444',
+      bg: 'rgba(239,68,68,0.15)',
+      lecons: [
+        { title: "La connaissance des réalités du monde hispanique et de l'Afrique", trimestre: '1er trimestre', heures: 18 },
+        { title: "L'échange d'information", trimestre: '1er trimestre', heures: 12 },
+        { title: "L'expression de l'opinion", trimestre: '2ème trimestre', heures: 12 },
+        { title: "L'expression des états d'âme", trimestre: '2ème trimestre', heures: 9 },
+        { title: "L'expression de l'ordre", trimestre: '3ème trimestre', heures: 9 },
+        { title: "La technique d'expression orale ou écrite", trimestre: '3ème trimestre', heures: 9 }
       ]
     },
     {
       icon: '🎨',
       name: 'Arts Plastiques',
-      lessons: [
+      color: '#F77F00',
+      bg: 'rgba(247,127,0,0.15)',
+      lecons: [
         { title: 'Choix de matériels et techniques de sculpture', trimestre: '1er trimestre', heures: 8 },
         { title: 'Protection de la femme face au VIH', trimestre: '1er trimestre', heures: 4 },
         { title: 'Journal et image de la « Une »', trimestre: '1er trimestre', heures: 4 },
-        { title: 'Images d\'Afrique et médias européens', trimestre: '1er trimestre', heures: 6 },
-        { title: 'Exode rural et problèmes d\'habitat en milieu urbain', trimestre: '2ème trimestre', heures: 4 },
+        { title: "Images d'Afrique et médias européens", trimestre: '1er trimestre', heures: 6 },
+        { title: "Exode rural et problèmes d'habitat en milieu urbain", trimestre: '2ème trimestre', heures: 4 },
         { title: 'Architecture moderne et bien-être des individus et des collectivités', trimestre: '2ème trimestre', heures: 8 },
-        { title: 'Utilisation de couleurs dans l\'habitat et thérapie', trimestre: '2ème trimestre', heures: 8 },
+        { title: "Utilisation de couleurs dans l'habitat et thérapie", trimestre: '2ème trimestre', heures: 8 },
         { title: 'Conception architecturale moderne et habitats traditionnels en C.I.', trimestre: '2ème trimestre', heures: 8 },
         { title: 'Impressionnisme et crise des valeurs au 19ème siècle', trimestre: '3ème trimestre', heures: 8 },
         { title: 'Symbolisme et expression des libertés au 19ème siècle', trimestre: '3ème trimestre', heures: 8 }
@@ -3388,11 +3406,13 @@ const DATA = {'5ème': {
     {
       icon: '🎵',
       name: 'Musique',
-      lessons: [
+      color: '#8B5CF6',
+      bg: 'rgba(139,92,246,0.15)',
+      lecons: [
         { title: 'La tonalité de SOL M', trimestre: '1er trimestre', heures: 3 },
         { title: 'La musique Yorouba du Bénin et du Nigéria', trimestre: '1er trimestre', heures: 3 },
         { title: 'La notion de contribuable', trimestre: '1er trimestre', heures: 3 },
-        { title: 'La musique d\'initiation et la musique sacrée en Côte d\'Ivoire', trimestre: '1er trimestre', heures: 3 },
+        { title: "La musique d'initiation et la musique sacrée en Côte d'Ivoire", trimestre: '1er trimestre', heures: 3 },
         { title: 'Chanson populaire', trimestre: '1er trimestre', heures: 3 },
         { title: 'Le triolet de croches', trimestre: '1er trimestre', heures: 3 },
         { title: 'Les fausses croyances dans la lutte contre le VIH/SIDA', trimestre: '2ème trimestre', heures: 3 },
@@ -3413,6 +3433,7 @@ const DATA = {'5ème': {
     jeudi:    ['Français', 'Anglais', 'Musique', 'Histoire-Géographie'],
     vendredi: ['Mathématiques', 'Physique-Chimie', 'SVT']
   }
+},          
 },
 '1ère D': {
   matieres: [
