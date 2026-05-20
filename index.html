@@ -3787,7 +3787,7 @@ function renderLecons(lecons) {
       <div class="lesson-num">${i+1}</div>
       <div class="lesson-text">
         <div class="lesson-title-text">${l.title}</div>
-        <div class="lesson-subtitle">${l.sub}</div>
+        <div class="lesson-subtitle">${l.sub || l.trimestre || ''}</div>
       </div>
       <span style="color:var(--muted);font-size:16px">🤖</span>
     </div>
