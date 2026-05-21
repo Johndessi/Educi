@@ -4055,31 +4055,49 @@ function _safeName(s) {
   return (s || '').replace(/[^a-zA-Z0-9]/g, '_').substring(0, 30);
 }
 
+function _stripEmojis(str) {
+  return (str || '')
+    .replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{FE00}-\u{FEFF}\u{200D}]/gu, '')
+    .replace(/ {2,}/g, ' ')
+    .trim();
+}
+
 function _buildPDF(lines) {
   const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-  const margin = 16;
-  const maxW = doc.internal.pageSize.getWidth() - margin * 2;
-  let y = 20;
+  const doc    = new jsPDF({ unit: 'mm', format: 'a4' });
+  const margin = 20;
+  const pageW  = doc.internal.pageSize.getWidth();
+  const pageH  = doc.internal.pageSize.getHeight();
+  const maxW   = pageW - margin * 2;
+  // line heights = fontSize(pt) × lineHeightFactor(2) × (25.4/72)
+  const LH = { title: 11.3, subtitle: 9.2, body: 8.5 };
+  let y = margin + 8;
+
   lines.forEach(({ text, style }) => {
-    if (!text && text !== '') return;
+    if (text === undefined || text === null) return;
+    const clean = _stripEmojis(text);
+
     if (style === 'title') {
-      doc.setFont('helvetica', 'bold');
+      doc.setFont('times', 'bold');
       doc.setFontSize(16);
     } else if (style === 'subtitle') {
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(11);
+      doc.setFont('times', 'bold');
+      doc.setFontSize(13);
     } else {
-      doc.setFont('helvetica', 'normal');
-      doc.setFontSize(10);
+      doc.setFont('times', 'normal');
+      doc.setFontSize(12);
     }
-    const split = doc.splitTextToSize(text || '', maxW);
+
+    if (!clean) { y += LH.body; return; }
+
+    const lh    = style === 'title' ? LH.title : style === 'subtitle' ? LH.subtitle : LH.body;
+    const split = doc.splitTextToSize(clean, maxW);
     split.forEach(line => {
-      if (y > 282) { doc.addPage(); y = 20; }
+      if (y > pageH - margin) { doc.addPage(); y = margin + 8; }
       doc.text(line, margin, y);
-      y += style === 'title' ? 9 : 6;
+      y += lh;
     });
-    y += style ? 3 : 1;
+    y += style ? 4 : 2;
   });
   return doc;
 }
