@@ -10,7 +10,6 @@
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -4050,103 +4049,71 @@ function fileToBase64(file) {
   });
 }
 
-// === PDF DOWNLOAD ===
-function _safeName(s) {
-  return (s || '').replace(/[^a-zA-Z0-9]/g, '_').substring(0, 30);
-}
-
-function _stripEmojis(str) {
-  return (str || '')
-    .replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{FE00}-\u{FEFF}\u{200D}]/gu, '')
-    .replace(/ {2,}/g, ' ')
-    .trim();
-}
-
-function _buildPDF(lines) {
-  const { jsPDF } = window.jspdf;
-  const doc    = new jsPDF({ unit: 'mm', format: 'a4' });
-  const margin = 20;
-  const pageW  = doc.internal.pageSize.getWidth();
-  const pageH  = doc.internal.pageSize.getHeight();
-  const maxW   = pageW - margin * 2;
-  const LH = { title: 8, subtitle: 7.5, body: 7 };
-  let y = margin + 8;
-
-  lines.forEach(({ text, style }) => {
-    if (text === undefined || text === null) return;
-    const clean = _stripEmojis(text);
-
-    doc.setCharSpace(0);
-    if (style === 'title') {
-      doc.setFont('times', 'bold');
-      doc.setFontSize(16);
-    } else if (style === 'subtitle') {
-      doc.setFont('times', 'bold');
-      doc.setFontSize(13);
-    } else {
-      doc.setFont('times', 'normal');
-      doc.setFontSize(12);
-    }
-
-    if (!clean) { y += LH.body; return; }
-
-    const lh    = style === 'title' ? LH.title : style === 'subtitle' ? LH.subtitle : LH.body;
-    const split = doc.splitTextToSize(clean, maxW);
-    split.forEach(line => {
-      if (y > pageH - margin) { doc.addPage(); y = margin + 8; }
-      doc.text(line, margin, y);
-      y += lh;
-    });
-    y += style ? 4 : 2;
-  });
-  return doc;
+// === PDF DOWNLOAD (window.print) ===
+function _openPrintWindow(title, subtitle, bodyHTML) {
+  const win = window.open('', '_blank');
+  win.document.write(`<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>${title}</title>
+<style>
+  @media print {
+    body { margin: 2cm; font-family: "Times New Roman", serif;
+           font-size: 12pt; line-height: 2; color: black;
+           background: white; }
+    h1   { font-size: 18pt; font-weight: bold; margin-bottom: 4pt; }
+    h2   { font-size: 13pt; font-weight: bold; margin-bottom: 8pt; color: #333; }
+    hr   { border: none; border-top: 1px solid #999; margin: 12pt 0; }
+    *    { background: none !important; color: black !important; box-shadow: none !important; }
+  }
+  body { margin: 2cm; font-family: "Times New Roman", serif;
+         font-size: 12pt; line-height: 2; color: black; background: white; }
+  h1   { font-size: 18pt; font-weight: bold; margin-bottom: 4pt; }
+  h2   { font-size: 13pt; font-weight: bold; margin-bottom: 8pt; color: #333; }
+  hr   { border: none; border-top: 1px solid #999; margin: 12pt 0; }
+</style>
+</head>
+<body>
+<h1>${title}</h1>
+<h2>${subtitle}</h2>
+<hr>
+${bodyHTML}
+</body>
+</html>`);
+  win.document.close();
+  win.focus();
+  win.print();
 }
 
 function dlCorrectionPDF() {
   const classe  = document.getElementById('corr-classe').value  || '?';
   const matiere = document.getElementById('corr-matiere').value || '?';
   const date    = new Date().toLocaleDateString('fr-FR');
-  const text    = document.getElementById('correction-text').innerText || '';
-  const doc = _buildPDF([
-    { text: 'EduCI — Correction de devoir', style: 'title' },
-    { text: `Classe : ${classe}  •  Matière : ${matiere}  •  Date : ${date}`, style: 'subtitle' },
-    { text: '' },
-    { text: text }
-  ]);
-  doc.save(`EduCI_Correction_${_safeName(classe)}_${_safeName(matiere)}_${date.replace(/\//g,'')}.pdf`);
+  const html    = document.getElementById('correction-text').innerHTML || '';
+  _openPrintWindow(
+    'EduCI — Correction de devoir',
+    `Classe : ${classe} &nbsp;•&nbsp; Matière : ${matiere} &nbsp;•&nbsp; Date : ${date}`,
+    html
+  );
 }
 
 function dlLeconPDF() {
-  const titre   = document.getElementById('viewer-title').textContent || '';
-  const sub     = document.getElementById('viewer-sub').textContent   || '';
-  const text    = document.getElementById('ai-content').innerText     || '';
-  const doc = _buildPDF([
-    { text: 'EduCI — Fiche de leçon', style: 'title' },
-    { text: sub,   style: 'subtitle' },
-    { text: titre, style: 'subtitle' },
-    { text: '' },
-    { text: text }
-  ]);
-  doc.save(`EduCI_Lecon_${_safeName(currentClasse)}_${_safeName(currentMatiere?.name)}_${_safeName(titre)}.pdf`);
+  const titre = document.getElementById('viewer-title').textContent || '';
+  const sub   = document.getElementById('viewer-sub').textContent   || '';
+  const html  = document.getElementById('ai-content').innerHTML     || '';
+  _openPrintWindow('EduCI — Fiche de leçon', `${sub} — ${titre}`, html);
 }
 
 function dlExercicePDF() {
-  const titre    = document.getElementById('viewer-title').textContent    || '';
-  const sub      = document.getElementById('viewer-sub').textContent      || '';
-  const exText   = document.getElementById('exercice-content').innerText  || '';
-  const corrText = document.getElementById('correction-content').innerText || '';
-  const lines = [
-    { text: 'EduCI — Exercice', style: 'title' },
-    { text: sub,   style: 'subtitle' },
-    { text: titre, style: 'subtitle' },
-    { text: '' },
-    { text: exText }
-  ];
-  if (corrText.trim()) {
-    lines.push({ text: '' }, { text: '— Correction —', style: 'subtitle' }, { text: corrText });
-  }
-  const doc = _buildPDF(lines);
-  doc.save(`EduCI_Exercice_${_safeName(currentClasse)}_${_safeName(currentMatiere?.name)}_${_safeName(titre)}.pdf`);
+  const titre    = document.getElementById('viewer-title').textContent     || '';
+  const sub      = document.getElementById('viewer-sub').textContent       || '';
+  const exHTML   = document.getElementById('exercice-content').innerHTML   || '';
+  const corrHTML = document.getElementById('correction-content').innerHTML || '';
+  const body     = corrHTML.trim()
+    ? `${exHTML}<hr><h2>Correction</h2>${corrHTML}`
+    : exHTML;
+  _openPrintWindow('EduCI — Exercice', `${sub} — ${titre}`, body);
 }
 
 // === NAVIGATION ===
