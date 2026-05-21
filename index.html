@@ -715,6 +715,97 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
     </div>
   </div>
 
+  <!-- PAGE ANNALES BAC -->
+  <div class="page" id="page-annales">
+    <div class="page-header">
+      <h2 style="color:var(--orange)">📜 Annales BAC</h2>
+      <p style="color:var(--muted);font-size:14px">Génère un sujet BAC ivoirien complet avec l'IA</p>
+    </div>
+    <div style="padding:0 16px">
+
+      <!-- Série -->
+      <div style="margin-bottom:8px">
+        <label style="color:var(--muted);font-size:12px;display:block;margin-bottom:4px">Série</label>
+        <select id="annale-serie"
+          style="width:100%;padding:12px;border-radius:12px;background:var(--card);
+                 color:var(--text);border:1px solid rgba(255,255,255,0.1);font-size:14px">
+          <option value="">-- Sélectionner la série --</option>
+          <option value="A1">A1</option>
+          <option value="A2">A2</option>
+          <option value="C">C</option>
+          <option value="D">D</option>
+        </select>
+      </div>
+
+      <!-- Matière -->
+      <div style="margin-bottom:8px">
+        <label style="color:var(--muted);font-size:12px;display:block;margin-bottom:4px">Matière</label>
+        <select id="annale-matiere"
+          style="width:100%;padding:12px;border-radius:12px;background:var(--card);
+                 color:var(--text);border:1px solid rgba(255,255,255,0.1);font-size:14px">
+          <option value="">-- Sélectionner la matière --</option>
+          <option value="Français">Français</option>
+          <option value="Mathématiques">Mathématiques</option>
+          <option value="SVT">SVT</option>
+          <option value="Physique-Chimie">Physique-Chimie</option>
+          <option value="Anglais">Anglais</option>
+          <option value="Histoire-Géographie">Histoire-Géographie</option>
+          <option value="Philosophie">Philosophie</option>
+        </select>
+      </div>
+
+      <!-- Année -->
+      <div style="margin-bottom:16px">
+        <label style="color:var(--muted);font-size:12px;display:block;margin-bottom:4px">Année</label>
+        <select id="annale-annee"
+          style="width:100%;padding:12px;border-radius:12px;background:var(--card);
+                 color:var(--text);border:1px solid rgba(255,255,255,0.1);font-size:14px">
+          <option value="">-- Sélectionner l'année --</option>
+          <option value="2020">2020</option>
+          <option value="2021">2021</option>
+          <option value="2022">2022</option>
+          <option value="2023">2023</option>
+          <option value="2024">2024</option>
+        </select>
+      </div>
+
+      <!-- Bouton générer -->
+      <button id="btn-annale" onclick="genAnnale()"
+        style="width:100%;padding:16px;border-radius:16px;background:var(--orange);
+               border:none;color:white;font-size:16px;font-weight:700;cursor:pointer;
+               display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:8px">
+        🤖 Générer l'annale
+      </button>
+
+      <!-- Loading -->
+      <div id="annale-loading" style="display:none;text-align:center;padding:40px">
+        <div style="font-size:40px;margin-bottom:12px">📜</div>
+        <div style="color:var(--orange);font-weight:600">Génération en cours...</div>
+        <div style="color:var(--muted);font-size:12px;margin-top:4px">L'IA rédige le sujet BAC</div>
+      </div>
+
+      <!-- Résultat -->
+      <div id="annale-result" style="display:none;margin-top:16px">
+        <div style="background:var(--card);border-radius:16px;padding:16px">
+          <div id="annale-result-header"
+            style="color:var(--orange);font-weight:700;font-size:15px;margin-bottom:4px"></div>
+          <div id="annale-result-sub"
+            style="color:var(--muted);font-size:12px;margin-bottom:14px"></div>
+          <div id="annale-text"
+            style="color:var(--text);line-height:1.7;font-size:14px"></div>
+          <button onclick="dlAnnalePDF()"
+            style="width:100%;margin-top:16px;padding:13px;border:none;border-radius:12px;
+                   background:#FF6B35;color:white;font-family:'Syne',sans-serif;
+                   font-size:14px;font-weight:700;cursor:pointer;
+                   display:flex;align-items:center;justify-content:center;gap:8px">
+            📥 Télécharger en PDF
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <!-- NAV -->
   <nav class="nav">
     <button class="nav-item active" onclick="showPage('home')" id="nav-home">
@@ -731,6 +822,9 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
     </button>
     <button class="nav-item" onclick="showPage('correction')" id="nav-correction">
       <span class="nav-icon">📝</span>Correction
+    </button>
+    <button class="nav-item" onclick="showPage('annales')" id="nav-annales">
+      <span class="nav-icon">📜</span>Annales
     </button>
   </nav>
 </div>
@@ -4114,6 +4208,50 @@ function dlExercicePDF() {
     ? `${exHTML}<hr><h2>Correction</h2>${corrHTML}`
     : exHTML;
   _openPrintWindow('EduCI — Exercice', `${sub} — ${titre}`, body);
+}
+
+// === ANNALES BAC ===
+async function genAnnale() {
+  const serie   = document.getElementById('annale-serie').value;
+  const matiere = document.getElementById('annale-matiere').value;
+  const annee   = document.getElementById('annale-annee').value;
+  if (!serie || !matiere || !annee) {
+    alert('Sélectionne la série, la matière et l\'année.');
+    return;
+  }
+  document.getElementById('annale-loading').style.display = 'block';
+  document.getElementById('annale-result').style.display  = 'none';
+  document.getElementById('btn-annale').disabled = true;
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 2000,
+        system: `Tu es un expert du BAC ivoirien (DENA). Génère un sujet d'examen complet et réaliste pour la série ${serie}, matière ${matiere}, style BAC Côte d'Ivoire ${annee}. Inclus toutes les parties officielles avec barème. Réponds en français.`,
+        messages: [{ role: 'user', content: `Génère le sujet BAC ${annee} — Série ${serie} — ${matiere}.` }]
+      })
+    });
+    const data = await resp.json();
+    const text = data.content?.[0]?.text || 'Erreur lors de la génération.';
+    document.getElementById('annale-result-header').textContent = `BAC ${annee} — Série ${serie} — ${matiere}`;
+    document.getElementById('annale-result-sub').textContent    = 'Sujet généré par IA · DENA Côte d\'Ivoire';
+    document.getElementById('annale-text').innerHTML = marked.parse(text);
+    document.getElementById('annale-result').style.display = 'block';
+  } catch (err) {
+    alert('Erreur : ' + err.message);
+  } finally {
+    document.getElementById('annale-loading').style.display = 'none';
+    document.getElementById('btn-annale').disabled = false;
+  }
+}
+
+function dlAnnalePDF() {
+  const header = document.getElementById('annale-result-header').textContent || 'Annale BAC';
+  const sub    = document.getElementById('annale-result-sub').textContent    || '';
+  const html   = document.getElementById('annale-text').innerHTML            || '';
+  _openPrintWindow(`EduCI — ${header}`, sub, html);
 }
 
 // === NAVIGATION ===
