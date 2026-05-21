@@ -685,9 +685,11 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
       <!-- Résultat correction -->
       <div id="correction-result" style="display:none;margin-top:20px">
         <div style="background:var(--card);border-radius:16px;padding:16px">
-          <div style="color:var(--orange);font-weight:700;margin-bottom:12px;font-size:16px">
+          <div style="color:var(--orange);font-weight:700;margin-bottom:4px;font-size:16px">
             📋 Correction
           </div>
+          <div id="correction-subtitle"
+            style="color:var(--muted);font-size:12px;margin-bottom:12px"></div>
           <div id="correction-text"
             style="color:var(--text);line-height:1.6;font-size:14px;white-space:pre-wrap">
           </div>
@@ -3998,6 +4000,7 @@ async function corrigerDevoir() {
       body: JSON.stringify({ model: 'claude-haiku-4-5-20251001', max_tokens: 1500, system: systemPrompt, messages })
     });
     const data = await response.json();
+    document.getElementById('correction-subtitle').textContent = classe + ' • ' + matiere;
     document.getElementById('correction-text').innerHTML = marked.parse(data.content[0].text);
     document.querySelectorAll('#correction-text table').forEach(table => {
       const headers = [...table.querySelectorAll('th')].map(th => th.textContent.trim());
