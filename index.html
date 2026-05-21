@@ -719,11 +719,11 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
   <div class="page" id="page-annales">
     <div class="page-header">
       <h2 style="color:var(--orange)">📜 Annales BAC</h2>
-      <p style="color:var(--muted);font-size:14px">Génère un sujet BAC ivoirien complet avec l'IA</p>
+      <p style="color:var(--muted);font-size:14px">Sujets style TOP CHRONO · Programme DPFC officiel</p>
     </div>
     <div style="padding:0 16px">
 
-      <!-- Série -->
+      <!-- Sélecteurs -->
       <div style="margin-bottom:8px">
         <label style="color:var(--muted);font-size:12px;display:block;margin-bottom:4px">Série</label>
         <select id="annale-serie"
@@ -736,8 +736,6 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
           <option value="D">D</option>
         </select>
       </div>
-
-      <!-- Matière -->
       <div style="margin-bottom:8px">
         <label style="color:var(--muted);font-size:12px;display:block;margin-bottom:4px">Matière</label>
         <select id="annale-matiere"
@@ -753,8 +751,6 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
           <option value="Philosophie">Philosophie</option>
         </select>
       </div>
-
-      <!-- Année -->
       <div style="margin-bottom:16px">
         <label style="color:var(--muted);font-size:12px;display:block;margin-bottom:4px">Année</label>
         <select id="annale-annee"
@@ -773,26 +769,96 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
       <button id="btn-annale" onclick="genAnnale()"
         style="width:100%;padding:16px;border-radius:16px;background:var(--orange);
                border:none;color:white;font-size:16px;font-weight:700;cursor:pointer;
-               display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:8px">
-        🤖 Générer l'annale
+               display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:16px">
+        🤖 Générer l'annale TOP CHRONO
       </button>
+
+      <!-- Liens officiels -->
+      <div style="background:var(--card);border-radius:14px;padding:14px;margin-bottom:16px">
+        <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;
+                    margin-bottom:10px;color:var(--text)">🔗 Vrais sujets officiels</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:10px">
+          Télécharge des sujets officiels BAC CI sur ces sites :
+        </div>
+        <a href="https://www.epreuvesetcorriges.com" target="_blank" rel="noopener"
+          style="display:flex;align-items:center;gap:10px;padding:10px;
+                 background:rgba(247,127,0,0.08);border-radius:10px;
+                 text-decoration:none;margin-bottom:8px">
+          <span style="font-size:20px">📂</span>
+          <div>
+            <div style="color:var(--orange);font-weight:600;font-size:13px">epreuvesetcorriges.com</div>
+            <div style="color:var(--muted);font-size:11px">Épreuves et corrigés BAC Côte d'Ivoire</div>
+          </div>
+        </a>
+        <a href="https://www.examens-concours.net" target="_blank" rel="noopener"
+          style="display:flex;align-items:center;gap:10px;padding:10px;
+                 background:rgba(247,127,0,0.08);border-radius:10px;
+                 text-decoration:none">
+          <span style="font-size:20px">📋</span>
+          <div>
+            <div style="color:var(--orange);font-weight:600;font-size:13px">examens-concours.net</div>
+            <div style="color:var(--muted);font-size:11px">Sujets et concours Afrique de l'Ouest</div>
+          </div>
+        </a>
+      </div>
+
+      <!-- Upload sujet réel -->
+      <div style="background:var(--card);border-radius:14px;padding:14px;margin-bottom:16px">
+        <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;
+                    margin-bottom:6px;color:var(--text)">📤 Corriger un vrai sujet BAC</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:12px">
+          Uploade un sujet réel (image, PDF, Word) : l'IA le corrige selon le barème DENA.
+        </div>
+        <div onclick="document.getElementById('annale-file').click()"
+          style="border:2px dashed var(--orange);border-radius:12px;padding:24px;
+                 text-align:center;cursor:pointer;background:rgba(247,127,0,0.04);
+                 margin-bottom:10px">
+          <div style="font-size:36px;margin-bottom:6px">📎</div>
+          <div style="color:var(--orange);font-weight:600;font-size:13px">
+            Choisir un fichier
+          </div>
+          <div style="color:var(--muted);font-size:11px;margin-top:2px">Image, PDF ou Word (.docx)</div>
+          <input type="file" id="annale-file"
+            accept="image/*,.pdf,.docx,application/pdf,
+              application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            style="display:none" onchange="previewAnnaleFile(this)">
+        </div>
+        <div id="annale-file-preview" style="display:none;margin-bottom:10px;
+          background:rgba(255,255,255,0.05);border-radius:10px;padding:10px;
+          display:flex;align-items:center;gap:10px">
+          <span id="annale-file-icon" style="font-size:28px"></span>
+          <div style="flex:1">
+            <div id="annale-file-name" style="font-weight:600;font-size:13px"></div>
+            <div id="annale-file-size" style="color:var(--muted);font-size:11px"></div>
+          </div>
+          <button onclick="clearAnnaleFile()"
+            style="background:rgba(239,68,68,0.2);border:none;color:#EF4444;
+                   border-radius:8px;padding:5px 9px;cursor:pointer;font-size:13px">✕</button>
+        </div>
+        <button id="btn-annale-upload" onclick="corrigerAnnaleUpload()"
+          style="width:100%;padding:13px;border-radius:12px;
+                 background:linear-gradient(135deg,var(--green),#00c853);
+                 border:none;color:white;font-size:14px;font-weight:700;cursor:pointer;
+                 display:flex;align-items:center;justify-content:center;gap:8px">
+          ✅ Corriger ce sujet avec l'IA
+        </button>
+      </div>
 
       <!-- Loading -->
       <div id="annale-loading" style="display:none;text-align:center;padding:40px">
         <div style="font-size:40px;margin-bottom:12px">📜</div>
         <div style="color:var(--orange);font-weight:600">Génération en cours...</div>
-        <div style="color:var(--muted);font-size:12px;margin-top:4px">L'IA rédige le sujet BAC</div>
+        <div style="color:var(--muted);font-size:12px;margin-top:4px">L'IA rédige le sujet style TOP CHRONO</div>
       </div>
 
       <!-- Résultat -->
-      <div id="annale-result" style="display:none;margin-top:16px">
+      <div id="annale-result" style="display:none;margin-top:8px">
         <div style="background:var(--card);border-radius:16px;padding:16px">
           <div id="annale-result-header"
             style="color:var(--orange);font-weight:700;font-size:15px;margin-bottom:4px"></div>
           <div id="annale-result-sub"
             style="color:var(--muted);font-size:12px;margin-bottom:14px"></div>
-          <div id="annale-text"
-            style="color:var(--text);line-height:1.7;font-size:14px"></div>
+          <div id="annale-text" style="color:var(--text);line-height:1.7;font-size:14px"></div>
           <button onclick="dlAnnalePDF()"
             style="width:100%;margin-top:16px;padding:13px;border:none;border-radius:12px;
                    background:#FF6B35;color:white;font-family:'Syne',sans-serif;
@@ -4228,15 +4294,15 @@ async function genAnnale() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model: 'claude-haiku-4-5-20251001',
-        max_tokens: 2000,
-        system: `Tu es un expert du BAC ivoirien (DENA). Génère un sujet d'examen complet et réaliste pour la série ${serie}, matière ${matiere}, style BAC Côte d'Ivoire ${annee}. Inclus toutes les parties officielles avec barème. Réponds en français.`,
-        messages: [{ role: 'user', content: `Génère le sujet BAC ${annee} — Série ${serie} — ${matiere}.` }]
+        max_tokens: 3000,
+        system: `Tu es un expert du BAC ivoirien (DENA/DPFC). Génère un sujet complet style TOP CHRONO pour ${matiere} - Série ${serie} - conforme au programme officiel DPFC Côte d'Ivoire.\n\nStructure OBLIGATOIRE :\n\n═══ RAPPEL DE COURS ═══\nPoints clés du programme à maîtriser pour ce sujet\n\n═══ SUJET D'EXAMEN ═══\n[En-tête officiel : REPUBLIQUE DE CÔTE D'IVOIRE - BACCALAURÉAT - Série/Matière/Durée/Coefficient]\nToutes les parties officielles avec consignes claires\n\n═══ CORRIGÉ DÉTAILLÉ ═══\nCorrection complète partie par partie avec barème\n\n═══ MÉTHODES & CONSEILS ═══\nTechniques de résolution, pièges à éviter\n\nSois précis, rigoureux, conforme au niveau BAC CI.`,
+        messages: [{ role: 'user', content: `Génère le sujet BAC ${annee} style TOP CHRONO — Série ${serie} — ${matiere}.` }]
       })
     });
     const data = await resp.json();
     const text = data.content?.[0]?.text || 'Erreur lors de la génération.';
     document.getElementById('annale-result-header').textContent = `BAC ${annee} — Série ${serie} — ${matiere}`;
-    document.getElementById('annale-result-sub').textContent    = 'Sujet généré par IA · DENA Côte d\'Ivoire';
+    document.getElementById('annale-result-sub').textContent    = 'Style TOP CHRONO · Généré par IA · Programme DPFC';
     document.getElementById('annale-text').innerHTML = marked.parse(text);
     document.getElementById('annale-result').style.display = 'block';
   } catch (err) {
@@ -4244,6 +4310,71 @@ async function genAnnale() {
   } finally {
     document.getElementById('annale-loading').style.display = 'none';
     document.getElementById('btn-annale').disabled = false;
+  }
+}
+
+function previewAnnaleFile(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const preview = document.getElementById('annale-file-preview');
+  document.getElementById('annale-file-name').textContent = file.name;
+  document.getElementById('annale-file-size').textContent = (file.size / 1024).toFixed(1) + ' Ko';
+  document.getElementById('annale-file-icon').textContent =
+    file.type.startsWith('image/') ? '🖼️' : file.type === 'application/pdf' ? '📄' : '📝';
+  preview.style.display = 'flex';
+}
+
+function clearAnnaleFile() {
+  document.getElementById('annale-file').value = '';
+  document.getElementById('annale-file-preview').style.display = 'none';
+}
+
+async function corrigerAnnaleUpload() {
+  const serie   = document.getElementById('annale-serie').value;
+  const matiere = document.getElementById('annale-matiere').value;
+  const annee   = document.getElementById('annale-annee').value;
+  const file    = document.getElementById('annale-file').files[0];
+  if (!file) { alert('Sélectionne un fichier sujet à corriger.'); return; }
+  document.getElementById('annale-loading').style.display = 'block';
+  document.getElementById('annale-result').style.display  = 'none';
+  document.getElementById('btn-annale-upload').disabled = true;
+  try {
+    const context = [serie, matiere, annee].filter(Boolean).join(' — ') || 'BAC Côte d\'Ivoire';
+    const system  = `Tu es un expert correcteur du BAC ivoirien (DENA/DPFC). Corrige le sujet fourni (${context}) avec un corrigé détaillé, partie par partie, barème inclus, conforme au programme officiel DPFC. Réponds en français.`;
+    let messages;
+    if (file.type.startsWith('image/')) {
+      const base64 = await fileToBase64(file);
+      messages = [{ role: 'user', content: [
+        { type: 'image', source: { type: 'base64', media_type: file.type, data: base64 } },
+        { type: 'text', text: `Voici le sujet BAC (${context}). Fournis le corrigé complet avec barème.` }
+      ]}];
+    } else if (file.type === 'application/pdf') {
+      const base64 = await fileToBase64(file);
+      messages = [{ role: 'user', content: [
+        { type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: base64 } },
+        { type: 'text', text: `Voici le sujet BAC (${context}). Fournis le corrigé complet avec barème.` }
+      ]}];
+    } else {
+      const buf = await file.arrayBuffer();
+      const { value } = await mammoth.extractRawText({ arrayBuffer: buf });
+      messages = [{ role: 'user', content: `Sujet BAC (${context}) :\n\n${value}\n\nFournis le corrigé complet avec barème.` }];
+    }
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model: 'claude-haiku-4-5-20251001', max_tokens: 3000, system, messages })
+    });
+    const data = await resp.json();
+    const text = data.content?.[0]?.text || 'Erreur lors de la correction.';
+    document.getElementById('annale-result-header').textContent = `Corrigé · ${context}`;
+    document.getElementById('annale-result-sub').textContent    = 'Corrigé IA · Programme DPFC Côte d\'Ivoire';
+    document.getElementById('annale-text').innerHTML = marked.parse(text);
+    document.getElementById('annale-result').style.display = 'block';
+  } catch (err) {
+    alert('Erreur : ' + err.message);
+  } finally {
+    document.getElementById('annale-loading').style.display = 'none';
+    document.getElementById('btn-annale-upload').disabled = false;
   }
 }
 
