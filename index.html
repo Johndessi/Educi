@@ -757,11 +757,6 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
           style="width:100%;padding:12px;border-radius:12px;background:var(--card);
                  color:var(--text);border:1px solid rgba(255,255,255,0.1);font-size:14px">
           <option value="">-- Sélectionner l'année --</option>
-          <option value="2020">2020</option>
-          <option value="2021">2021</option>
-          <option value="2022">2022</option>
-          <option value="2023">2023</option>
-          <option value="2024">2024</option>
         </select>
       </div>
 
@@ -859,6 +854,14 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
           <div id="annale-result-sub"
             style="color:var(--muted);font-size:12px;margin-bottom:14px"></div>
           <div id="annale-text" style="color:var(--text);line-height:1.7;font-size:14px"></div>
+          <div id="annale-corrige-section" style="display:none;margin-top:20px">
+            <div style="border-top:2px solid var(--orange);padding-top:14px;margin-bottom:12px;
+                        display:flex;align-items:center;gap:8px">
+              <span style="font-weight:700;color:var(--orange);font-size:15px;
+                           font-family:'Syne',sans-serif">✅ CORRIGÉ DÉTAILLÉ</span>
+            </div>
+            <div id="annale-corrige" style="color:var(--text);line-height:1.7;font-size:14px"></div>
+          </div>
           <button onclick="dlAnnalePDF()"
             style="width:100%;margin-top:16px;padding:13px;border:none;border-radius:12px;
                    background:#FF6B35;color:white;font-family:'Syne',sans-serif;
@@ -4077,9 +4080,22 @@ let selectedPM = 'Orange Money';
 let selectedPlan = 'Mensuel • 500 FCFA';
 
 // === INIT ===
+function initAnnalesAnnees() {
+  const sel = document.getElementById('annale-annee');
+  if (!sel) return;
+  const current = new Date().getFullYear();
+  for (let y = current; y >= 2015; y--) {
+    const opt = document.createElement('option');
+    opt.value = String(y);
+    opt.textContent = String(y);
+    sel.appendChild(opt);
+  }
+}
+
 function startApp() {
   if (currentClasse) applyClasse(currentClasse);
   initCorrection();
+  initAnnalesAnnees();
 }
 document.addEventListener('DOMContentLoaded', startApp);
 
@@ -4292,23 +4308,32 @@ async function genAnnale() {
   const enTete = isFr
     ? `RÉPUBLIQUE DE CÔTE D'IVOIRE\nMINISTÈRE DE L'ÉDUCATION NATIONALE\nDIRECTION RÉGIONALE DE L'ÉDUCATION NATIONALE ET DE L'ALPHABÉTISATION\nET DE L'ENSEIGNEMENT TECHNIQUE (DRENAET)\nBACCALAURÉAT — Session ${annee}\nÉpreuve de FRANÇAIS — Série ${serie}\nDurée : 4h | Coefficient : [selon série]`
     : `RÉPUBLIQUE DE CÔTE D'IVOIRE — MINISTÈRE DE L'ÉDUCATION NATIONALE (DRENAET)\nBACCALAURÉAT ${annee} — Série ${serie} — ${matiere}`;
-  const sysPrompt = `Tu es un expert du BAC ivoirien (DRENAET/DPFC). Génère un sujet complet style SÉSAME BAC pour ${matiere} - Série ${serie} - conforme au programme officiel DPFC Côte d'Ivoire.\n\nStructure OBLIGATOIRE :\n\n═══ RAPPEL DE COURS ═══\nPoints clés du programme à maîtriser pour ce sujet\n\n═══ SUJET D'EXAMEN ═══\n[Utilise exactement cet en-tête officiel :\n${enTete}]\nToutes les parties officielles avec consignes claires\n\n═══ CORRIGÉ DÉTAILLÉ ═══\nCorrection complète partie par partie avec barème\n\n═══ MÉTHODES & CONSEILS ═══\nTechniques de résolution, pièges à éviter\n\nSois précis, rigoureux, conforme au niveau BAC CI.`;
+  const sysPrompt = `Tu es un expert du BAC ivoirien (DRENAET/DPFC). Génère un sujet complet style SÉSAME BAC pour ${matiere} - Série ${serie} - conforme au programme officiel DPFC Côte d'Ivoire.\n\nStructure OBLIGATOIRE (respecte exactement cet ordre et ces séparateurs) :\n\n═══ RAPPEL DE COURS ═══\nPoints clés du programme à maîtriser pour ce sujet\n\n═══ SUJET D'EXAMEN ═══\n[Utilise exactement cet en-tête officiel :\n${enTete}]\nToutes les parties officielles avec consignes claires\n\n═══ MÉTHODES & CONSEILS ═══\nTechniques de résolution, pièges à éviter\n\n══════ CORRIGÉ ══════\n\n═══ CORRIGÉ DÉTAILLÉ ═══\nCorrection COMPLÈTE partie par partie avec barème chiffré. Ne pas résumer — développer chaque étape.\n\nIMPORTANT : La ligne ══════ CORRIGÉ ══════ doit apparaître exactement telle quelle pour séparer le sujet du corrigé.`;
   try {
     const resp = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model: 'claude-haiku-4-5-20251001',
-        max_tokens: 3000,
+        max_tokens: 4000,
         system: sysPrompt,
-        messages: [{ role: 'user', content: `Génère le sujet BAC ${annee} style SÉSAME BAC — Série ${serie} — ${matiere}.` }]
+        messages: [{ role: 'user', content: `Génère le sujet BAC ${annee} style SÉSAME BAC — Série ${serie} — ${matiere}. Inclus obligatoirement le corrigé complet après la ligne ══════ CORRIGÉ ══════.` }]
       })
     });
     const data = await resp.json();
     const text = data.content?.[0]?.text || 'Erreur lors de la génération.';
+    const SEP = '══════ CORRIGÉ ══════';
+    const parts = text.split(SEP);
     document.getElementById('annale-result-header').textContent = `BAC ${annee} — Série ${serie} — ${matiere}`;
     document.getElementById('annale-result-sub').textContent    = 'Style SÉSAME BAC · Généré par EduCI IA · Programme DPFC';
-    document.getElementById('annale-text').innerHTML = marked.parse(text);
+    document.getElementById('annale-text').innerHTML = marked.parse(parts[0].trim());
+    const corrigeSection = document.getElementById('annale-corrige-section');
+    if (parts[1] && parts[1].trim()) {
+      document.getElementById('annale-corrige').innerHTML = marked.parse(parts[1].trim());
+      corrigeSection.style.display = 'block';
+    } else {
+      corrigeSection.style.display = 'none';
+    }
     document.getElementById('annale-result').style.display = 'block';
   } catch (err) {
     alert('Erreur : ' + err.message);
@@ -4384,10 +4409,15 @@ async function corrigerAnnaleUpload() {
 }
 
 function dlAnnalePDF() {
-  const header = document.getElementById('annale-result-header').textContent || 'Annale BAC';
-  const sub    = document.getElementById('annale-result-sub').textContent    || '';
-  const html   = document.getElementById('annale-text').innerHTML            || '';
-  _openPrintWindow(`EduCI — ${header}`, sub, html);
+  const header  = document.getElementById('annale-result-header').textContent || 'Annale BAC';
+  const sub     = document.getElementById('annale-result-sub').textContent    || '';
+  const sujet   = document.getElementById('annale-text').innerHTML            || '';
+  const corrige = document.getElementById('annale-corrige').innerHTML         || '';
+  const corrigeSection = document.getElementById('annale-corrige-section');
+  const corrigeHTML = corrigeSection.style.display !== 'none' && corrige
+    ? `<hr style="margin:24px 0"><h2 style="color:#000">CORRIGÉ DÉTAILLÉ</h2>${corrige}`
+    : '';
+  _openPrintWindow(`EduCI — ${header}`, sub, sujet + corrigeHTML);
 }
 
 // === NAVIGATION ===
