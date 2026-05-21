@@ -807,7 +807,7 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
         <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;
                     margin-bottom:6px;color:var(--text)">📤 Corriger un vrai sujet BAC</div>
         <div style="font-size:12px;color:var(--muted);margin-bottom:12px">
-          Uploade un sujet réel (image, PDF, Word) : l'IA le corrige selon le barème DENA.
+          Uploade un sujet réel (image, PDF, Word) : l'IA le corrige selon le barème DRENAET.
         </div>
         <div onclick="document.getElementById('annale-file').click()"
           style="border:2px dashed var(--orange);border-radius:12px;padding:24px;
@@ -4288,6 +4288,11 @@ async function genAnnale() {
   document.getElementById('annale-loading').style.display = 'block';
   document.getElementById('annale-result').style.display  = 'none';
   document.getElementById('btn-annale').disabled = true;
+  const isFr = matiere.toLowerCase().includes('fran');
+  const enTete = isFr
+    ? `RÉPUBLIQUE DE CÔTE D'IVOIRE\nMINISTÈRE DE L'ÉDUCATION NATIONALE\nDIRECTION RÉGIONALE DE L'ÉDUCATION NATIONALE ET DE L'ALPHABÉTISATION\nET DE L'ENSEIGNEMENT TECHNIQUE (DRENAET)\nBACCALAURÉAT — Session ${annee}\nÉpreuve de FRANÇAIS — Série ${serie}\nDurée : 4h | Coefficient : [selon série]`
+    : `RÉPUBLIQUE DE CÔTE D'IVOIRE — MINISTÈRE DE L'ÉDUCATION NATIONALE (DRENAET)\nBACCALAURÉAT ${annee} — Série ${serie} — ${matiere}`;
+  const sysPrompt = `Tu es un expert du BAC ivoirien (DRENAET/DPFC). Génère un sujet complet style TOP CHRONO pour ${matiere} - Série ${serie} - conforme au programme officiel DPFC Côte d'Ivoire.\n\nStructure OBLIGATOIRE :\n\n═══ RAPPEL DE COURS ═══\nPoints clés du programme à maîtriser pour ce sujet\n\n═══ SUJET D'EXAMEN ═══\n[Utilise exactement cet en-tête officiel :\n${enTete}]\nToutes les parties officielles avec consignes claires\n\n═══ CORRIGÉ DÉTAILLÉ ═══\nCorrection complète partie par partie avec barème\n\n═══ MÉTHODES & CONSEILS ═══\nTechniques de résolution, pièges à éviter\n\nSois précis, rigoureux, conforme au niveau BAC CI.`;
   try {
     const resp = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -4295,7 +4300,7 @@ async function genAnnale() {
       body: JSON.stringify({
         model: 'claude-haiku-4-5-20251001',
         max_tokens: 3000,
-        system: `Tu es un expert du BAC ivoirien (DENA/DPFC). Génère un sujet complet style TOP CHRONO pour ${matiere} - Série ${serie} - conforme au programme officiel DPFC Côte d'Ivoire.\n\nStructure OBLIGATOIRE :\n\n═══ RAPPEL DE COURS ═══\nPoints clés du programme à maîtriser pour ce sujet\n\n═══ SUJET D'EXAMEN ═══\n[En-tête officiel : REPUBLIQUE DE CÔTE D'IVOIRE - BACCALAURÉAT - Série/Matière/Durée/Coefficient]\nToutes les parties officielles avec consignes claires\n\n═══ CORRIGÉ DÉTAILLÉ ═══\nCorrection complète partie par partie avec barème\n\n═══ MÉTHODES & CONSEILS ═══\nTechniques de résolution, pièges à éviter\n\nSois précis, rigoureux, conforme au niveau BAC CI.`,
+        system: sysPrompt,
         messages: [{ role: 'user', content: `Génère le sujet BAC ${annee} style TOP CHRONO — Série ${serie} — ${matiere}.` }]
       })
     });
@@ -4340,7 +4345,7 @@ async function corrigerAnnaleUpload() {
   document.getElementById('btn-annale-upload').disabled = true;
   try {
     const context = [serie, matiere, annee].filter(Boolean).join(' — ') || 'BAC Côte d\'Ivoire';
-    const system  = `Tu es un expert correcteur du BAC ivoirien (DENA/DPFC). Corrige le sujet fourni (${context}) avec un corrigé détaillé, partie par partie, barème inclus, conforme au programme officiel DPFC. Réponds en français.`;
+    const system  = `Tu es un expert correcteur du BAC ivoirien (DRENAET/DPFC). Corrige le sujet fourni (${context}) avec un corrigé détaillé, partie par partie, barème inclus, conforme au programme officiel DPFC. Réponds en français.`;
     let messages;
     if (file.type.startsWith('image/')) {
       const base64 = await fileToBase64(file);
