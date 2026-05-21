@@ -719,7 +719,7 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
   <div class="page" id="page-annales">
     <div class="page-header">
       <h2 style="color:var(--orange)">📜 Annales BAC</h2>
-      <p style="color:var(--muted);font-size:14px">Sujets style TOP CHRONO · Programme DPFC officiel</p>
+      <p style="color:var(--muted);font-size:14px">Sujets style SÉSAME BAC · Programme DPFC officiel</p>
     </div>
     <div style="padding:0 16px">
 
@@ -770,7 +770,7 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
         style="width:100%;padding:16px;border-radius:16px;background:var(--orange);
                border:none;color:white;font-size:16px;font-weight:700;cursor:pointer;
                display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:16px">
-        🤖 Générer l'annale TOP CHRONO
+        🤖 Générer l'annale SÉSAME BAC
       </button>
 
       <!-- Liens officiels -->
@@ -848,7 +848,7 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
       <div id="annale-loading" style="display:none;text-align:center;padding:40px">
         <div style="font-size:40px;margin-bottom:12px">📜</div>
         <div style="color:var(--orange);font-weight:600">Génération en cours...</div>
-        <div style="color:var(--muted);font-size:12px;margin-top:4px">L'IA rédige le sujet style TOP CHRONO</div>
+        <div style="color:var(--muted);font-size:12px;margin-top:4px">L'IA rédige le sujet style SÉSAME BAC</div>
       </div>
 
       <!-- Résultat -->
@@ -4292,7 +4292,7 @@ async function genAnnale() {
   const enTete = isFr
     ? `RÉPUBLIQUE DE CÔTE D'IVOIRE\nMINISTÈRE DE L'ÉDUCATION NATIONALE\nDIRECTION RÉGIONALE DE L'ÉDUCATION NATIONALE ET DE L'ALPHABÉTISATION\nET DE L'ENSEIGNEMENT TECHNIQUE (DRENAET)\nBACCALAURÉAT — Session ${annee}\nÉpreuve de FRANÇAIS — Série ${serie}\nDurée : 4h | Coefficient : [selon série]`
     : `RÉPUBLIQUE DE CÔTE D'IVOIRE — MINISTÈRE DE L'ÉDUCATION NATIONALE (DRENAET)\nBACCALAURÉAT ${annee} — Série ${serie} — ${matiere}`;
-  const sysPrompt = `Tu es un expert du BAC ivoirien (DRENAET/DPFC). Génère un sujet complet style TOP CHRONO pour ${matiere} - Série ${serie} - conforme au programme officiel DPFC Côte d'Ivoire.\n\nStructure OBLIGATOIRE :\n\n═══ RAPPEL DE COURS ═══\nPoints clés du programme à maîtriser pour ce sujet\n\n═══ SUJET D'EXAMEN ═══\n[Utilise exactement cet en-tête officiel :\n${enTete}]\nToutes les parties officielles avec consignes claires\n\n═══ CORRIGÉ DÉTAILLÉ ═══\nCorrection complète partie par partie avec barème\n\n═══ MÉTHODES & CONSEILS ═══\nTechniques de résolution, pièges à éviter\n\nSois précis, rigoureux, conforme au niveau BAC CI.`;
+  const sysPrompt = `Tu es un expert du BAC ivoirien (DRENAET/DPFC). Génère un sujet complet style SÉSAME BAC pour ${matiere} - Série ${serie} - conforme au programme officiel DPFC Côte d'Ivoire.\n\nStructure OBLIGATOIRE :\n\n═══ RAPPEL DE COURS ═══\nPoints clés du programme à maîtriser pour ce sujet\n\n═══ SUJET D'EXAMEN ═══\n[Utilise exactement cet en-tête officiel :\n${enTete}]\nToutes les parties officielles avec consignes claires\n\n═══ CORRIGÉ DÉTAILLÉ ═══\nCorrection complète partie par partie avec barème\n\n═══ MÉTHODES & CONSEILS ═══\nTechniques de résolution, pièges à éviter\n\nSois précis, rigoureux, conforme au niveau BAC CI.`;
   try {
     const resp = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -4301,13 +4301,13 @@ async function genAnnale() {
         model: 'claude-haiku-4-5-20251001',
         max_tokens: 3000,
         system: sysPrompt,
-        messages: [{ role: 'user', content: `Génère le sujet BAC ${annee} style TOP CHRONO — Série ${serie} — ${matiere}.` }]
+        messages: [{ role: 'user', content: `Génère le sujet BAC ${annee} style SÉSAME BAC — Série ${serie} — ${matiere}.` }]
       })
     });
     const data = await resp.json();
     const text = data.content?.[0]?.text || 'Erreur lors de la génération.';
     document.getElementById('annale-result-header').textContent = `BAC ${annee} — Série ${serie} — ${matiere}`;
-    document.getElementById('annale-result-sub').textContent    = 'Style TOP CHRONO · Généré par IA · Programme DPFC';
+    document.getElementById('annale-result-sub').textContent    = 'Style SÉSAME BAC · Généré par EduCI IA · Programme DPFC';
     document.getElementById('annale-text').innerHTML = marked.parse(text);
     document.getElementById('annale-result').style.display = 'block';
   } catch (err) {
