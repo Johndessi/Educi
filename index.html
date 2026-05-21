@@ -10,6 +10,7 @@
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -693,6 +694,13 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
           <div id="correction-text"
             style="color:var(--text);line-height:1.6;font-size:14px;white-space:pre-wrap">
           </div>
+          <button onclick="dlCorrectionPDF()"
+            style="width:100%;margin-top:16px;padding:13px;border:none;border-radius:12px;
+                   background:#FF6B35;color:white;font-family:'Syne',sans-serif;
+                   font-size:14px;font-weight:700;cursor:pointer;
+                   display:flex;align-items:center;justify-content:center;gap:8px">
+            📥 Télécharger en PDF
+          </button>
         </div>
       </div>
 
@@ -746,6 +754,13 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
           <div class="dots"><span></span><span></span><span></span></div>
         </div>
       </div>
+      <button onclick="dlLeconPDF()"
+        style="width:100%;margin-top:16px;padding:13px;border:none;border-radius:12px;
+               background:#FF6B35;color:white;font-family:'Syne',sans-serif;
+               font-size:14px;font-weight:700;cursor:pointer;
+               display:flex;align-items:center;justify-content:center;gap:8px">
+        📥 Télécharger en PDF
+      </button>
     </div>
     <div class="ai-card">
       <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:6px;">📋 Fiche de Révision</div>
@@ -776,6 +791,13 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
         <button onclick="showCorrection()" style="width:100%;padding:12px;border:none;border-radius:12px;background:linear-gradient(135deg,var(--green),#00c853);color:white;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">✅ Voir la correction</button>
       </div>
       <div id="correction-content" style="margin-top:14px;"></div>
+      <button onclick="dlExercicePDF()"
+        style="width:100%;margin-top:16px;padding:13px;border:none;border-radius:12px;
+               background:#FF6B35;color:white;font-family:'Syne',sans-serif;
+               font-size:14px;font-weight:700;cursor:pointer;
+               display:flex;align-items:center;justify-content:center;gap:8px">
+        📥 Télécharger en PDF
+      </button>
     </div>
   </div>
 </div>
@@ -4026,6 +4048,87 @@ function fileToBase64(file) {
     reader.onerror = reject;
     reader.readAsDataURL(file);
   });
+}
+
+// === PDF DOWNLOAD ===
+function _safeName(s) {
+  return (s || '').replace(/[^a-zA-Z0-9]/g, '_').substring(0, 30);
+}
+
+function _buildPDF(lines) {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  const margin = 16;
+  const maxW = doc.internal.pageSize.getWidth() - margin * 2;
+  let y = 20;
+  lines.forEach(({ text, style }) => {
+    if (!text && text !== '') return;
+    if (style === 'title') {
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(16);
+    } else if (style === 'subtitle') {
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(11);
+    } else {
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(10);
+    }
+    const split = doc.splitTextToSize(text || '', maxW);
+    split.forEach(line => {
+      if (y > 282) { doc.addPage(); y = 20; }
+      doc.text(line, margin, y);
+      y += style === 'title' ? 9 : 6;
+    });
+    y += style ? 3 : 1;
+  });
+  return doc;
+}
+
+function dlCorrectionPDF() {
+  const classe  = document.getElementById('corr-classe').value  || '?';
+  const matiere = document.getElementById('corr-matiere').value || '?';
+  const date    = new Date().toLocaleDateString('fr-FR');
+  const text    = document.getElementById('correction-text').innerText || '';
+  const doc = _buildPDF([
+    { text: 'EduCI — Correction de devoir', style: 'title' },
+    { text: `Classe : ${classe}  •  Matière : ${matiere}  •  Date : ${date}`, style: 'subtitle' },
+    { text: '' },
+    { text: text }
+  ]);
+  doc.save(`EduCI_Correction_${_safeName(classe)}_${_safeName(matiere)}_${date.replace(/\//g,'')}.pdf`);
+}
+
+function dlLeconPDF() {
+  const titre   = document.getElementById('viewer-title').textContent || '';
+  const sub     = document.getElementById('viewer-sub').textContent   || '';
+  const text    = document.getElementById('ai-content').innerText     || '';
+  const doc = _buildPDF([
+    { text: 'EduCI — Fiche de leçon', style: 'title' },
+    { text: sub,   style: 'subtitle' },
+    { text: titre, style: 'subtitle' },
+    { text: '' },
+    { text: text }
+  ]);
+  doc.save(`EduCI_Lecon_${_safeName(currentClasse)}_${_safeName(currentMatiere?.name)}_${_safeName(titre)}.pdf`);
+}
+
+function dlExercicePDF() {
+  const titre    = document.getElementById('viewer-title').textContent    || '';
+  const sub      = document.getElementById('viewer-sub').textContent      || '';
+  const exText   = document.getElementById('exercice-content').innerText  || '';
+  const corrText = document.getElementById('correction-content').innerText || '';
+  const lines = [
+    { text: 'EduCI — Exercice', style: 'title' },
+    { text: sub,   style: 'subtitle' },
+    { text: titre, style: 'subtitle' },
+    { text: '' },
+    { text: exText }
+  ];
+  if (corrText.trim()) {
+    lines.push({ text: '' }, { text: '— Correction —', style: 'subtitle' }, { text: corrText });
+  }
+  const doc = _buildPDF(lines);
+  doc.save(`EduCI_Exercice_${_safeName(currentClasse)}_${_safeName(currentMatiere?.name)}_${_safeName(titre)}.pdf`);
 }
 
 // === NAVIGATION ===
