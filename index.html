@@ -368,6 +368,41 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
   display: inline-block; padding: 4px 10px;
   border-radius: 8px; font-size: 11px; font-weight: 600;
 }
+/* Tables générées par marked.parse() dans la correction */
+#correction-text table {
+  width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px;
+}
+#correction-text th,
+#correction-text td {
+  border: 1px solid rgba(255,255,255,0.12);
+  padding: 8px 10px; text-align: left; vertical-align: top;
+}
+#correction-text th {
+  background: rgba(247,127,0,0.15); color: var(--orange); font-weight: 600;
+}
+#correction-text tr:nth-child(even) td { background: rgba(255,255,255,0.03); }
+@media (max-width: 600px) {
+  #correction-text table,
+  #correction-text thead,
+  #correction-text tbody,
+  #correction-text th,
+  #correction-text td,
+  #correction-text tr { display: block; }
+  #correction-text thead { display: none; }
+  #correction-text tr {
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px; margin-bottom: 8px; overflow: hidden;
+  }
+  #correction-text td {
+    position: relative; padding: 8px 8px 8px 46%;
+    border: none; border-bottom: 1px solid rgba(255,255,255,0.08); min-height: 36px;
+  }
+  #correction-text td::before {
+    content: attr(data-label);
+    position: absolute; left: 0; top: 8px; width: 43%;
+    font-weight: 600; color: var(--orange); font-size: 11px; padding: 0 4px;
+  }
+}
 </style>
 </head>
 <body>
@@ -3964,6 +3999,14 @@ async function corrigerDevoir() {
     });
     const data = await response.json();
     document.getElementById('correction-text').innerHTML = marked.parse(data.content[0].text);
+    document.querySelectorAll('#correction-text table').forEach(table => {
+      const headers = [...table.querySelectorAll('th')].map(th => th.textContent.trim());
+      table.querySelectorAll('tbody tr').forEach(row => {
+        [...row.querySelectorAll('td')].forEach((td, i) => {
+          if (headers[i]) td.setAttribute('data-label', headers[i]);
+        });
+      });
+    });
     document.getElementById('correction-result').style.display = 'block';
   } catch (err) {
     alert('Erreur lors de la correction : ' + err.message);
