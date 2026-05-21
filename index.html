@@ -538,6 +538,32 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
   <div class="page" id="page-planning">
     <div class="section-title">Planning Semaine</div>
     <div class="planning-grid" id="planning-grid"></div>
+    <!-- Planning IA -->
+    <div style="margin-top:12px">
+      <button id="btn-gen-planning" onclick="genPlanning()"
+        style="width:100%;padding:16px;border-radius:16px;background:var(--orange);
+               border:none;color:white;font-size:16px;font-weight:700;cursor:pointer;
+               display:flex;align-items:center;justify-content:center;gap:8px">
+        🗓️ Générer mon planning IA
+      </button>
+      <div id="planning-loading" style="display:none;text-align:center;padding:40px">
+        <div style="color:var(--muted);font-size:14px">⏳ Génération du planning en cours…</div>
+      </div>
+      <div id="planning-ia-result" style="display:none;margin-top:16px;
+           background:var(--card);border-radius:16px;padding:16px">
+        <div id="planning-ia-header"
+          style="color:var(--orange);font-weight:700;font-size:15px;margin-bottom:14px"></div>
+        <div id="planning-ia-text"
+          style="color:var(--text);line-height:1.7;font-size:14px"></div>
+        <button onclick="dlPlanningPDF()"
+          style="width:100%;margin-top:16px;padding:13px;border:none;border-radius:12px;
+                 background:#FF6B35;color:white;font-family:'Syne',sans-serif;
+                 font-size:14px;font-weight:700;cursor:pointer;
+                 display:flex;align-items:center;justify-content:center;gap:8px">
+          📥 Télécharger en PDF
+        </button>
+      </div>
+    </div>
   </div>
 
   <!-- PAGE: PAIEMENT -->
@@ -4358,11 +4384,11 @@ async function askQuestion() {
 
 // === PLANNING ===
 function renderPlanning(planning) {
+  const grid = document.getElementById('planning-grid');
   if (!planning || !planning.length) {
-    document.getElementById('planning-grid').innerHTML = '<div style="padding:20px;color:var(--muted)">Aucun planning disponible.</div>';
+    grid.innerHTML = '';
     return;
   }
-  const grid = document.getElementById('planning-grid');
   grid.innerHTML = planning.map(p => `
     <div class="day-card">
       <div class="day-header">
@@ -4379,6 +4405,50 @@ function renderPlanning(planning) {
       </div>
     </div>
   `).join('');
+}
+
+async function genPlanning() {
+  const classe = currentClasse || 'cette classe';
+  document.getElementById('planning-loading').style.display = 'block';
+  document.getElementById('planning-ia-result').style.display = 'none';
+  document.getElementById('btn-gen-planning').disabled = true;
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 2000,
+        system: `Tu es expert du programme DPFC Côte d'Ivoire. Génère un planning de révision hebdomadaire complet pour un élève de ${classe}.
+
+Structure :
+- Lundi à Vendredi : 2-3 matières par jour
+- Durée par matière : 1h à 1h30
+- Basé sur les chapitres DPFC officiels
+- Équilibré entre toutes les matières
+- Conseils de révision pour chaque jour
+
+Format : tableau jour par jour clair et lisible`,
+        messages: [{ role: 'user', content: `Génère le planning de révision hebdomadaire pour un élève de ${classe}.` }]
+      })
+    });
+    const data = await resp.json();
+    const text = data.content?.[0]?.text || 'Erreur lors de la génération.';
+    document.getElementById('planning-ia-header').textContent = `Planning IA — ${classe}`;
+    document.getElementById('planning-ia-text').innerHTML = marked.parse(text);
+    document.getElementById('planning-ia-result').style.display = 'block';
+  } catch (err) {
+    alert('Erreur : ' + err.message);
+  } finally {
+    document.getElementById('planning-loading').style.display = 'none';
+    document.getElementById('btn-gen-planning').disabled = false;
+  }
+}
+
+function dlPlanningPDF() {
+  const header = document.getElementById('planning-ia-header').textContent || 'Planning de révision';
+  const html   = document.getElementById('planning-ia-text').innerHTML    || '';
+  _openPrintWindow(`EduCI — ${header}`, 'Programme DPFC Côte d\'Ivoire', html);
 }
 
 // === PAIEMENT ===
