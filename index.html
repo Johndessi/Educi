@@ -4069,14 +4069,14 @@ function _buildPDF(lines) {
   const pageW  = doc.internal.pageSize.getWidth();
   const pageH  = doc.internal.pageSize.getHeight();
   const maxW   = pageW - margin * 2;
-  // line heights = fontSize(pt) × lineHeightFactor(2) × (25.4/72)
-  const LH = { title: 11.3, subtitle: 9.2, body: 8.5 };
+  const LH = { title: 8, subtitle: 7.5, body: 7 };
   let y = margin + 8;
 
   lines.forEach(({ text, style }) => {
     if (text === undefined || text === null) return;
     const clean = _stripEmojis(text);
 
+    doc.setCharSpace(0);
     if (style === 'title') {
       doc.setFont('times', 'bold');
       doc.setFontSize(16);
