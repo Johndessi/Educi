@@ -3875,6 +3875,10 @@ function initCorrection() {
     opt.textContent = cl;
     sel.appendChild(opt);
   });
+  if (currentClasse && DATA[currentClasse]) {
+    sel.value = currentClasse;
+    updateCorrMatiere();
+  }
 }
 
 function updateCorrMatiere() {
@@ -3959,7 +3963,7 @@ async function corrigerDevoir() {
       body: JSON.stringify({ model: 'claude-haiku-4-5-20251001', max_tokens: 1500, system: systemPrompt, messages })
     });
     const data = await response.json();
-    document.getElementById('correction-text').textContent = data.content[0].text;
+    document.getElementById('correction-text').innerHTML = marked.parse(data.content[0].text);
     document.getElementById('correction-result').style.display = 'block';
   } catch (err) {
     alert('Erreur lors de la correction : ' + err.message);
