@@ -771,6 +771,30 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
       <div id="viewer-sub" style="font-size:12px;color:var(--muted)"></div>
     </div>
   </div>
+  <!-- TTS Bar -->
+  <div id="tts-bar" style="padding:10px 16px 12px;background:var(--card);
+       border-bottom:1px solid rgba(255,255,255,0.06)">
+    <div style="height:3px;background:rgba(255,255,255,0.08);border-radius:2px;margin-bottom:10px">
+      <div id="tts-progress" style="height:100%;width:0%;background:#FF6B35;
+           border-radius:2px;transition:width 0.4s"></div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button id="tts-btn-play" onclick="ttsPlay()"
+        style="flex:1;padding:10px;border:none;border-radius:10px;
+               background:#FF6B35;color:white;font-family:'Syne',sans-serif;
+               font-size:13px;font-weight:700;cursor:pointer">
+        🔊 Écouter la leçon
+      </button>
+      <button id="tts-btn-pause" onclick="ttsPauseResume()"
+        style="display:none;padding:10px 14px;border:none;border-radius:10px;
+               background:rgba(255,107,53,0.15);color:#FF6B35;
+               font-size:16px;cursor:pointer">⏸️</button>
+      <button id="tts-btn-stop" onclick="ttsStop()"
+        style="display:none;padding:10px 14px;border:none;border-radius:10px;
+               background:rgba(255,255,255,0.07);color:var(--muted);
+               font-size:16px;cursor:pointer">⏹️</button>
+    </div>
+  </div>
   <div class="viewer-content">
     <div class="ai-card">
       <div class="ai-badge">🤖 Professeur IA</div>
@@ -4253,13 +4277,81 @@ function openLesson(i) {
   document.getElementById('resume-content').innerHTML = '';
   document.getElementById('resume-btn').textContent = '📝 Générer la fiche de révision';
   document.getElementById('resume-btn').disabled = false;
+  _ttsReset();
   document.getElementById('lesson-viewer').style.display = 'block';
   explainLesson(currentMatiere.name, lecon.title, currentClasse);
 }
 
 function closeViewer() {
+  _ttsReset();
   document.getElementById('lesson-viewer').style.display = 'none';
 }
+
+// === TEXT TO SPEECH ===
+let _tts = { utt: null, total: 0, idx: 0 };
+
+function _ttsReset() {
+  if (window.speechSynthesis) window.speechSynthesis.cancel();
+  _tts.utt = null; _tts.idx = 0;
+  const prog  = document.getElementById('tts-progress');
+  const play  = document.getElementById('tts-btn-play');
+  const pause = document.getElementById('tts-btn-pause');
+  const stop  = document.getElementById('tts-btn-stop');
+  if (prog)  prog.style.width   = '0%';
+  if (play)  { play.style.display  = ''; play.textContent = '🔊 Écouter la leçon'; }
+  if (pause) { pause.style.display = 'none'; pause.textContent = '⏸️'; }
+  if (stop)  stop.style.display  = 'none';
+}
+
+function ttsPlay() {
+  if (!window.speechSynthesis) { alert('SpeechSynthesis non disponible sur ce navigateur.'); return; }
+  _ttsReset();
+  const raw = (document.getElementById('ai-content') || {}).innerText || '';
+  if (!raw.trim()) { alert('La leçon n\'est pas encore chargée.'); return; }
+  _tts.total = raw.trim().split(/\s+/).length;
+  const utt = new SpeechSynthesisUtterance(raw);
+  utt.lang = 'fr-FR';
+  utt.rate = 0.9;
+  const setVoice = () => {
+    const voices = window.speechSynthesis.getVoices();
+    const frF = voices.find(v => v.lang === 'fr-FR' && /fem|female|amelie|thomas|julie|marie/i.test(v.name))
+             || voices.find(v => v.lang === 'fr-FR')
+             || voices.find(v => v.lang.startsWith('fr'));
+    if (frF) utt.voice = frF;
+  };
+  setVoice();
+  if (!utt.voice && window.speechSynthesis.onvoiceschanged !== undefined) {
+    window.speechSynthesis.onvoiceschanged = () => { setVoice(); window.speechSynthesis.onvoiceschanged = null; };
+  }
+  utt.onboundary = function(e) {
+    if (e.name === 'word') {
+      _tts.idx = Math.min(_tts.idx + 1, _tts.total);
+      const pct = Math.round((_tts.idx / _tts.total) * 100);
+      const p = document.getElementById('tts-progress');
+      if (p) p.style.width = pct + '%';
+    }
+  };
+  utt.onend = utt.onerror = _ttsReset;
+  _tts.utt = utt;
+  window.speechSynthesis.speak(utt);
+  document.getElementById('tts-btn-play').style.display  = 'none';
+  document.getElementById('tts-btn-pause').style.display = '';
+  document.getElementById('tts-btn-stop').style.display  = '';
+}
+
+function ttsPauseResume() {
+  if (!window.speechSynthesis) return;
+  const btn = document.getElementById('tts-btn-pause');
+  if (window.speechSynthesis.paused) {
+    window.speechSynthesis.resume();
+    if (btn) btn.textContent = '⏸️';
+  } else {
+    window.speechSynthesis.pause();
+    if (btn) btn.textContent = '▶️';
+  }
+}
+
+function ttsStop() { _ttsReset(); }
 
 // === CLAUDE API ===
 async function explainLesson(matiere, titre, classe) {
