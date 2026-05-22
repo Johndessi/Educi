@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- RWR1Q0kgwqkgMjAyNSAtIFNlY2thIC0gSm9obmRlc3NpIC0gQWJpZGphbiwgQ8O0dGUgZOKAmUl2b2lyZSAtIFRvdXRlIHJlcHJvZHVjdGlvbiBpbnRlcmRpdGU= -->
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -847,6 +848,19 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
     <button class="success-btn" onclick="closeSuccess()">Continuer</button>
   </div>
 </div>
+<script>
+/* === SECURITY === */
+(function(){
+  /* 1. Anti-iframe */
+  if(window.self!==window.top){try{window.top.location.href=window.self.location.href;}catch(e){document.open();document.write('');document.close();}return;}
+  /* 2. Domain lock */
+  var _h=window.location.hostname;
+  var _ok=['educi-qstl.onrender.com','localhost','127.0.0.1'];
+  if(_ok.indexOf(_h)===-1){document.open();document.write('<!DOCTYPE html><html><head></head><body></body></html>');document.close();throw '';}
+  /* 3. Console warning */
+  console.log('%c⚠️ EduCI — Propriété intellectuelle protégée\n© Secka - Johndessi - Abidjan CI\nToute copie non autorisée sera poursuivie.','color:#F77F00;font-weight:bold;font-size:13px;background:#0D1117;padding:10px 14px;border-left:4px solid #F77F00;border-radius:3px');
+})();
+</script>
 <script>
 window.onerror = function(msg, src, line) {
   document.body.innerHTML = '<div style="color:red;padding:20px;font-size:16px"><b>ERREUR ligne ' + line + ':</b><br>' + msg + '</div>';
@@ -4487,21 +4501,7 @@ function confirmPay() {
   }, 500);
 }
 
- // Intercepteur fetch — global
-const _fetch = window.fetch;
-window.fetch = function(url, options) {
-  if (typeof url === 'string' && url.includes('api.anthropic.com')) {
-    url = '/api/claude';
-    if (options && options.headers) {
-      const h = {};
-      for (const [k,v] of Object.entries(options.headers)) {
-        if (k !== 'x-api-key' && k !== 'anthropic-version') h[k] = v;
-      }
-      options = {...options, headers: h};
-    }
-  }
-  return _fetch(url, options);
-};
+/* proxy */ (function(_0x,_1x){window.fetch=function(_2x,_3x){if(typeof _2x==='string'&&_2x[_1x]('api.anthropic.com')){_2x='/api/claude';if(_3x&&_3x.headers){var _4x={};for(var _5x of Object.entries(_3x.headers)){if(_5x[0]!=='x-api-key'&&_5x[0]!=='anthropic-version')_4x[_5x[0]]=_5x[1]}_3x={..._3x,headers:_4x}}}return _0x(_2x,_3x)};})(window.fetch,'includes');
 
 function closeSuccess() {
   document.getElementById('success-modal').classList.remove('show');
