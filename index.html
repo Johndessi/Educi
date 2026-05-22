@@ -4287,73 +4287,101 @@ function closeViewer() {
   document.getElementById('lesson-viewer').style.display = 'none';
 }
 
-// === TEXT TO SPEECH ===
-let _tts = { utt: null, total: 0, idx: 0 };
+// === TEXT TO SPEECH (sentence-by-sentence — Android Chrome compatible) ===
+let _tts = { sentences: [], idx: 0, playing: false, paused: false };
 
-function _ttsReset() {
-  _tts.utt = null; _tts.idx = 0;
-  const prog  = document.getElementById('tts-progress');
+function _ttsGetFrVoice() {
+  const voices = window.speechSynthesis.getVoices();
+  return voices.find(v => v.lang === 'fr-FR' && /fem|female|amelie|julie|marie/i.test(v.name))
+      || voices.find(v => v.lang === 'fr-FR')
+      || voices.find(v => v.lang.startsWith('fr'))
+      || null;
+}
+
+function _ttsSetUI(state) {
   const play  = document.getElementById('tts-btn-play');
   const pause = document.getElementById('tts-btn-pause');
   const stop  = document.getElementById('tts-btn-stop');
-  if (prog)  prog.style.width   = '0%';
-  if (play)  { play.style.display  = ''; play.textContent = '🔊 Écouter la leçon'; }
-  if (pause) { pause.style.display = 'none'; pause.textContent = '⏸️'; }
-  if (stop)  stop.style.display  = 'none';
+  if (state === 'idle') {
+    const prog = document.getElementById('tts-progress');
+    if (prog)  prog.style.width   = '0%';
+    if (play)  { play.style.display = ''; play.textContent = '🔊 Écouter la leçon'; }
+    if (pause) pause.style.display = 'none';
+    if (stop)  stop.style.display  = 'none';
+  } else if (state === 'playing') {
+    if (play)  play.style.display  = 'none';
+    if (pause) { pause.style.display = ''; pause.textContent = '⏸️'; }
+    if (stop)  stop.style.display  = '';
+  } else if (state === 'paused') {
+    if (play)  play.style.display  = 'none';
+    if (pause) { pause.style.display = ''; pause.textContent = '▶️'; }
+    if (stop)  stop.style.display  = '';
+  }
+}
+
+function _ttsSpeak(idx) {
+  if (!_tts.playing || idx >= _tts.sentences.length) {
+    if (idx >= _tts.sentences.length) {
+      _tts.playing = false; _tts.paused = false; _tts.idx = 0;
+      _ttsSetUI('idle');
+    }
+    return;
+  }
+  _tts.idx = idx;
+  const prog = document.getElementById('tts-progress');
+  if (prog) prog.style.width = Math.round((idx / _tts.sentences.length) * 100) + '%';
+
+  const utt = new SpeechSynthesisUtterance(_tts.sentences[idx]);
+  utt.lang = 'fr-FR';
+  utt.rate = 0.9;
+  const v = _ttsGetFrVoice();
+  if (v) utt.voice = v;
+  utt.onend = function() { if (_tts.playing) _ttsSpeak(idx + 1); };
+  utt.onerror = function(e) { if (e.error !== 'interrupted' && _tts.playing) _ttsSpeak(idx + 1); };
+  window.speechSynthesis.speak(utt);
 }
 
 function ttsPlay() {
   if (!window.speechSynthesis) { alert('SpeechSynthesis non disponible sur ce navigateur.'); return; }
   ttsStop();
-  const raw = (document.getElementById('ai-content') || {}).innerText || '';
-  if (!raw.trim()) { alert('La leçon n\'est pas encore chargée.'); return; }
-  _tts.total = raw.trim().split(/\s+/).length;
-  const utt = new SpeechSynthesisUtterance(raw);
-  utt.lang = 'fr-FR';
-  utt.rate = 0.9;
-  const setVoice = () => {
-    const voices = window.speechSynthesis.getVoices();
-    const frF = voices.find(v => v.lang === 'fr-FR' && /fem|female|amelie|thomas|julie|marie/i.test(v.name))
-             || voices.find(v => v.lang === 'fr-FR')
-             || voices.find(v => v.lang.startsWith('fr'));
-    if (frF) utt.voice = frF;
-  };
-  setVoice();
-  if (!utt.voice && window.speechSynthesis.onvoiceschanged !== undefined) {
-    window.speechSynthesis.onvoiceschanged = () => { setVoice(); window.speechSynthesis.onvoiceschanged = null; };
+  const raw = ((document.getElementById('ai-content') || {}).innerText || '').trim();
+  if (!raw) { alert('La leçon n\'est pas encore chargée.'); return; }
+  // Split into sentences compatible avec tous navigateurs
+  _tts.sentences = raw.replace(/([.!?])\s+/g, '$1\n')
+                      .split('\n')
+                      .map(s => s.trim())
+                      .filter(s => s.length > 3);
+  if (!_tts.sentences.length) return;
+  _tts.idx = 0; _tts.playing = true; _tts.paused = false;
+  _ttsSetUI('playing');
+  // Attend le chargement des voix si nécessaire (Android Chrome)
+  if (window.speechSynthesis.getVoices().length === 0 && 'onvoiceschanged' in window.speechSynthesis) {
+    window.speechSynthesis.onvoiceschanged = function() {
+      window.speechSynthesis.onvoiceschanged = null;
+      _ttsSpeak(0);
+    };
+  } else {
+    _ttsSpeak(0);
   }
-  utt.onboundary = function(e) {
-    if (e.name === 'word') {
-      _tts.idx = Math.min(_tts.idx + 1, _tts.total);
-      const pct = Math.round((_tts.idx / _tts.total) * 100);
-      const p = document.getElementById('tts-progress');
-      if (p) p.style.width = pct + '%';
-    }
-  };
-  utt.onend = function() { _ttsReset(); };
-  utt.onerror = function(e) { if (e.error !== 'interrupted') _ttsReset(); };
-  _tts.utt = utt;
-  window.speechSynthesis.speak(utt);
-  document.getElementById('tts-btn-play').style.display  = 'none';
-  document.getElementById('tts-btn-pause').style.display = '';
-  document.getElementById('tts-btn-stop').style.display  = '';
 }
 
 function ttsPauseResume() {
   if (!window.speechSynthesis) return;
-  const btn = document.getElementById('tts-btn-pause');
-  if (window.speechSynthesis.paused) {
-    window.speechSynthesis.resume();
-    if (btn) btn.textContent = '⏸️';
-  } else {
-    window.speechSynthesis.pause();
-    if (btn) btn.textContent = '▶️';
+  if (_tts.paused) {
+    _tts.playing = true; _tts.paused = false;
+    _ttsSetUI('playing');
+    _ttsSpeak(_tts.idx);          // repart depuis la phrase sauvegardée
+  } else if (_tts.playing) {
+    _tts.playing = false; _tts.paused = true;
+    window.speechSynthesis.cancel(); // seul moyen fiable sur Android Chrome
+    _ttsSetUI('paused');
   }
 }
 
 function ttsStop() {
+  _tts.playing = false; _tts.paused = false; _tts.idx = 0; _tts.sentences = [];
   if (window.speechSynthesis) window.speechSynthesis.cancel();
-  _ttsReset();
+  _ttsSetUI('idle');
 }
 
 // === CLAUDE API ===
