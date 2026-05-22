@@ -4277,13 +4277,13 @@ function openLesson(i) {
   document.getElementById('resume-content').innerHTML = '';
   document.getElementById('resume-btn').textContent = '📝 Générer la fiche de révision';
   document.getElementById('resume-btn').disabled = false;
-  _ttsReset();
+  ttsStop();
   document.getElementById('lesson-viewer').style.display = 'block';
   explainLesson(currentMatiere.name, lecon.title, currentClasse);
 }
 
 function closeViewer() {
-  _ttsReset();
+  ttsStop();
   document.getElementById('lesson-viewer').style.display = 'none';
 }
 
@@ -4291,7 +4291,6 @@ function closeViewer() {
 let _tts = { utt: null, total: 0, idx: 0 };
 
 function _ttsReset() {
-  if (window.speechSynthesis) window.speechSynthesis.cancel();
   _tts.utt = null; _tts.idx = 0;
   const prog  = document.getElementById('tts-progress');
   const play  = document.getElementById('tts-btn-play');
@@ -4305,7 +4304,7 @@ function _ttsReset() {
 
 function ttsPlay() {
   if (!window.speechSynthesis) { alert('SpeechSynthesis non disponible sur ce navigateur.'); return; }
-  _ttsReset();
+  ttsStop();
   const raw = (document.getElementById('ai-content') || {}).innerText || '';
   if (!raw.trim()) { alert('La leçon n\'est pas encore chargée.'); return; }
   _tts.total = raw.trim().split(/\s+/).length;
@@ -4331,7 +4330,8 @@ function ttsPlay() {
       if (p) p.style.width = pct + '%';
     }
   };
-  utt.onend = utt.onerror = _ttsReset;
+  utt.onend = function() { _ttsReset(); };
+  utt.onerror = function(e) { if (e.error !== 'interrupted') _ttsReset(); };
   _tts.utt = utt;
   window.speechSynthesis.speak(utt);
   document.getElementById('tts-btn-play').style.display  = 'none';
@@ -4351,7 +4351,10 @@ function ttsPauseResume() {
   }
 }
 
-function ttsStop() { _ttsReset(); }
+function ttsStop() {
+  if (window.speechSynthesis) window.speechSynthesis.cancel();
+  _ttsReset();
+}
 
 // === CLAUDE API ===
 async function explainLesson(matiere, titre, classe) {
