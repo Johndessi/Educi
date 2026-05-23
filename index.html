@@ -270,109 +270,153 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
   font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800;
   color: var(--orange); margin: 8px 0;
 }
-.plan-price span { font-size: 14px; font-weight: 400; color: var(--muted); }
-.plan-features { list-style: none; display: flex; flex-direction: column; gap: 6px; }
-.plan-features li { font-size: 13px; color: var(--muted); }
-.plan-features li::before { content: "✓ "; color: var(--green); font-weight: 700; }
-
-.pay-btn {
-  width: 100%; padding: 16px; border: none; border-radius: 14px;
-  font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700;
-  cursor: pointer; transition: all 0.2s; margin-bottom: 14px;
-  background: linear-gradient(135deg, var(--orange), #ff6b00);
+#correction-text th {
+  background: rgba(247,127,0,0.15); color: var(--orange); font-weight: 600;
+}
+#correction-text tr:nth-child(even) td { background: rgba(255,255,255,0.03); }
+@media (max-width: 600px) {
+  #correction-text table,
+  #correction-text thead,
+  #correction-text tbody,
+  #correction-text th,
+  #correction-text td,
+  #correction-text tr { display: block; }
+  #correction-text thead { display: none; }
+  #correction-text tr {
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px; margin-bottom: 8px; overflow: hidden;
+  }
+  #correction-text td {
+    position: relative; padding: 8px 8px 8px 46%;
+    border: none; border-bottom: 1px solid rgba(255,255,255,0.08); min-height: 36px;
+  }
+  #correction-text td::before {
+    content: attr(data-label);
+    position: absolute; left: 0; top: 8px; width: 43%;
+    font-weight: 600; color: var(--orange); font-size: 11px; padding: 0 4px;
+  }
+}
+#auth-gate {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: linear-gradient(160deg,#0D1B4B 0%,#1A237E 55%,#0D47A1 100%);
+  overflow-y: auto;
+  font-family: 'DM Sans', sans-serif;
   color: white;
 }
-.pay-btn:active { transform: scale(0.98); }
-
-.payment-methods { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.pm-card {
-  background: var(--card); border: 2px solid var(--border);
-  border-radius: 14px; padding: 16px; cursor: pointer;
-  text-align: center; transition: all 0.2s;
-}
-.pm-card.selected { border-color: var(--orange); background: rgba(247,127,0,0.08); }
-.pm-logo { font-size: 28px; margin-bottom: 6px; }
-.pm-name { font-size: 13px; font-weight: 600; }
-
-/* MODAL PAIEMENT */
-#pay-modal {
-  display: none; position: fixed; inset: 0; z-index: 300;
-  background: rgba(0,0,0,0.85);
-  align-items: flex-end; justify-content: center;
-}
-#pay-modal.show { display: flex; }
-.modal-box {
-  background: var(--card); border-radius: 24px 24px 0 0;
-  padding: 28px 24px; width: 100%;
-  animation: slideUp 0.3s ease;
-}
-@keyframes slideUp {
-  from { transform: translateY(100%); }
-  to { transform: translateY(0); }
-}
-.modal-title { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 6px; }
-.modal-amount { font-size: 14px; color: var(--muted); margin-bottom: 24px; }
-.modal-input {
-  width: 100%; background: var(--card2); border: 1px solid var(--border);
-  border-radius: 12px; padding: 14px 16px; color: var(--text);
-  font-family: 'DM Sans', sans-serif; font-size: 16px; outline: none;
-  margin-bottom: 14px;
-}
-.modal-input:focus { border-color: var(--orange); }
-.modal-confirm {
-  width: 100%; padding: 16px; border: none; border-radius: 14px;
-  background: linear-gradient(135deg, var(--orange), #ff6b00);
-  color: white; font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700;
-  cursor: pointer; margin-bottom: 10px;
-}
-.modal-cancel {
-  width: 100%; padding: 14px; border: 1px solid var(--border);
-  background: transparent; color: var(--muted);
-  font-family: 'DM Sans', sans-serif; font-size: 14px;
-  border-radius: 14px; cursor: pointer;
-}
-
-/* SUCCESS */
-#success-modal {
-  display: none; position: fixed; inset: 0; z-index: 400;
-  background: rgba(0,0,0,0.9);
-  align-items: center; justify-content: center;
-}
-#success-modal.show { display: flex; }
-.success-box {
-  background: var(--card); border-radius: 24px;
-  padding: 40px 32px; margin: 20px; text-align: center;
-  animation: scaleIn 0.3s ease;
-}
-@keyframes scaleIn {
-  from { transform: scale(0.8); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-.success-icon { font-size: 64px; margin-bottom: 16px; }
-.success-title { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; margin-bottom: 8px; }
-.success-msg { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
-.success-btn {
-  padding: 14px 32px; background: var(--green);
-  color: white; border: none; border-radius: 14px;
-  font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700;
-  cursor: pointer;
-}
-
-.plan-card.selected-plan {
-  border-color: var(--orange) !important;
-  background: rgba(247,127,0,0.1);
-  transform: scale(1.02);
-}
-.plan-card { cursor: pointer; transition: all 0.2s; }
-  display: inline-block; padding: 4px 10px;
-  border-radius: 8px; font-size: 11px; font-weight: 600;
-}
+#app-contenu { display: block; }
 </style>
 </head>
 <body>
 
+<!-- AUTH GATE -->
+<div id="auth-gate" style="display:none">
+
+  <!-- Écran 1 : numéro de téléphone -->
+  <div id="auth-screen-tel" style="min-height:100vh;display:flex;flex-direction:column;
+       align-items:center;justify-content:center;padding:32px 20px;gap:20px">
+    <img src="/icons/icon-192.png" style="width:80px;height:80px;border-radius:20px;margin-bottom:4px">
+    <div style="text-align:center">
+      <div style="font-family:'Syne',sans-serif;font-size:26px;font-weight:800">EduCI</div>
+      <div style="font-size:14px;opacity:0.75;margin-top:4px">Plateforme scolaire ivoirienne</div>
+    </div>
+    <div style="width:100%;max-width:360px">
+      <label style="font-size:13px;opacity:0.8;display:block;margin-bottom:8px">Ton numéro de téléphone</label>
+      <input id="auth-tel" type="tel" placeholder="+225 07 00 00 00 00"
+        style="width:100%;padding:14px 16px;border-radius:14px;border:1.5px solid rgba(255,255,255,0.25);
+               background:rgba(255,255,255,0.1);color:white;font-size:16px;
+               box-sizing:border-box;outline:none"
+        oninput="document.getElementById('auth-tel-err').textContent=''"
+        onkeydown="if(event.key==='Enter')authStep1()">
+      <div id="auth-tel-err" style="color:#FF6B35;font-size:12px;margin-top:6px;min-height:16px"></div>
+    </div>
+    <button onclick="authStep1()"
+      style="width:100%;max-width:360px;padding:15px;border:none;border-radius:14px;
+             background:#FF6B35;color:white;font-family:'Syne',sans-serif;
+             font-size:16px;font-weight:700;cursor:pointer">
+      Continuer →
+    </button>
+    <div style="font-size:12px;opacity:0.55;text-align:center;max-width:300px">
+      Ton numéro identifie ton abonnement · aucun mot de passe requis
+    </div>
+    <button onclick="document.getElementById('auth-gate').style.display='none'"
+      style="background:none;border:none;color:rgba(255,255,255,0.45);font-size:13px;
+             cursor:pointer;text-decoration:underline;margin-top:-8px">
+      Continuer sans abonnement
+    </button>
+  </div>
+
+  <!-- Écran 2 : choix de forfait -->
+  <div id="auth-screen-plan" style="display:none;min-height:100vh;flex-direction:column;
+       align-items:center;padding:40px 20px 32px;gap:16px">
+    <button onclick="authBack('tel')"
+      style="align-self:flex-start;background:rgba(255,255,255,0.12);border:none;
+             color:white;border-radius:10px;padding:8px 14px;font-size:13px;cursor:pointer">
+      ← Retour
+    </button>
+    <div style="text-align:center;margin-bottom:8px">
+      <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:700">Choisir un forfait</div>
+      <div style="font-size:13px;opacity:0.7;margin-top:4px">Accès illimité à toutes les fonctionnalités</div>
+    </div>
+    <!-- Mensuel -->
+    <div onclick="authChoisirForfait('mensuel')" style="width:100%;max-width:360px;cursor:pointer;
+         background:rgba(255,255,255,0.09);border:1.5px solid rgba(255,255,255,0.18);
+         border-radius:16px;padding:18px 20px;box-sizing:border-box;transition:border-color .2s"
+         onmouseover="this.style.borderColor='#FF6B35'" onmouseout="this.style.borderColor='rgba(255,255,255,0.18)'">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:16px">Mensuel</div>
+          <div style="font-size:12px;opacity:0.65;margin-top:2px">30 jours d'accès</div>
+        </div>
+        <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#FF6B35">500 F</div>
+      </div>
+    </div>
+    <!-- Trimestriel -->
+    <div onclick="authChoisirForfait('trimestriel')" style="width:100%;max-width:360px;cursor:pointer;
+         background:rgba(255,107,53,0.15);border:1.5px solid #FF6B35;
+         border-radius:16px;padding:18px 20px;box-sizing:border-box;position:relative">
+      <div style="position:absolute;top:-10px;left:20px;background:#FF6B35;color:white;
+           font-size:11px;font-weight:700;padding:2px 10px;border-radius:20px">⭐ POPULAIRE</div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:16px">Trimestriel</div>
+          <div style="font-size:12px;opacity:0.65;margin-top:2px">90 jours d'accès</div>
+        </div>
+        <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#FF6B35">1 200 F</div>
+      </div>
+    </div>
+    <!-- Annuel -->
+    <div onclick="authChoisirForfait('annuel')" style="width:100%;max-width:360px;cursor:pointer;
+         background:rgba(255,255,255,0.09);border:1.5px solid rgba(255,255,255,0.18);
+         border-radius:16px;padding:18px 20px;box-sizing:border-box"
+         onmouseover="this.style.borderColor='#FF6B35'" onmouseout="this.style.borderColor='rgba(255,255,255,0.18)'">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:16px">Annuel</div>
+          <div style="font-size:12px;opacity:0.65;margin-top:2px">365 jours d'accès</div>
+        </div>
+        <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#FF6B35">4 000 F</div>
+      </div>
+    </div>
+    <div id="auth-plan-err" style="color:#FF6B35;font-size:13px;min-height:16px;text-align:center"></div>
+  </div>
+
+  <!-- Écran 3 : vérification -->
+  <div id="auth-screen-check" style="display:none;min-height:100vh;flex-direction:column;
+       align-items:center;justify-content:center;padding:32px 20px;gap:20px;text-align:center">
+    <div style="width:48px;height:48px;border:4px solid rgba(255,255,255,0.2);
+         border-top-color:#FF6B35;border-radius:50%;animation:spin 1s linear infinite"></div>
+    <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700">Vérification en cours…</div>
+    <div id="auth-check-msg" style="font-size:13px;opacity:0.7;max-width:280px">
+      Patiente quelques secondes pendant que nous confirmons ton paiement.
+    </div>
+  </div>
+</div>
+
 <!-- APP -->
-<div id="app" style="display:block">
+<div id="app-contenu" style="display:block">
 
   <!-- HEADER -->
   <div class="header">
@@ -504,75 +548,89 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
     <div class="planning-grid" id="planning-grid"></div>
   </div>
 
-  <!-- PAGE: PAIEMENT -->
-  <div class="page" id="page-paiement">
-    <div class="section-title">Abonnement</div>
-    <div class="plan-cards">
-      <div class="plan-card" id="plan-mensuel" onclick="selectPlan(this,'Mensuel','500 FCFA')">
-        <div class="plan-name">Mensuel</div>
-        <div class="plan-price">500 FCFA <span>/ mois</span></div>
-        <ul class="plan-features">
-          <li>Toutes les leçons</li>
-          <li>Explications IA illimitées</li>
-          <li>Planning hebdomadaire</li>
-        </ul>
+  <!-- PAGE CORRECTION -->
+  <div class="page" id="page-correction">
+    <div class="page-header" style="padding:20px 16px 8px">
+      <h2 style="color:var(--orange);font-family:'Syne',sans-serif">📝 Correction de devoir</h2>
+      <p style="color:var(--muted);font-size:14px;margin-top:4px">Uploade ton devoir, l'IA te le corrige</p>
+    </div>
+    <div style="padding:0 16px 100px">
+      <div style="margin-bottom:16px">
+        <select id="corr-classe" onchange="updateCorrMatiere()"
+          style="width:100%;padding:12px;border-radius:12px;background:var(--card);
+                 color:var(--text);border:1px solid rgba(255,255,255,0.1);
+                 font-size:14px;margin-bottom:8px">
+          <option value="">-- Sélectionner la classe --</option>
+        </select>
+        <select id="corr-matiere"
+          style="width:100%;padding:12px;border-radius:12px;background:var(--card);
+                 color:var(--text);border:1px solid rgba(255,255,255,0.1);font-size:14px">
+          <option value="">-- Sélectionner la matière --</option>
+        </select>
       </div>
-      <div class="plan-card popular selected-plan" id="plan-trimestriel" onclick="selectPlan(this,'Trimestriel','1200 FCFA')">
-        <div class="popular-badge">⭐ POPULAIRE</div>
-        <div class="plan-name">Trimestriel</div>
-        <div class="plan-price">1200 FCFA <span>/ 3 mois</span></div>
-        <ul class="plan-features">
-          <li>Tout du plan mensuel</li>
-          <li>Exercices corrigés</li>
-          <li>Annales BAC</li>
-          <li>Économisez 300 FCFA</li>
-        </ul>
+      <div id="upload-zone" onclick="document.getElementById('devoir-file').click()"
+        style="border:2px dashed var(--orange);border-radius:16px;padding:40px 20px;
+               text-align:center;cursor:pointer;background:rgba(247,127,0,0.05);
+               margin-bottom:16px;transition:background 0.2s">
+        <div style="font-size:48px;margin-bottom:8px">📎</div>
+        <div style="color:var(--orange);font-weight:600;margin-bottom:4px">Appuie pour choisir un fichier</div>
+        <div style="color:var(--muted);font-size:12px">Image, Photo, PDF ou Word (.docx)</div>
+        <input type="file" id="devoir-file"
+          accept="image/*,.pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+          style="display:none" onchange="previewDevoir(this)">
       </div>
-      <div class="plan-card" id="plan-annuel" onclick="selectPlan(this,'Annuel','4000 FCFA')">
-        <div class="plan-name">Annuel</div>
-        <div class="plan-price">4000 FCFA <span>/ an</span></div>
-        <ul class="plan-features">
-          <li>Tout inclus</li>
-          <li>Accès prioritaire IA</li>
-          <li>Corrections personnalisées</li>
-          <li>Économisez 2000 FCFA</li>
-        </ul>
+      <div id="file-preview" style="display:none;margin-bottom:16px;background:var(--card);
+           border-radius:12px;padding:12px;align-items:center;gap:12px">
+        <span id="file-icon" style="font-size:32px"></span>
+        <div>
+          <div id="file-name" style="font-weight:600;font-size:14px"></div>
+          <div id="file-size" style="color:var(--muted);font-size:12px"></div>
+        </div>
+        <button onclick="clearFile()"
+          style="margin-left:auto;background:rgba(239,68,68,0.2);border:none;
+                 color:#EF4444;border-radius:8px;padding:6px 10px;cursor:pointer">✕</button>
+      </div>
+      <div id="img-preview-container" style="display:none;margin-bottom:16px;text-align:center">
+        <img id="img-preview" style="max-width:100%;border-radius:12px;max-height:300px">
+      </div>
+      <button onclick="corrigerDevoir()"
+        style="width:100%;padding:16px;border-radius:16px;background:var(--orange);border:none;
+               color:white;font-size:16px;font-weight:700;cursor:pointer;
+               display:flex;align-items:center;justify-content:center;gap:8px">
+        🤖 Corriger avec l'IA
+      </button>
+      <div id="correction-loading" style="display:none;text-align:center;padding:40px">
+        <div style="font-size:40px;margin-bottom:12px">🤖</div>
+        <div style="color:var(--orange);font-weight:600">Correction en cours...</div>
+        <div style="color:var(--muted);font-size:12px;margin-top:4px">L'IA analyse ton devoir</div>
+      </div>
+      <div id="correction-result" style="display:none;margin-top:20px">
+        <div style="background:var(--card);border-radius:16px;padding:16px">
+          <div style="color:var(--orange);font-weight:700;margin-bottom:4px;font-size:16px">📋 Correction</div>
+          <div id="correction-subtitle" style="color:var(--muted);font-size:12px;margin-bottom:12px"></div>
+          <div id="correction-text" style="color:var(--text);line-height:1.6;font-size:14px;white-space:pre-wrap"></div>
+          <button onclick="dlCorrectionPDF()"
+            style="width:100%;margin-top:16px;padding:13px;border:none;border-radius:12px;
+                   background:#FF6B35;color:white;font-family:'Syne',sans-serif;
+                   font-size:14px;font-weight:700;cursor:pointer;
+                   display:flex;align-items:center;justify-content:center;gap:8px">
+            📥 Télécharger en PDF
+          </button>
+        </div>
       </div>
     </div>
-
-    <div class="section-title">Moyen de paiement</div>
-    <div class="payment-methods" id="payment-methods">
-      <div class="pm-card selected" onclick="selectPM(this,'Orange Money')" data-pm="Orange Money">
-        <div class="pm-logo"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Orange_logo.svg/120px-Orange_logo.svg.png" style="width:40px;height:40px;object-fit:contain;border-radius:8px;" onerror="this.parentNode.innerHTML='🟠'"></div>
-        <div class="pm-name">Orange Money</div>
-      </div>
-      <div class="pm-card" onclick="selectPM(this,'MTN MoMo')" data-pm="MTN MoMo">
-        <div class="pm-logo"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/New-mtn-logo.jpg/120px-New-mtn-logo.jpg" style="width:40px;height:40px;object-fit:contain;border-radius:8px;" onerror="this.parentNode.innerHTML='🟡'"></div>
-        <div class="pm-name">MTN MoMo</div>
-      </div>
-      <div class="pm-card" onclick="selectPM(this,'Moov Money')" data-pm="Moov Money">
-        <div class="pm-logo"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Moov_Africa_logo.svg/120px-Moov_Africa_logo.svg.png" style="width:40px;height:40px;object-fit:contain;border-radius:8px;" onerror="this.parentNode.innerHTML='🔵'"></div>
-        <div class="pm-name">Moov Money</div>
-      </div>
-      <div class="pm-card" onclick="selectPM(this,'Wave')" data-pm="Wave">
-        <div class="pm-logo"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Wave_logo_2022.svg/120px-Wave_logo_2022.svg.png" style="width:40px;height:40px;object-fit:contain;border-radius:8px;" onerror="this.parentNode.innerHTML='🌊'"></div>
-        <div class="pm-name">Wave</div>
-      </div>
-    </div>
-
-    <br>
-    <div id="selected-plan-summary" style="background:rgba(247,127,0,0.1);border:1px solid rgba(247,127,0,0.3);border-radius:14px;padding:14px 16px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;">
-      <div>
-        <div style="font-size:12px;color:var(--muted)">Plan sélectionné</div>
-        <div id="summary-plan" style="font-family:'Syne',sans-serif;font-weight:700;font-size:16px;">Trimestriel</div>
-      </div>
-      <div style="text-align:right">
-        <div style="font-size:12px;color:var(--muted)">Montant</div>
-        <div id="summary-price" style="font-family:'Syne',sans-serif;font-weight:800;font-size:20px;color:var(--orange);">1200 FCFA</div>
-      </div>
-    </div>
-    <button class="pay-btn" onclick="openPayModal()">Payer maintenant →</button>
   </div>
+
+  <!-- PWA install button -->
+  <button id="pwa-install-btn" onclick="pwaInstall()"
+    style="display:none;position:fixed;bottom:80px;left:50%;transform:translateX(-50%);
+           z-index:9998;background:#FF6B35;color:white;border:none;
+           border-radius:25px;padding:12px 24px;
+           font-family:'Syne',sans-serif;font-size:14px;font-weight:700;
+           cursor:pointer;white-space:nowrap;
+           box-shadow:0 4px 20px rgba(255,107,53,0.45)">
+    📲 Installer EduCI
+  </button>
 
   <!-- NAV -->
   <nav class="nav">
@@ -585,19 +643,41 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
     <button class="nav-item" onclick="showPage('planning')" id="nav-planning">
       <span class="nav-icon">📅</span>Planning
     </button>
-    <button class="nav-item" onclick="showPage('paiement')" id="nav-paiement">
-      <span class="nav-icon">💳</span>Abonnement
+    <button class="nav-item" onclick="showPage('correction')" id="nav-correction">
+      <span class="nav-icon">📝</span>Correction
     </button>
   </nav>
 </div>
 
-<!-- LESSON VIEWER -->
+<!-- LESSON VIEWER (overlay fixe) -->
 <div id="lesson-viewer">
   <div class="viewer-header">
     <div class="back-btn" onclick="closeViewer()">←</div>
     <div style="flex:1">
       <div id="viewer-title" style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;"></div>
       <div id="viewer-sub" style="font-size:12px;color:var(--muted)"></div>
+    </div>
+  </div>
+  <!-- Barre TTS -->
+  <div id="tts-bar" style="padding:10px 16px 12px;background:var(--card);
+       border-bottom:1px solid rgba(255,255,255,0.06)">
+    <div style="height:3px;background:rgba(255,255,255,0.08);border-radius:2px;margin-bottom:10px">
+      <div id="tts-progress" style="height:100%;width:0%;background:#FF6B35;
+           border-radius:2px;transition:width 0.4s"></div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button id="tts-btn-play" onclick="ttsPlay()"
+        style="flex:1;padding:10px;border:none;border-radius:10px;
+               background:#FF6B35;color:white;font-family:'Syne',sans-serif;
+               font-size:13px;font-weight:700;cursor:pointer">
+        🔊 Écouter la leçon
+      </button>
+      <button id="tts-btn-pause" onclick="ttsPauseResume()"
+        style="display:none;padding:10px 14px;border:none;border-radius:10px;
+               background:rgba(255,107,53,0.15);color:#FF6B35;font-size:16px;cursor:pointer">⏸️</button>
+      <button id="tts-btn-stop" onclick="ttsStop()"
+        style="display:none;padding:10px 14px;border:none;border-radius:10px;
+               background:rgba(255,255,255,0.07);color:var(--muted);font-size:16px;cursor:pointer">⏹️</button>
     </div>
   </div>
   <div class="viewer-content">
@@ -609,14 +689,24 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
           <div class="dots"><span></span><span></span><span></span></div>
         </div>
       </div>
+      <button onclick="dlLeconPDF()"
+        style="width:100%;margin-top:16px;padding:13px;border:none;border-radius:12px;
+               background:#FF6B35;color:white;font-family:'Syne',sans-serif;
+               font-size:14px;font-weight:700;cursor:pointer;
+               display:flex;align-items:center;justify-content:center;gap:8px">
+        📥 Télécharger en PDF
+      </button>
     </div>
     <div class="ai-card">
       <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:6px;">📋 Fiche de Révision</div>
-      <div style="font-size:13px;color:var(--muted);margin-bottom:14px;">Génère une fiche de révision structurée et condensée de cette leçon.</div>
-      <button onclick="genResume()" id="resume-btn" style="width:100%;padding:13px;border:none;border-radius:12px;background:linear-gradient(135deg,#009A44,#00c853);color:white;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:14px;">📝 Générer la fiche de révision</button>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:14px;">Génère une fiche de révision structurée et condensée.</div>
+      <button onclick="genResume()" id="resume-btn"
+        style="width:100%;padding:13px;border:none;border-radius:12px;
+               background:linear-gradient(135deg,#009A44,#00c853);color:white;
+               font-family:'Syne',sans-serif;font-size:14px;font-weight:700;
+               cursor:pointer;margin-bottom:14px;">📝 Générer la fiche de révision</button>
       <div id="resume-content"></div>
     </div>
-
     <div class="ai-card">
       <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:12px;">❓ Pose une question</div>
       <div class="ask-form">
@@ -625,44 +715,53 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
       </div>
       <div id="ask-response" style="margin-top:16px;line-height:1.7;font-size:14px;"></div>
     </div>
-
     <div class="ai-card">
-      <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:6px;">📝 Exercices & Corrections</div>
-      <div style="font-size:13px;color:var(--muted);margin-bottom:14px;">L'IA génère des exercices adaptés à ton niveau avec les corrections détaillées.</div>
+      <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:6px;">📝 Exercices &amp; Corrections</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:14px;">L'IA génère des exercices adaptés avec corrections détaillées.</div>
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">
-        <button onclick="genExercice('facile')" style="flex:1;padding:10px;border:1px solid var(--border);background:rgba(0,154,68,0.1);color:#00c853;border-radius:10px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;cursor:pointer;">🟢 Facile</button>
-        <button onclick="genExercice('moyen')" style="flex:1;padding:10px;border:1px solid var(--border);background:rgba(247,127,0,0.1);color:var(--orange);border-radius:10px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;cursor:pointer;">🟠 Moyen</button>
-        <button onclick="genExercice('difficile')" style="flex:1;padding:10px;border:1px solid var(--border);background:rgba(239,68,68,0.1);color:#ef4444;border-radius:10px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;cursor:pointer;">🔴 Difficile</button>
+        <button onclick="genExercice('facile')"
+          style="flex:1;padding:10px;border:1px solid var(--border);background:rgba(0,154,68,0.1);
+                 color:#00c853;border-radius:10px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;cursor:pointer;">🟢 Facile</button>
+        <button onclick="genExercice('moyen')"
+          style="flex:1;padding:10px;border:1px solid var(--border);background:rgba(247,127,0,0.1);
+                 color:var(--orange);border-radius:10px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;cursor:pointer;">🟠 Moyen</button>
+        <button onclick="genExercice('difficile')"
+          style="flex:1;padding:10px;border:1px solid var(--border);background:rgba(239,68,68,0.1);
+                 color:#ef4444;border-radius:10px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;cursor:pointer;">🔴 Difficile</button>
       </div>
       <div id="exercice-content"></div>
       <div id="correction-btn-container" style="display:none;margin-top:14px;">
-        <button onclick="showCorrection()" style="width:100%;padding:12px;border:none;border-radius:12px;background:linear-gradient(135deg,var(--green),#00c853);color:white;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">✅ Voir la correction</button>
+        <button onclick="showCorrection()"
+          style="width:100%;padding:12px;border:none;border-radius:12px;
+                 background:linear-gradient(135deg,var(--green),#00c853);color:white;
+                 font-family:'Syne',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">✅ Voir la correction</button>
       </div>
       <div id="correction-content" style="margin-top:14px;"></div>
+      <button onclick="dlExercicePDF()"
+        style="width:100%;margin-top:16px;padding:13px;border:none;border-radius:12px;
+               background:#FF6B35;color:white;font-family:'Syne',sans-serif;
+               font-size:14px;font-weight:700;cursor:pointer;
+               display:flex;align-items:center;justify-content:center;gap:8px">
+        📥 Télécharger en PDF
+      </button>
     </div>
   </div>
 </div>
 
-<!-- MODAL PAIEMENT -->
-<div id="pay-modal" onclick="closePayModal(event)">
-  <div class="modal-box">
-    <div class="modal-title">💳 Confirmer le paiement</div>
-    <div class="modal-amount" id="modal-amount">Plan Mensuel • 500 FCFA via Orange Money</div>
-    <input class="modal-input" id="phone-input" placeholder="Numéro de téléphone (ex: 07 XX XX XX XX)" type="tel" />
-    <button class="modal-confirm" onclick="confirmPay()">Confirmer le paiement</button>
-    <button class="modal-cancel" onclick="closePayModal()">Annuler</button>
-  </div>
-</div>
 
-<!-- SUCCESS MODAL -->
-<div id="success-modal">
-  <div class="success-box">
-    <div class="success-icon">✅</div>
-    <div class="success-title">Paiement réussi !</div>
-    <div class="success-msg" id="success-msg">Votre abonnement est activé. Bonne révision !</div>
-    <button class="success-btn" onclick="closeSuccess()">Continuer</button>
-  </div>
-</div>
+<script>
+/* === SECURITY === */
+(function(){
+  /* 1. Anti-iframe */
+  if(window.self!==window.top){try{window.top.location.href=window.self.location.href;}catch(e){document.open();document.write('');document.close();}return;}
+  /* 2. Domain lock */
+  var _h=window.location.hostname;
+  var _ok=['educi-qstl.onrender.com','localhost','127.0.0.1'];
+  if(_ok.indexOf(_h)===-1){document.open();document.write('<!DOCTYPE html><html><head></head><body></body></html>');document.close();throw '';}
+  /* 3. Console warning */
+  console.log('%c⚠️ EduCI — Propriété intellectuelle protégée\n© Secka - Johndessi - Abidjan CI\nToute copie non autorisée sera poursuivie.','color:#F77F00;font-weight:bold;font-size:13px;background:#0D1117;padding:10px 14px;border-left:4px solid #F77F00;border-radius:3px');
+})();
+</script>
 <script>
 window.onerror = function(msg, src, line) {
   document.body.innerHTML = '<div style="color:red;padding:20px;font-size:16px"><b>ERREUR ligne ' + line + ':</b><br>' + msg + '</div>';
@@ -3705,14 +3804,325 @@ const DATA = {'5ème': {
 // === STATE ===
 let currentClasse = localStorage.getItem('classe') || null;
 let currentMatiere = null;
-let selectedPM = 'Orange Money';
-let selectedPlan = 'Mensuel • 500 FCFA';
 
 // === INIT ===
+// === AUTH / PAIEMENT ===
+let _authTel = '';
+
+function _authShow(screen) {
+  ['tel','plan','check'].forEach(s => {
+    const el = document.getElementById('auth-screen-' + s);
+    if (el) el.style.display = s === screen ? 'flex' : 'none';
+  });
+}
+
+function debloquerApp() {
+  var gate = document.getElementById('auth-gate');
+  if (gate) gate.style.display = 'none';
+}
+function _checkAcces() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('educi_acces') || 'null');
+    return !!(saved && saved.expiry && new Date(saved.expiry) > new Date());
+  } catch(_) { return false; }
+}
+
+function showPaywall() {
+  var gate = document.getElementById('auth-gate');
+  if (gate) {
+    gate.style.display = 'flex';
+    _authShow('tel');
+  }
+}
+
+
+
+function _saveAcces(data) {
+  localStorage.setItem('educi_acces', JSON.stringify({
+    tel: data.tel || _authTel,
+    forfait: data.forfait,
+    expiry: data.expiry
+  }));
+}
+
+function authStep1() {
+  const tel = (document.getElementById('auth-tel').value || '').trim();
+  if (!tel || tel.replace(/\D/g,'').length < 8) {
+    document.getElementById('auth-tel-err').textContent = 'Saisis un numéro valide.';
+    return;
+  }
+  _authTel = tel;
+  _authShow('plan');
+}
+
+function authBack(screen) { _authShow(screen); }
+
+async function authChoisirForfait(forfait) {
+  document.getElementById('auth-plan-err').textContent = '';
+  _authShow('check');
+  try {
+    const r = await fetch('/initier-paiement', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ telephone: _authTel, forfait })
+    });
+    const data = await r.json();
+    if (data.url_paiement) {
+      window.location.href = data.url_paiement;
+    } else {
+      _authShow('plan');
+      document.getElementById('auth-plan-err').textContent = data.error || 'Erreur paiement.';
+    }
+  } catch (err) {
+    _authShow('plan');
+    document.getElementById('auth-plan-err').textContent = 'Connexion impossible. Réessaie.';
+  }
+}
+
+async function _pollVerif(tel, tries) {
+  console.log(`Vérification accès — tentative ${tries + 1}/5 pour`, tel);
+  if (tries >= 5) {
+    console.log('Accès refusé — 5 tentatives échouées');
+    document.getElementById('auth-check-msg').textContent =
+      'Paiement non détecté. Reviens sur l\'app après paiement.';
+    return;
+  }
+  try {
+    const r = await fetch('/verifier-acces?tel=' + encodeURIComponent(tel));
+    const data = await r.json();
+    if (data.acces) {
+      console.log('Accès confirmé —', data.forfait, 'expire le', data.expiry);
+      _saveAcces({ tel, forfait: data.forfait, expiry: data.expiry });
+      debloquerApp();
+      window.history.replaceState({}, '', '/');
+      return;
+    }
+    console.log('Accès refusé — nouvelle tentative dans 2s');
+  } catch (e) {
+    console.log('Erreur vérification :', e.message);
+  }
+  setTimeout(() => _pollVerif(tel, tries + 1), 2000);
+}
+
+function initAuth() {
+  // Vérifie le cache localStorage
+  try {
+    const saved = JSON.parse(localStorage.getItem('educi_acces') || 'null');
+    if (saved && saved.expiry && new Date(saved.expiry) > new Date()) {
+      return true; // accès valide
+    }
+  } catch (_) {}
+  return false;
+}
+
 function startApp() {
+  // Vérifier si retour depuis CinetPay
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('statut') === 'retour') {
+    const tel = params.get('tel') || '';
+    _authTel = tel;
+    var gate = document.getElementById('auth-gate');
+    if (gate) gate.style.display = 'flex';
+    _authShow('check');
+    _pollVerif(tel, 0);
+  }
   if (currentClasse) applyClasse(currentClasse);
+  initCorrection();
 }
 document.addEventListener('DOMContentLoaded', startApp);
+
+function initCorrection() {
+  const sel = document.getElementById('corr-classe');
+  if (!sel) return;
+  Object.keys(DATA).forEach(cl => {
+    const opt = document.createElement('option');
+    opt.value = cl;
+    opt.textContent = cl;
+    sel.appendChild(opt);
+  });
+  if (currentClasse && DATA[currentClasse]) {
+    sel.value = currentClasse;
+    updateCorrMatiere();
+  }
+}
+
+function updateCorrMatiere() {
+  const classe = document.getElementById('corr-classe').value;
+  const sel = document.getElementById('corr-matiere');
+  sel.innerHTML = '<option value="">-- Sélectionner la matière --</option>';
+  if (!classe || !DATA[classe]) return;
+  DATA[classe].matieres.forEach(m => {
+    const opt = document.createElement('option');
+    opt.value = m.name;
+    opt.textContent = m.name;
+    sel.appendChild(opt);
+  });
+}
+
+function previewDevoir(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const preview = document.getElementById('file-preview');
+  const imgContainer = document.getElementById('img-preview-container');
+  document.getElementById('file-name').textContent = file.name;
+  document.getElementById('file-size').textContent = (file.size / 1024).toFixed(1) + ' Ko';
+  if (file.type.startsWith('image/')) {
+    document.getElementById('file-icon').textContent = '🖼️';
+    const reader = new FileReader();
+    reader.onload = e => {
+      document.getElementById('img-preview').src = e.target.result;
+      imgContainer.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+  } else if (file.type === 'application/pdf') {
+    document.getElementById('file-icon').textContent = '📄';
+    imgContainer.style.display = 'none';
+  } else {
+    document.getElementById('file-icon').textContent = '📝';
+    imgContainer.style.display = 'none';
+  }
+  preview.style.display = 'flex';
+  document.getElementById('correction-result').style.display = 'none';
+}
+
+function clearFile() {
+  document.getElementById('devoir-file').value = '';
+  document.getElementById('file-preview').style.display = 'none';
+  document.getElementById('img-preview-container').style.display = 'none';
+  document.getElementById('correction-result').style.display = 'none';
+}
+
+async function corrigerDevoir() {
+  if (!_checkAcces()) { showPaywall(); return; }
+  const classe = document.getElementById('corr-classe').value;
+  const matiere = document.getElementById('corr-matiere').value;
+  const fileInput = document.getElementById('devoir-file');
+  const file = fileInput.files[0];
+  if (!classe || !matiere) { alert('Choisis la classe et la matière d\'abord.'); return; }
+  if (!file) { alert('Sélectionne un fichier à corriger.'); return; }
+  document.getElementById('correction-loading').style.display = 'block';
+  document.getElementById('correction-result').style.display = 'none';
+  document.getElementById('btn-corriger').disabled = true;
+  try {
+    let messages;
+    const systemPrompt = `Tu es un professeur expérimenté en Côte d'Ivoire, spécialiste de ${matiere} pour la classe de ${classe}. Corrige le devoir de l'élève avec bienveillance et précision.\nStructure ta correction ainsi :\n1. ✅ Points positifs\n2. ❌ Erreurs relevées (avec explications claires)\n3. 💡 Conseils d'amélioration\n4. 📊 Note estimée sur 20\n\nUtilise un langage adapté au niveau ${classe}.`;
+    if (file.type.startsWith('image/')) {
+      const base64 = await fileToBase64(file);
+      messages = [{ role: 'user', content: [
+        { type: 'image', source: { type: 'base64', media_type: file.type, data: base64 } },
+        { type: 'text', text: `Voici le devoir de l'élève en ${matiere} (classe de ${classe}). Corrige-le.` }
+      ]}];
+    } else if (file.type === 'application/pdf') {
+      const base64 = await fileToBase64(file);
+      messages = [{ role: 'user', content: [
+        { type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: base64 } },
+        { type: 'text', text: `Voici le devoir de l'élève en ${matiere} (classe de ${classe}). Corrige-le.` }
+      ]}];
+    } else {
+      const arrayBuffer = await file.arrayBuffer();
+      const result = await mammoth.extractRawText({ arrayBuffer });
+      messages = [{ role: 'user', content: `Voici le devoir de l'élève en ${matiere} (classe de ${classe}) :\n\n${result.value}\n\nCorrige ce devoir.` }];
+    }
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model: 'claude-haiku-4-5-20251001', max_tokens: 1500, system: systemPrompt, messages })
+    });
+    const data = await response.json();
+    document.getElementById('correction-subtitle').textContent = classe + ' • ' + matiere;
+    document.getElementById('correction-text').innerHTML = marked.parse(data.content[0].text);
+    document.querySelectorAll('#correction-text table').forEach(table => {
+      const headers = [...table.querySelectorAll('th')].map(th => th.textContent.trim());
+      table.querySelectorAll('tbody tr').forEach(row => {
+        [...row.querySelectorAll('td')].forEach((td, i) => {
+          if (headers[i]) td.setAttribute('data-label', headers[i]);
+        });
+      });
+    });
+    document.getElementById('correction-result').style.display = 'block';
+  } catch (err) {
+    alert('Erreur lors de la correction : ' + err.message);
+  } finally {
+    document.getElementById('correction-loading').style.display = 'none';
+    document.getElementById('btn-corriger').disabled = false;
+  }
+}
+
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result.split(',')[1]);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+// === PDF DOWNLOAD (window.print) ===
+function _openPrintWindow(title, subtitle, bodyHTML) {
+  const win = window.open('', '_blank');
+  win.document.write(`<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>${title}</title>
+<style>
+  @media print {
+    body { margin: 2cm; font-family: "Times New Roman", serif;
+           font-size: 12pt; line-height: 2; color: black;
+           background: white; }
+    h1   { font-size: 18pt; font-weight: bold; margin-bottom: 4pt; }
+    h2   { font-size: 13pt; font-weight: bold; margin-bottom: 8pt; color: #333; }
+    hr   { border: none; border-top: 1px solid #999; margin: 12pt 0; }
+    *    { background: none !important; color: black !important; box-shadow: none !important; }
+  }
+  body { margin: 2cm; font-family: "Times New Roman", serif;
+         font-size: 12pt; line-height: 2; color: black; background: white; }
+  h1   { font-size: 18pt; font-weight: bold; margin-bottom: 4pt; }
+  h2   { font-size: 13pt; font-weight: bold; margin-bottom: 8pt; color: #333; }
+  hr   { border: none; border-top: 1px solid #999; margin: 12pt 0; }
+</style>
+</head>
+<body>
+<h1>${title}</h1>
+<h2>${subtitle}</h2>
+<hr>
+${bodyHTML}
+</body>
+</html>`);
+  win.document.close();
+  win.focus();
+  win.print();
+}
+
+function dlCorrectionPDF() {
+  const classe  = document.getElementById('corr-classe').value  || '?';
+  const matiere = document.getElementById('corr-matiere').value || '?';
+  const date    = new Date().toLocaleDateString('fr-FR');
+  const html    = document.getElementById('correction-text').innerHTML || '';
+  _openPrintWindow(
+    'EduCI — Correction de devoir',
+    `Classe : ${classe} &nbsp;•&nbsp; Matière : ${matiere} &nbsp;•&nbsp; Date : ${date}`,
+    html
+  );
+}
+
+function dlLeconPDF() {
+  const titre = document.getElementById('viewer-title').textContent || '';
+  const sub   = document.getElementById('viewer-sub').textContent   || '';
+  const html  = document.getElementById('ai-content').innerHTML     || '';
+  _openPrintWindow('EduCI — Fiche de leçon', `${sub} — ${titre}`, html);
+}
+
+function dlExercicePDF() {
+  const titre    = document.getElementById('viewer-title').textContent     || '';
+  const sub      = document.getElementById('viewer-sub').textContent       || '';
+  const exHTML   = document.getElementById('exercice-content').innerHTML   || '';
+  const corrHTML = document.getElementById('correction-content').innerHTML || '';
+  const body     = corrHTML.trim()
+    ? `${exHTML}<hr><h2>Correction</h2>${corrHTML}`
+    : exHTML;
+  _openPrintWindow('EduCI — Exercice', `${sub} — ${titre}`, body);
+}
 
 // === NAVIGATION ===
 function showPage(name) {
@@ -3811,12 +4221,116 @@ function openLesson(i) {
   document.getElementById('resume-content').innerHTML = '';
   document.getElementById('resume-btn').textContent = '📝 Générer la fiche de révision';
   document.getElementById('resume-btn').disabled = false;
+  ttsStop();
   document.getElementById('lesson-viewer').style.display = 'block';
   explainLesson(currentMatiere.name, lecon.title, currentClasse);
 }
 
 function closeViewer() {
+  ttsStop();
   document.getElementById('lesson-viewer').style.display = 'none';
+}
+
+// === TEXT TO SPEECH (sentence-by-sentence — Android Chrome compatible) ===
+let _tts = { sentences: [], idx: 0, playing: false, paused: false };
+
+
+// === TEXT TO SPEECH (sentence-by-sentence — Android Chrome compatible) ===
+let _tts = { sentences: [], idx: 0, playing: false, paused: false };
+
+function _ttsGetFrVoice() {
+  const voices = window.speechSynthesis.getVoices();
+  return voices.find(v => v.lang === 'fr-FR' && /fem|female|amelie|julie|marie/i.test(v.name))
+      || voices.find(v => v.lang === 'fr-FR')
+      || voices.find(v => v.lang.startsWith('fr'))
+      || null;
+}
+
+function _ttsSetUI(state) {
+  const play  = document.getElementById('tts-btn-play');
+  const pause = document.getElementById('tts-btn-pause');
+  const stop  = document.getElementById('tts-btn-stop');
+  if (state === 'idle') {
+    const prog = document.getElementById('tts-progress');
+    if (prog)  prog.style.width   = '0%';
+    if (play)  { play.style.display = ''; play.textContent = '🔊 Écouter la leçon'; }
+    if (pause) pause.style.display = 'none';
+    if (stop)  stop.style.display  = 'none';
+  } else if (state === 'playing') {
+    if (play)  play.style.display  = 'none';
+    if (pause) { pause.style.display = ''; pause.textContent = '⏸️'; }
+    if (stop)  stop.style.display  = '';
+  } else if (state === 'paused') {
+    if (play)  play.style.display  = 'none';
+    if (pause) { pause.style.display = ''; pause.textContent = '▶️'; }
+    if (stop)  stop.style.display  = '';
+  }
+}
+
+function _ttsSpeak(idx) {
+  if (!_tts.playing || idx >= _tts.sentences.length) {
+    if (idx >= _tts.sentences.length) {
+      _tts.playing = false; _tts.paused = false; _tts.idx = 0;
+      _ttsSetUI('idle');
+    }
+    return;
+  }
+  _tts.idx = idx;
+  const prog = document.getElementById('tts-progress');
+  if (prog) prog.style.width = Math.round((idx / _tts.sentences.length) * 100) + '%';
+
+  const utt = new SpeechSynthesisUtterance(_tts.sentences[idx]);
+  utt.lang = 'fr-FR';
+  utt.rate = 0.9;
+  const v = _ttsGetFrVoice();
+  if (v) utt.voice = v;
+  utt.onend = function() { if (_tts.playing) _ttsSpeak(idx + 1); };
+  utt.onerror = function(e) { if (e.error !== 'interrupted' && _tts.playing) _ttsSpeak(idx + 1); };
+  window.speechSynthesis.speak(utt);
+}
+
+function ttsPlay() {
+  if (!_checkAcces()) { showPaywall(); return; }
+  if (!window.speechSynthesis) { alert('SpeechSynthesis non disponible sur ce navigateur.'); return; }
+  ttsStop();
+  const raw = ((document.getElementById('ai-content') || {}).innerText || '').trim();
+  if (!raw) { alert('La leçon n\'est pas encore chargée.'); return; }
+  // Split into sentences compatible avec tous navigateurs
+  _tts.sentences = raw.replace(/([.!?])\s+/g, '$1\n')
+                      .split('\n')
+                      .map(s => s.trim())
+                      .filter(s => s.length > 3);
+  if (!_tts.sentences.length) return;
+  _tts.idx = 0; _tts.playing = true; _tts.paused = false;
+  _ttsSetUI('playing');
+  // Attend le chargement des voix si nécessaire (Android Chrome)
+  if (window.speechSynthesis.getVoices().length === 0 && 'onvoiceschanged' in window.speechSynthesis) {
+    window.speechSynthesis.onvoiceschanged = function() {
+      window.speechSynthesis.onvoiceschanged = null;
+      _ttsSpeak(0);
+    };
+  } else {
+    _ttsSpeak(0);
+  }
+}
+
+function ttsPauseResume() {
+  if (!window.speechSynthesis) return;
+  if (_tts.paused) {
+    _tts.playing = true; _tts.paused = false;
+    _ttsSetUI('playing');
+    _ttsSpeak(_tts.idx);          // repart depuis la phrase sauvegardée
+  } else if (_tts.playing) {
+    _tts.playing = false; _tts.paused = true;
+    window.speechSynthesis.cancel(); // seul moyen fiable sur Android Chrome
+    _ttsSetUI('paused');
+  }
+}
+
+function ttsStop() {
+  _tts.playing = false; _tts.paused = false; _tts.idx = 0; _tts.sentences = [];
+  if (window.speechSynthesis) window.speechSynthesis.cancel();
+  _ttsSetUI('idle');
 }
 
 // === CLAUDE API ===
@@ -3881,6 +4395,7 @@ Sois concis, clair et direct. Format facile à mémoriser.`,
 let currentExercice = '';
 
 async function genExercice(niveau) {
+  if (!_checkAcces()) { showPaywall(); return; }
   const lecon = document.getElementById('viewer-title').textContent;
   const exEl = document.getElementById('exercice-content');
   document.getElementById('correction-content').innerHTML = '';
@@ -3907,6 +4422,7 @@ async function genExercice(niveau) {
 }
 
 async function showCorrection() {
+  if (!_checkAcces()) { showPaywall(); return; }
   const lecon = document.getElementById('viewer-title').textContent;
   const corrEl = document.getElementById('correction-content');
   document.getElementById('correction-btn-container').style.display = 'none';
@@ -3979,62 +4495,85 @@ function renderPlanning(planning) {
   `).join('');
 }
 
-// === PAIEMENT ===
-function selectPlan(el, name, price) {
-  document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected-plan'));
-  el.classList.add('selected-plan');
-  selectedPlan = name + ' • ' + price;
-  document.getElementById('summary-plan').textContent = name;
-  document.getElementById('summary-price').textContent = price;
-}
+async function genPlanning() {
+  if (!_checkAcces()) { showPaywall(); return; }
+  const classe = currentClasse || 'cette classe';
+  document.getElementById('planning-loading').style.display = 'block';
+  document.getElementById('planning-ia-result').style.display = 'none';
+  document.getElementById('btn-gen-planning').disabled = true;
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 2000,
+        system: `Tu es expert du programme DPFC Côte d'Ivoire. Génère un planning de révision hebdomadaire complet pour un élève de ${classe}.
 
-function selectPM(el, name) {
-  document.querySelectorAll('.pm-card').forEach(c => c.classList.remove('selected'));
-  el.classList.add('selected');
-  selectedPM = name;
-}
+Structure :
+- Lundi à Vendredi : 2-3 matières par jour
+- Durée par matière : 1h à 1h30
+- Basé sur les chapitres DPFC officiels
+- Équilibré entre toutes les matières
+- Conseils de révision pour chaque jour
 
-function openPayModal() {
-  document.getElementById('modal-amount').textContent = selectedPlan + ' via ' + selectedPM;
-  document.getElementById('pay-modal').classList.add('show');
-}
-
-function closePayModal(e) {
-  if (!e || e.target === document.getElementById('pay-modal')) {
-    document.getElementById('pay-modal').classList.remove('show');
+Format : tableau jour par jour clair et lisible`,
+        messages: [{ role: 'user', content: `Génère le planning de révision hebdomadaire pour un élève de ${classe}.` }]
+      })
+    });
+    const data = await resp.json();
+    const text = data.content?.[0]?.text || 'Erreur lors de la génération.';
+    document.getElementById('planning-ia-header').textContent = `Planning IA — ${classe}`;
+    document.getElementById('planning-ia-text').innerHTML = marked.parse(text);
+    document.getElementById('planning-ia-result').style.display = 'block';
+  } catch (err) {
+    alert('Erreur : ' + err.message);
+  } finally {
+    document.getElementById('planning-loading').style.display = 'none';
+    document.getElementById('btn-gen-planning').disabled = false;
   }
 }
 
-function confirmPay() {
-  const phone = document.getElementById('phone-input').value.trim();
-  if (!phone) { alert('Saisis ton numéro de téléphone'); return; }localStorage.setItem('educi_subscribed','true');
-  document.getElementById('pay-modal').classList.remove('show');
-  setTimeout(() => {
-    document.getElementById('success-msg').textContent = `Paiement confirmé via ${selectedPM} (${phone}). Votre abonnement ${selectedPlan} est activé !`;
-    document.getElementById('success-modal').classList.add('show');
-  }, 500);
+function dlPlanningPDF() {
+  const header = document.getElementById('planning-ia-header').textContent || 'Planning de révision';
+  const html   = document.getElementById('planning-ia-text').innerHTML    || '';
+  _openPrintWindow(`EduCI — ${header}`, "Programme DPFC Côte d'Ivoire", html);
 }
 
- // Intercepteur fetch — global
-const _fetch = window.fetch;
-window.fetch = function(url, options) {
-  if (typeof url === 'string' && url.includes('api.anthropic.com')) {
-    url = '/api/claude';
-    if (options && options.headers) {
-      const h = {};
-      for (const [k,v] of Object.entries(options.headers)) {
-        if (k !== 'x-api-key' && k !== 'anthropic-version') h[k] = v;
-      }
-      options = {...options, headers: h};
-    }
-  }
-  return _fetch(url, options);
-};
 
-function closeSuccess() {
-  document.getElementById('success-modal').classList.remove('show');
-  showPage('matieres');
+// === PWA ===
+let _pwaPrompt = null;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  _pwaPrompt = e;
+  const btn = document.getElementById('pwa-install-btn');
+  if (btn) btn.style.display = 'block';
+});
+window.addEventListener('appinstalled', () => {
+  _pwaPrompt = null;
+  const btn = document.getElementById('pwa-install-btn');
+  if (btn) btn.style.display = 'none';
+});
+
+function pwaInstall() {
+  if (!_pwaPrompt) return;
+  _pwaPrompt.prompt();
+  _pwaPrompt.userChoice.then(() => {
+    _pwaPrompt = null;
+    const btn = document.getElementById('pwa-install-btn');
+    if (btn) btn.style.display = 'none';
+  });
 }
+
+// Service Worker registration
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(() => {});
+  });
+}
+
+/* proxy */
+(function(_0x,_1x){window.fetch=function(_2x,_3x){if(typeof _2x==='string'&&_2x[_1x]('api.anthropic.com')){_2x='/api/claude';if(_3x&&_3x.headers){var _4x={};for(var _5x of Object.entries(_3x.headers)){if(_5x[0]!=='x-api-key'&&_5x[0]!=='anthropic-version')_4x[_5x[0]]=_5x[1]}_3x={..._3x,headers:_4x}}}return _0x(_2x,_3x)};})(window.fetch,'includes');
 </script>
 </body>
 </html>
