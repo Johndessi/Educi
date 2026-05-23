@@ -3871,7 +3871,7 @@ async function authChoisirForfait(forfait) {
       window.location.href = data.url_paiement;
     } else {
       _authShow('plan');
-      document.getElementById('auth-plan-err').textContent = data.error || 'Erreur paiement.';
+      document.getElementById('auth-plan-err').textContent = 'Paiement impossible. Vérifie ton numéro et réessaie.';
     }
   } catch (err) {
     _authShow('plan');

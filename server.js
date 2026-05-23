@@ -110,7 +110,7 @@ app.post('/initier-paiement', async (req, res) => {
     });
     const data = await r.json();
     if (data.code === '201') return res.json({ url_paiement: data.data.payment_url });
-    res.status(400).json({ error: data.message || 'Erreur CinetPay' });
+    res.status(400).json({ error: 'Paiement impossible. Vérifie ton numéro et réessaie.' });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
