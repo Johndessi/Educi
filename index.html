@@ -307,9 +307,153 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
   color: white;
 }
 #app-contenu { display: block; }
+
+/* === ADMIN === */
+#admin-page {
+  display: none;
+  min-height: 100vh;
+  background: #0D1117;
+  color: #E6EDF3;
+  font-family: 'DM Sans', sans-serif;
+  padding-bottom: 40px;
+}
+.adm-header {
+  background: #161B22;
+  border-bottom: 1px solid #30363D;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.adm-header-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; }
+.adm-header-sub { font-size: 12px; color: #8B949E; margin-top: 1px; }
+.adm-body { padding: 20px 16px; max-width: 700px; margin: 0 auto; }
+.adm-login { background: #161B22; border: 1px solid #30363D; border-radius: 16px; padding: 28px 20px; max-width: 360px; margin: 40px auto; }
+.adm-login-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 18px; margin-bottom: 6px; }
+.adm-login-sub { font-size: 13px; color: #8B949E; margin-bottom: 20px; }
+.adm-input {
+  width: 100%; padding: 12px 14px; background: #0D1117;
+  border: 1px solid #30363D; border-radius: 10px; color: #E6EDF3;
+  font-size: 15px; box-sizing: border-box; outline: none; margin-bottom: 12px;
+}
+.adm-input:focus { border-color: #F77F00; }
+.adm-btn {
+  width: 100%; padding: 13px; border: none; border-radius: 10px;
+  background: #F77F00; color: white; font-family: 'Syne', sans-serif;
+  font-size: 15px; font-weight: 700; cursor: pointer;
+}
+.adm-btn-sm {
+  padding: 8px 16px; border: none; border-radius: 8px;
+  background: #21262D; color: #E6EDF3; font-size: 13px;
+  font-family: 'Syne', sans-serif; font-weight: 600; cursor: pointer;
+  border: 1px solid #30363D;
+}
+.adm-btn-sm:hover { background: #30363D; }
+.adm-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+.adm-card {
+  background: #161B22; border: 1px solid #30363D;
+  border-radius: 14px; padding: 16px;
+}
+.adm-card-label { font-size: 12px; color: #8B949E; margin-bottom: 6px; }
+.adm-card-val { font-family: 'Syne', sans-serif; font-size: 26px; font-weight: 800; color: #F77F00; }
+.adm-card-sub { font-size: 12px; color: #8B949E; margin-top: 2px; }
+.adm-section-title {
+  font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px;
+  margin-bottom: 12px; display: flex; align-items: center;
+  justify-content: space-between;
+}
+.adm-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.adm-table th {
+  text-align: left; padding: 10px 8px; color: #8B949E;
+  border-bottom: 1px solid #30363D; font-weight: 600; font-size: 12px;
+}
+.adm-table td {
+  padding: 12px 8px; border-bottom: 1px solid #21262D; vertical-align: top;
+}
+.adm-badge {
+  display: inline-block; padding: 3px 8px; border-radius: 20px;
+  font-size: 11px; font-weight: 700;
+}
+.adm-badge-mensuel { background: rgba(59,130,246,0.15); color: #60a5fa; }
+.adm-badge-trimestriel { background: rgba(247,127,0,0.15); color: #F77F00; }
+.adm-badge-annuel { background: rgba(0,154,68,0.15); color: #34d399; }
+.adm-days-ok { color: #34d399; font-weight: 600; }
+.adm-days-warn { color: #fbbf24; font-weight: 600; }
+.adm-days-crit { color: #f87171; font-weight: 600; }
+.adm-empty { text-align: center; padding: 40px 20px; color: #8B949E; font-size: 14px; }
+.adm-err { color: #f87171; font-size: 13px; margin-top: 8px; min-height: 18px; text-align: center; }
+@media (max-width: 360px) {
+  .adm-cards { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
+
+<!-- ADMIN PAGE -->
+<div id="admin-page">
+  <div class="adm-header">
+    <img src="/icons/icon-192.png" style="width:36px;height:36px;border-radius:10px">
+    <div>
+      <div class="adm-header-title">EduCI Admin</div>
+      <div class="adm-header-sub">Tableau de bord abonnements</div>
+    </div>
+    <div style="margin-left:auto;display:flex;gap:8px">
+      <button class="adm-btn-sm" onclick="adminRefresh()">🔄 Actualiser</button>
+      <button class="adm-btn-sm" onclick="adminLogout()">Déconnexion</button>
+    </div>
+  </div>
+
+  <div class="adm-body">
+
+    <!-- Écran login -->
+    <div id="adm-login-screen" style="display:none">
+      <div class="adm-login">
+        <div class="adm-login-title">🔐 Accès Admin</div>
+        <div class="adm-login-sub">Saisis la clé d'administration pour accéder aux statistiques.</div>
+        <input id="adm-key-input" class="adm-input" type="password"
+          placeholder="Clé admin"
+          onkeydown="if(event.key==='Enter')adminLogin()">
+        <button class="adm-btn" onclick="adminLogin()">Accéder →</button>
+        <div id="adm-login-err" class="adm-err"></div>
+      </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="adm-dashboard" style="display:none">
+
+      <!-- Cartes résumé -->
+      <div class="adm-cards" id="adm-cards">
+        <div class="adm-card">
+          <div class="adm-card-label">Total abonnés</div>
+          <div class="adm-card-val" id="adm-total">—</div>
+          <div class="adm-card-sub">abonnements actifs</div>
+        </div>
+        <div class="adm-card">
+          <div class="adm-card-label">Revenus estimés</div>
+          <div class="adm-card-val" id="adm-revenus">—</div>
+          <div class="adm-card-sub">FCFA cumulés</div>
+        </div>
+        <div class="adm-card" style="grid-column:1/-1">
+          <div class="adm-card-label">Répartition forfaits</div>
+          <div id="adm-repartition" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px"></div>
+        </div>
+      </div>
+
+      <!-- Tableau abonnés -->
+      <div class="adm-section-title">
+        <span>Abonnés actifs</span>
+        <span id="adm-updated" style="font-size:11px;color:#8B949E;font-weight:400"></span>
+      </div>
+      <div id="adm-table-wrap">
+        <div class="adm-empty">Chargement…</div>
+      </div>
+
+    </div>
+  </div>
+</div>
 
 <!-- AUTH GATE -->
 <div id="auth-gate" style="display:none">
@@ -4577,6 +4721,135 @@ if ('serviceWorker' in navigator) {
 
 /* proxy */
 (function(_0x,_1x){window.fetch=function(_2x,_3x){if(typeof _2x==='string'&&_2x[_1x]('api.anthropic.com')){_2x='/api/claude';if(_3x&&_3x.headers){var _4x={};for(var _5x of Object.entries(_3x.headers)){if(_5x[0]!=='x-api-key'&&_5x[0]!=='anthropic-version')_4x[_5x[0]]=_5x[1]}_3x={..._3x,headers:_4x}}}return _0x(_2x,_3x)};})(window.fetch,'includes');
+
+// === ADMIN DASHBOARD ===
+(function() {
+  if (window.location.pathname !== '/admin') return;
+
+  document.addEventListener('DOMContentLoaded', function() {
+    // Masquer app normal
+    var gate = document.getElementById('auth-gate');
+    var app  = document.getElementById('app-contenu');
+    if (gate) gate.style.display = 'none';
+    if (app)  app.style.display  = 'none';
+
+    var adminPage = document.getElementById('admin-page');
+    if (adminPage) adminPage.style.display = 'block';
+
+    var params = new URLSearchParams(window.location.search);
+    var key = params.get('key') || '';
+    if (key) {
+      document.getElementById('adm-key-input').value = key;
+      _adminFetch(key);
+    } else {
+      _adminShowLogin();
+    }
+  });
+})();
+
+function _adminShowLogin() {
+  document.getElementById('adm-login-screen').style.display = 'block';
+  document.getElementById('adm-dashboard').style.display   = 'none';
+}
+
+function _adminShowDashboard() {
+  document.getElementById('adm-login-screen').style.display = 'none';
+  document.getElementById('adm-dashboard').style.display   = 'block';
+}
+
+function adminLogin() {
+  var key = (document.getElementById('adm-key-input').value || '').trim();
+  document.getElementById('adm-login-err').textContent = '';
+  if (!key) { document.getElementById('adm-login-err').textContent = 'Saisis la clé admin.'; return; }
+  _adminFetch(key);
+}
+
+function adminRefresh() {
+  var key = (document.getElementById('adm-key-input').value || '').trim();
+  if (key) _adminFetch(key);
+}
+
+function adminLogout() {
+  window.history.replaceState({}, '', '/admin');
+  document.getElementById('adm-key-input').value = '';
+  _adminShowLogin();
+}
+
+async function _adminFetch(key) {
+  try {
+    const r = await fetch('/api/admin/stats?key=' + encodeURIComponent(key));
+    const data = await r.json();
+    if (r.status === 401 || data.error) {
+      document.getElementById('adm-login-err').textContent = 'Clé invalide.';
+      _adminShowLogin();
+      return;
+    }
+    // Mettre la clé dans l'URL sans recharger
+    window.history.replaceState({}, '', '/admin?key=' + encodeURIComponent(key));
+    _adminRender(data);
+    _adminShowDashboard();
+  } catch(e) {
+    document.getElementById('adm-login-err').textContent = 'Erreur de connexion.';
+    _adminShowLogin();
+  }
+}
+
+function _adminMaskPhone(tel) {
+  if (!tel || tel.length < 6) return tel;
+  return tel.slice(0, 2) + '****' + tel.slice(-4);
+}
+
+function _adminDaysClass(j) {
+  if (j > 30) return 'adm-days-ok';
+  if (j > 7)  return 'adm-days-warn';
+  return 'adm-days-crit';
+}
+
+function _adminFormatDate(iso) {
+  try {
+    const d = new Date(iso);
+    return d.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' });
+  } catch(_) { return iso; }
+}
+
+function _adminRender(data) {
+  // Cartes
+  document.getElementById('adm-total').textContent   = data.total_abonnes;
+  document.getElementById('adm-revenus').textContent = (data.revenus_estimes || 0).toLocaleString('fr-FR') + ' F';
+
+  // Répartition forfaits
+  var counts = { mensuel: 0, trimestriel: 0, annuel: 0 };
+  (data.abonnes || []).forEach(function(a) { if (counts[a.forfait] !== undefined) counts[a.forfait]++; });
+  document.getElementById('adm-repartition').innerHTML =
+    Object.entries(counts).map(function(e) {
+      var label = { mensuel: 'Mensuel', trimestriel: 'Trimestriel', annuel: 'Annuel' }[e[0]];
+      return '<span class="adm-badge adm-badge-' + e[0] + '">' + label + ' × ' + e[1] + '</span>';
+    }).join('');
+
+  // Horodatage
+  document.getElementById('adm-updated').textContent =
+    'Mis à jour ' + new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+
+  // Tableau
+  var wrap = document.getElementById('adm-table-wrap');
+  if (!data.abonnes || data.abonnes.length === 0) {
+    wrap.innerHTML = '<div class="adm-empty">Aucun abonné actif pour le moment.</div>';
+    return;
+  }
+  var rows = data.abonnes.map(function(a) {
+    var dc = _adminDaysClass(a.jours_restants);
+    return '<tr>' +
+      '<td style="font-family:monospace">' + _adminMaskPhone(a.telephone) + '</td>' +
+      '<td><span class="adm-badge adm-badge-' + a.forfait + '">' + a.forfait + '</span></td>' +
+      '<td>' + _adminFormatDate(a.expiry) + '</td>' +
+      '<td class="' + dc + '">' + a.jours_restants + 'j</td>' +
+    '</tr>';
+  }).join('');
+  wrap.innerHTML =
+    '<table class="adm-table"><thead><tr>' +
+    '<th>Téléphone</th><th>Forfait</th><th>Expiration</th><th>Restant</th>' +
+    '</tr></thead><tbody>' + rows + '</tbody></table>';
+}
 </script>
 </body>
 </html>

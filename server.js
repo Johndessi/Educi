@@ -69,6 +69,7 @@ app.post('/api/claude', async (req, res) => {
 });
 
 // === ABONNEMENTS CINETPAY ===
+const ADMIN_KEY = process.env.ADMIN_KEY || 'EDUCI_ADMIN_2026';
 const abonnes = new Map();
 const FORFAITS = {
   mensuel:     { prix: 500,  jours: 30,  label: '1 mois'  },
@@ -153,6 +154,25 @@ app.get('/verifier-acces', (req, res) => {
   if (!sub) return res.json({ acces: false });
   if (new Date() > new Date(sub.expiry)) { abonnes.delete(tel); return res.json({ acces: false }); }
   res.json({ acces: true, forfait: sub.forfait, expiry: sub.expiry });
+});
+
+app.get('/api/admin/stats', (req, res) => {
+  if (req.query.key !== ADMIN_KEY)
+    return res.status(401).json({ error: 'Clé invalide' });
+  const now = new Date();
+  const list = [];
+  let revenus = 0;
+  for (const [tel, sub] of abonnes.entries()) {
+    if (new Date(sub.expiry) < now) { abonnes.delete(tel); continue; }
+    const jours_restants = Math.ceil((new Date(sub.expiry) - now) / 86400000);
+    list.push({ telephone: tel, forfait: sub.forfait, expiry: sub.expiry, jours_restants });
+    revenus += FORFAITS[sub.forfait]?.prix || 0;
+  }
+  res.json({
+    abonnes: list,
+    total_abonnes: list.length,
+    revenus_estimes: revenus
+  });
 });
 
 app.get('*', (req, res) => {
