@@ -427,7 +427,7 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
 <body>
 
 <!-- AUTH GATE -->
-<div id="auth-gate">
+<div id="auth-gate" style="display:flex">
 
   <!-- Écran 1 : numéro de téléphone -->
   <div id="auth-screen-tel" style="min-height:100vh;display:flex;flex-direction:column;
@@ -526,7 +526,7 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
 </div>
 
 <!-- APP -->
-<div id="app-contenu">
+<div id="app-contenu" style="display:none">
 
   <!-- HEADER -->
   <div class="header">
@@ -4120,8 +4120,11 @@ function _authShow(screen) {
 }
 
 function debloquerApp() {
-  document.getElementById('auth-gate').style.display = 'none';
-  document.getElementById('app-contenu').style.display = 'block';
+  var gate = document.getElementById('auth-gate');
+  var app  = document.getElementById('app-contenu');
+  if (gate) gate.style.display = 'none';
+  if (app)  app.style.display  = 'block';
+  console.log('debloquerApp() — app visible, gate masqué');
 }
 
 function _saveAcces(data) {
@@ -4228,7 +4231,15 @@ function initAuth() {
 }
 
 function startApp() {
-  initAuth();
+  try {
+    initAuth();
+  } catch(e) {
+    console.error('initAuth() erreur :', e);
+    var gate = document.getElementById('auth-gate');
+    var app  = document.getElementById('app-contenu');
+    if (gate) gate.style.display = 'flex';
+    if (app)  app.style.display  = 'none';
+  }
   if (currentClasse) applyClasse(currentClasse);
   initCorrection();
 }
