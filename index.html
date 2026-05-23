@@ -1,20 +1,14 @@
 <!DOCTYPE html>
-<!-- RWR1Q0kgwqkgMjAyNSAtIFNlY2thIC0gSm9obmRlc3NpIC0gQWJpZGphbiwgQ8O0dGUgZOKAmUl2b2lyZSAtIFRvdXRlIHJlcHJvZHVjdGlvbiBpbnRlcmRpdGU= -->
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#FF6B35">
+<meta name="theme-color" content="#F77F00">
 <meta name="description" content="EduCI - Plateforme éducative pour élèves ivoiriens">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="EduCI">
-<link rel="manifest" href="/manifest.json">
-<link rel="apple-touch-icon" href="/icons/icon-192.png">
 <title>EduCI - Réussis ton Bac</title>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -221,9 +215,6 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
   0%,80%,100% { transform: scale(0); }
   40% { transform: scale(1); }
 }
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
 
 .ask-form { display: flex; gap: 10px; margin-top: 20px; }
 .ask-input {
@@ -262,16 +253,22 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
 }
 
 /* PAIEMENT PAGE */
-  border-radius: 8px; font-size: 11px; font-weight: 600;
+.plan-cards { display: flex; flex-direction: column; gap: 14px; margin-bottom: 28px; }
+.plan-card {
+  background: var(--card); border: 2px solid var(--border);
+  border-radius: 18px; padding: 20px;
+  cursor: pointer; transition: all 0.2s;
 }
-/* Tables générées par marked.parse() dans la correction */
-#correction-text table {
-  width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px;
+.plan-card.popular { border-color: var(--orange); }
+.popular-badge {
+  background: var(--orange); color: white;
+  font-size: 11px; font-weight: 700; padding: 3px 10px;
+  border-radius: 10px; display: inline-block; margin-bottom: 10px;
 }
-#correction-text th,
-#correction-text td {
-  border: 1px solid rgba(255,255,255,0.12);
-  padding: 8px 10px; text-align: left; vertical-align: top;
+.plan-name { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; }
+.plan-price {
+  font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800;
+  color: var(--orange); margin: 8px 0;
 }
 #correction-text th {
   background: rgba(247,127,0,0.15); color: var(--orange); font-weight: 600;
@@ -300,7 +297,7 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
   }
 }
 #auth-gate {
-  display: flex;
+  display: none;
   position: fixed;
   inset: 0;
   z-index: 9999;
@@ -309,13 +306,157 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
   font-family: 'DM Sans', sans-serif;
   color: white;
 }
-#app-contenu { display: none; }
+#app-contenu { display: block; }
+
+/* === ADMIN === */
+#admin-page {
+  display: none;
+  min-height: 100vh;
+  background: #0D1117;
+  color: #E6EDF3;
+  font-family: 'DM Sans', sans-serif;
+  padding-bottom: 40px;
+}
+.adm-header {
+  background: #161B22;
+  border-bottom: 1px solid #30363D;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.adm-header-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; }
+.adm-header-sub { font-size: 12px; color: #8B949E; margin-top: 1px; }
+.adm-body { padding: 20px 16px; max-width: 700px; margin: 0 auto; }
+.adm-login { background: #161B22; border: 1px solid #30363D; border-radius: 16px; padding: 28px 20px; max-width: 360px; margin: 40px auto; }
+.adm-login-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 18px; margin-bottom: 6px; }
+.adm-login-sub { font-size: 13px; color: #8B949E; margin-bottom: 20px; }
+.adm-input {
+  width: 100%; padding: 12px 14px; background: #0D1117;
+  border: 1px solid #30363D; border-radius: 10px; color: #E6EDF3;
+  font-size: 15px; box-sizing: border-box; outline: none; margin-bottom: 12px;
+}
+.adm-input:focus { border-color: #F77F00; }
+.adm-btn {
+  width: 100%; padding: 13px; border: none; border-radius: 10px;
+  background: #F77F00; color: white; font-family: 'Syne', sans-serif;
+  font-size: 15px; font-weight: 700; cursor: pointer;
+}
+.adm-btn-sm {
+  padding: 8px 16px; border: none; border-radius: 8px;
+  background: #21262D; color: #E6EDF3; font-size: 13px;
+  font-family: 'Syne', sans-serif; font-weight: 600; cursor: pointer;
+  border: 1px solid #30363D;
+}
+.adm-btn-sm:hover { background: #30363D; }
+.adm-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+.adm-card {
+  background: #161B22; border: 1px solid #30363D;
+  border-radius: 14px; padding: 16px;
+}
+.adm-card-label { font-size: 12px; color: #8B949E; margin-bottom: 6px; }
+.adm-card-val { font-family: 'Syne', sans-serif; font-size: 26px; font-weight: 800; color: #F77F00; }
+.adm-card-sub { font-size: 12px; color: #8B949E; margin-top: 2px; }
+.adm-section-title {
+  font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px;
+  margin-bottom: 12px; display: flex; align-items: center;
+  justify-content: space-between;
+}
+.adm-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.adm-table th {
+  text-align: left; padding: 10px 8px; color: #8B949E;
+  border-bottom: 1px solid #30363D; font-weight: 600; font-size: 12px;
+}
+.adm-table td {
+  padding: 12px 8px; border-bottom: 1px solid #21262D; vertical-align: top;
+}
+.adm-badge {
+  display: inline-block; padding: 3px 8px; border-radius: 20px;
+  font-size: 11px; font-weight: 700;
+}
+.adm-badge-mensuel { background: rgba(59,130,246,0.15); color: #60a5fa; }
+.adm-badge-trimestriel { background: rgba(247,127,0,0.15); color: #F77F00; }
+.adm-badge-annuel { background: rgba(0,154,68,0.15); color: #34d399; }
+.adm-days-ok { color: #34d399; font-weight: 600; }
+.adm-days-warn { color: #fbbf24; font-weight: 600; }
+.adm-days-crit { color: #f87171; font-weight: 600; }
+.adm-empty { text-align: center; padding: 40px 20px; color: #8B949E; font-size: 14px; }
+.adm-err { color: #f87171; font-size: 13px; margin-top: 8px; min-height: 18px; text-align: center; }
+@media (max-width: 360px) {
+  .adm-cards { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
 
+<!-- ADMIN PAGE -->
+<div id="admin-page">
+  <div class="adm-header">
+    <img src="/icons/icon-192.png" style="width:36px;height:36px;border-radius:10px">
+    <div>
+      <div class="adm-header-title">EduCI Admin</div>
+      <div class="adm-header-sub">Tableau de bord abonnements</div>
+    </div>
+    <div style="margin-left:auto;display:flex;gap:8px">
+      <button class="adm-btn-sm" onclick="adminRefresh()">🔄 Actualiser</button>
+      <button class="adm-btn-sm" onclick="adminLogout()">Déconnexion</button>
+    </div>
+  </div>
+
+  <div class="adm-body">
+
+    <!-- Écran login -->
+    <div id="adm-login-screen" style="display:none">
+      <div class="adm-login">
+        <div class="adm-login-title">🔐 Accès Admin</div>
+        <div class="adm-login-sub">Saisis la clé d'administration pour accéder aux statistiques.</div>
+        <input id="adm-key-input" class="adm-input" type="password"
+          placeholder="Clé admin"
+          onkeydown="if(event.key==='Enter')adminLogin()">
+        <button class="adm-btn" onclick="adminLogin()">Accéder →</button>
+        <div id="adm-login-err" class="adm-err"></div>
+      </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="adm-dashboard" style="display:none">
+
+      <!-- Cartes résumé -->
+      <div class="adm-cards" id="adm-cards">
+        <div class="adm-card">
+          <div class="adm-card-label">Total abonnés</div>
+          <div class="adm-card-val" id="adm-total">—</div>
+          <div class="adm-card-sub">abonnements actifs</div>
+        </div>
+        <div class="adm-card">
+          <div class="adm-card-label">Revenus estimés</div>
+          <div class="adm-card-val" id="adm-revenus">—</div>
+          <div class="adm-card-sub">FCFA cumulés</div>
+        </div>
+        <div class="adm-card" style="grid-column:1/-1">
+          <div class="adm-card-label">Répartition forfaits</div>
+          <div id="adm-repartition" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px"></div>
+        </div>
+      </div>
+
+      <!-- Tableau abonnés -->
+      <div class="adm-section-title">
+        <span>Abonnés actifs</span>
+        <span id="adm-updated" style="font-size:11px;color:#8B949E;font-weight:400"></span>
+      </div>
+      <div id="adm-table-wrap">
+        <div class="adm-empty">Chargement…</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 <!-- AUTH GATE -->
-<div id="auth-gate" style="display:flex">
+<div id="auth-gate" style="display:none">
 
   <!-- Écran 1 : numéro de téléphone -->
   <div id="auth-screen-tel" style="min-height:100vh;display:flex;flex-direction:column;
@@ -344,6 +485,11 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
     <div style="font-size:12px;opacity:0.55;text-align:center;max-width:300px">
       Ton numéro identifie ton abonnement · aucun mot de passe requis
     </div>
+    <button onclick="document.getElementById('auth-gate').style.display='none'"
+      style="background:none;border:none;color:rgba(255,255,255,0.45);font-size:13px;
+             cursor:pointer;text-decoration:underline;margin-top:-8px">
+      Continuer sans abonnement
+    </button>
   </div>
 
   <!-- Écran 2 : choix de forfait -->
@@ -414,7 +560,7 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
 </div>
 
 <!-- APP -->
-<div id="app-contenu" style="display:none">
+<div id="app-contenu" style="display:block">
 
   <!-- HEADER -->
   <div class="header">
@@ -544,33 +690,207 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
   <div class="page" id="page-planning">
     <div class="section-title">Planning Semaine</div>
     <div class="planning-grid" id="planning-grid"></div>
-    <!-- Planning IA -->
-    <div style="margin-top:12px">
-      <button id="btn-gen-planning" onclick="genPlanning()"
-        style="width:100%;padding:16px;border-radius:16px;background:var(--orange);
-               border:none;color:white;font-size:16px;font-weight:700;cursor:pointer;
-               display:flex;align-items:center;justify-content:center;gap:8px">
-        🗓️ Générer mon planning IA
-      </button>
-      <div id="planning-loading" style="display:none;text-align:center;padding:40px">
-        <div style="color:var(--muted);font-size:14px">⏳ Génération du planning en cours…</div>
+  </div>
+
+  <!-- PAGE CORRECTION -->
+  <div class="page" id="page-correction">
+    <div class="page-header" style="padding:20px 16px 8px">
+      <h2 style="color:var(--orange);font-family:'Syne',sans-serif">📝 Correction de devoir</h2>
+      <p style="color:var(--muted);font-size:14px;margin-top:4px">Uploade ton devoir, l'IA te le corrige</p>
+    </div>
+    <div style="padding:0 16px 100px">
+      <div style="margin-bottom:16px">
+        <select id="corr-classe" onchange="updateCorrMatiere()"
+          style="width:100%;padding:12px;border-radius:12px;background:var(--card);
+                 color:var(--text);border:1px solid rgba(255,255,255,0.1);
+                 font-size:14px;margin-bottom:8px">
+          <option value="">-- Sélectionner la classe --</option>
+        </select>
+        <select id="corr-matiere"
+          style="width:100%;padding:12px;border-radius:12px;background:var(--card);
+                 color:var(--text);border:1px solid rgba(255,255,255,0.1);font-size:14px">
+          <option value="">-- Sélectionner la matière --</option>
+        </select>
       </div>
-      <div id="planning-ia-result" style="display:none;margin-top:16px;
-           background:var(--card);border-radius:16px;padding:16px">
-        <div id="planning-ia-header"
-          style="color:var(--orange);font-weight:700;font-size:15px;margin-bottom:14px"></div>
-        <div id="planning-ia-text"
-          style="color:var(--text);line-height:1.7;font-size:14px"></div>
-        <button onclick="dlPlanningPDF()"
-          style="width:100%;margin-top:16px;padding:13px;border:none;border-radius:12px;
-                 background:#FF6B35;color:white;font-family:'Syne',sans-serif;
-                 font-size:14px;font-weight:700;cursor:pointer;
-                 display:flex;align-items:center;justify-content:center;gap:8px">
-          📥 Télécharger en PDF
-        </button>
+      <div id="upload-zone" onclick="document.getElementById('devoir-file').click()"
+        style="border:2px dashed var(--orange);border-radius:16px;padding:40px 20px;
+               text-align:center;cursor:pointer;background:rgba(247,127,0,0.05);
+               margin-bottom:16px;transition:background 0.2s">
+        <div style="font-size:48px;margin-bottom:8px">📎</div>
+        <div style="color:var(--orange);font-weight:600;margin-bottom:4px">Appuie pour choisir un fichier</div>
+        <div style="color:var(--muted);font-size:12px">Image, Photo, PDF ou Word (.docx)</div>
+        <input type="file" id="devoir-file"
+          accept="image/*,.pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+          style="display:none" onchange="previewDevoir(this)">
+      </div>
+      <div id="file-preview" style="display:none;margin-bottom:16px;background:var(--card);
+           border-radius:12px;padding:12px;align-items:center;gap:12px">
+        <span id="file-icon" style="font-size:32px"></span>
+        <div>
+          <div id="file-name" style="font-weight:600;font-size:14px"></div>
+          <div id="file-size" style="color:var(--muted);font-size:12px"></div>
+        </div>
+        <button onclick="clearFile()"
+          style="margin-left:auto;background:rgba(239,68,68,0.2);border:none;
+                 color:#EF4444;border-radius:8px;padding:6px 10px;cursor:pointer">✕</button>
+      </div>
+      <div id="img-preview-container" style="display:none;margin-bottom:16px;text-align:center">
+        <img id="img-preview" style="max-width:100%;border-radius:12px;max-height:300px">
+      </div>
+      <button onclick="corrigerDevoir()"
+        style="width:100%;padding:16px;border-radius:16px;background:var(--orange);border:none;
+               color:white;font-size:16px;font-weight:700;cursor:pointer;
+               display:flex;align-items:center;justify-content:center;gap:8px">
+        🤖 Corriger avec l'IA
+      </button>
+      <div id="correction-loading" style="display:none;text-align:center;padding:40px">
+        <div style="font-size:40px;margin-bottom:12px">🤖</div>
+        <div style="color:var(--orange);font-weight:600">Correction en cours...</div>
+        <div style="color:var(--muted);font-size:12px;margin-top:4px">L'IA analyse ton devoir</div>
+      </div>
+      <div id="correction-result" style="display:none;margin-top:20px">
+        <div style="background:var(--card);border-radius:16px;padding:16px">
+          <div style="color:var(--orange);font-weight:700;margin-bottom:4px;font-size:16px">📋 Correction</div>
+          <div id="correction-subtitle" style="color:var(--muted);font-size:12px;margin-bottom:12px"></div>
+          <div id="correction-text" style="color:var(--text);line-height:1.6;font-size:14px;white-space:pre-wrap"></div>
+          <button onclick="dlCorrectionPDF()"
+            style="width:100%;margin-top:16px;padding:13px;border:none;border-radius:12px;
+                   background:#FF6B35;color:white;font-family:'Syne',sans-serif;
+                   font-size:14px;font-weight:700;cursor:pointer;
+                   display:flex;align-items:center;justify-content:center;gap:8px">
+            📥 Télécharger en PDF
+          </button>
+        </div>
       </div>
     </div>
   </div>
+
+  <!-- PWA install button -->
+  <button id="pwa-install-btn" onclick="pwaInstall()"
+    style="display:none;position:fixed;bottom:80px;left:50%;transform:translateX(-50%);
+           z-index:9998;background:#FF6B35;color:white;border:none;
+           border-radius:25px;padding:12px 24px;
+           font-family:'Syne',sans-serif;font-size:14px;font-weight:700;
+           cursor:pointer;white-space:nowrap;
+           box-shadow:0 4px 20px rgba(255,107,53,0.45)">
+    📲 Installer EduCI
+  </button>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <button class="nav-item active" onclick="showPage('home')" id="nav-home">
+      <span class="nav-icon">🏠</span>Accueil
+    </button>
+    <button class="nav-item" onclick="showPage('matieres')" id="nav-matieres">
+      <span class="nav-icon">📚</span>Matières
+    </button>
+    <button class="nav-item" onclick="showPage('planning')" id="nav-planning">
+      <span class="nav-icon">📅</span>Planning
+    </button>
+    <button class="nav-item" onclick="showPage('correction')" id="nav-correction">
+      <span class="nav-icon">📝</span>Correction
+    </button>
+  </nav>
+</div>
+
+<!-- LESSON VIEWER (overlay fixe) -->
+<div id="lesson-viewer">
+  <div class="viewer-header">
+    <div class="back-btn" onclick="closeViewer()">←</div>
+    <div style="flex:1">
+      <div id="viewer-title" style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;"></div>
+      <div id="viewer-sub" style="font-size:12px;color:var(--muted)"></div>
+    </div>
+  </div>
+  <!-- Barre TTS -->
+  <div id="tts-bar" style="padding:10px 16px 12px;background:var(--card);
+       border-bottom:1px solid rgba(255,255,255,0.06)">
+    <div style="height:3px;background:rgba(255,255,255,0.08);border-radius:2px;margin-bottom:10px">
+      <div id="tts-progress" style="height:100%;width:0%;background:#FF6B35;
+           border-radius:2px;transition:width 0.4s"></div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button id="tts-btn-play" onclick="ttsPlay()"
+        style="flex:1;padding:10px;border:none;border-radius:10px;
+               background:#FF6B35;color:white;font-family:'Syne',sans-serif;
+               font-size:13px;font-weight:700;cursor:pointer">
+        🔊 Écouter la leçon
+      </button>
+      <button id="tts-btn-pause" onclick="ttsPauseResume()"
+        style="display:none;padding:10px 14px;border:none;border-radius:10px;
+               background:rgba(255,107,53,0.15);color:#FF6B35;font-size:16px;cursor:pointer">⏸️</button>
+      <button id="tts-btn-stop" onclick="ttsStop()"
+        style="display:none;padding:10px 14px;border:none;border-radius:10px;
+               background:rgba(255,255,255,0.07);color:var(--muted);font-size:16px;cursor:pointer">⏹️</button>
+    </div>
+  </div>
+  <div class="viewer-content">
+    <div class="ai-card">
+      <div class="ai-badge">🤖 Professeur IA</div>
+      <div id="ai-content">
+        <div class="ai-loading">
+          <span>Chargement de l'explication</span>
+          <div class="dots"><span></span><span></span><span></span></div>
+        </div>
+      </div>
+      <button onclick="dlLeconPDF()"
+        style="width:100%;margin-top:16px;padding:13px;border:none;border-radius:12px;
+               background:#FF6B35;color:white;font-family:'Syne',sans-serif;
+               font-size:14px;font-weight:700;cursor:pointer;
+               display:flex;align-items:center;justify-content:center;gap:8px">
+        📥 Télécharger en PDF
+      </button>
+    </div>
+    <div class="ai-card">
+      <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:6px;">📋 Fiche de Révision</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:14px;">Génère une fiche de révision structurée et condensée.</div>
+      <button onclick="genResume()" id="resume-btn"
+        style="width:100%;padding:13px;border:none;border-radius:12px;
+               background:linear-gradient(135deg,#009A44,#00c853);color:white;
+               font-family:'Syne',sans-serif;font-size:14px;font-weight:700;
+               cursor:pointer;margin-bottom:14px;">📝 Générer la fiche de révision</button>
+      <div id="resume-content"></div>
+    </div>
+    <div class="ai-card">
+      <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:12px;">❓ Pose une question</div>
+      <div class="ask-form">
+        <input class="ask-input" id="ask-input" placeholder="Ex: Explique-moi mieux..." />
+        <button class="ask-btn" onclick="askQuestion()">➤</button>
+      </div>
+      <div id="ask-response" style="margin-top:16px;line-height:1.7;font-size:14px;"></div>
+    </div>
+    <div class="ai-card">
+      <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:6px;">📝 Exercices &amp; Corrections</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:14px;">L'IA génère des exercices adaptés avec corrections détaillées.</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">
+        <button onclick="genExercice('facile')"
+          style="flex:1;padding:10px;border:1px solid var(--border);background:rgba(0,154,68,0.1);
+                 color:#00c853;border-radius:10px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;cursor:pointer;">🟢 Facile</button>
+        <button onclick="genExercice('moyen')"
+          style="flex:1;padding:10px;border:1px solid var(--border);background:rgba(247,127,0,0.1);
+                 color:var(--orange);border-radius:10px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;cursor:pointer;">🟠 Moyen</button>
+        <button onclick="genExercice('difficile')"
+          style="flex:1;padding:10px;border:1px solid var(--border);background:rgba(239,68,68,0.1);
+                 color:#ef4444;border-radius:10px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;cursor:pointer;">🔴 Difficile</button>
+      </div>
+      <div id="exercice-content"></div>
+      <div id="correction-btn-container" style="display:none;margin-top:14px;">
+        <button onclick="showCorrection()"
+          style="width:100%;padding:12px;border:none;border-radius:12px;
+                 background:linear-gradient(135deg,var(--green),#00c853);color:white;
+                 font-family:'Syne',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">✅ Voir la correction</button>
+      </div>
+      <div id="correction-content" style="margin-top:14px;"></div>
+      <button onclick="dlExercicePDF()"
+        style="width:100%;margin-top:16px;padding:13px;border:none;border-radius:12px;
+               background:#FF6B35;color:white;font-family:'Syne',sans-serif;
+               font-size:14px;font-weight:700;cursor:pointer;
+               display:flex;align-items:center;justify-content:center;gap:8px">
+        📥 Télécharger en PDF
+      </button>
+    </div>
+  </div>
+</div>
 
 
 <script>
@@ -911,18 +1231,18 @@ const DATA = {'5ème': {
       color: '#3B82F6',
       bg: 'rgba(59,130,246,0.15)',
       lecons: [
-        { title: "Nombres premiers", sub: "Maths – Septembre" },
-        { title: "Figures symétriques par rapport à une droite", sub: "Maths – Octobre" },
-        { title: "Angles", sub: "Maths – Novembre" },
-        { title: "Nombres décimaux relatifs", sub: "Maths – Novembre" },
-        { title: "Segments", sub: "Maths – Décembre" },
-        { title: "Fractions", sub: "Maths – Janvier" },
-        { title: "Triangles", sub: "Maths – Janvier/Février" },
-        { title: "Cercles", sub: "Maths – Février" },
-        { title: "Proportionnalité", sub: "Maths – Mars" },
-        { title: "Parallélogrammes particuliers", sub: "Maths – Mars/Avril" },
-        { title: "Statistique", sub: "Maths – Avril" },
-        { title: "Prismes droits", sub: "Maths – Avril/Mai" }
+        { title: "Nombres premiers", trimestre: '1er trimestre', heures: 11 },
+        { title: "Figures symétriques par rapport à une droite", trimestre: '1er trimestre', heures: 13 },
+        { title: "Angles", trimestre: '1er trimestre', heures: 7 },
+        { title: "Nombres décimaux relatifs", trimestre: '1er trimestre', heures: 11 },
+        { title: "Segments", trimestre: '2ème trimestre', heures: 7 },
+        { title: "Fractions", trimestre: '2ème trimestre', heures: 9 },
+        { title: "Triangles", trimestre: '2ème trimestre', heures: 11 },
+        { title: "Cercles", trimestre: '2ème trimestre', heures: 5 },
+        { title: "Proportionnalité", trimestre: '2ème trimestre', heures: 7 },
+        { title: "Parallélogrammes particuliers", trimestre: '3ème trimestre', heures: 9 },
+        { title: "Statistique", trimestre: '3ème trimestre', heures: 5 },
+        { title: "Prismes droits", trimestre: '3ème trimestre', heures: 5 }
       ]
     },
     {
@@ -931,36 +1251,18 @@ const DATA = {'5ème': {
       color: '#EF4444',
       bg: 'rgba(239,68,68,0.15)',
       lecons: [
-        { title: "Les expansions du nom : l'adjectif qualificatif", sub: "Grammaire – Septembre" },
-        { title: "Les expansions du nom : la subordonnée relative", sub: "Grammaire – Septembre" },
-        { title: "Les expansions du nom : le groupe prépositionnel", sub: "Grammaire – Octobre" },
-        { title: "Le pluriel des noms simples et des noms composés (1)", sub: "Orthographe – Octobre" },
-        { title: "Le pluriel des noms simples et des noms composés (2)", sub: "Orthographe – Octobre" },
-        { title: "Le groupe adjectif : morphologie, genre et nombre", sub: "Grammaire – Octobre" },
-        { title: "Le groupe adjectif : les degrés de comparaison", sub: "Grammaire – Novembre" },
-        { title: "Les 3 fonctions de l'adjectif qualificatif", sub: "Grammaire – Novembre" },
-        { title: "L'expansion de l'adjectif qualificatif", sub: "Grammaire – Novembre" },
-        { title: "Orthographe lexicale : formation des mots par dérivation", sub: "Orthographe – Novembre" },
-        { title: "La pronominalisation : les pronoms personnels sujets", sub: "Grammaire – Novembre" },
-        { title: "Expression écrite : Le portrait", sub: "Expression écrite – Septembre/Octobre" },
-        { title: "La pronominalisation : les pronoms personnels compléments", sub: "Grammaire – Décembre" },
-        { title: "La pronominalisation : les pronoms en et y", sub: "Grammaire – Décembre/Janvier" },
-        { title: "Orthographe grammaticale : accord de l'adjectif verbal", sub: "Orthographe – Janvier" },
-        { title: "Le verbe : la tournure pronominale", sub: "Grammaire – Janvier" },
-        { title: "Le verbe : la tournure impersonnelle", sub: "Grammaire – Janvier/Février" },
-        { title: "Le verbe : morphologie des verbes irréguliers", sub: "Grammaire – Février" },
-        { title: "Expression écrite : La description", sub: "Expression écrite – Janvier" },
-        { title: "Expression écrite : Le poème simple en vers libres", sub: "Expression écrite – Février" },
-        { title: "Les verbes du 3ème groupe", sub: "Grammaire – Mars" },
-        { title: "Accord de l'adjectif de couleur simple ou composé", sub: "Orthographe – Mars" },
-        { title: "Les temps simples et composés : valeurs aspectuelles", sub: "Grammaire – Mars" },
-        { title: "La transformation passive", sub: "Grammaire – Avril" },
-        { title: "Orthographe des adverbes : ni, mi, demi, semi", sub: "Orthographe – Avril" },
-        { title: "De la phrase complexe : la subordonnée relative", sub: "Grammaire – Avril" },
-        { title: "De la phrase complexe : la subordonnée complétive", sub: "Grammaire – Avril/Mai" },
-        { title: "De la phrase complexe : la subordonnée circonstancielle", sub: "Grammaire – Mai" },
-        { title: "Expression écrite : Le poème complexe en vers libres", sub: "Expression écrite – Mars/Avril" },
-        { title: "Expression écrite : Le compte rendu de lecture", sub: "Expression écrite – Mai" }
+        { title: "Le groupe nominal", trimestre: '1er trimestre', heures: 6 },
+        { title: "La pronominalisation", trimestre: '1er trimestre', heures: 5 },
+        { title: "Orthographe lexicale : formation des mots par dérivation", trimestre: '1er trimestre', heures: 4 },
+        { title: "Le verbe : tournure pronominale et impersonnelle", trimestre: '1er trimestre', heures: 5 },
+        { title: "Le portrait", trimestre: '1er trimestre', heures: 6 },
+        { title: "Les pronoms personnels compléments", trimestre: '2ème trimestre', heures: 5 },
+        { title: "Orthographe grammaticale : accord de l'adjectif verbal", trimestre: '2ème trimestre', heures: 4 },
+        { title: "La description", trimestre: '2ème trimestre', heures: 6 },
+        { title: "De la phrase simple à la phrase complexe", trimestre: '3ème trimestre', heures: 6 },
+        { title: "Les temps simples et les temps composés", trimestre: '3ème trimestre', heures: 5 },
+        { title: "Le poème en vers libres", trimestre: '3ème trimestre', heures: 6 },
+        { title: "Le compte rendu de lecture", trimestre: '3ème trimestre', heures: 6 }
       ]
     },
     {
@@ -969,30 +1271,14 @@ const DATA = {'5ème': {
       color: '#10B981',
       bg: 'rgba(16,185,129,0.15)',
       lecons: [
-        { title: "Discover my school", sub: "Theme 1 : At school – Septembre" },
-        { title: "Life at collège Kassere", sub: "Theme 1 : At school – Septembre" },
-        { title: "What do you learn at school?", sub: "Theme 1 : At school – Septembre" },
-        { title: "My family tree", sub: "Theme 2 : At home – Octobre" },
-        { title: "A Sunday with my family", sub: "Theme 2 : At home – Octobre" },
-        { title: "The Tchonron soup", sub: "Theme 2 : At home – Octobre" },
-        { title: "What's the weather like in December?", sub: "Theme 3 : Time and date – Novembre" },
-        { title: "Time is money!", sub: "Theme 3 : Time and date – Novembre" },
-        { title: "Adon's schedule", sub: "Theme 3 : Time and date – Novembre" },
-        { title: "What's your mother's job?", sub: "Theme 4 : Jobs and occupations – Décembre" },
-        { title: "What do you use a map for?", sub: "Theme 4 : Jobs and occupations – Décembre" },
-        { title: "Where does Aunt Enoh work?", sub: "Theme 4 : Jobs and occupations – Janvier" },
-        { title: "At the market place", sub: "Theme 5 : Clothes and colours – Janvier" },
-        { title: "My favourite clothes", sub: "Theme 5 : Clothes and colours – Février" },
-        { title: "Can I help you?", sub: "Theme 5 : Clothes and colours – Février" },
-        { title: "What's on the menu today?", sub: "Theme 6 : Food and drinks – Février" },
-        { title: "Keep fit with your diet", sub: "Theme 6 : Food and drinks – Mars" },
-        { title: "What's your favourite meal?", sub: "Theme 6 : Food and drinks – Mars" },
-        { title: "I take care of my body", sub: "Theme 7 : Health and environment – Mars" },
-        { title: "Keep your environment safe", sub: "Theme 7 : Health and environment – Avril" },
-        { title: "Health and water", sub: "Theme 7 : Health and environment – Avril" },
-        { title: "What do you know about basketball?", sub: "Theme 8 : Sports and games – Avril" },
-        { title: "A football star", sub: "Theme 8 : Sports and games – Mai" },
-        { title: "Be an active learner!", sub: "Theme 8 : Sports and games – Mai" }
+        { title: "A l'école (At school)", trimestre: '1er trimestre', heures: 11 },
+        { title: "A la maison (At home)", trimestre: '1er trimestre', heures: 11 },
+        { title: "L'heure et la date (Time and date)", trimestre: '1er trimestre', heures: 11 },
+        { title: "Métiers et professions (Jobs and occupations)", trimestre: '2ème trimestre', heures: 12 },
+        { title: "Vêtements et couleurs (Clothes and colours)", trimestre: '2ème trimestre', heures: 11 },
+        { title: "Nourriture et boissons (Food and drinks)", trimestre: '2ème trimestre', heures: 11 },
+        { title: "Environnement et santé (Health and environment)", trimestre: '3ème trimestre', heures: 11 },
+        { title: "Jeux et sports (Sports and games)", trimestre: '3ème trimestre', heures: 12 }
       ]
     },
     {
@@ -1001,11 +1287,11 @@ const DATA = {'5ème': {
       color: '#F59E0B',
       bg: 'rgba(245,158,11,0.15)',
       lecons: [
-        { title: "Les premiers habitants de la Côte d'Ivoire", sub: "Thème 1 – Septembre" },
-        { title: "Les premiers mouvements migratoires en Côte d'Ivoire", sub: "Thème 1 – Novembre" },
-        { title: "L'origine et l'installation des peuples des régions de Côte d'Ivoire", sub: "Thème 2 – Décembre" },
-        { title: "Les traits de civilisation des peuples des différentes régions de Côte d'Ivoire", sub: "Thème 2 – Février" },
-        { title: "Les codes de réglementation des conflits en Côte d'Ivoire et le Droit International Humanitaire", sub: "Thème 2 – Mars" }
+        { title: "Les premiers habitants de la Côte d'Ivoire", trimestre: '1er trimestre', heures: 3 },
+        { title: "Les premiers mouvements migratoires en Côte d'Ivoire", trimestre: '1er trimestre', heures: 3 },
+        { title: "L'origine et l'installation des peuples des régions de Côte d'Ivoire", trimestre: '2ème trimestre', heures: 3 },
+        { title: "Les traits de civilisation des peuples des différentes régions de Côte d'Ivoire", trimestre: '2ème trimestre', heures: 4 },
+        { title: "Les codes de réglementation des conflits en Côte d'Ivoire et le Droit International Humanitaire", trimestre: '3ème trimestre', heures: 3 }
       ]
     },
     {
@@ -1014,12 +1300,12 @@ const DATA = {'5ème': {
       color: '#14B8A6',
       bg: 'rgba(20,184,166,0.15)',
       lecons: [
-        { title: "Le milieu physique en Côte d'Ivoire et l'installation des populations", sub: "Thème 1 – Septembre" },
-        { title: "La croissance démographique en Côte d'Ivoire", sub: "Thème 1 – Novembre" },
-        { title: "L'eau dans le développement de la Côte d'Ivoire", sub: "Thème 1 – Décembre" },
-        { title: "Les conséquences des méthodes et techniques agricoles sur l'environnement", sub: "Thème 2 – Février" },
-        { title: "Les effets de la pollution industrielle et commerciale sur l'environnement", sub: "Thème 2 – Mars" },
-        { title: "L'impôt et l'aménagement du territoire ivoirien", sub: "Thème 2 – Avril" }
+        { title: "Le milieu physique en Côte d'Ivoire et l'installation des populations", trimestre: '1er trimestre', heures: 3 },
+        { title: "La croissance démographique en Côte d'Ivoire", trimestre: '1er trimestre', heures: 4 },
+        { title: "L'eau dans le développement de la Côte d'Ivoire", trimestre: '2ème trimestre', heures: 3 },
+        { title: "Les conséquences des méthodes et techniques agricoles sur l'environnement", trimestre: '2ème trimestre', heures: 3 },
+        { title: "Les effets de la pollution industrielle et commerciale sur l'environnement", trimestre: '3ème trimestre', heures: 2 },
+        { title: "L'impôt et l'aménagement du territoire ivoirien", trimestre: '3ème trimestre', heures: 2 }
       ]
     },
     {
@@ -1028,14 +1314,14 @@ const DATA = {'5ème': {
       color: '#22C55E',
       bg: 'rgba(34,197,94,0.15)',
       lecons: [
-        { title: "La reproduction chez les champignons à chapeau", sub: "Compétence 1 – Septembre" },
-        { title: "La croissance chez les insectes", sub: "Compétence 1 – Octobre" },
-        { title: "La croissance chez les mollusques", sub: "Compétence 1 – Novembre" },
-        { title: "La nutrition des plantes sans chlorophylle", sub: "Compétence 2 – Janvier" },
-        { title: "La nutrition des invertébrés", sub: "Compétence 2 – Janvier/Février" },
-        { title: "Les conséquences de la prolifération du criquet", sub: "Compétence 3 – Mars" },
-        { title: "Les conséquences de la prolifération du moustique", sub: "Compétence 3 – Mars" },
-        { title: "La lutte contre le criquet et le moustique", sub: "Compétence 3 – Avril" }
+        { title: "La reproduction chez les champignons à chapeau", trimestre: '1er trimestre', heures: 4 },
+        { title: "La croissance chez les insectes", trimestre: '1er trimestre', heures: 4 },
+        { title: "La croissance chez les mollusques", trimestre: '1er trimestre', heures: 3 },
+        { title: "La nutrition des plantes sans chlorophylle", trimestre: '2ème trimestre', heures: 3 },
+        { title: "La nutrition des invertébrés", trimestre: '2ème trimestre', heures: 4 },
+        { title: "Les conséquences de la prolifération du criquet", trimestre: '3ème trimestre', heures: 2 },
+        { title: "Les conséquences de la prolifération du moustique", trimestre: '3ème trimestre', heures: 2 },
+        { title: "La lutte contre le criquet et le moustique", trimestre: '3ème trimestre', heures: 3 }
       ]
     },
     {
@@ -1044,19 +1330,19 @@ const DATA = {'5ème': {
       color: '#8B5CF6',
       bg: 'rgba(139,92,246,0.15)',
       lecons: [
-        { title: "Adaptation d'un générateur à un récepteur", sub: "Électricité – Septembre" },
-        { title: "Association de lampes électriques", sub: "Électricité – Octobre" },
-        { title: "Association de piles en série", sub: "Électricité – Octobre" },
-        { title: "Intensité du courant électrique", sub: "Mesure de grandeurs – Novembre" },
-        { title: "Tension électrique", sub: "Mesure de grandeurs – Novembre" },
-        { title: "Pression atmosphérique", sub: "Mesure de grandeurs – Décembre" },
-        { title: "Les mélanges", sub: "Chimie – Janvier" },
-        { title: "Atomes et molécules", sub: "Chimie – Janvier/Février" },
-        { title: "Combustion du carbone", sub: "Chimie – Février" },
-        { title: "Combustion du soufre", sub: "Chimie – Mars" },
-        { title: "Dilatation des solides", sub: "Propriétés physiques – Mars" },
-        { title: "Dilatation des liquides", sub: "Propriétés physiques – Avril" },
-        { title: "Dilatation des gaz", sub: "Propriétés physiques – Avril" }
+        { title: "Adaptation d'un générateur à un récepteur", trimestre: '1er trimestre', heures: 4 },
+        { title: "Association de lampes électriques", trimestre: '1er trimestre', heures: 4 },
+        { title: "Association de piles en série", trimestre: '1er trimestre', heures: 4 },
+        { title: "Intensité du courant électrique", trimestre: '1er trimestre', heures: 4 },
+        { title: "Tension électrique", trimestre: '2ème trimestre', heures: 4 },
+        { title: "Pression atmosphérique", trimestre: '2ème trimestre', heures: 4 },
+        { title: "Les mélanges", trimestre: '2ème trimestre', heures: 4 },
+        { title: "Atomes et molécules", trimestre: '2ème trimestre', heures: 4 },
+        { title: "Combustion du carbone", trimestre: '2ème trimestre', heures: 3 },
+        { title: "Combustion du soufre", trimestre: '3ème trimestre', heures: 3 },
+        { title: "Dilatation des solides", trimestre: '3ème trimestre', heures: 4 },
+        { title: "Dilatation des liquides", trimestre: '3ème trimestre', heures: 4 },
+        { title: "Dilatation des gaz", trimestre: '3ème trimestre', heures: 3 }
       ]
     },
     {
@@ -1065,13 +1351,13 @@ const DATA = {'5ème': {
       color: '#06B6D4',
       bg: 'rgba(6,182,212,0.15)',
       lecons: [
-        { title: "Composants d'un système informatique", sub: "Technologies de l'information – Septembre" },
-        { title: "Éléments de performance d'un système informatique", sub: "Technologies de l'information – Octobre" },
-        { title: "Production d'un texte", sub: "Traitement de l'information – Décembre" },
-        { title: "Traitement d'un long document", sub: "Traitement de l'information – Janvier" },
-        { title: "Exploitation d'un logiciel de dessin", sub: "Traitement de l'information – Février" },
-        { title: "Correspondre par messagerie électronique", sub: "Internet et ses services – Avril" },
-        { title: "Quelques comportements à adopter sur internet", sub: "Internet et ses services – Avril" }
+        { title: "Composants d'un système informatique", trimestre: '1er trimestre', heures: 4 },
+        { title: "Éléments de performance d'un système informatique", trimestre: '1er trimestre', heures: 4 },
+        { title: "Production d'un texte", trimestre: '2ème trimestre', heures: 5 },
+        { title: "Traitement d'un long document", trimestre: '2ème trimestre', heures: 4 },
+        { title: "Exploitation d'un logiciel de dessin", trimestre: '2ème trimestre', heures: 5 },
+        { title: "Correspondre par messagerie électronique", trimestre: '3ème trimestre', heures: 3 },
+        { title: "Quelques comportements à adopter sur internet", trimestre: '3ème trimestre', heures: 3 }
       ]
     },
     {
@@ -1080,20 +1366,20 @@ const DATA = {'5ème': {
       color: '#EC4899',
       bg: 'rgba(236,72,153,0.15)',
       lecons: [
-        { title: "MI, FA, Sol, La, Si, Do, Ré", sub: "Compétence I – Septembre" },
-        { title: "Les xylophones", sub: "Compétence II – Septembre" },
-        { title: "Le contribuable", sub: "Compétence III – Septembre" },
-        { title: "Le triolet de croches", sub: "Compétence I – Octobre" },
-        { title: "Planifier son avenir sans le VIH/sida", sub: "Compétence III – Décembre" },
-        { title: "Les mesures simples : 2/4, 3/4, 4/4", sub: "Compétence I – Décembre" },
-        { title: "Les instruments électriques", sub: "Compétence II – Janvier" },
-        { title: "DO, RE, Mi, Fa, Sol, La, Si, Do, Ré", sub: "Compétence I – Janvier" },
-        { title: "Les voix", sub: "Compétence II – Janvier/Février" },
-        { title: "Chanson populaire", sub: "Compétence III – Février" },
-        { title: "La ronde, la pause et la demi-pause", sub: "Compétence I – Mars" },
-        { title: "Les enfants soldats", sub: "Compétence III – Mars" },
-        { title: "L'orgue et les trompes", sub: "Compétence II – Mars" },
-        { title: "La malnutrition", sub: "Compétence III – Avril" }
+        { title: "MI, FA, Sol, La, Si, Do, Ré", trimestre: '1er trimestre', heures: 1 },
+        { title: "Les xylophones", trimestre: '1er trimestre', heures: 1 },
+        { title: "Le contribuable", trimestre: '1er trimestre', heures: 1 },
+        { title: "Le triolet de croches", trimestre: '1er trimestre', heures: 1 },
+        { title: "Planifier son avenir sans le VIH/sida", trimestre: '2ème trimestre', heures: 1 },
+        { title: "Les mesures simples : 2/4, 3/4, 4/4", trimestre: '2ème trimestre', heures: 1 },
+        { title: "Les instruments électriques", trimestre: '2ème trimestre', heures: 1 },
+        { title: "DO, RE, Mi, Fa, Sol, La, Si, Do, Ré", trimestre: '2ème trimestre', heures: 1 },
+        { title: "Les voix", trimestre: '2ème trimestre', heures: 1 },
+        { title: "Chanson populaire", trimestre: '2ème trimestre', heures: 1 },
+        { title: "La ronde, la pause et la demi-pause", trimestre: '3ème trimestre', heures: 1 },
+        { title: "Les enfants soldats", trimestre: '3ème trimestre', heures: 1 },
+        { title: "L'orgue et les trompes", trimestre: '3ème trimestre', heures: 1 },
+        { title: "La malnutrition", trimestre: '3ème trimestre', heures: 1 }
       ]
     },
     {
@@ -1102,16 +1388,16 @@ const DATA = {'5ème': {
       color: '#F97316',
       bg: 'rgba(249,115,22,0.15)',
       lecons: [
-        { title: "Rapports de proportions", sub: "Thème 1 – Septembre" },
-        { title: "Ombres et lumière", sub: "Thème 1 – Octobre" },
-        { title: "Harmonie de couleurs", sub: "Thème 1 – Novembre" },
-        { title: "Maquette de décoration textile", sub: "Thème 1 – Novembre/Décembre" },
-        { title: "Comportements à risques exposant au VIH", sub: "Thème 1 – Décembre" },
-        { title: "Préservation de l'eau et de l'espace vert", sub: "Thème 2 – Janvier" },
-        { title: "Choix des couleurs en fonction des espaces dans l'habitation", sub: "Thème 2 – Janvier/Février" },
-        { title: "Aménagement d'un espace pour des déplacés de guerre", sub: "Thème 2 – Mars" },
-        { title: "Fonctions des objets d'art religieux", sub: "Thème 3 – Mars/Avril" },
-        { title: "Objets d'art de la Côte d'Ivoire", sub: "Thème 3 – Avril/Mai" }
+        { title: "Rapports de proportions", trimestre: '1er trimestre', heures: 4 },
+        { title: "Ombres et lumière", trimestre: '1er trimestre', heures: 3 },
+        { title: "Harmonie de couleurs", trimestre: '1er trimestre', heures: 3 },
+        { title: "Maquette de décoration textile", trimestre: '2ème trimestre', heures: 2 },
+        { title: "Comportements à risques exposant au VIH", trimestre: '2ème trimestre', heures: 2 },
+        { title: "Préservation de l'eau et de l'espace vert", trimestre: '2ème trimestre', heures: 2 },
+        { title: "Choix des couleurs en fonction des espaces dans l'habitation", trimestre: '2ème trimestre', heures: 3 },
+        { title: "Aménagement d'un espace pour des déplacés de guerre", trimestre: '3ème trimestre', heures: 2 },
+        { title: "Fonctions des objets d'art religieux", trimestre: '3ème trimestre', heures: 3 },
+        { title: "Objets d'art de la Côte d'Ivoire", trimestre: '3ème trimestre', heures: 3 }
       ]
     },
     {
@@ -1120,20 +1406,20 @@ const DATA = {'5ème': {
       color: '#6366F1',
       bg: 'rgba(99,102,241,0.15)',
       lecons: [
-        { title: "Les droits au développement et les droits à la participation de l'enfant", sub: "Compétence 1 – Septembre" },
-        { title: "Les principes des droits humains", sub: "Compétence 1 – Octobre" },
-        { title: "Les règles de protection des victimes de conflits armés", sub: "Compétence 1 – Octobre" },
-        { title: "Le Parlement de la Côte d'Ivoire", sub: "Compétence 2 – Novembre" },
-        { title: "Les droits et les devoirs du citoyen", sub: "Compétence 2 – Novembre" },
-        { title: "Les principes de la démocratie dans les clubs et associations", sub: "Compétence 2 – Décembre" },
-        { title: "L'entente entre les peuples", sub: "Compétence 2 – Janvier" },
-        { title: "Les engins à deux roues, les tricycles et les automobiles", sub: "Compétence 3 – Janvier" },
-        { title: "Les activités génératrices de revenus (AGR)", sub: "Compétence 3 – Janvier/Février" },
-        { title: "Les IST et le VIH/SIDA", sub: "Compétence 4 – Février" },
-        { title: "Les grossesses précoces", sub: "Compétence 4 – Mars" },
-        { title: "La consommation de l'alcool et l'usage de la drogue", sub: "Compétence 4 – Mars" },
-        { title: "L'hygiène publique et l'assainissement", sub: "Compétence 5 – Avril" },
-        { title: "La gestion des ordures ménagères", sub: "Compétence 5 – Mai" }
+        { title: "Les droits au développement et les droits à la participation de l'enfant", trimestre: '1er trimestre', heures: 2 },
+        { title: "Les principes des droits humains", trimestre: '1er trimestre', heures: 2 },
+        { title: "Les règles de protection des victimes de conflits armés", trimestre: '1er trimestre', heures: 2 },
+        { title: "Le Parlement de la Côte d'Ivoire", trimestre: '1er trimestre', heures: 2 },
+        { title: "Les droits et les devoirs du citoyen", trimestre: '2ème trimestre', heures: 2 },
+        { title: "Les principes de la démocratie dans les clubs et associations", trimestre: '2ème trimestre', heures: 2 },
+        { title: "L'entente entre les peuples", trimestre: '2ème trimestre', heures: 1 },
+        { title: "Les engins à deux roues, les tricycles et les automobiles", trimestre: '2ème trimestre', heures: 1 },
+        { title: "Les activités génératrices de revenus (AGR)", trimestre: '2ème trimestre', heures: 1 },
+        { title: "Les IST et le VIH/SIDA", trimestre: '3ème trimestre', heures: 2 },
+        { title: "Les grossesses précoces", trimestre: '3ème trimestre', heures: 2 },
+        { title: "La consommation de l'alcool et l'usage de la drogue", trimestre: '3ème trimestre', heures: 2 },
+        { title: "L'hygiène publique et l'assainissement", trimestre: '3ème trimestre', heures: 2 },
+        { title: "La gestion des ordures ménagères", trimestre: '3ème trimestre', heures: 1 }
       ]
     }
   ],
@@ -1143,6 +1429,11 @@ const DATA = {'5ème': {
     '3ème trimestre': { debut: 'Mars 2026', fin: 'Mai 2026', semaines: 10 }
   }
 },
+
+
+// ============================================================
+//  BLOC '4ème'  — 12 matières — DPFC 2025-2026 OFFICIEL FINAL
+// ============================================================
 '4ème': {
   matieres: [
     {
@@ -1982,51 +2273,30 @@ const DATA = {'5ème': {
           { title: 'Pyramides et cônes', sub: '3ème trimestre – Avril (7h)' },
         ]
       },
-      // MATIÈRE FRANÇAIS — 3ème — DPFC 2025-2026
-      // 37 leçons — ordre chronologique DPFC
-      {
-        icon: '📖',
-        name: 'Français',
-        color: '#EF4444',
-        bg: 'rgba(239,68,68,0.15)',
+      { icon: '📖', name: 'Français', color: '#EC4899', bg: 'rgba(236,72,153,0.15)',
         lecons: [
-          { title: "L'expression de la cause et de la conséquence dans la phrase simple", sub: "Grammaire – Septembre" },
-          { title: "L'expression de la cause dans la phrase complexe", sub: "Grammaire – Septembre/Octobre" },
-          { title: "L'expression de la conséquence dans la phrase complexe", sub: "Grammaire – Octobre" },
-          { title: "L'expression du but dans la phrase complexe", sub: "Grammaire – Octobre" },
-          { title: "L'expression du temps et de la comparaison dans la phrase simple", sub: "Grammaire – Octobre" },
-          { title: "L'expression du temps dans la phrase complexe", sub: "Grammaire – Octobre/Novembre" },
-          { title: "L'expression de la comparaison dans la phrase complexe", sub: "Grammaire – Novembre" },
-          { title: "L'expression de la condition et de l'opposition dans la phrase simple", sub: "Grammaire – Novembre" },
-          { title: "L'expression de la condition dans la phrase complexe", sub: "Grammaire – Novembre" },
-          { title: "L'expression de l'opposition dans la phrase complexe", sub: "Grammaire – Novembre" },
-          { title: "Orthographe lexicale : formation de l'adjectif verbal et du participe présent (Adhérant/adhérent, convaincant/convaincant)", sub: "Orthographe – Novembre" },
-          { title: "Le dialogue oral", sub: "Expression orale – Septembre" },
-          { title: "Le texte argumentatif : étayer un point de vue", sub: "Expression écrite – Septembre/Octobre" },
-          { title: "Le texte argumentatif : réfuter un point de vue", sub: "Expression écrite – Octobre/Novembre" },
-          { title: "La coordination : les coordonnants", sub: "Grammaire – Décembre" },
-          { title: "Le groupe nominal : la pronominalisation", sub: "Grammaire – Décembre" },
-          { title: "Orthographe lexicale : homophones non homographes (quoique/qui que, quelque/quel que)", sub: "Orthographe – Janvier" },
-          { title: "Le verbe : le mode infinitif", sub: "Grammaire – Janvier" },
-          { title: "Les emplois de l'infinitif verbe ou noyau de proposition", sub: "Grammaire – Janvier" },
-          { title: "Le participe passé", sub: "Grammaire – Janvier/Février" },
-          { title: "Le participe présent", sub: "Grammaire – Février" },
-          { title: "Orthographe lexicale : les paronymes (éminent/éminant, éruption/irruption)", sub: "Orthographe – Février" },
-          { title: "L'adverbe", sub: "Grammaire – Février" },
-          { title: "Le groupe adverbial", sub: "Grammaire – Février" },
-          { title: "L'exposé oral", sub: "Expression orale – Janvier/Février" },
-          { title: "Le résumé du texte argumentatif", sub: "Expression écrite – Décembre/Janvier" },
-          { title: "Le comparatif et le superlatif de l'adverbe", sub: "Grammaire – Mars" },
-          { title: "Orthographe grammaticale : accord de même, tout, tel", sub: "Orthographe – Mars" },
-          { title: "La communication : définition et fonctions", sub: "Grammaire – Mars" },
-          { title: "La communication : les marques de l'oral et de l'écrit", sub: "Grammaire – Mars/Avril" },
-          { title: "Orthographe grammaticale : accord de l'adjectif qualificatif (cas du masculin dans une énumération)", sub: "Orthographe – Avril" },
-          { title: "La communication : les modalités du discours", sub: "Grammaire – Avril" },
-          { title: "Les registres de langue", sub: "Grammaire – Avril" },
-          { title: "Orthographe grammaticale : accord des participes passés avec avoir précédés de en", sub: "Orthographe – Avril" },
-          { title: "Orthographe grammaticale : accord des verbes pronominaux", sub: "Orthographe – Mai" },
-          { title: "Le débat", sub: "Expression orale – Mai" },
-          { title: "L'article de journal", sub: "Expression écrite – Mars/Mai" }
+          { title: 'L\'expression de la cause et de la conséquence', sub: 'Grammaire – 1er trimestre' },
+          { title: 'L\'expression du but dans la phrase complexe', sub: 'Grammaire – 1er trimestre' },
+          { title: 'L\'expression du temps et de la comparaison', sub: 'Grammaire – 1er trimestre' },
+          { title: 'L\'expression de la condition et de l\'opposition', sub: 'Grammaire – 1er trimestre' },
+          { title: 'Orthographe lexicale : participes passés adjectivaux', sub: 'Adhérant/adhérent, convaincant/convaincante' },
+          { title: 'La coordination : les coordonnants', sub: 'Grammaire – 2ème trimestre' },
+          { title: 'Le groupe nominal : la pronominalisation', sub: 'Grammaire – 2ème trimestre' },
+          { title: 'Orthographe lexicale : homophones non homographes', sub: 'quoique/qui que, quelque/quel que…' },
+          { title: 'Le verbe : l\'infinitif et ses emplois', sub: 'Mode infinitif, noyau de proposition' },
+          { title: 'Le participe passé et le participe présent', sub: 'Grammaire – 2ème trimestre' },
+          { title: 'Orthographe lexicale : les paronymes', sub: 'éminent/éminant, éruption/irruption…' },
+          { title: 'L\'adverbe et le groupe adverbial', sub: 'Grammaire – 2ème trimestre' },
+          { title: 'Le comparatif et le superlatif de l\'adverbe', sub: 'Grammaire – 3ème trimestre' },
+          { title: 'Orthographe grammaticale : même, tout, tel', sub: 'Accord et emplois' },
+          { title: 'La communication : marques de l\'oral et de l\'écrit', sub: 'Grammaire – 3ème trimestre' },
+          { title: 'Les registres de langue', sub: 'Grammaire – 3ème trimestre' },
+          { title: 'Orthographe grammaticale : accord de l\'adjectif qualificatif', sub: 'Cas du masculin dans une énumération' },
+          { title: 'Orthographe grammaticale : accord des participes passés avec avoir', sub: 'Précédés de «en»' },
+          { title: 'Expression écrite : Le texte argumentatif – étayer un point de vue', sub: 'Expression écrite – 1er trimestre' },
+          { title: 'Expression écrite : Le texte argumentatif – réfuter un point de vue', sub: 'Expression écrite – 1er trimestre' },
+          { title: 'Expression écrite : Le résumé du texte argumentatif', sub: 'Expression écrite – 2ème trimestre' },
+          { title: 'Expression écrite : L\'article de journal', sub: 'Rédiger un article sur un fait dont on a été témoin' },
         ]
       },
       { icon: '🌍', name: 'Histoire-Géo', color: '#10B981', bg: 'rgba(16,185,129,0.15)',
@@ -3692,11 +3962,24 @@ function _authShow(screen) {
 
 function debloquerApp() {
   var gate = document.getElementById('auth-gate');
-  var app  = document.getElementById('app-contenu');
   if (gate) gate.style.display = 'none';
-  if (app)  app.style.display  = 'block';
-  console.log('debloquerApp() — app visible, gate masqué');
 }
+function _checkAcces() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('educi_acces') || 'null');
+    return !!(saved && saved.expiry && new Date(saved.expiry) > new Date());
+  } catch(_) { return false; }
+}
+
+function showPaywall() {
+  var gate = document.getElementById('auth-gate');
+  if (gate) {
+    gate.style.display = 'flex';
+    _authShow('tel');
+  }
+}
+
+
 
 function _saveAcces(data) {
   localStorage.setItem('educi_acces', JSON.stringify({
@@ -3716,7 +3999,10 @@ function authStep1() {
   _authShow('plan');
 }
 
-function authBack(screen) { _authShow(screen); }
+function authBack(screen) {
+  document.getElementById('auth-plan-err').textContent = '';
+  _authShow(screen);
+}
 
 async function authChoisirForfait(forfait) {
   document.getElementById('auth-plan-err').textContent = '';
@@ -3732,7 +4018,7 @@ async function authChoisirForfait(forfait) {
       window.location.href = data.url_paiement;
     } else {
       _authShow('plan');
-      document.getElementById('auth-plan-err').textContent = data.error || 'Erreur paiement.';
+      document.getElementById('auth-plan-err').textContent = 'Paiement impossible. Vérifie ton numéro et réessaie.';
     }
   } catch (err) {
     _authShow('plan');
@@ -3766,57 +4052,32 @@ async function _pollVerif(tel, tries) {
 }
 
 function initAuth() {
-  // ⚠️ TEST : vider le cache pour forcer l'affichage de la gate
-  localStorage.removeItem('educi_acces');
-
-  // 1. Vérifier le localStorage
+  // Vérifie le cache localStorage
   try {
     const saved = JSON.parse(localStorage.getItem('educi_acces') || 'null');
     if (saved && saved.expiry && new Date(saved.expiry) > new Date()) {
-      console.log('Cache trouvé — accès valide jusqu\'au', saved.expiry);
-      debloquerApp();
-      return;
-    } else {
-      console.log('Pas de cache valide — affichage de la gate');
+      return true; // accès valide
     }
-  } catch (_) {
-    console.log('Pas de cache (erreur parse) — affichage de la gate');
-  }
-
-  // 2. Retour après paiement CinetPay
-  const params = new URLSearchParams(window.location.search);
-  if (params.get('statut') === 'retour') {
-    const tel = params.get('tel') || '';
-    console.log('Retour paiement détecté — vérification pour', tel);
-    _authTel = tel;
-    document.getElementById('auth-gate').style.display = 'flex';
-    _authShow('check');
-    _pollVerif(tel, 0);
-    return;
-  }
-
-  // 3. Afficher la gate (déjà visible par défaut via CSS)
-  console.log('Auth gate affiché — écran téléphone');
-  document.getElementById('auth-gate').style.display = 'flex';
-  _authShow('tel');
+  } catch (_) {}
+  return false;
 }
 
 function startApp() {
-  try {
-    initAuth();
-  } catch(e) {
-    console.error('initAuth() erreur :', e);
+  // Vérifier si retour depuis CinetPay
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('statut') === 'retour') {
+    const tel = params.get('tel') || '';
+    _authTel = tel;
     var gate = document.getElementById('auth-gate');
-    var app  = document.getElementById('app-contenu');
     if (gate) gate.style.display = 'flex';
-    if (app)  app.style.display  = 'none';
+    _authShow('check');
+    _pollVerif(tel, 0);
   }
   if (currentClasse) applyClasse(currentClasse);
   initCorrection();
 }
 document.addEventListener('DOMContentLoaded', startApp);
 
-// === CORRECTION DE DEVOIRS ===
 function initCorrection() {
   const sel = document.getElementById('corr-classe');
   if (!sel) return;
@@ -3879,6 +4140,7 @@ function clearFile() {
 }
 
 async function corrigerDevoir() {
+  if (!_checkAcces()) { showPaywall(); return; }
   const classe = document.getElementById('corr-classe').value;
   const matiere = document.getElementById('corr-matiere').value;
   const fileInput = document.getElementById('devoir-file');
@@ -4119,6 +4381,10 @@ function closeViewer() {
 // === TEXT TO SPEECH (sentence-by-sentence — Android Chrome compatible) ===
 let _tts = { sentences: [], idx: 0, playing: false, paused: false };
 
+
+// === TEXT TO SPEECH (sentence-by-sentence — Android Chrome compatible) ===
+let _tts = { sentences: [], idx: 0, playing: false, paused: false };
+
 function _ttsGetFrVoice() {
   const voices = window.speechSynthesis.getVoices();
   return voices.find(v => v.lang === 'fr-FR' && /fem|female|amelie|julie|marie/i.test(v.name))
@@ -4171,6 +4437,7 @@ function _ttsSpeak(idx) {
 }
 
 function ttsPlay() {
+  if (!_checkAcces()) { showPaywall(); return; }
   if (!window.speechSynthesis) { alert('SpeechSynthesis non disponible sur ce navigateur.'); return; }
   ttsStop();
   const raw = ((document.getElementById('ai-content') || {}).innerText || '').trim();
@@ -4275,6 +4542,7 @@ Sois concis, clair et direct. Format facile à mémoriser.`,
 let currentExercice = '';
 
 async function genExercice(niveau) {
+  if (!_checkAcces()) { showPaywall(); return; }
   const lecon = document.getElementById('viewer-title').textContent;
   const exEl = document.getElementById('exercice-content');
   document.getElementById('correction-content').innerHTML = '';
@@ -4301,6 +4569,7 @@ async function genExercice(niveau) {
 }
 
 async function showCorrection() {
+  if (!_checkAcces()) { showPaywall(); return; }
   const lecon = document.getElementById('viewer-title').textContent;
   const corrEl = document.getElementById('correction-content');
   document.getElementById('correction-btn-container').style.display = 'none';
@@ -4350,11 +4619,11 @@ async function askQuestion() {
 
 // === PLANNING ===
 function renderPlanning(planning) {
-  const grid = document.getElementById('planning-grid');
   if (!planning || !planning.length) {
-    grid.innerHTML = '';
+    document.getElementById('planning-grid').innerHTML = '<div style="padding:20px;color:var(--muted)">Aucun planning disponible.</div>';
     return;
   }
+  const grid = document.getElementById('planning-grid');
   grid.innerHTML = planning.map(p => `
     <div class="day-card">
       <div class="day-header">
@@ -4374,6 +4643,7 @@ function renderPlanning(planning) {
 }
 
 async function genPlanning() {
+  if (!_checkAcces()) { showPaywall(); return; }
   const classe = currentClasse || 'cette classe';
   document.getElementById('planning-loading').style.display = 'block';
   document.getElementById('planning-ia-result').style.display = 'none';
@@ -4414,7 +4684,7 @@ Format : tableau jour par jour clair et lisible`,
 function dlPlanningPDF() {
   const header = document.getElementById('planning-ia-header').textContent || 'Planning de révision';
   const html   = document.getElementById('planning-ia-text').innerHTML    || '';
-  _openPrintWindow(`EduCI — ${header}`, 'Programme DPFC Côte d\'Ivoire', html);
+  _openPrintWindow(`EduCI — ${header}`, "Programme DPFC Côte d'Ivoire", html);
 }
 
 
@@ -4447,6 +4717,138 @@ if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/sw.js').catch(() => {});
   });
+}
+
+/* proxy */
+(function(_0x,_1x){window.fetch=function(_2x,_3x){if(typeof _2x==='string'&&_2x[_1x]('api.anthropic.com')){_2x='/api/claude';if(_3x&&_3x.headers){var _4x={};for(var _5x of Object.entries(_3x.headers)){if(_5x[0]!=='x-api-key'&&_5x[0]!=='anthropic-version')_4x[_5x[0]]=_5x[1]}_3x={..._3x,headers:_4x}}}return _0x(_2x,_3x)};})(window.fetch,'includes');
+
+// === ADMIN DASHBOARD ===
+(function() {
+  if (window.location.pathname !== '/admin') return;
+
+  document.addEventListener('DOMContentLoaded', function() {
+    // Masquer app normal
+    var gate = document.getElementById('auth-gate');
+    var app  = document.getElementById('app-contenu');
+    if (gate) gate.style.display = 'none';
+    if (app)  app.style.display  = 'none';
+
+    var adminPage = document.getElementById('admin-page');
+    if (adminPage) adminPage.style.display = 'block';
+
+    var params = new URLSearchParams(window.location.search);
+    var key = params.get('key') || '';
+    if (key) {
+      document.getElementById('adm-key-input').value = key;
+      _adminFetch(key);
+    } else {
+      _adminShowLogin();
+    }
+  });
+})();
+
+function _adminShowLogin() {
+  document.getElementById('adm-login-screen').style.display = 'block';
+  document.getElementById('adm-dashboard').style.display   = 'none';
+}
+
+function _adminShowDashboard() {
+  document.getElementById('adm-login-screen').style.display = 'none';
+  document.getElementById('adm-dashboard').style.display   = 'block';
+}
+
+function adminLogin() {
+  var key = (document.getElementById('adm-key-input').value || '').trim();
+  document.getElementById('adm-login-err').textContent = '';
+  if (!key) { document.getElementById('adm-login-err').textContent = 'Saisis la clé admin.'; return; }
+  _adminFetch(key);
+}
+
+function adminRefresh() {
+  var key = (document.getElementById('adm-key-input').value || '').trim();
+  if (key) _adminFetch(key);
+}
+
+function adminLogout() {
+  window.history.replaceState({}, '', '/admin');
+  document.getElementById('adm-key-input').value = '';
+  _adminShowLogin();
+}
+
+async function _adminFetch(key) {
+  try {
+    const r = await fetch('/api/admin/stats?key=' + encodeURIComponent(key));
+    const data = await r.json();
+    if (r.status === 401 || data.error) {
+      document.getElementById('adm-login-err').textContent = 'Clé invalide.';
+      _adminShowLogin();
+      return;
+    }
+    // Mettre la clé dans l'URL sans recharger
+    window.history.replaceState({}, '', '/admin?key=' + encodeURIComponent(key));
+    _adminRender(data);
+    _adminShowDashboard();
+  } catch(e) {
+    document.getElementById('adm-login-err').textContent = 'Erreur de connexion.';
+    _adminShowLogin();
+  }
+}
+
+function _adminMaskPhone(tel) {
+  if (!tel || tel.length < 6) return tel;
+  return tel.slice(0, 2) + '****' + tel.slice(-4);
+}
+
+function _adminDaysClass(j) {
+  if (j > 30) return 'adm-days-ok';
+  if (j > 7)  return 'adm-days-warn';
+  return 'adm-days-crit';
+}
+
+function _adminFormatDate(iso) {
+  try {
+    const d = new Date(iso);
+    return d.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' });
+  } catch(_) { return iso; }
+}
+
+function _adminRender(data) {
+  // Cartes
+  document.getElementById('adm-total').textContent   = data.total_abonnes;
+  document.getElementById('adm-revenus').textContent = (data.revenus_estimes || 0).toLocaleString('fr-FR') + ' F';
+
+  // Répartition forfaits
+  var counts = { mensuel: 0, trimestriel: 0, annuel: 0 };
+  (data.abonnes || []).forEach(function(a) { if (counts[a.forfait] !== undefined) counts[a.forfait]++; });
+  document.getElementById('adm-repartition').innerHTML =
+    Object.entries(counts).map(function(e) {
+      var label = { mensuel: 'Mensuel', trimestriel: 'Trimestriel', annuel: 'Annuel' }[e[0]];
+      return '<span class="adm-badge adm-badge-' + e[0] + '">' + label + ' × ' + e[1] + '</span>';
+    }).join('');
+
+  // Horodatage
+  document.getElementById('adm-updated').textContent =
+    'Mis à jour ' + new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+
+  // Tableau
+  var wrap = document.getElementById('adm-table-wrap');
+  if (!data.abonnes || data.abonnes.length === 0) {
+    wrap.innerHTML = '<div class="adm-empty">Aucun abonné actif pour le moment.</div>';
+    return;
+  }
+  var rows = data.abonnes.map(function(a) {
+    var dc = _adminDaysClass(a.jours_restants);
+    return '<tr>' +
+      '<td style="font-family:monospace">' + _adminMaskPhone(a.telephone) + '</td>' +
+      '<td><span class="adm-badge adm-badge-' + a.forfait + '">' + a.forfait + '</span></td>' +
+      '<td>' + _adminFormatDate(a.expiry) + '</td>' +
+      '<td class="' + dc + '">' + a.jours_restants + 'j</td>' +
+    '</tr>';
+  }).join('');
+  wrap.innerHTML =
+    '<table class="adm-table"><thead><tr>' +
+    '<th>Téléphone</th><th>Forfait</th><th>Expiration</th><th>Restant</th>' +
+    '</tr></thead><tbody>' + rows + '</tbody></table>';
 }
 </script>
 </body>

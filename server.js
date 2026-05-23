@@ -69,6 +69,7 @@ app.post('/api/claude', async (req, res) => {
 });
 
 // === ABONNEMENTS CINETPAY ===
+const ADMIN_KEY = process.env.ADMIN_KEY || 'EDUCI_ADMIN_2026';
 const abonnes = new Map();
 const FORFAITS = {
   mensuel:     { prix: 500,  jours: 30,  label: '1 mois'  },
@@ -77,6 +78,8 @@ const FORFAITS = {
 };
 
 app.post('/initier-paiement', async (req, res) => {
+  if (!process.env.CINETPAY_API_KEY)
+    return res.status(503).json({ error: 'Paiement temporairement indisponible. Réessaie dans quelques heures.' });
   const { telephone, forfait } = req.body;
   if (!telephone || !FORFAITS[forfait])
     return res.status(400).json({ error: 'Données invalides' });
@@ -96,6 +99,13 @@ app.post('/initier-paiement', async (req, res) => {
         notify_url:              'https://educi-qstl.onrender.com/webhook-cinetpay',
         return_url:              `https://educi-qstl.onrender.com/?tel=${encodeURIComponent(telephone)}&statut=retour`,
         customer_phone_number:   telephone,
+        customer_name:           'Eleve',
+        customer_surname:        'EduCI',
+        customer_email:          'eleve@educi.ci',
+        customer_address:        'Abidjan',
+        customer_city:           'Abidjan',
+        customer_country:        'CI',
+        customer_zip_code:       '00225',
         metadata:                JSON.stringify({ telephone, forfait }),
         lang:                    'fr',
         channels:                'ALL'
@@ -103,7 +113,7 @@ app.post('/initier-paiement', async (req, res) => {
     });
     const data = await r.json();
     if (data.code === '201') return res.json({ url_paiement: data.data.payment_url });
-    res.status(400).json({ error: data.message || 'Erreur CinetPay' });
+    res.status(400).json({ error: 'Paiement impossible. Vérifie ton numéro et réessaie.' });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -144,6 +154,25 @@ app.get('/verifier-acces', (req, res) => {
   if (!sub) return res.json({ acces: false });
   if (new Date() > new Date(sub.expiry)) { abonnes.delete(tel); return res.json({ acces: false }); }
   res.json({ acces: true, forfait: sub.forfait, expiry: sub.expiry });
+});
+
+app.get('/api/admin/stats', (req, res) => {
+  if (req.query.key !== ADMIN_KEY)
+    return res.status(401).json({ error: 'Clé invalide' });
+  const now = new Date();
+  const list = [];
+  let revenus = 0;
+  for (const [tel, sub] of abonnes.entries()) {
+    if (new Date(sub.expiry) < now) { abonnes.delete(tel); continue; }
+    const jours_restants = Math.ceil((new Date(sub.expiry) - now) / 86400000);
+    list.push({ telephone: tel, forfait: sub.forfait, expiry: sub.expiry, jours_restants });
+    revenus += FORFAITS[sub.forfait]?.prix || 0;
+  }
+  res.json({
+    abonnes: list,
+    total_abonnes: list.length,
+    revenus_estimes: revenus
+  });
 });
 
 app.get('*', (req, res) => {
