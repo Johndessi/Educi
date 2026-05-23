@@ -77,6 +77,8 @@ const FORFAITS = {
 };
 
 app.post('/initier-paiement', async (req, res) => {
+  if (!process.env.CINETPAY_API_KEY)
+    return res.status(503).json({ error: 'Paiement temporairement indisponible. Réessaie dans quelques heures.' });
   const { telephone, forfait } = req.body;
   if (!telephone || !FORFAITS[forfait])
     return res.status(400).json({ error: 'Données invalides' });

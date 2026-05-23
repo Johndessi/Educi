@@ -3855,7 +3855,10 @@ function authStep1() {
   _authShow('plan');
 }
 
-function authBack(screen) { _authShow(screen); }
+function authBack(screen) {
+  document.getElementById('auth-plan-err').textContent = '';
+  _authShow(screen);
+}
 
 async function authChoisirForfait(forfait) {
   document.getElementById('auth-plan-err').textContent = '';
