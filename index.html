@@ -388,6 +388,41 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
 @media (max-width: 360px) {
   .adm-cards { grid-template-columns: 1fr; }
 }
+/* === PROFIL === */
+.profil-hero {
+  background: linear-gradient(135deg, var(--card) 0%, #1a2233 100%);
+  border: 1px solid var(--border); border-radius: 20px;
+  padding: 32px 20px; margin: 16px; text-align: center;
+}
+.profil-avatar {
+  width: 72px; height: 72px;
+  background: linear-gradient(135deg, var(--orange), #ff6b00);
+  border-radius: 50%; display: flex; align-items: center;
+  justify-content: center; font-size: 32px; margin: 0 auto 16px;
+}
+.profil-phone {
+  font-family: 'Syne', sans-serif; font-size: 22px;
+  font-weight: 700; color: white; letter-spacing: 2px;
+}
+.profil-forfait-badge {
+  display: inline-block; padding: 5px 18px; border-radius: 20px;
+  font-size: 13px; font-weight: 700; margin-top: 12px;
+}
+.profil-forfait-badge.mensuel     { background: rgba(247,127,0,0.18); color: var(--orange); border: 1px solid rgba(247,127,0,0.4); }
+.profil-forfait-badge.trimestriel { background: rgba(33,150,243,0.18); color: #42a5f5;      border: 1px solid rgba(33,150,243,0.4); }
+.profil-forfait-badge.annuel      { background: rgba(0,154,68,0.18);   color: var(--green);  border: 1px solid rgba(0,154,68,0.4); }
+.profil-info-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 16px; padding: 18px 20px; margin: 0 16px 12px;
+}
+.profil-info-label {
+  font-size: 11px; color: var(--muted); text-transform: uppercase;
+  letter-spacing: 0.6px; margin-bottom: 6px;
+}
+.profil-info-value { font-size: 16px; font-weight: 600; color: white; }
+.profil-prog-bar { height: 8px; background: var(--card2); border-radius: 8px; overflow: hidden; margin-top: 10px; }
+.profil-prog-fill { height: 100%; border-radius: 8px; background: linear-gradient(90deg, var(--orange), #ff6b00); transition: width .5s ease; }
+.profil-no-sub { text-align: center; padding: 48px 24px 32px; }
 </style>
 </head>
 <body>
@@ -776,6 +811,11 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
     📲 Installer EduCI
   </button>
 
+  <!-- PAGE: PROFIL -->
+  <div class="page" id="page-profil">
+    <div id="profil-content"></div>
+  </div>
+
   <!-- NAV -->
   <nav class="nav">
     <button class="nav-item active" onclick="showPage('home')" id="nav-home">
@@ -789,6 +829,9 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
     </button>
     <button class="nav-item" onclick="showPage('correction')" id="nav-correction">
       <span class="nav-icon">📝</span>Correction
+    </button>
+    <button class="nav-item" onclick="showPage('profil');renderProfil()" id="nav-profil">
+      <span class="nav-icon">👤</span>Profil
     </button>
   </nav>
 </div>
@@ -4282,6 +4325,76 @@ function showPage(name) {
 }
 
 function goHome() { showPage('home'); }
+
+// === PROFIL ===
+function renderProfil() {
+  const el = document.getElementById('profil-content');
+  let sub = null;
+  try { sub = JSON.parse(localStorage.getItem('educi_acces') || 'null'); } catch(_) {}
+
+  const actif = !!(sub && sub.expiry && new Date(sub.expiry) > new Date());
+
+  if (!actif) {
+    el.innerHTML = `
+      <div style="padding:24px 16px 8px">
+        <h2 style="font-family:'Syne',sans-serif;color:var(--orange);margin-bottom:4px">Mon Profil</h2>
+      </div>
+      <div class="profil-no-sub">
+        <div style="font-size:52px;margin-bottom:16px">🔒</div>
+        <div style="font-size:18px;font-weight:700;color:white;margin-bottom:8px">Aucun abonnement actif</div>
+        <div style="font-size:14px;color:var(--muted);margin-bottom:28px;line-height:1.6">Abonne-toi pour accéder à toutes les fonctionnalités IA d'EduCI.</div>
+        <button onclick="showPaywall()" style="width:100%;padding:16px;border-radius:16px;background:linear-gradient(135deg,var(--orange),#ff6b00);border:none;color:white;font-size:16px;font-weight:700;cursor:pointer;font-family:'Syne',sans-serif">
+          S'abonner maintenant
+        </button>
+      </div>`;
+    return;
+  }
+
+  const DUREES = { mensuel: 30, trimestriel: 90, annuel: 365 };
+  const LABELS  = { mensuel: 'Mensuel', trimestriel: 'Trimestriel', annuel: 'Annuel' };
+  const now     = new Date();
+  const expiry  = new Date(sub.expiry);
+  const total   = DUREES[sub.forfait] || 30;
+  const restant = Math.max(0, Math.ceil((expiry - now) / 86400000));
+  const pct     = Math.min(100, Math.round((restant / total) * 100));
+  const tel     = (sub.tel || '').replace(/\D/g, '');
+  const telMask = tel.length >= 6 ? tel.slice(0,2) + '****' + tel.slice(-4) : tel || '—';
+  const dateExp = expiry.toLocaleDateString('fr-FR', { day:'numeric', month:'long', year:'numeric' });
+  const forfait = sub.forfait || 'mensuel';
+
+  el.innerHTML = `
+    <div style="padding:16px 16px 8px">
+      <h2 style="font-family:'Syne',sans-serif;color:var(--orange);margin-bottom:0">Mon Profil</h2>
+    </div>
+
+    <div class="profil-hero">
+      <div class="profil-avatar">👤</div>
+      <div class="profil-phone">${telMask}</div>
+      <div class="profil-forfait-badge ${forfait}">${LABELS[forfait] || forfait}</div>
+    </div>
+
+    <div class="profil-info-card">
+      <div class="profil-info-label">Date d'expiration</div>
+      <div class="profil-info-value">📅 ${dateExp}</div>
+    </div>
+
+    <div class="profil-info-card">
+      <div class="profil-info-label">Jours restants</div>
+      <div class="profil-info-value" style="display:flex;justify-content:space-between;align-items:center">
+        <span>${restant} / ${total} jours</span>
+        <span style="font-size:13px;color:var(--muted)">${pct}%</span>
+      </div>
+      <div class="profil-prog-bar">
+        <div class="profil-prog-fill" style="width:${pct}%"></div>
+      </div>
+    </div>
+
+    <div style="padding:4px 16px 32px">
+      <button onclick="showPaywall()" style="width:100%;padding:16px;border-radius:16px;background:linear-gradient(135deg,var(--orange),#ff6b00);border:none;color:white;font-size:16px;font-weight:700;cursor:pointer;font-family:'Syne',sans-serif">
+        🔄 Renouveler l'abonnement
+      </button>
+    </div>`;
+}
 
 // === CLASSE ===
 function selectClasse(classe) {
