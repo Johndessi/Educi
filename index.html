@@ -411,14 +411,23 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
     font-weight: 600; color: var(--orange); font-size: 11px; padding: 0 4px;
   }
 }
+#auth-gate {
+  display: flex;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: linear-gradient(160deg,#0D1B4B 0%,#1A237E 55%,#0D47A1 100%);
+  overflow-y: auto;
+  font-family: 'DM Sans', sans-serif;
+  color: white;
+}
+#app-contenu { display: none; }
 </style>
 </head>
 <body>
 
 <!-- AUTH GATE -->
-<div id="auth-gate" style="display:flex;position:fixed;inset:0;z-index:10000;
-     background:linear-gradient(160deg,#0D1B4B 0%,#1A237E 55%,#0D47A1 100%);
-     overflow-y:auto;font-family:'DM Sans',sans-serif;color:white">
+<div id="auth-gate">
 
   <!-- Écran 1 : numéro de téléphone -->
   <div id="auth-screen-tel" style="min-height:100vh;display:flex;flex-direction:column;
@@ -517,7 +526,7 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
 </div>
 
 <!-- APP -->
-<div id="app" style="display:block">
+<div id="app-contenu">
 
   <!-- HEADER -->
   <div class="header">
@@ -4110,9 +4119,9 @@ function _authShow(screen) {
   });
 }
 
-function _hideAuthGate() {
-  const g = document.getElementById('auth-gate');
-  if (g) g.style.display = 'none';
+function debloquerApp() {
+  document.getElementById('auth-gate').style.display = 'none';
+  document.getElementById('app-contenu').style.display = 'block';
 }
 
 function _saveAcces(data) {
@@ -4171,7 +4180,7 @@ async function _pollVerif(tel, tries) {
     if (data.acces) {
       console.log('Accès confirmé —', data.forfait, 'expire le', data.expiry);
       _saveAcces({ tel, forfait: data.forfait, expiry: data.expiry });
-      _hideAuthGate();
+      debloquerApp();
       window.history.replaceState({}, '', '/');
       return;
     }
@@ -4191,7 +4200,7 @@ function initAuth() {
     const saved = JSON.parse(localStorage.getItem('educi_acces') || 'null');
     if (saved && saved.expiry && new Date(saved.expiry) > new Date()) {
       console.log('Cache trouvé — accès valide jusqu\'au', saved.expiry);
-      _hideAuthGate();
+      debloquerApp();
       return;
     } else {
       console.log('Pas de cache valide — affichage de la gate');
