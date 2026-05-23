@@ -4015,10 +4015,12 @@ function _checkAcces() {
 }
 
 function showPaywall() {
+  const savedTel = localStorage.getItem('educi_tel');
+  if (savedTel) _authTel = savedTel;
   var gate = document.getElementById('auth-gate');
   if (gate) {
     gate.style.display = 'flex';
-    _authShow('tel');
+    _authShow(savedTel ? 'plan' : 'tel');
   }
 }
 
@@ -4032,19 +4034,35 @@ function _saveAcces(data) {
   }));
 }
 
-function authStep1() {
+async function authStep1() {
   const tel = (document.getElementById('auth-tel').value || '').trim();
   if (!tel || tel.replace(/\D/g,'').length < 8) {
     document.getElementById('auth-tel-err').textContent = 'Saisis un numéro valide.';
     return;
   }
   _authTel = tel;
-  _authShow('plan');
+  try {
+    const r = await fetch('/verifier-acces?tel=' + encodeURIComponent(tel));
+    const data = await r.json();
+    if (data.acces) {
+      _saveAcces({ tel, forfait: data.forfait, expiry: data.expiry });
+      localStorage.setItem('educi_tel', tel);
+      debloquerApp();
+      return;
+    }
+  } catch(_) {}
+  // Pas abonné → accès gratuit aux leçons
+  localStorage.setItem('educi_tel', tel);
+  debloquerApp();
 }
 
 function authBack(screen) {
   document.getElementById('auth-plan-err').textContent = '';
-  _authShow(screen);
+  if (screen === 'tel' && localStorage.getItem('educi_tel')) {
+    document.getElementById('auth-gate').style.display = 'none';
+  } else {
+    _authShow(screen);
+  }
 }
 
 async function authChoisirForfait(forfait) {
@@ -4106,7 +4124,6 @@ function initAuth() {
 }
 
 function startApp() {
-  // Vérifier si retour depuis CinetPay
   const params = new URLSearchParams(window.location.search);
   if (params.get('statut') === 'retour') {
     const tel = params.get('tel') || '';
@@ -4115,6 +4132,9 @@ function startApp() {
     if (gate) gate.style.display = 'flex';
     _authShow('check');
     _pollVerif(tel, 0);
+  } else if (!localStorage.getItem('educi_tel')) {
+    var gate = document.getElementById('auth-gate');
+    if (gate) { gate.style.display = 'flex'; _authShow('tel'); }
   }
   if (currentClasse) applyClasse(currentClasse);
   initCorrection();
