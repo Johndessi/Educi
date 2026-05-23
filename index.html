@@ -221,6 +221,9 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
   0%,80%,100% { transform: scale(0); }
   40% { transform: scale(1); }
 }
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
 
 .ask-form { display: flex; gap: 10px; margin-top: 20px; }
 .ask-input {
@@ -411,6 +414,107 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
 </style>
 </head>
 <body>
+
+<!-- AUTH GATE -->
+<div id="auth-gate" style="display:none;position:fixed;inset:0;z-index:10000;
+     background:linear-gradient(160deg,#0D1B4B 0%,#1A237E 55%,#0D47A1 100%);
+     overflow-y:auto;font-family:'DM Sans',sans-serif;color:white">
+
+  <!-- Écran 1 : numéro de téléphone -->
+  <div id="auth-screen-tel" style="min-height:100vh;display:flex;flex-direction:column;
+       align-items:center;justify-content:center;padding:32px 20px;gap:20px">
+    <img src="/icons/icon-192.png" style="width:80px;height:80px;border-radius:20px;margin-bottom:4px">
+    <div style="text-align:center">
+      <div style="font-family:'Syne',sans-serif;font-size:26px;font-weight:800">EduCI</div>
+      <div style="font-size:14px;opacity:0.75;margin-top:4px">Plateforme scolaire ivoirienne</div>
+    </div>
+    <div style="width:100%;max-width:360px">
+      <label style="font-size:13px;opacity:0.8;display:block;margin-bottom:8px">Ton numéro de téléphone</label>
+      <input id="auth-tel" type="tel" placeholder="+225 07 00 00 00 00"
+        style="width:100%;padding:14px 16px;border-radius:14px;border:1.5px solid rgba(255,255,255,0.25);
+               background:rgba(255,255,255,0.1);color:white;font-size:16px;
+               box-sizing:border-box;outline:none"
+        oninput="document.getElementById('auth-tel-err').textContent=''"
+        onkeydown="if(event.key==='Enter')authStep1()">
+      <div id="auth-tel-err" style="color:#FF6B35;font-size:12px;margin-top:6px;min-height:16px"></div>
+    </div>
+    <button onclick="authStep1()"
+      style="width:100%;max-width:360px;padding:15px;border:none;border-radius:14px;
+             background:#FF6B35;color:white;font-family:'Syne',sans-serif;
+             font-size:16px;font-weight:700;cursor:pointer">
+      Continuer →
+    </button>
+    <div style="font-size:12px;opacity:0.55;text-align:center;max-width:300px">
+      Ton numéro identifie ton abonnement · aucun mot de passe requis
+    </div>
+  </div>
+
+  <!-- Écran 2 : choix de forfait -->
+  <div id="auth-screen-plan" style="display:none;min-height:100vh;flex-direction:column;
+       align-items:center;padding:40px 20px 32px;gap:16px">
+    <button onclick="authBack('tel')"
+      style="align-self:flex-start;background:rgba(255,255,255,0.12);border:none;
+             color:white;border-radius:10px;padding:8px 14px;font-size:13px;cursor:pointer">
+      ← Retour
+    </button>
+    <div style="text-align:center;margin-bottom:8px">
+      <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:700">Choisir un forfait</div>
+      <div style="font-size:13px;opacity:0.7;margin-top:4px">Accès illimité à toutes les fonctionnalités</div>
+    </div>
+    <!-- Mensuel -->
+    <div onclick="authChoisirForfait('mensuel')" style="width:100%;max-width:360px;cursor:pointer;
+         background:rgba(255,255,255,0.09);border:1.5px solid rgba(255,255,255,0.18);
+         border-radius:16px;padding:18px 20px;box-sizing:border-box;transition:border-color .2s"
+         onmouseover="this.style.borderColor='#FF6B35'" onmouseout="this.style.borderColor='rgba(255,255,255,0.18)'">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:16px">Mensuel</div>
+          <div style="font-size:12px;opacity:0.65;margin-top:2px">30 jours d'accès</div>
+        </div>
+        <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#FF6B35">500 F</div>
+      </div>
+    </div>
+    <!-- Trimestriel -->
+    <div onclick="authChoisirForfait('trimestriel')" style="width:100%;max-width:360px;cursor:pointer;
+         background:rgba(255,107,53,0.15);border:1.5px solid #FF6B35;
+         border-radius:16px;padding:18px 20px;box-sizing:border-box;position:relative">
+      <div style="position:absolute;top:-10px;left:20px;background:#FF6B35;color:white;
+           font-size:11px;font-weight:700;padding:2px 10px;border-radius:20px">⭐ POPULAIRE</div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:16px">Trimestriel</div>
+          <div style="font-size:12px;opacity:0.65;margin-top:2px">90 jours d'accès</div>
+        </div>
+        <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#FF6B35">1 200 F</div>
+      </div>
+    </div>
+    <!-- Annuel -->
+    <div onclick="authChoisirForfait('annuel')" style="width:100%;max-width:360px;cursor:pointer;
+         background:rgba(255,255,255,0.09);border:1.5px solid rgba(255,255,255,0.18);
+         border-radius:16px;padding:18px 20px;box-sizing:border-box"
+         onmouseover="this.style.borderColor='#FF6B35'" onmouseout="this.style.borderColor='rgba(255,255,255,0.18)'">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:16px">Annuel</div>
+          <div style="font-size:12px;opacity:0.65;margin-top:2px">365 jours d'accès</div>
+        </div>
+        <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#FF6B35">4 000 F</div>
+      </div>
+    </div>
+    <div id="auth-plan-err" style="color:#FF6B35;font-size:13px;min-height:16px;text-align:center"></div>
+  </div>
+
+  <!-- Écran 3 : vérification -->
+  <div id="auth-screen-check" style="display:none;min-height:100vh;flex-direction:column;
+       align-items:center;justify-content:center;padding:32px 20px;gap:20px;text-align:center">
+    <div style="width:48px;height:48px;border:4px solid rgba(255,255,255,0.2);
+         border-top-color:#FF6B35;border-radius:50%;animation:spin 1s linear infinite"></div>
+    <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700">Vérification en cours…</div>
+    <div id="auth-check-msg" style="font-size:13px;opacity:0.7;max-width:280px">
+      Patiente quelques secondes pendant que nous confirmons ton paiement.
+    </div>
+  </div>
+</div>
 
 <!-- APP -->
 <div id="app" style="display:block">
@@ -3996,7 +4100,112 @@ let selectedPM = 'Orange Money';
 let selectedPlan = 'Mensuel • 500 FCFA';
 
 // === INIT ===
+// === AUTH / PAIEMENT ===
+let _authTel = '';
+
+function _authShow(screen) {
+  ['tel','plan','check'].forEach(s => {
+    const el = document.getElementById('auth-screen-' + s);
+    if (el) el.style.display = s === screen ? 'flex' : 'none';
+  });
+}
+
+function _hideAuthGate() {
+  const g = document.getElementById('auth-gate');
+  if (g) g.style.display = 'none';
+}
+
+function _saveAcces(data) {
+  localStorage.setItem('educi_acces', JSON.stringify({
+    tel: data.tel || _authTel,
+    forfait: data.forfait,
+    expiry: data.expiry
+  }));
+}
+
+function authStep1() {
+  const tel = (document.getElementById('auth-tel').value || '').trim();
+  if (!tel || tel.replace(/\D/g,'').length < 8) {
+    document.getElementById('auth-tel-err').textContent = 'Saisis un numéro valide.';
+    return;
+  }
+  _authTel = tel;
+  _authShow('plan');
+}
+
+function authBack(screen) { _authShow(screen); }
+
+async function authChoisirForfait(forfait) {
+  document.getElementById('auth-plan-err').textContent = '';
+  _authShow('check');
+  try {
+    const r = await fetch('/initier-paiement', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ telephone: _authTel, forfait })
+    });
+    const data = await r.json();
+    if (data.url_paiement) {
+      window.location.href = data.url_paiement;
+    } else {
+      _authShow('plan');
+      document.getElementById('auth-plan-err').textContent = data.error || 'Erreur paiement.';
+    }
+  } catch (err) {
+    _authShow('plan');
+    document.getElementById('auth-plan-err').textContent = 'Connexion impossible. Réessaie.';
+  }
+}
+
+async function _pollVerif(tel, tries) {
+  if (tries >= 5) {
+    document.getElementById('auth-check-msg').textContent =
+      'Paiement non détecté. Reviens sur l\'app après paiement.';
+    return;
+  }
+  try {
+    const r = await fetch('/verifier-acces?tel=' + encodeURIComponent(tel));
+    const data = await r.json();
+    if (data.acces) {
+      _saveAcces({ tel, forfait: data.forfait, expiry: data.expiry });
+      _hideAuthGate();
+      // Nettoie l'URL
+      window.history.replaceState({}, '', '/');
+      return;
+    }
+  } catch (_) {}
+  setTimeout(() => _pollVerif(tel, tries + 1), 2000);
+}
+
+function initAuth() {
+  // 1. Vérifier le localStorage
+  try {
+    const saved = JSON.parse(localStorage.getItem('educi_acces') || 'null');
+    if (saved && saved.expiry && new Date(saved.expiry) > new Date()) {
+      _hideAuthGate(); return;
+    }
+  } catch (_) {}
+
+  // 2. Retour après paiement CinetPay
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('statut') === 'retour') {
+    const tel = params.get('tel') || '';
+    _authTel = tel;
+    const g = document.getElementById('auth-gate');
+    if (g) g.style.display = 'block';
+    _authShow('check');
+    _pollVerif(tel, 0);
+    return;
+  }
+
+  // 3. Afficher la gate
+  const g = document.getElementById('auth-gate');
+  if (g) g.style.display = 'block';
+  _authShow('tel');
+}
+
 function startApp() {
+  initAuth();
   if (currentClasse) applyClasse(currentClasse);
   initCorrection();
 }
