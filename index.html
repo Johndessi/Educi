@@ -416,7 +416,7 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
 <body>
 
 <!-- AUTH GATE -->
-<div id="auth-gate" style="display:none;position:fixed;inset:0;z-index:10000;
+<div id="auth-gate" style="display:flex;position:fixed;inset:0;z-index:10000;
      background:linear-gradient(160deg,#0D1B4B 0%,#1A237E 55%,#0D47A1 100%);
      overflow-y:auto;font-family:'DM Sans',sans-serif;color:white">
 
@@ -4158,7 +4158,9 @@ async function authChoisirForfait(forfait) {
 }
 
 async function _pollVerif(tel, tries) {
+  console.log(`Vérification accès — tentative ${tries + 1}/5 pour`, tel);
   if (tries >= 5) {
+    console.log('Accès refusé — 5 tentatives échouées');
     document.getElementById('auth-check-msg').textContent =
       'Paiement non détecté. Reviens sur l\'app après paiement.';
     return;
@@ -4167,40 +4169,52 @@ async function _pollVerif(tel, tries) {
     const r = await fetch('/verifier-acces?tel=' + encodeURIComponent(tel));
     const data = await r.json();
     if (data.acces) {
+      console.log('Accès confirmé —', data.forfait, 'expire le', data.expiry);
       _saveAcces({ tel, forfait: data.forfait, expiry: data.expiry });
       _hideAuthGate();
-      // Nettoie l'URL
       window.history.replaceState({}, '', '/');
       return;
     }
-  } catch (_) {}
+    console.log('Accès refusé — nouvelle tentative dans 2s');
+  } catch (e) {
+    console.log('Erreur vérification :', e.message);
+  }
   setTimeout(() => _pollVerif(tel, tries + 1), 2000);
 }
 
 function initAuth() {
+  // ⚠️ TEST : vider le cache pour forcer l'affichage de la gate
+  localStorage.removeItem('educi_acces');
+
   // 1. Vérifier le localStorage
   try {
     const saved = JSON.parse(localStorage.getItem('educi_acces') || 'null');
     if (saved && saved.expiry && new Date(saved.expiry) > new Date()) {
-      _hideAuthGate(); return;
+      console.log('Cache trouvé — accès valide jusqu\'au', saved.expiry);
+      _hideAuthGate();
+      return;
+    } else {
+      console.log('Pas de cache valide — affichage de la gate');
     }
-  } catch (_) {}
+  } catch (_) {
+    console.log('Pas de cache (erreur parse) — affichage de la gate');
+  }
 
   // 2. Retour après paiement CinetPay
   const params = new URLSearchParams(window.location.search);
   if (params.get('statut') === 'retour') {
     const tel = params.get('tel') || '';
+    console.log('Retour paiement détecté — vérification pour', tel);
     _authTel = tel;
-    const g = document.getElementById('auth-gate');
-    if (g) g.style.display = 'block';
+    document.getElementById('auth-gate').style.display = 'flex';
     _authShow('check');
     _pollVerif(tel, 0);
     return;
   }
 
-  // 3. Afficher la gate
-  const g = document.getElementById('auth-gate');
-  if (g) g.style.display = 'block';
+  // 3. Afficher la gate (déjà visible par défaut via CSS)
+  console.log('Auth gate affiché — écran téléphone');
+  document.getElementById('auth-gate').style.display = 'flex';
   _authShow('tel');
 }
 
