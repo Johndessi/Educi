@@ -4381,10 +4381,6 @@ function closeViewer() {
 // === TEXT TO SPEECH (sentence-by-sentence — Android Chrome compatible) ===
 let _tts = { sentences: [], idx: 0, playing: false, paused: false };
 
-
-// === TEXT TO SPEECH (sentence-by-sentence — Android Chrome compatible) ===
-let _tts = { sentences: [], idx: 0, playing: false, paused: false };
-
 function _ttsGetFrVoice() {
   const voices = window.speechSynthesis.getVoices();
   return voices.find(v => v.lang === 'fr-FR' && /fem|female|amelie|julie|marie/i.test(v.name))
