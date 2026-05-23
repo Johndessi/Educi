@@ -6,19 +6,25 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
-// Fichiers PWA — servis avec les bons headers avant express.static
-app.get('/sw.js', (req, res) => {
-  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-  res.setHeader('Content-Type', 'application/javascript');
-  res.sendFile(path.join(__dirname, 'sw.js'));
-});
-
+// ── Routes PWA statiques (avant tout le reste) ──────────────────────────────
 app.get('/manifest.json', (req, res) => {
   res.setHeader('Content-Type', 'application/manifest+json');
   res.sendFile(path.join(__dirname, 'manifest.json'));
 });
 
+app.get('/sw.js', (req, res) => {
+  res.setHeader('Content-Type', 'application/javascript');
+  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+  res.sendFile(path.join(__dirname, 'sw.js'));
+});
+
+app.get('/.well-known/assetlinks.json', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.sendFile(path.join(__dirname, '.well-known', 'assetlinks.json'));
+});
+
 app.use('/icons', express.static(path.join(__dirname, 'icons'), { maxAge: '7d' }));
+// ────────────────────────────────────────────────────────────────────────────
 
 app.use(express.static(__dirname));
 
