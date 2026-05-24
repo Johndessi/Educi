@@ -4005,7 +4005,9 @@ function _authShow(screen) {
 
 function debloquerApp() {
   var gate = document.getElementById('auth-gate');
+  var app = document.getElementById('app-contenu');
   if (gate) gate.style.display = 'none';
+  if (app) app.style.display = 'block';
 }
 function _checkAcces() {
   try {
