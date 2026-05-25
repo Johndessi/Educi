@@ -787,7 +787,7 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
           <option value="">-- Sélectionner la matière --</option>
         </select>
       </div>
-      <div id="upload-zone" onclick="document.getElementById('devoir-file').click()"
+      <div id="upload-zone" onclick="ouvrirUpload()"
         style="border:2px dashed var(--orange);border-radius:16px;padding:40px 20px;
                text-align:center;cursor:pointer;background:rgba(247,127,0,0.05);
                margin-bottom:16px;transition:background 0.2s">
@@ -867,7 +867,7 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
     <button class="nav-item" onclick="showPage('planning')" id="nav-planning">
       <span class="nav-icon">📅</span>Planning
     </button>
-    <button class="nav-item" onclick="showPage('correction')" id="nav-correction">
+    <button class="nav-item" onclick="ouvrirCorrection()" id="nav-correction">
       <span class="nav-icon">📝</span>Correction
     </button>
     <button class="nav-item" onclick="showPage('profil');renderProfil()" id="nav-profil">
@@ -4283,6 +4283,18 @@ function clearFile() {
   document.getElementById('file-preview').style.display = 'none';
   document.getElementById('img-preview-container').style.display = 'none';
   document.getElementById('correction-result').style.display = 'none';
+}
+
+function ouvrirCorrection() {
+  const cache = lireCache();
+  if (!cache || new Date(cache.expiry) <= new Date()) { afficherAuthGate('correction'); return; }
+  showPage('correction');
+}
+
+function ouvrirUpload() {
+  const cache = lireCache();
+  if (!cache || new Date(cache.expiry) <= new Date()) { afficherAuthGate('correction'); return false; }
+  document.getElementById('devoir-file').click();
 }
 
 async function corrigerDevoir() {
