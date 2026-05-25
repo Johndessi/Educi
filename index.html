@@ -423,11 +423,51 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
 .profil-prog-bar { height: 8px; background: var(--card2); border-radius: 8px; overflow: hidden; margin-top: 10px; }
 .profil-prog-fill { height: 100%; border-radius: 8px; background: linear-gradient(90deg, var(--orange), #ff6b00); transition: width .5s ease; }
 .profil-no-sub { text-align: center; padding: 48px 24px 32px; }
+/* === LOADING SCREEN === */
+#loading-screen {
+  position: fixed; inset: 0; z-index: 10000;
+  background: var(--dark);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 24px;
+}
+.ld-dot {
+  display: inline-block; width: 10px; height: 10px;
+  background: var(--orange); border-radius: 50%;
+  animation: ldBounce 1.2s ease-in-out infinite;
+}
+.ld-dot:nth-child(2) { animation-delay: .2s; }
+.ld-dot:nth-child(3) { animation-delay: .4s; }
+@keyframes ldBounce {
+  0%, 80%, 100% { transform: scale(0); opacity: .3; }
+  40%            { transform: scale(1); opacity: 1;  }
+}
 </style>
 </head>
 <body>
 
 <!-- ADMIN PAGE -->
+<!-- LOADING SCREEN -->
+<div id="loading-screen">
+  <img src="/icons/icon-192.png" style="width:80px;height:80px;border-radius:20px">
+  <div style="font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:white">EduCI</div>
+  <div style="display:flex;gap:10px">
+    <span class="ld-dot"></span>
+    <span class="ld-dot"></span>
+    <span class="ld-dot"></span>
+  </div>
+  <div id="loading-retry" style="display:none;text-align:center;padding:0 32px">
+    <div style="color:rgba(255,255,255,0.5);font-size:13px;margin-bottom:14px">
+      L'application met du temps à répondre…
+    </div>
+    <button onclick="retryLoading()"
+      style="background:var(--orange);color:white;border:none;border-radius:14px;
+             padding:13px 32px;font-size:15px;font-weight:700;cursor:pointer;
+             font-family:'Syne',sans-serif">
+      🔄 Réessayer
+    </button>
+  </div>
+</div>
+
 <div id="admin-page">
   <div class="adm-header">
     <img src="/icons/icon-192.png" style="width:36px;height:36px;border-radius:10px">
@@ -4003,7 +4043,19 @@ function _authShow(screen) {
   });
 }
 
+function _hideLoading() {
+  var ls = document.getElementById('loading-screen');
+  if (ls) ls.style.display = 'none';
+  if (window._loadRetryTimer) { clearTimeout(window._loadRetryTimer); window._loadRetryTimer = null; }
+}
+
+function retryLoading() {
+  document.getElementById('loading-retry').style.display = 'none';
+  startApp();
+}
+
 function debloquerApp() {
+  _hideLoading();
   var gate = document.getElementById('auth-gate');
   var app = document.getElementById('app-contenu');
   if (gate) gate.style.display = 'none';
@@ -4126,17 +4178,27 @@ function initAuth() {
 }
 
 function startApp() {
+  // Bouton Réessayer visible après 10s si rien ne s'affiche
+  window._loadRetryTimer = setTimeout(function() {
+    var retry = document.getElementById('loading-retry');
+    if (retry) retry.style.display = 'block';
+  }, 10000);
+
   const params = new URLSearchParams(window.location.search);
   if (params.get('statut') === 'retour') {
     const tel = params.get('tel') || '';
     _authTel = tel;
+    _hideLoading();
     var gate = document.getElementById('auth-gate');
     if (gate) gate.style.display = 'flex';
     _authShow('check');
     _pollVerif(tel, 0);
   } else if (!localStorage.getItem('educi_tel')) {
+    _hideLoading();
     var gate = document.getElementById('auth-gate');
     if (gate) { gate.style.display = 'flex'; _authShow('tel'); }
+  } else {
+    debloquerApp();
   }
   if (currentClasse) applyClasse(currentClasse);
   initCorrection();
