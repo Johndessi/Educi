@@ -577,7 +577,7 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
     </button>
     <div style="text-align:center;margin-bottom:8px">
       <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:700">Choisir un forfait</div>
-      <div style="font-size:13px;opacity:0.7;margin-top:4px">Accès illimité à toutes les fonctionnalités</div>
+      <div id="paywall-msg" style="font-size:13px;opacity:0.7;margin-top:4px">Accès illimité à toutes les fonctionnalités</div>
     </div>
     <!-- Mensuel -->
     <div onclick="authChoisirForfait('mensuel')" style="width:100%;max-width:360px;cursor:pointer;
@@ -4068,9 +4068,15 @@ function _checkAcces() {
   } catch(_) { return false; }
 }
 
-function showPaywall() {
+function showPaywall(msg) {
   const savedTel = localStorage.getItem('educi_tel');
   if (savedTel) _authTel = savedTel;
+  var msgEl = document.getElementById('paywall-msg');
+  if (msgEl) {
+    msgEl.textContent = msg || 'Cette fonctionnalité est réservée aux abonnés. Choisis ton forfait pour continuer.';
+    msgEl.style.opacity = msg ? '1' : '0.7';
+    msgEl.style.color   = msg ? '#FF6B35' : '';
+  }
   var gate = document.getElementById('auth-gate');
   if (gate) {
     gate.style.display = 'flex';
@@ -4112,6 +4118,8 @@ async function authStep1() {
 
 function authBack(screen) {
   document.getElementById('auth-plan-err').textContent = '';
+  var msgEl = document.getElementById('paywall-msg');
+  if (msgEl) { msgEl.textContent = 'Accès illimité à toutes les fonctionnalités'; msgEl.style.opacity = '0.7'; msgEl.style.color = ''; }
   if (screen === 'tel' && localStorage.getItem('educi_tel')) {
     document.getElementById('auth-gate').style.display = 'none';
   } else {
