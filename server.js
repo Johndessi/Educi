@@ -179,6 +179,17 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
+// Ping toutes les 10 minutes pour éviter la mise en veille (Render free tier)
+const PING_URL = 'https://educi-qstl.onrender.com/verifier-acces?tel=ping';
+setInterval(async () => {
+  try {
+    await fetch(PING_URL);
+    console.log('Ping serveur OK');
+  } catch(e) {
+    console.log('Ping échoué:', e.message);
+  }
+}, 10 * 60 * 1000);
+
 app.listen(PORT, () => {
   console.log(`EduCI server running on port ${PORT}`);
 });
