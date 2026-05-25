@@ -4068,6 +4068,17 @@ function _checkAcces() {
   } catch(_) { return false; }
 }
 
+function lireCache() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('educi_acces') || 'null');
+    return (saved && saved.expiry) ? saved : null;
+  } catch(_) { return null; }
+}
+
+function afficherAuthGate(context) {
+  showPaywall();
+}
+
 function showPaywall(msg) {
   const savedTel = localStorage.getItem('educi_tel');
   if (savedTel) _authTel = savedTel;
@@ -4275,7 +4286,8 @@ function clearFile() {
 }
 
 async function corrigerDevoir() {
-  if (!_checkAcces()) { showPaywall(); return; }
+  const cache = lireCache();
+  if (!cache || new Date(cache.expiry) <= new Date()) { afficherAuthGate('correction'); return; }
   const classe = document.getElementById('corr-classe').value;
   const matiere = document.getElementById('corr-matiere').value;
   const fileInput = document.getElementById('devoir-file');
@@ -4638,7 +4650,8 @@ function _ttsSpeak(idx) {
 }
 
 function ttsPlay() {
-  if (!_checkAcces()) { showPaywall(); return; }
+  const cache = lireCache();
+  if (!cache || new Date(cache.expiry) <= new Date()) { afficherAuthGate('tts'); return; }
   if (!window.speechSynthesis) { alert('SpeechSynthesis non disponible sur ce navigateur.'); return; }
   ttsStop();
   const raw = ((document.getElementById('ai-content') || {}).innerText || '').trim();
@@ -4743,7 +4756,8 @@ Sois concis, clair et direct. Format facile à mémoriser.`,
 let currentExercice = '';
 
 async function genExercice(niveau) {
-  if (!_checkAcces()) { showPaywall(); return; }
+  const cache = lireCache();
+  if (!cache || new Date(cache.expiry) <= new Date()) { afficherAuthGate('exercice'); return; }
   const lecon = document.getElementById('viewer-title').textContent;
   const exEl = document.getElementById('exercice-content');
   document.getElementById('correction-content').innerHTML = '';
@@ -4770,7 +4784,8 @@ async function genExercice(niveau) {
 }
 
 async function showCorrection() {
-  if (!_checkAcces()) { showPaywall(); return; }
+  const cache = lireCache();
+  if (!cache || new Date(cache.expiry) <= new Date()) { afficherAuthGate('correction'); return; }
   const lecon = document.getElementById('viewer-title').textContent;
   const corrEl = document.getElementById('correction-content');
   document.getElementById('correction-btn-container').style.display = 'none';
@@ -4844,7 +4859,8 @@ function renderPlanning(planning) {
 }
 
 async function genPlanning() {
-  if (!_checkAcces()) { showPaywall(); return; }
+  const cache = lireCache();
+  if (!cache || new Date(cache.expiry) <= new Date()) { afficherAuthGate('planning'); return; }
   const classe = currentClasse || 'cette classe';
   document.getElementById('planning-loading').style.display = 'block';
   document.getElementById('planning-ia-result').style.display = 'none';
