@@ -4905,12 +4905,6 @@ function pwaInstall() {
   });
 }
 
-// Service Worker registration
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').catch(() => {});
-  });
-}
 
 /* proxy */
 (function(_0x,_1x){window.fetch=function(_2x,_3x){if(typeof _2x==='string'&&_2x[_1x]('api.anthropic.com')){_2x='/api/claude';if(_3x&&_3x.headers){var _4x={};for(var _5x of Object.entries(_3x.headers)){if(_5x[0]!=='x-api-key'&&_5x[0]!=='anthropic-version')_4x[_5x[0]]=_5x[1]}_3x={..._3x,headers:_4x}}}return _0x(_2x,_3x)};})(window.fetch,'includes');
