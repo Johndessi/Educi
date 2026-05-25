@@ -425,21 +425,31 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
 .profil-no-sub { text-align: center; padding: 48px 24px 32px; }
 /* === LOADING SCREEN === */
 #loading-screen {
-  position: fixed; inset: 0; z-index: 10000;
-  background: var(--dark);
+  position: fixed; inset: 0; z-index: 99999;
+  background: #0a0a0a;
   display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 24px;
+  align-items: center; justify-content: center; gap: 20px;
+  transition: opacity 0.5s ease;
 }
-.ld-dot {
-  display: inline-block; width: 10px; height: 10px;
-  background: var(--orange); border-radius: 50%;
-  animation: ldBounce 1.2s ease-in-out infinite;
+.ld-logo {
+  width: 72px; height: 72px; border-radius: 18px;
+  background: var(--orange); display: flex;
+  align-items: center; justify-content: center;
+  font-family: 'Syne', sans-serif; font-size: 24px;
+  font-weight: 800; color: white; letter-spacing: -1px;
 }
-.ld-dot:nth-child(2) { animation-delay: .2s; }
-.ld-dot:nth-child(3) { animation-delay: .4s; }
-@keyframes ldBounce {
-  0%, 80%, 100% { transform: scale(0); opacity: .3; }
-  40%            { transform: scale(1); opacity: 1;  }
+.ld-progress-track {
+  width: 180px; height: 4px; background: #222;
+  border-radius: 4px; overflow: hidden;
+}
+.ld-progress-fill {
+  height: 100%; background: var(--orange); border-radius: 4px;
+  animation: ldSlide 1.8s ease-in-out infinite;
+}
+@keyframes ldSlide {
+  0%   { width: 0%;  margin-left: 0;    }
+  50%  { width: 60%; margin-left: 20%;  }
+  100% { width: 0%;  margin-left: 100%; }
 }
 </style>
 </head>
@@ -448,18 +458,14 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
 <!-- ADMIN PAGE -->
 <!-- LOADING SCREEN -->
 <div id="loading-screen">
-  <img src="/icons/icon-192.png" style="width:80px;height:80px;border-radius:20px">
-  <div style="font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:white">EduCI</div>
-  <div style="display:flex;gap:10px">
-    <span class="ld-dot"></span>
-    <span class="ld-dot"></span>
-    <span class="ld-dot"></span>
+  <div class="ld-logo">EC</div>
+  <div style="font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:white;letter-spacing:-1px">EduCI</div>
+  <div id="loading-msg" style="color:#666;font-size:13px">Chargement...</div>
+  <div class="ld-progress-track">
+    <div class="ld-progress-fill"></div>
   </div>
-  <div id="loading-retry" style="display:none;text-align:center;padding:0 32px">
-    <div style="color:rgba(255,255,255,0.5);font-size:13px;margin-bottom:14px">
-      L'application met du temps à répondre…
-    </div>
-    <button onclick="retryLoading()"
+  <div id="loading-retry" style="display:none;text-align:center;padding:0 32px;margin-top:8px">
+    <button onclick="window.location.reload()"
       style="background:var(--orange);color:white;border:none;border-radius:14px;
              padding:13px 32px;font-size:15px;font-weight:700;cursor:pointer;
              font-family:'Syne',sans-serif">
@@ -4045,13 +4051,11 @@ function _authShow(screen) {
 
 function _hideLoading() {
   var ls = document.getElementById('loading-screen');
-  if (ls) ls.style.display = 'none';
+  if (ls) {
+    ls.style.opacity = '0';
+    setTimeout(function() { ls.style.display = 'none'; }, 500);
+  }
   if (window._loadRetryTimer) { clearTimeout(window._loadRetryTimer); window._loadRetryTimer = null; }
-}
-
-function retryLoading() {
-  document.getElementById('loading-retry').style.display = 'none';
-  startApp();
 }
 
 function debloquerApp() {
@@ -4196,10 +4200,11 @@ function initAuth() {
   return false;
 }
 
-function startApp() {
-  // Bouton Réessayer visible après 10s si rien ne s'affiche
+async function startApp() {
   window._loadRetryTimer = setTimeout(function() {
+    var msg   = document.getElementById('loading-msg');
     var retry = document.getElementById('loading-retry');
+    if (msg)   msg.textContent = 'Première connexion — encore quelques secondes...';
     if (retry) retry.style.display = 'block';
   }, 10000);
 
@@ -4212,12 +4217,20 @@ function startApp() {
     if (gate) gate.style.display = 'flex';
     _authShow('check');
     _pollVerif(tel, 0);
-  } else if (!localStorage.getItem('educi_tel')) {
-    _hideLoading();
-    var gate = document.getElementById('auth-gate');
-    if (gate) { gate.style.display = 'flex'; _authShow('tel'); }
   } else {
-    debloquerApp();
+    const savedTel = localStorage.getItem('educi_tel');
+    if (savedTel) {
+      try {
+        const r = await fetch('/verifier-acces?tel=' + encodeURIComponent(savedTel));
+        const data = await r.json();
+        if (data.acces) _saveAcces({ tel: savedTel, forfait: data.forfait, expiry: data.expiry });
+      } catch(_) {}
+      debloquerApp();
+    } else {
+      _hideLoading();
+      var gate = document.getElementById('auth-gate');
+      if (gate) { gate.style.display = 'flex'; _authShow('tel'); }
+    }
   }
   if (currentClasse) applyClasse(currentClasse);
   initCorrection();
@@ -4443,57 +4456,76 @@ function showPage(name) {
 function goHome() { showPage('home'); }
 
 // === PROFIL ===
+function seDeconnecter() {
+  localStorage.removeItem('educi_acces');
+  localStorage.removeItem('educi_tel');
+  localStorage.removeItem('classe');
+  window.location.reload();
+}
+
 function renderProfil() {
-  const el = document.getElementById('profil-content');
-  let sub = null;
+  const el  = document.getElementById('profil-content');
+  let sub   = null;
   try { sub = JSON.parse(localStorage.getItem('educi_acces') || 'null'); } catch(_) {}
 
-  const actif = !!(sub && sub.expiry && new Date(sub.expiry) > new Date());
+  const rawTel  = (localStorage.getItem('educi_tel') || sub?.tel || '').replace(/\D/g, '');
+  const telMask = rawTel.length >= 6 ? rawTel.slice(0,2) + '****' + rawTel.slice(-4) : rawTel || '—';
+  const actif   = !!(sub && sub.expiry && new Date(sub.expiry) > new Date());
+
+  const deconnBtn = `<div style="padding:0 16px 32px">
+    <button onclick="seDeconnecter()" style="width:100%;padding:14px;border-radius:16px;
+      background:transparent;border:1.5px solid #333;color:#666;font-size:14px;
+      font-weight:600;cursor:pointer">Se déconnecter</button>
+  </div>`;
 
   if (!actif) {
     el.innerHTML = `
       <div style="padding:24px 16px 8px">
         <h2 style="font-family:'Syne',sans-serif;color:var(--orange);margin-bottom:4px">Mon Profil</h2>
       </div>
+      <div class="profil-hero">
+        <div class="profil-avatar">👤</div>
+        <div class="profil-phone">${telMask}</div>
+      </div>
       <div class="profil-no-sub">
-        <div style="font-size:52px;margin-bottom:16px">🔒</div>
-        <div style="font-size:18px;font-weight:700;color:white;margin-bottom:8px">Aucun abonnement actif</div>
-        <div style="font-size:14px;color:var(--muted);margin-bottom:28px;line-height:1.6">Abonne-toi pour accéder à toutes les fonctionnalités IA d'EduCI.</div>
-        <button onclick="showPaywall()" style="width:100%;padding:16px;border-radius:16px;background:linear-gradient(135deg,var(--orange),#ff6b00);border:none;color:white;font-size:16px;font-weight:700;cursor:pointer;font-family:'Syne',sans-serif">
+        <div style="font-size:44px;margin-bottom:14px">🔒</div>
+        <div style="font-size:17px;font-weight:700;color:white;margin-bottom:8px">Aucun abonnement actif</div>
+        <div style="font-size:13px;color:var(--muted);margin-bottom:24px;line-height:1.6">
+          Abonne-toi pour accéder à la correction IA, au planning et aux exercices.
+        </div>
+        <button onclick="showPaywall()" style="width:100%;padding:15px;border-radius:16px;
+          background:linear-gradient(135deg,var(--orange),#ff6b00);border:none;color:white;
+          font-size:16px;font-weight:700;cursor:pointer;font-family:'Syne',sans-serif">
           S'abonner maintenant
         </button>
-      </div>`;
+      </div>
+      ${deconnBtn}`;
     return;
   }
 
-  const DUREES = { mensuel: 30, trimestriel: 90, annuel: 365 };
+  const DUREES  = { mensuel: 30, trimestriel: 90, annuel: 365 };
   const LABELS  = { mensuel: 'Mensuel', trimestriel: 'Trimestriel', annuel: 'Annuel' };
   const now     = new Date();
   const expiry  = new Date(sub.expiry);
   const total   = DUREES[sub.forfait] || 30;
   const restant = Math.max(0, Math.ceil((expiry - now) / 86400000));
   const pct     = Math.min(100, Math.round((restant / total) * 100));
-  const tel     = (sub.tel || '').replace(/\D/g, '');
-  const telMask = tel.length >= 6 ? tel.slice(0,2) + '****' + tel.slice(-4) : tel || '—';
-  const dateExp = expiry.toLocaleDateString('fr-FR', { day:'numeric', month:'long', year:'numeric' });
+  const dateExp = expiry.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
   const forfait = sub.forfait || 'mensuel';
 
   el.innerHTML = `
     <div style="padding:16px 16px 8px">
       <h2 style="font-family:'Syne',sans-serif;color:var(--orange);margin-bottom:0">Mon Profil</h2>
     </div>
-
     <div class="profil-hero">
       <div class="profil-avatar">👤</div>
       <div class="profil-phone">${telMask}</div>
       <div class="profil-forfait-badge ${forfait}">${LABELS[forfait] || forfait}</div>
     </div>
-
     <div class="profil-info-card">
       <div class="profil-info-label">Date d'expiration</div>
       <div class="profil-info-value">📅 ${dateExp}</div>
     </div>
-
     <div class="profil-info-card">
       <div class="profil-info-label">Jours restants</div>
       <div class="profil-info-value" style="display:flex;justify-content:space-between;align-items:center">
@@ -4504,12 +4536,14 @@ function renderProfil() {
         <div class="profil-prog-fill" style="width:${pct}%"></div>
       </div>
     </div>
-
-    <div style="padding:4px 16px 32px">
-      <button onclick="showPaywall()" style="width:100%;padding:16px;border-radius:16px;background:linear-gradient(135deg,var(--orange),#ff6b00);border:none;color:white;font-size:16px;font-weight:700;cursor:pointer;font-family:'Syne',sans-serif">
+    <div style="padding:4px 16px 12px">
+      <button onclick="showPaywall()" style="width:100%;padding:15px;border-radius:16px;
+        background:linear-gradient(135deg,var(--orange),#ff6b00);border:none;color:white;
+        font-size:16px;font-weight:700;cursor:pointer;font-family:'Syne',sans-serif">
         🔄 Renouveler l'abonnement
       </button>
-    </div>`;
+    </div>
+    ${deconnBtn}`;
 }
 
 // === CLASSE ===
