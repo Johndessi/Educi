@@ -586,7 +586,7 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
       <div id="paywall-msg" style="font-size:13px;opacity:0.7;margin-top:4px">Accès illimité à toutes les fonctionnalités</div>
     </div>
     <!-- Mensuel -->
-    <div onclick="authChoisirForfait('mensuel')" style="width:100%;max-width:360px;cursor:pointer;
+    <div onclick="lancerPaiement('mensuel', 500)" style="width:100%;max-width:360px;cursor:pointer;
          background:rgba(255,255,255,0.09);border:1.5px solid rgba(255,255,255,0.18);
          border-radius:16px;padding:18px 20px;box-sizing:border-box;transition:border-color .2s"
          onmouseover="this.style.borderColor='#FF6B35'" onmouseout="this.style.borderColor='rgba(255,255,255,0.18)'">
@@ -599,7 +599,7 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
       </div>
     </div>
     <!-- Trimestriel -->
-    <div onclick="authChoisirForfait('trimestriel')" style="width:100%;max-width:360px;cursor:pointer;
+    <div onclick="lancerPaiement('trimestriel', 1200)" style="width:100%;max-width:360px;cursor:pointer;
          background:rgba(255,107,53,0.15);border:1.5px solid #FF6B35;
          border-radius:16px;padding:18px 20px;box-sizing:border-box;position:relative">
       <div style="position:absolute;top:-10px;left:20px;background:#FF6B35;color:white;
@@ -613,7 +613,7 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
       </div>
     </div>
     <!-- Annuel -->
-    <div onclick="authChoisirForfait('annuel')" style="width:100%;max-width:360px;cursor:pointer;
+    <div onclick="lancerPaiement('annuel', 4000)" style="width:100%;max-width:360px;cursor:pointer;
          background:rgba(255,255,255,0.09);border:1.5px solid rgba(255,255,255,0.18);
          border-radius:16px;padding:18px 20px;box-sizing:border-box"
          onmouseover="this.style.borderColor='#FF6B35'" onmouseout="this.style.borderColor='rgba(255,255,255,0.18)'">
@@ -4142,26 +4142,22 @@ function authBack(screen) {
   }
 }
 
-async function authChoisirForfait(forfait) {
+function lancerPaiement(forfait, montant) {
   document.getElementById('auth-plan-err').textContent = '';
-  _authShow('check');
-  try {
-    const r = await fetch('/initier-paiement', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ telephone: _authTel, forfait })
-    });
-    const data = await r.json();
-    if (data.url_paiement) {
-      window.location.href = data.url_paiement;
-    } else {
-      _authShow('plan');
-      document.getElementById('auth-plan-err').textContent = 'Paiement impossible. Vérifie ton numéro et réessaie.';
-    }
-  } catch (err) {
-    _authShow('plan');
-    document.getElementById('auth-plan-err').textContent = 'Connexion impossible. Réessaie.';
+  const telephone = _authTel;
+  if (!telephone) {
+    document.getElementById('auth-plan-err').textContent = 'Numéro de téléphone manquant.';
+    return;
   }
+  openKkiapayWidget({
+    amount:   montant,
+    key:      '6cf82df05a7a11f1badfd5dabf3a76c4',
+    sandbox:  true,
+    phone:    telephone,
+    data:     JSON.stringify({ telephone, forfait }),
+    callback: 'https://educi-qstl.onrender.com/verifier-acces',
+    theme:    '#e63946'
+  });
 }
 
 async function _pollVerif(tel, tries) {
@@ -5107,6 +5103,15 @@ function _adminRender(data) {
     '<th>Téléphone</th><th>Forfait</th><th>Expiration</th><th>Restant</th>' +
     '</tr></thead><tbody>' + rows + '</tbody></table>';
 }
+</script>
+<script src="https://cdn.kkiapay.me/k.js"></script>
+<script>
+  addSuccessListener(function(response) {
+    var gate = document.getElementById('auth-gate');
+    if (gate) gate.style.display = 'flex';
+    _authShow('check');
+    _pollVerif(_authTel, 0);
+  });
 </script>
 </body>
 </html>
