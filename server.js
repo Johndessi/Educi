@@ -1,4 +1,4 @@
-const express = require('express');
+ const express = require('express');
 const path = require('path');
 
 const app = express();
@@ -12,7 +12,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// ── Routes PWA statiques (avant tout le reste) ──────────────────────────────
+// --- Routes PWA statiques (avant tout le reste) ---
 app.get('/manifest.json', (req, res) => {
   res.setHeader('Content-Type', 'application/manifest+json');
   res.sendFile(path.join(__dirname, 'manifest.json'));
@@ -30,18 +30,18 @@ app.get('/.well-known/assetlinks.json', (req, res) => {
 });
 
 app.use('/icons', express.static(path.join(__dirname, 'icons'), { maxAge: '7d' }));
-// ────────────────────────────────────────────────────────────────────────────
+// ---------------------------------------------------
 
 app.use(express.static(__dirname));
 
-const SYSTEM_PROMPT = `Tu es le Professeur IA d'EduCI, application educative ivoirienne. Tu aides les eleves du secondaire ivoirien (6eme, 5eme, 4eme, 3eme, 2nde, 1ere, Terminale A, C, D) selon le programme officiel DPFC de Cote d'Ivoire.
+const SYSTEM_PROMPT = `Tu es le Professeur IA d'EduCI, application educative ivoirienne. Tu aides les eleves du secondaire (3ème, Terminale A, C et D) à comprendre leurs cours.
 
 REGLES IMPORTANTES :
 - Explique clairement et simplement selon le niveau de l'eleve
 - Utilise des exemples concrets tires du quotidien ivoirien
 - Pour les formules mathematiques, physique et chimie : ecris-les en texte simple et lisible
   Exemple : "F = m x a" au lieu de code LaTeX
-  Exemple : "AM/AB = AN/AC" pour les fractions geometriques
+  Exemple : "E = AN/AC" pour les fractions geometriques
   Exemple : "E = 1/2 x m x v2" pour l'energie cinetique
 - Pour la SVT : decris clairement les schemas et figures en texte
 - Encourage toujours l'eleve
@@ -74,7 +74,7 @@ app.post('/api/claude', async (req, res) => {
   }
 });
 
-// === ABONNEMENTS CINETPAY ===
+// === ABONNEMENTS KKIAPAY ===
 const ADMIN_KEY = process.env.ADMIN_KEY || 'EDUCI_ADMIN_2026';
 const abonnes = new Map();
 const FORFAITS = {
@@ -83,78 +83,44 @@ const FORFAITS = {
   annuel:      { prix: 4000, jours: 365, label: '1 an'    }
 };
 
-app.post('/initier-paiement', async (req, res) => {
-  if (!process.env.CINETPAY_API_KEY)
-    return res.status(503).json({ error: 'Paiement temporairement indisponible. Réessaie dans quelques heures.' });
-  const { telephone, forfait } = req.body;
-  if (!telephone || !FORFAITS[forfait])
-    return res.status(400).json({ error: 'Données invalides' });
-  const f = FORFAITS[forfait];
-  const transactionId = `EDUCI-${Date.now()}-${telephone.replace(/\D/g,'').slice(-4)}`;
+const KKIAPAY_PRIVATE_KEY = process.env.KKIAPAY_PRIVATE_KEY;
+const KKIAPAY_SECRET      = process.env.KKIAPAY_SECRET;
+
+// Webhook Kkiapay — appelé automatiquement après paiement réussi
+app.post('/webhook-kkiapay', async (req, res) => {
+  res.sendStatus(200);
+  const { transactionId } = req.body;
+  if (!transactionId) return;
   try {
-    const r = await fetch('https://api-checkout.cinetpay.com/v2/payment', {
+    const r = await fetch('https://api-sandbox.kkiapay.me/api/v1/transactions/status', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        apikey:                  process.env.CINETPAY_API_KEY,
-        site_id:                 process.env.CINETPAY_SITE_ID,
-        transaction_id:          transactionId,
-        amount:                  f.prix,
-        currency:                'XOF',
-        description:             `Abonnement EduCI — ${f.label}`,
-        notify_url:              'https://educi-qstl.onrender.com/webhook-cinetpay',
-        return_url:              `https://educi-qstl.onrender.com/?tel=${encodeURIComponent(telephone)}&statut=retour`,
-        customer_phone_number:   telephone,
-        customer_name:           'Eleve',
-        customer_surname:        'EduCI',
-        customer_email:          'eleve@educi.ci',
-        customer_address:        'Abidjan',
-        customer_city:           'Abidjan',
-        customer_country:        'CI',
-        customer_zip_code:       '00225',
-        metadata:                JSON.stringify({ telephone, forfait }),
-        lang:                    'fr',
-        channels:                'ALL'
-      })
+      headers: {
+        'Content-Type': 'application/json',
+        'x-private-key': KKIAPAY_PRIVATE_KEY,
+        'x-secret-key':  KKIAPAY_SECRET
+      },
+      body: JSON.stringify({ transactionId })
     });
     const data = await r.json();
-    if (data.code === '201') return res.json({ url_paiement: data.data.payment_url });
-    res.status(400).json({ error: 'Paiement impossible. Vérifie ton numéro et réessaie.' });
+    if (data.status === 'SUCCESS') {
+      let meta = {};
+      try { meta = JSON.parse(data.metadata || '{}'); } catch(_) {}
+      const { telephone, forfait } = meta;
+      if (telephone && FORFAITS[forfait]) {
+        const tel    = telephone.replace(/\D/g, '');
+        const expiry = new Date(Date.now() + FORFAITS[forfait].jours * 86400000);
+        abonnes.set(tel, { forfait, expiry });
+        console.log(`✅ Abonnement activé : ${tel} → ${forfait} → ${expiry.toISOString()}`);
+      }
+    }
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error('Webhook Kkiapay error:', err.message);
   }
 });
 
-app.post('/webhook-cinetpay', async (req, res) => {
-  res.sendStatus(200);
-  const { cpm_trans_id } = req.body;
-  if (!cpm_trans_id) return;
-  try {
-    const r = await fetch('https://api-checkout.cinetpay.com/v2/payment/check', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        apikey:         process.env.CINETPAY_API_KEY,
-        site_id:        process.env.CINETPAY_SITE_ID,
-        transaction_id: cpm_trans_id
-      })
-    });
-    const data = await r.json();
-    if (data.code === '00' && data.data?.cpm_result === '00') {
-      let meta = {};
-      try { meta = JSON.parse(data.data.cpm_custom || data.data.metadata || '{}'); } catch(_) {}
-      const { telephone, forfait } = meta;
-      if (telephone && FORFAITS[forfait]) {
-        const expiry = new Date(Date.now() + FORFAITS[forfait].jours * 86400000);
-        abonnes.set(telephone.replace(/\D/g,''), { forfait, expiry });
-        console.log(`✅ Abonnement activé : ${telephone} — ${forfait} → ${expiry.toISOString()}`);
-      }
-    }
-  } catch (err) { console.error('Webhook error:', err.message); }
-});
-
+// Vérification accès élève
 app.get('/verifier-acces', (req, res) => {
-  const tel = (req.query.tel || '').replace(/\D/g,'');
+  const tel = (req.query.tel || '').replace(/\D/g, '');
   if (!tel) return res.json({ acces: false });
   const sub = abonnes.get(tel);
   if (!sub) return res.json({ acces: false });
@@ -162,10 +128,11 @@ app.get('/verifier-acces', (req, res) => {
   res.json({ acces: true, forfait: sub.forfait, expiry: sub.expiry });
 });
 
+// Dashboard admin
 app.get('/api/admin/stats', (req, res) => {
   if (req.query.key !== ADMIN_KEY)
     return res.status(401).json({ error: 'Clé invalide' });
-  const now = new Date();
+  const now  = new Date();
   const list = [];
   let revenus = 0;
   for (const [tel, sub] of abonnes.entries()) {
@@ -192,7 +159,7 @@ setInterval(async () => {
     await fetch(PING_URL);
     console.log('Ping serveur OK');
   } catch(e) {
-    console.log('Ping échoué:', e.message);
+    console.error('Ping échoué:', e.message);
   }
 }, 10 * 60 * 1000);
 
