@@ -586,7 +586,7 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
       <div id="paywall-msg" style="font-size:13px;opacity:0.7;margin-top:4px">Accès illimité à toutes les fonctionnalités</div>
     </div>
     <!-- Mensuel -->
-    <div onclick="lancerPaiement('mensuel', 500)" style="width:100%;max-width:360px;cursor:pointer;
+    <div onclick="ouvrirPaiement('mensuel', 500)" style="width:100%;max-width:360px;cursor:pointer;
          background:rgba(255,255,255,0.09);border:1.5px solid rgba(255,255,255,0.18);
          border-radius:16px;padding:18px 20px;box-sizing:border-box;transition:border-color .2s"
          onmouseover="this.style.borderColor='#FF6B35'" onmouseout="this.style.borderColor='rgba(255,255,255,0.18)'">
@@ -599,7 +599,7 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
       </div>
     </div>
     <!-- Trimestriel -->
-    <div onclick="lancerPaiement('trimestriel', 1200)" style="width:100%;max-width:360px;cursor:pointer;
+    <div onclick="ouvrirPaiement('trimestriel', 1200)" style="width:100%;max-width:360px;cursor:pointer;
          background:rgba(255,107,53,0.15);border:1.5px solid #FF6B35;
          border-radius:16px;padding:18px 20px;box-sizing:border-box;position:relative">
       <div style="position:absolute;top:-10px;left:20px;background:#FF6B35;color:white;
@@ -613,7 +613,7 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
       </div>
     </div>
     <!-- Annuel -->
-    <div onclick="lancerPaiement('annuel', 4000)" style="width:100%;max-width:360px;cursor:pointer;
+    <div onclick="ouvrirPaiement('annuel', 4000)" style="width:100%;max-width:360px;cursor:pointer;
          background:rgba(255,255,255,0.09);border:1.5px solid rgba(255,255,255,0.18);
          border-radius:16px;padding:18px 20px;box-sizing:border-box"
          onmouseover="this.style.borderColor='#FF6B35'" onmouseout="this.style.borderColor='rgba(255,255,255,0.18)'">
@@ -4142,21 +4142,29 @@ function authBack(screen) {
   }
 }
 
-function lancerPaiement(forfait, montant) {
-  document.getElementById('auth-plan-err').textContent = '';
-  const telephone = _authTel;
-  if (!telephone) {
-    document.getElementById('auth-plan-err').textContent = 'Numéro de téléphone manquant.';
-    return;
-  }
-  openKkiapayWidget({
-    amount:   montant,
-    key:      '6cf82df05a7a11f1badfd5dabf3a76c4',
-    sandbox:  true,
-    phone:    telephone,
-    data:     JSON.stringify({ telephone, forfait }),
-    callback: 'https://educi-qstl.onrender.com/verifier-acces',
-    theme:    '#e63946'
+function ouvrirPaiement(forfait, montant) {
+  document.getElementById('modal-sms-forfait').textContent = forfait;
+  document.getElementById('modal-sms-montant').textContent = montant;
+  document.getElementById('modal-paiement-sms').style.display = 'flex';
+}
+function fermerModalSms() {
+  document.getElementById('modal-paiement-sms').style.display = 'none';
+}
+function confirmerPaiement() {
+  const tel = document.getElementById('sms-telephone').value.trim();
+  if (!tel) { alert('Entrez votre numéro Mobile Money'); return; }
+  fetch('/webhook-sms', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({
+      telephone: tel,
+      forfait: document.getElementById('modal-sms-forfait').textContent,
+      montant: document.getElementById('modal-sms-montant').textContent,
+      statut: 'en_attente'
+    })
+  }).then(() => {
+    fermerModalSms();
+    alert('Paiement en cours de vérification. Votre accès sera activé sous peu.');
   });
 }
 
@@ -5104,44 +5112,43 @@ function _adminRender(data) {
     '</tr></thead><tbody>' + rows + '</tbody></table>';
 }
 </script>
-<script src="https://cdn.kkiapay.me/k.js"></script>
-<script>
-  addSuccessListener(function(response) {
-    var gate = document.getElementById('auth-gate');
-    if (gate) gate.style.display = 'flex';
-    _authShow('check');
-    _pollVerif(_authTel, 0);
-  });
-</script>
-<!-- Modal Paiement Manuel -->
-<div id="modal-paiement" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:9999;overflow-y:auto;">
-<div style="background:#fff;margin:20px auto;padding:24px;max-width:420px;border-radius:16px;">
-<h2 style="color:#1a73e8;margin-bottom:16px;">💳 Activer mon abonnement</h2>
-<p style="margin-bottom:12px;">Envoie le montant de ton forfait directement sur ce numéro :</p>
-<div style="background:#f0f7ff;border-radius:12px;padding:16px;text-align:center;margin-bottom:16px;">
-<div style="font-size:28px;font-weight:bold;color:#1a73e8;">📱 07 89 81 62 54</div>
-<div style="color:#555;margin-top:8px;">Wave • Orange Money • MTN • Moov</div>
+<!-- MODAL PAIEMENT SMS -->
+<div id="modal-paiement-sms" style="display:none;position:fixed;inset:0;z-index:99999;
+     background:rgba(0,0,0,0.85);align-items:center;justify-content:center;padding:20px">
+  <div style="background:#161B22;border:1px solid #30363D;border-radius:20px;
+              padding:28px 24px;width:100%;max-width:380px;box-sizing:border-box">
+    <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:800;
+                color:white;margin-bottom:6px">💳 Abonnement EduCI</div>
+    <div style="font-size:13px;color:#8B949E;margin-bottom:20px">
+      Forfait : <strong id="modal-sms-forfait" style="color:#F77F00"></strong>
+      &nbsp;—&nbsp;<strong id="modal-sms-montant" style="color:#F77F00"></strong> F CFA
+    </div>
+    <div style="font-size:13px;color:#ccc;margin-bottom:8px">
+      1. Envoyez le montant en Mobile Money à :
+    </div>
+    <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;
+                color:#F77F00;text-align:center;margin-bottom:20px;letter-spacing:1px">
+      +225 07 89 81 62 54
+    </div>
+    <div style="font-size:13px;color:#ccc;margin-bottom:8px">
+      2. Entrez votre numéro ci-dessous et cliquez <strong>J'ai payé</strong>
+    </div>
+    <input id="sms-telephone" type="tel" placeholder="+225 07 00 00 00 00"
+      style="width:100%;padding:13px 16px;border-radius:12px;border:1.5px solid #30363D;
+             background:#0D1117;color:white;font-size:15px;box-sizing:border-box;
+             outline:none;margin-bottom:14px">
+    <button onclick="confirmerPaiement()"
+      style="width:100%;padding:14px;border-radius:14px;background:#F77F00;border:none;
+             color:white;font-family:'Syne',sans-serif;font-size:15px;font-weight:700;
+             cursor:pointer;margin-bottom:10px">
+      ✅ J'ai payé
+    </button>
+    <button onclick="fermerModalSms()"
+      style="width:100%;padding:12px;border-radius:14px;background:transparent;
+             border:1px solid #30363D;color:#8B949E;font-size:14px;cursor:pointer">
+      Annuler
+    </button>
+  </div>
 </div>
-<div style="background:#fff8e1;border-radius:12px;padding:16px;margin-bottom:16px;">
-<b>Choisir ton forfait :</b><br><br>
-<div onclick="selectForfait(500,'mensuel')" id="f500" style="cursor:pointer;padding:10px;border:2px solid #ddd;border-radius:8px;margin-bottom:8px;">🗓 1 mois — <b>500 FCFA</b></div>
-<div onclick="selectForfait(1200,'trimestriel')" id="f1200" style="cursor:pointer;padding:10px;border:2px solid #ddd;border-radius:8px;margin-bottom:8px;">📅 3 mois — <b>1 200 FCFA</b></div>
-<div onclick="selectForfait(4000,'annuel')" id="f4000" style="cursor:pointer;padding:10px;border:2px solid #ddd;border-radius:8px;">🎯 1 an — <b>4 000 FCFA</b></div>
-</div>
-<div style="background:#e8f5e9;border-radius:12px;padding:12px;margin-bottom:16px;">
-⚠️ <b>Important :</b> Écris ton numéro de téléphone dans le motif du paiement.<br>Ex: <i>0789816254 EduCI</i>
-</div>
-<button onclick="document.getElementById('modal-paiement').style.display='none'" style="width:100%;padding:14px;background:#1a73e8;color:#fff;border:none;border-radius:10px;font-size:16px;cursor:pointer;">✅ J'ai compris</button>
-</div>
-</div>
-<script>
-function selectForfait(montant, nom) {
-  document.querySelectorAll('#f500,#f1200,#f4000').forEach(el => el.style.border='2px solid #ddd');
-  document.getElementById('f'+montant).style.border='2px solid #1a73e8';
-}
-function ouvrirPaiement() {
-  document.getElementById('modal-paiement').style.display='block';
-}
-</script>
 </body>
 </html>
