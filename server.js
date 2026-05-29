@@ -121,26 +121,47 @@ app.post('/webhook-kkiapay', async (req, res) => {
 const SMS_SECRET = process.env.SMS_WEBHOOK_SECRET || 'EDUCI_SMS_2026';
 
 app.post('/webhook-sms', (req, res) => {
-  const { secret, montant, telephone_eleve } = req.body;
+  const body = req.body;
 
-  if (secret !== SMS_SECRET)
-    return res.status(401).json({ error: 'Secret invalide' });
+  let telephone = null;
+  let montantNum = 0;
 
-  if (!telephone_eleve || !montant)
-    return res.status(400).json({ error: 'Donnees manquantes' });
+  // Cas 1 : body structuré avec telephone + forfait + montant
+  if (body.telephone && body.montant) {
+    telephone = body.telephone;
+    montantNum = parseInt(String(body.montant).replace(/\D/g, '')) || 0;
+  }
+  // Cas 2 : SMS brut Orange Money / Wave dans body.texte ou body.message
+  else if (body.texte || body.message) {
+    const sms = body.texte || body.message;
+    console.log('📩 SMS brut reçu :', sms);
 
-  const montantStr = String(montant);
-const match = montantStr.match(/(\d+)/);
-const montantNum = match ? parseInt(match[1]) : 0;
-  let forfait = null;
-  if (montantNum >= 4000)      forfait = 'annuel';
-  else if (montantNum >= 1200) forfait = 'trimestriel';
-  else if (montantNum >= 500)  forfait = 'mensuel';
+    // Extraire le montant (ex: "500 FCFA", "1 200 F CFA", "4000F")
+    const montantMatch = sms.match(/(\d[\d\s]*)\s*F(?:\s?CFA)?(?:\s|$)/i);
+    montantNum = montantMatch ? parseInt(montantMatch[1].replace(/\s/g, '')) : 0;
 
-  if (!forfait)
-    return res.status(400).json({ error: 'Montant non reconnu' });
+    // Extraire le numéro ivoirien (07xxxxxxxx / 05xxxxxxxx / 01xxxxxxxx)
+    const telMatch = sms.match(/(?:225)?([05701]\d{8})/);
+    telephone = telMatch ? telMatch[1] : null;
+  }
+  else {
+    return res.status(400).json({ error: 'Données manquantes : telephone+montant ou texte SMS requis' });
+  }
 
-  const tel    = telephone_eleve.replace(/\D/g, '');
+  if (!telephone) {
+    return res.status(400).json({ error: 'Numéro de téléphone introuvable' });
+  }
+
+  // Déterminer le forfait selon le montant exact
+  const MONTANTS = { 500: 'mensuel', 1200: 'trimestriel', 4000: 'annuel' };
+  const forfait = MONTANTS[montantNum] || null;
+
+  if (!forfait) {
+    console.warn(`⚠️ Montant non reconnu : ${montantNum} FCFA — SMS:`, body.texte || body.message || body.montant);
+    return res.status(400).json({ error: 'Montant non reconnu', montant_recu: montantNum });
+  }
+
+  const tel    = String(telephone).replace(/\D/g, '');
   const expiry = new Date(Date.now() + FORFAITS[forfait].jours * 86400000);
   abonnes.set(tel, { forfait, expiry, source: 'sms' });
 
