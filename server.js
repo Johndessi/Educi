@@ -129,7 +129,9 @@ app.post('/webhook-sms', (req, res) => {
   if (!telephone_eleve || !montant)
     return res.status(400).json({ error: 'Donnees manquantes' });
 
-  const montantNum = parseInt(montant);
+  const montantStr = String(montant);
+const match = montantStr.match(/(\d+)/);
+const montantNum = match ? parseInt(match[1]) : 0;
   let forfait = null;
   if (montantNum >= 4000)      forfait = 'annuel';
   else if (montantNum >= 1200) forfait = 'trimestriel';
