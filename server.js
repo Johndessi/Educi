@@ -117,7 +117,35 @@ app.post('/webhook-kkiapay', async (req, res) => {
     console.error('Webhook Kkiapay error:', err.message);
   }
 });
+// === PAIEMENT MANUEL SMS (Make.com) ===
+const SMS_SECRET = process.env.SMS_WEBHOOK_SECRET || 'EDUCI_SMS_2026';
 
+app.post('/webhook-sms', (req, res) => {
+  const { secret, montant, telephone_eleve } = req.body;
+
+  if (secret !== SMS_SECRET)
+    return res.status(401).json({ error: 'Secret invalide' });
+
+  if (!telephone_eleve || !montant)
+    return res.status(400).json({ error: 'Donnees manquantes' });
+
+  const montantNum = parseInt(montant);
+  let forfait = null;
+  if (montantNum >= 4000)      forfait = 'annuel';
+  else if (montantNum >= 1200) forfait = 'trimestriel';
+  else if (montantNum >= 500)  forfait = 'mensuel';
+
+  if (!forfait)
+    return res.status(400).json({ error: 'Montant non reconnu' });
+
+  const tel    = telephone_eleve.replace(/\D/g, '');
+  const expiry = new Date(Date.now() + FORFAITS[forfait].jours * 86400000);
+  abonnes.set(tel, { forfait, expiry, source: 'sms' });
+
+  console.log(`✅ SMS Paiement : ${tel} → ${forfait} → ${expiry.toISOString()}`);
+  res.json({ success: true, forfait, expiry });
+});
+// ==========================================
 // Vérification accès élève
 app.get('/verifier-acces', (req, res) => {
   const tel = (req.query.tel || '').replace(/\D/g, '');
