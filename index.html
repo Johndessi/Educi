@@ -770,6 +770,18 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
   <!-- PAGE: PLANNING -->
   <div class="page" id="page-planning">
     <div class="section-title">Planning Semaine</div>
+    <div style="padding:0 16px 8px">
+      <button id="btn-gen-planning" onclick="genPlanning()"
+        style="width:100%;padding:15px;border-radius:16px;
+               background:linear-gradient(135deg,var(--orange),#ff6b00);
+               border:none;color:white;font-family:'Syne',sans-serif;
+               font-size:15px;font-weight:700;cursor:pointer;margin-bottom:12px">
+        🗓️ Générer mon planning
+      </button>
+      <div id="planning-loading" style="display:none;color:var(--muted);font-size:14px;
+           text-align:center;padding:12px">⏳ Génération en cours...</div>
+      <div id="planning-ia-result"></div>
+    </div>
     <div class="planning-grid" id="planning-grid"></div>
   </div>
 
@@ -4901,7 +4913,9 @@ async function askQuestion() {
 // === PLANNING ===
 function renderPlanning(planning) {
   if (!planning || !planning.length) {
-    document.getElementById('planning-grid').innerHTML = '<div style="padding:20px;color:var(--muted)">Aucun planning disponible.</div>';
+    document.getElementById('planning-grid').innerHTML =
+      '<div style="padding:4px 16px 20px;color:var(--muted);font-size:13px;text-align:center">' +
+      'Aucun planning disponible. Clique sur "Générer mon planning" pour en créer un.</div>';
     return;
   }
   const grid = document.getElementById('planning-grid');
