@@ -122,6 +122,7 @@ const SMS_SECRET = process.env.SMS_WEBHOOK_SECRET || 'EDUCI_SMS_2026';
 
 app.post('/webhook-sms', (req, res) => {
   const body = req.body;
+  console.log('📦 Body reçu complet :', JSON.stringify(body));
 
   let telephone = null;
   let montantNum = 0;
