@@ -4213,6 +4213,19 @@ async function startApp() {
   }, 10000);
 
   const params = new URLSearchParams(window.location.search);
+
+  // Mode démo : ?demo=SECKA2026 → accès complet 24h sans paiement
+  if (params.get('demo') === 'SECKA2026') {
+    const expiry = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
+    localStorage.setItem('educi_acces', JSON.stringify({ tel: 'demo', forfait: 'annuel', expiry }));
+    localStorage.setItem('educi_tel', 'demo');
+    window.history.replaceState({}, '', '/');
+    debloquerApp();
+    if (currentClasse) applyClasse(currentClasse);
+    initCorrection();
+    return;
+  }
+
   if (params.get('statut') === 'retour') {
     const tel = params.get('tel') || '';
     _authTel = tel;
