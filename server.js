@@ -128,9 +128,17 @@ app.post('/webhook-sms', (req, res) => {
   let montantNum = 0;
 
   // Cas 1 : body structuré avec telephone + forfait + montant
-  if (body.telephone && body.montant) {
-    telephone = body.telephone;
-    montantNum = parseInt(String(body.montant).replace(/\D/g, '')) || 0;
+  if ((body.telephone || body.telephone_eleve) && body.montant) {
+    telephone = body.telephone_eleve || body.telephone;
+    const montantStr = String(body.montant);
+    // Si montant ressemble à un SMS brut plutôt qu'un nombre, extraire avec regex
+    if (/[A-Za-z]/.test(montantStr)) {
+      console.log('📩 montant traité comme SMS brut :', montantStr);
+      const montantMatch = montantStr.match(/(\d[\d\s]*)\s*F(?:\s?CFA)?(?:\s|$)/i);
+      montantNum = montantMatch ? parseInt(montantMatch[1].replace(/\s/g, '')) : 0;
+    } else {
+      montantNum = parseInt(montantStr.replace(/\D/g, '')) || 0;
+    }
   }
   // Cas 2 : SMS brut Orange Money / Wave dans body.texte ou body.message
   else if (body.texte || body.message) {
