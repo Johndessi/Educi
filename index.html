@@ -4067,14 +4067,16 @@ function debloquerApp() {
 }
 function _checkAcces() {
   try {
-    const saved = JSON.parse(localStorage.getItem('educi_acces') || 'null');
+    const raw = sessionStorage.getItem('educi_acces') || localStorage.getItem('educi_acces') || 'null';
+    const saved = JSON.parse(raw);
     return !!(saved && saved.expiry && new Date(saved.expiry) > new Date());
   } catch(_) { return false; }
 }
 
 function lireCache() {
   try {
-    const saved = JSON.parse(localStorage.getItem('educi_acces') || 'null');
+    const raw = sessionStorage.getItem('educi_acces') || localStorage.getItem('educi_acces') || 'null';
+    const saved = JSON.parse(raw);
     return (saved && saved.expiry) ? saved : null;
   } catch(_) { return null; }
 }
@@ -4217,8 +4219,8 @@ async function startApp() {
   // Mode démo : ?demo=SECKA2026 → accès complet 24h sans paiement
   if (params.get('demo') === 'SECKA2026') {
     const expiry = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
-    localStorage.setItem('educi_acces', JSON.stringify({ tel: 'demo', forfait: 'annuel', expiry }));
-    localStorage.setItem('educi_tel', 'demo');
+    sessionStorage.setItem('educi_acces', JSON.stringify({ tel: 'demo', forfait: 'annuel', expiry }));
+    sessionStorage.setItem('educi_tel', 'demo');
     window.history.replaceState({}, '', '/');
     debloquerApp();
     if (currentClasse) applyClasse(currentClasse);
