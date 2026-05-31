@@ -74,6 +74,47 @@ app.post('/api/claude', async (req, res) => {
   }
 });
 
+const SUPPORT_PROMPT = `Tu es le professeur IA d'EduCI, plateforme éducative ivoirienne. Tu aides les élèves du secondaire en Côte d'Ivoire suivant les programmes DPFC officiels. Tu réponds en français, de façon claire, simple et encourageante. Tu t'adaptes au niveau de l'élève selon sa classe.`;
+
+app.post('/support', async (req, res) => {
+  const { telephone, classe, matiere, question } = req.body;
+  if (!question) return res.status(400).json({ error: 'Le champ question est requis.' });
+
+  const userMessage = [
+    classe   ? `Classe : ${classe}`   : null,
+    matiere  ? `Matière : ${matiere}` : null,
+    `Question : ${question}`
+  ].filter(Boolean).join('\n');
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': process.env.ANTHROPIC_API_KEY,
+        'anthropic-version': '2023-06-01'
+      },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 1024,
+        system: SUPPORT_PROMPT,
+        messages: [{ role: 'user', content: userMessage }]
+      })
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      console.error('Erreur /support API Claude:', data);
+      return res.status(502).json({ error: 'Erreur lors de la réponse IA.' });
+    }
+    const reponse = data.content?.[0]?.text || '';
+    console.log(`📚 Support [${telephone || 'inconnu'}] ${classe || ''} ${matiere || ''} → ${reponse.slice(0,60)}…`);
+    res.json({ reponse });
+  } catch (err) {
+    console.error('Erreur /support:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // === ABONNEMENTS KKIAPAY ===
 const ADMIN_KEY = process.env.ADMIN_KEY || 'EDUCI_ADMIN_2026';
 const abonnes = new Map();
