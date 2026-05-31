@@ -5276,7 +5276,7 @@ async function envoyerAide() {
     var data = await r.json();
     document.getElementById('aide-loading').style.display = 'none';
     var rep = document.getElementById('aide-reponse');
-    rep.textContent = data.reponse || data.error || 'Aucune réponse.';
+    rep.innerHTML = data.reponse ? marked.parse(data.reponse) : (data.error || 'Aucune réponse.');
     rep.style.display = 'block';
   } catch(e) {
     document.getElementById('aide-loading').style.display = 'none';

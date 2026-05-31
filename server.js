@@ -158,6 +158,14 @@ app.post('/webhook-kkiapay', async (req, res) => {
     console.error('Webhook Kkiapay error:', err.message);
   }
 });
+// Normalise un numéro ivoirien : supprime +, espaces, tirets et le préfixe 225
+// → 0789816254 / +2250789816254 / 2250789816254 donnent tous "0789816254"
+function normaliserTel(t) {
+  let n = String(t).replace(/[\s\-+]/g, '');
+  if (n.startsWith('225')) n = n.slice(3);
+  return n;
+}
+
 // === PAIEMENT MANUEL SMS (Make.com) ===
 const SMS_SECRET = process.env.SMS_WEBHOOK_SECRET || 'EDUCI_SMS_2026';
 
@@ -211,7 +219,7 @@ app.post('/webhook-sms', (req, res) => {
     return res.status(400).json({ error: 'Montant non reconnu', montant_recu: montantNum });
   }
 
-  const tel    = String(telephone).replace(/\D/g, '');
+  const tel    = normaliserTel(telephone);
   const expiry = new Date(Date.now() + FORFAITS[forfait].jours * 86400000);
   abonnes.set(tel, { forfait, expiry, source: 'sms' });
 
@@ -221,7 +229,7 @@ app.post('/webhook-sms', (req, res) => {
 // ==========================================
 // Vérification accès élève
 app.get('/verifier-acces', (req, res) => {
-  const tel = (req.query.tel || '').replace(/\D/g, '');
+  const tel = normaliserTel(req.query.tel || '');
   if (!tel) return res.json({ acces: false });
   const sub = abonnes.get(tel);
   if (!sub) return res.json({ acces: false });
