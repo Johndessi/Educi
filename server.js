@@ -202,13 +202,16 @@ app.post('/webhook-sms', (req, res) => {
   const body = req.body;
   console.log('📦 Body reçu complet :', JSON.stringify(body));
 
+  // Nettoyage du champ montant : supprime sauts de ligne et caractères de contrôle
+  const montantBrut = (body.montant || '').replace(/[\r\n\t]/g, ' ').trim();
+
   let telephone = null;
   let montantNum = 0;
 
   // Cas 1 : body structuré avec telephone + forfait + montant
-  if ((body.telephone || body.telephone_eleve) && body.montant) {
+  if ((body.telephone || body.telephone_eleve) && montantBrut) {
     telephone = body.telephone_eleve || body.telephone;
-    const montantStr = String(body.montant);
+    const montantStr = String(montantBrut);
     // Si montant ressemble à un SMS brut plutôt qu'un nombre, extraire avec regex
     if (/[A-Za-z]/.test(montantStr)) {
       console.log('📩 montant traité comme SMS brut :', montantStr);
@@ -246,7 +249,7 @@ app.post('/webhook-sms', (req, res) => {
   else if (montantNum >= 4000 && montantNum <= 4099) forfait = 'annuel';
 
   if (!forfait) {
-    console.warn(`⚠️ Montant non reconnu : ${montantNum} FCFA — SMS:`, body.texte || body.message || body.montant);
+    console.warn(`⚠️ Montant non reconnu : ${montantNum} FCFA — SMS:`, body.texte || body.message || montantBrut);
     return res.status(400).json({ error: 'Montant non reconnu', montant_recu: montantNum });
   }
 
