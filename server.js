@@ -1,5 +1,6 @@
  const express = require('express');
 const path = require('path');
+const fs   = require('fs');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -117,7 +118,33 @@ app.post('/support', async (req, res) => {
 
 // === ABONNEMENTS KKIAPAY ===
 const ADMIN_KEY = process.env.ADMIN_KEY || 'EDUCI_ADMIN_2026';
-const abonnes = new Map();
+
+// Persistance JSON
+const DB_PATH = path.join(__dirname, 'abonnements.json');
+
+function chargerAbonnes() {
+  try {
+    if (!fs.existsSync(DB_PATH)) return new Map();
+    const data = JSON.parse(fs.readFileSync(DB_PATH, 'utf8'));
+    return new Map(Object.entries(data));
+  } catch (e) {
+    console.error('Erreur lecture abonnements.json:', e.message);
+    return new Map();
+  }
+}
+
+function sauvegarder() {
+  try {
+    const obj = {};
+    for (const [tel, sub] of abonnes.entries()) obj[tel] = sub;
+    fs.writeFileSync(DB_PATH, JSON.stringify(obj, null, 2));
+  } catch (e) {
+    console.error('Erreur écriture abonnements.json:', e.message);
+  }
+}
+
+const abonnes = chargerAbonnes();
+console.log(`📂 ${abonnes.size} abonnement(s) chargé(s) depuis abonnements.json`);
 const FORFAITS = {
   mensuel:     { prix: 500,  jours: 30,  label: '1 mois'  },
   trimestriel: { prix: 1200, jours: 90,  label: '3 mois'  },
@@ -151,6 +178,7 @@ app.post('/webhook-kkiapay', async (req, res) => {
         const tel    = telephone.replace(/\D/g, '');
         const expiry = new Date(Date.now() + FORFAITS[forfait].jours * 86400000);
         abonnes.set(tel, { forfait, expiry });
+        sauvegarder();
         console.log(`✅ Abonnement activé : ${tel} → ${forfait} → ${expiry.toISOString()}`);
       }
     }
@@ -225,6 +253,7 @@ app.post('/webhook-sms', (req, res) => {
   const tel    = normaliserTel(telephone);
   const expiry = new Date(Date.now() + FORFAITS[forfait].jours * 86400000);
   abonnes.set(tel, { forfait, expiry, source: 'sms' });
+  sauvegarder();
 
   console.log(`✅ SMS Paiement : ${tel} → ${forfait} → ${expiry.toISOString()}`);
   res.json({ success: true, forfait, expiry });
@@ -236,7 +265,7 @@ app.get('/verifier-acces', (req, res) => {
   if (!tel) return res.json({ acces: false });
   const sub = abonnes.get(tel);
   if (!sub) return res.json({ acces: false });
-  if (new Date() > new Date(sub.expiry)) { abonnes.delete(tel); return res.json({ acces: false }); }
+  if (new Date() > new Date(sub.expiry)) { abonnes.delete(tel); sauvegarder(); return res.json({ acces: false }); }
   res.json({ acces: true, forfait: sub.forfait, expiry: sub.expiry });
 });
 
@@ -247,12 +276,14 @@ app.get('/api/admin/stats', (req, res) => {
   const now  = new Date();
   const list = [];
   let revenus = 0;
+  let purge = false;
   for (const [tel, sub] of abonnes.entries()) {
-    if (new Date(sub.expiry) < now) { abonnes.delete(tel); continue; }
+    if (new Date(sub.expiry) < now) { abonnes.delete(tel); purge = true; continue; }
     const jours_restants = Math.ceil((new Date(sub.expiry) - now) / 86400000);
     list.push({ telephone: tel, forfait: sub.forfait, expiry: sub.expiry, jours_restants });
     revenus += FORFAITS[sub.forfait]?.prix || 0;
   }
+  if (purge) sauvegarder();
   res.json({
     abonnes: list,
     total_abonnes: list.length,
