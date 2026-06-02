@@ -210,9 +210,11 @@ app.post('/webhook-sms', (req, res) => {
     return res.status(400).json({ error: 'Numéro de téléphone introuvable' });
   }
 
-  // Déterminer le forfait selon le montant exact
-  const MONTANTS = { 500: 'mensuel', 1200: 'trimestriel', 4000: 'annuel' };
-  const forfait = MONTANTS[montantNum] || null;
+  // Déterminer le forfait selon le montant (plage pour absorber les frais)
+  let forfait = null;
+  if      (montantNum >= 500  && montantNum <= 599)  forfait = 'mensuel';
+  else if (montantNum >= 1200 && montantNum <= 1299) forfait = 'trimestriel';
+  else if (montantNum >= 4000 && montantNum <= 4099) forfait = 'annuel';
 
   if (!forfait) {
     console.warn(`⚠️ Montant non reconnu : ${montantNum} FCFA — SMS:`, body.texte || body.message || body.montant);
