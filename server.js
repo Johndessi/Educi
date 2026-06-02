@@ -159,7 +159,7 @@ app.post('/webhook-kkiapay', async (req, res) => {
   }
 });
 // Normalise un numéro ivoirien : supprime +, espaces, tirets et le préfixe 225
-// → 0789816254 / +2250789816254 / 2250789816254 donnent tous "0789816254"
+// → 0712243627 / +2250712243627 / 2250712243627 donnent tous "0712243627"
 function normaliserTel(t) {
   let n = String(t).replace(/[\s\-+]/g, '');
   if (n.startsWith('225')) n = n.slice(3);
