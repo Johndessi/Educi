@@ -170,6 +170,7 @@ function normaliserTel(t) {
 const SMS_SECRET = process.env.SMS_WEBHOOK_SECRET || 'EDUCI_SMS_2026';
 
 app.post('/webhook-sms', (req, res) => {
+  console.log('WEBHOOK RECU:', JSON.stringify(req.body));
   const body = req.body;
   console.log('📦 Body reçu complet :', JSON.stringify(body));
 
