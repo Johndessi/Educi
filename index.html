@@ -780,7 +780,15 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
       </button>
       <div id="planning-loading" style="display:none;color:var(--muted);font-size:14px;
            text-align:center;padding:12px">⏳ Génération en cours...</div>
-      <div id="planning-ia-result"></div>
+      <div id="planning-ia-result" style="display:none;margin-top:8px">
+        <div id="planning-ia-header" style="font-family:'Syne',sans-serif;font-size:16px;
+             font-weight:800;color:var(--orange);margin-bottom:12px"></div>
+        <div id="planning-ia-text" style="font-size:14px;line-height:1.7;color:var(--text)"></div>
+        <button onclick="dlPlanningPDF()" style="margin-top:12px;padding:10px 18px;
+               border-radius:12px;background:transparent;border:1px solid var(--orange);
+               color:var(--orange);font-size:13px;font-family:'Syne',sans-serif;
+               font-weight:700;cursor:pointer">⬇️ Télécharger PDF</button>
+      </div>
     </div>
     <div class="planning-grid" id="planning-grid"></div>
   </div>
@@ -4985,9 +4993,12 @@ async function genPlanning() {
   const cache = lireCache();
   if (!cache || new Date(cache.expiry) <= new Date()) { afficherAuthGate('planning'); return; }
   const classe = currentClasse || 'cette classe';
-  document.getElementById('planning-loading').style.display = 'block';
-  document.getElementById('planning-ia-result').style.display = 'none';
-  document.getElementById('btn-gen-planning').disabled = true;
+  const elLoading = document.getElementById('planning-loading');
+  const elResult  = document.getElementById('planning-ia-result');
+  const elBtn     = document.getElementById('btn-gen-planning');
+  if (elLoading) elLoading.style.display = 'block';
+  if (elResult)  elResult.style.display  = 'none';
+  if (elBtn)     elBtn.disabled = true;
   try {
     const resp = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -5010,20 +5021,24 @@ Format : tableau jour par jour clair et lisible`,
     });
     const data = await resp.json();
     const text = data.content?.[0]?.text || 'Erreur lors de la génération.';
-    document.getElementById('planning-ia-header').textContent = `Planning IA — ${classe}`;
-    document.getElementById('planning-ia-text').innerHTML = marked.parse(text);
-    document.getElementById('planning-ia-result').style.display = 'block';
+    const elHeader = document.getElementById('planning-ia-header');
+    const elText   = document.getElementById('planning-ia-text');
+    if (elHeader) elHeader.textContent = `Planning IA — ${classe}`;
+    if (elText)   elText.innerHTML = marked.parse(text);
+    if (elResult) elResult.style.display = 'block';
   } catch (err) {
     alert('Erreur : ' + err.message);
   } finally {
-    document.getElementById('planning-loading').style.display = 'none';
-    document.getElementById('btn-gen-planning').disabled = false;
+    if (elLoading) elLoading.style.display = 'none';
+    if (elBtn)     elBtn.disabled = false;
   }
 }
 
 function dlPlanningPDF() {
-  const header = document.getElementById('planning-ia-header').textContent || 'Planning de révision';
-  const html   = document.getElementById('planning-ia-text').innerHTML    || '';
+  const elHeader = document.getElementById('planning-ia-header');
+  const elText   = document.getElementById('planning-ia-text');
+  const header   = elHeader ? elHeader.textContent || 'Planning de révision' : 'Planning de révision';
+  const html     = elText   ? elText.innerHTML     || ''                     : '';
   _openPrintWindow(`EduCI — ${header}`, "Programme DPFC Côte d'Ivoire", html);
 }
 
