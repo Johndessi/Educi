@@ -6,6 +6,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use((req, res, next) => {
   res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
@@ -224,8 +225,15 @@ app.post('/webhook-sms', (req, res) => {
     return mTel ? mTel[1] : null;
   }
 
+  // Cas 0 : SMS Forwarder (x-www-form-urlencoded) — champs msg + from
+  if (body.msg && body.from) {
+    const sms = String(body.msg).replace(/[\r\n\t]/g, ' ').trim();
+    console.log('📲 SMS Forwarder reçu — from:', body.from, '| msg:', sms);
+    telephone  = String(body.from).replace(/[\s\-+]/g, '');
+    montantNum = extraireMontant(sms);
+  }
   // Cas 1 : body structuré avec telephone + montant
-  if ((body.telephone || body.telephone_eleve) && montantBrut) {
+  else if ((body.telephone || body.telephone_eleve) && montantBrut) {
     telephone = body.telephone_eleve || body.telephone;
     const montantStr = String(montantBrut);
     if (/[A-Za-z]/.test(montantStr)) {
@@ -236,7 +244,7 @@ app.post('/webhook-sms', (req, res) => {
       montantNum = parseInt(montantStr.replace(/\D/g, '')) || 0;
     }
   }
-  // Cas 2 : SMS brut Orange Money / Wave dans body.texte ou body.message
+  // Cas 2 : SMS brut dans body.texte ou body.message
   else if (body.texte || body.message) {
     const sms = body.texte || body.message;
     console.log('📩 SMS brut reçu :', sms);
