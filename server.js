@@ -199,7 +199,7 @@ const SMS_SECRET = process.env.SMS_WEBHOOK_SECRET || 'EDUCI_SMS_2026';
 
 app.post('/webhook-sms', (req, res) => {
   console.log('WEBHOOK RECU:', JSON.stringify(req.body));
-  const body = req.body;
+  const body = (typeof req.body === 'object' && req.body !== null) ? req.body : {};
   console.log('📦 Body reçu complet :', JSON.stringify(body));
 
   // Nettoyage du champ montant : supprime sauts de ligne et caractères de contrôle
@@ -208,15 +208,30 @@ app.post('/webhook-sms', (req, res) => {
   let telephone = null;
   let montantNum = 0;
 
-  // Cas 1 : body structuré avec telephone + forfait + montant
+  // Extrait le montant depuis une chaîne SMS (essaie FCFA d'abord, puis F CFA)
+  function extraireMontant(str) {
+    const m1 = str.match(/(\d+(?:\.\d+)?)\s*FCFA/i);
+    if (m1) return parseInt(m1[1]);
+    const m2 = str.match(/(\d[\d\s]*)\s*F(?:\s?CFA)?(?:\s|$)/i);
+    return m2 ? parseInt(m2[1].replace(/\s/g, '')) : 0;
+  }
+
+  // Extrait le numéro expéditeur depuis un SMS ("du 07 12 24..." ou format ivoirien)
+  function extraireTel(str) {
+    const mDu  = str.match(/du\s+([\d\s]+)/i);
+    if (mDu) return mDu[1].replace(/\s/g, '');
+    const mTel = str.match(/(?:225)?([05701]\d{8})/);
+    return mTel ? mTel[1] : null;
+  }
+
+  // Cas 1 : body structuré avec telephone + montant
   if ((body.telephone || body.telephone_eleve) && montantBrut) {
     telephone = body.telephone_eleve || body.telephone;
     const montantStr = String(montantBrut);
-    // Si montant ressemble à un SMS brut plutôt qu'un nombre, extraire avec regex
     if (/[A-Za-z]/.test(montantStr)) {
+      // montant contient un SMS complet
       console.log('📩 montant traité comme SMS brut :', montantStr);
-      const montantMatch = montantStr.match(/(\d[\d\s]*)\s*F(?:\s?CFA)?(?:\s|$)/i);
-      montantNum = montantMatch ? parseInt(montantMatch[1].replace(/\s/g, '')) : 0;
+      montantNum = extraireMontant(montantStr);
     } else {
       montantNum = parseInt(montantStr.replace(/\D/g, '')) || 0;
     }
@@ -225,14 +240,8 @@ app.post('/webhook-sms', (req, res) => {
   else if (body.texte || body.message) {
     const sms = body.texte || body.message;
     console.log('📩 SMS brut reçu :', sms);
-
-    // Extraire le montant (ex: "500 FCFA", "1 200 F CFA", "4000F")
-    const montantMatch = sms.match(/(\d[\d\s]*)\s*F(?:\s?CFA)?(?:\s|$)/i);
-    montantNum = montantMatch ? parseInt(montantMatch[1].replace(/\s/g, '')) : 0;
-
-    // Extraire le numéro ivoirien (07xxxxxxxx / 05xxxxxxxx / 01xxxxxxxx)
-    const telMatch = sms.match(/(?:225)?([05701]\d{8})/);
-    telephone = telMatch ? telMatch[1] : null;
+    montantNum = extraireMontant(sms);
+    telephone  = extraireTel(sms);
   }
   else {
     return res.status(400).json({ error: 'Données manquantes : telephone+montant ou texte SMS requis' });
