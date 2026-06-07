@@ -36,7 +36,7 @@ app.use('/icons', express.static(path.join(__dirname, 'icons'), { maxAge: '7d' }
 
 app.use(express.static(__dirname));
 
-const SYSTEM_PROMPT = `Tu es le Professeur IA d'EduCI, application educative ivoirienne. Tu aides les eleves du secondaire (3ème, Terminale A, C et D) à comprendre leurs cours.
+const SYSTEM_PROMPT = `Tu es le Professeur d'EduCI, application educative ivoirienne. Tu aides les eleves du secondaire (3ème, Terminale A, C et D) à comprendre leurs cours.
 
 REGLES IMPORTANTES :
 - Explique clairement et simplement selon le niveau de l'eleve
@@ -76,7 +76,7 @@ app.post('/api/claude', async (req, res) => {
   }
 });
 
-const SUPPORT_PROMPT = `Tu es le professeur IA d'EduCI, plateforme éducative ivoirienne. Tu aides les élèves du secondaire en Côte d'Ivoire suivant les programmes DPFC officiels. Tu réponds en français, de façon claire, simple et encourageante. Tu t'adaptes au niveau de l'élève selon sa classe.`;
+const SUPPORT_PROMPT = `Tu es le professeur d'EduCI, plateforme éducative ivoirienne. Tu aides les élèves du secondaire en Côte d'Ivoire suivant les programmes DPFC officiels. Tu réponds en français, de façon claire, simple et encourageante. Tu t'adaptes au niveau de l'élève selon sa classe.`;
 
 app.post('/support', async (req, res) => {
   const { telephone, classe, matiere, question } = req.body;
