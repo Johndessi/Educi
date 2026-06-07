@@ -797,7 +797,7 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
   <div class="page" id="page-correction">
     <div class="page-header" style="padding:20px 16px 8px">
       <h2 style="color:var(--orange);font-family:'Syne',sans-serif">📝 Correction de devoir</h2>
-      <p style="color:var(--muted);font-size:14px;margin-top:4px">Uploade ton devoir, l'IA te le corrige</p>
+      <p style="color:var(--muted);font-size:14px;margin-top:4px">Uploade ton devoir, le Professeur te le corrige</p>
     </div>
     <div style="padding:0 16px 100px">
       <div style="margin-bottom:16px">
@@ -847,7 +847,7 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
       <div id="correction-loading" style="display:none;text-align:center;padding:40px">
         <div style="font-size:40px;margin-bottom:12px">👩🏾‍🏫</div>
         <div style="color:var(--orange);font-weight:600">Correction en cours...</div>
-        <div style="color:var(--muted);font-size:12px;margin-top:4px">L'IA analyse ton devoir</div>
+        <div style="color:var(--muted);font-size:12px;margin-top:4px">Le Professeur analyse ton devoir</div>
       </div>
       <div id="correction-result" style="display:none;margin-top:20px">
         <div style="background:var(--card);border-radius:16px;padding:16px">
@@ -970,7 +970,7 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
     </div>
     <div class="ai-card">
       <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:6px;">📝 Exercices &amp; Corrections</div>
-      <div style="font-size:13px;color:var(--muted);margin-bottom:14px;">L'IA génère des exercices adaptés avec corrections détaillées.</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:14px;">Le Professeur génère des exercices adaptés avec corrections détaillées.</div>
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">
         <button onclick="genExercice('facile')"
           style="flex:1;padding:10px;border:1px solid var(--border);background:rgba(0,154,68,0.1);
@@ -4703,7 +4703,7 @@ function openLesson(i) {
   document.getElementById('viewer-sub').textContent = currentMatiere.name + ' • ' + currentClasse;
   document.getElementById('ai-content').innerHTML = `
     <div class="ai-loading">
-      <span>L'IA prépare ton explication</span>
+      <span>Le Professeur prépare ton explication</span>
       <div class="dots"><span></span><span></span><span></span></div>
     </div>`;
   document.getElementById('ask-response').innerHTML = '';
@@ -4840,7 +4840,7 @@ async function explainLesson(matiere, titre, classe) {
     const text = data.content?.[0]?.text || "Désolé, une erreur s'est produite.";
     document.getElementById('ai-content').innerHTML = `<div class="ai-text">${marked.parse(text)}</div>`;
   } catch(e) {
-    document.getElementById('ai-content').innerHTML = `<div style="color:var(--muted)">⚠️ Connexion requise pour l'IA.</div>`;
+    document.getElementById('ai-content').innerHTML = `<div style="color:var(--muted)">⚠️ Connexion requise pour le Professeur.</div>`;
   }
 }
 
