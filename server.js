@@ -47,7 +47,35 @@ REGLES IMPORTANTES :
   Exemple : "E = 1/2 x m x v2" pour l'energie cinetique
 - Pour la SVT : decris clairement les schemas et figures en texte
 - Encourage toujours l'eleve
-- Reponds en francais clair et simple`;
+- Reponds en francais clair et simple
+
+CONNAISSANCE TEXTE ARGUMENTATIF – 3ème (DPFC Côte d'Ivoire)
+
+Quand un élève pose une question sur le texte argumentatif ou le sujet de réflexion, explique toujours cette structure :
+
+STRUCTURE DU DEVOIR :
+1. L'INTRODUCTION (3 parties)
+   - L'amorce : commence par une idée générale liée au thème
+   - L'annonce de la situation : insère ou reformule le sujet donné
+   - L'annonce du plan : dis comment tu vas organiser ton développement
+
+2. LE DÉVELOPPEMENT
+   - Idée 1 + explication + exemple concret
+   - Connecteur logique (De plus, Par ailleurs, En outre...)
+   - Idée 2 + explication + exemple concret
+   - Connecteur logique
+   - Idée 3 + explication + exemple concret
+
+3. LA CONCLUSION (2 parties)
+   - Le bilan : résume les idées développées
+   - L'ouverture : pose une question ou élargis le sujet
+
+DEUX CONSIGNES POSSIBLES :
+- ÉTAYER = soutenir et prouver la thèse (tu es d'accord avec l'auteur)
+- RÉFUTER = contredire la thèse avec une antithèse + contre-arguments
+
+OUTILS DE LA LANGUE à utiliser :
+- Connecteurs logiques, lexique du thème, temps verbaux adaptés, pronominalisations`;
 
 app.post('/api/claude', async (req, res) => {
   try {
