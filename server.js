@@ -254,6 +254,146 @@ CARACTÉRISTIQUES :
 7. La formule de politesse
 8. Les pièces jointes (P.J.)
 9. La signature`;
+
+const FICHES = [
+  {
+    id: "tle-fr-commentaire-compose",
+    classe: "Terminale",
+    matiere: "Français",
+    competence: "Compétence 3 : Traiter des situations relatives à la rédaction des écrits divers",
+    activite: "Expression écrite",
+    lecon: "Leçon 2 : Le commentaire composé",
+    seances: [
+      {
+        numero: 1,
+        titre: "Analyse du libellé et construction du sens du texte",
+        habiletes: [
+          "Identifier les différents centres d'intérêt",
+          "Expliquer les centres d'intérêt",
+          "Relever les indices textuels pertinents du texte",
+          "Analyser leur(s) effet(s) de sens",
+          "Construire le sens du texte"
+        ],
+        contenu: [
+          {
+            titre: "I. Définition",
+            texte: "Le commentaire composé est un exercice argumenté visant à mettre en valeur la qualité d'un texte. Il faut faire appel au fond (les idées) et à la forme (procédés grammaticaux, figures de style…). C'est révéler la signification profonde en allant au-delà de l'explicite."
+          },
+          {
+            titre: "II. Analyse du libellé",
+            texte: "Le libellé comprend deux composantes :\n1. La tâche : elle indique le type de travail à faire (ex. : « Faites un commentaire composé de ce texte »).\n2. Les centres d'intérêt : ils indiquent les grandes orientations du développement. Chaque centre d'intérêt est un thème à exploiter à l'aide d'indices textuels (procédés grammaticaux, figures de style…)."
+          },
+          {
+            titre: "III. Construction du sens du texte",
+            texte: "1. Le type ou la nature du texte : récit, dialogue, discours, description, portrait, poème…\n2. La tonalité : sentiment ou impression ressenti après la lecture.\n3. Le thème : ce dont parle le texte.\n4. L'idée générale : ce que dit l'auteur à propos du thème."
+          },
+          {
+            titre: "IV. Les indices textuels",
+            texte: "Ce sont les éléments pertinents sélectionnés en fonction des centres d'intérêt. Types d'indices : lexicaux, procédés grammaticaux, figures de style, indices d'énonciation."
+          }
+        ]
+      },
+      {
+        numero: 2,
+        titre: "Organisation des centres d'intérêt",
+        habiletes: [
+          "Organiser les centres d'intérêt",
+          "Élaborer le plan détaillé : titres, sous-titres, idées convergentes, moyens utilisés"
+        ],
+        contenu: [
+          {
+            titre: "I. Organisation des centres d'intérêt",
+            texte: "Les indices textuels sont répartis selon les centres d'intérêt. Cette organisation se fait en plusieurs étapes :\n1. La recherche des sous-titres : regrouper les interprétations voisines pour dégager 2 à 3 sous-thèmes.\n2. Le plan détaillé : repérer les citations illustrant chaque CI, indiquer les techniques littéraires et leurs interprétations, regrouper les interprétations convergentes en sous-parties (2 minimum, 4 maximum)."
+          }
+        ]
+      },
+      {
+        numero: 3,
+        titre: "Rédaction d'un paragraphe",
+        habiletes: [
+          "Identifier les composantes d'un paragraphe de commentaire composé",
+          "Identifier les éléments de transition entre paragraphes",
+          "Identifier les éléments de transition entre le paragraphe et la conclusion partielle"
+        ],
+        contenu: [
+          {
+            titre: "I. Les composantes d'un paragraphe argumentatif",
+            texte: "1. Une idée directrice (sous-thème) : argument développé dans un seul paragraphe.\n2. Explication du sous-thème : dire ce que l'idée signifie exactement.\n3. Illustration du sous-thème : un ou deux indices textuels tirés du texte support.\n4. Conclusion du sous-thème et annonce du suivant : reprendre l'idée développée et établir le lien avec le paragraphe suivant."
+          },
+          {
+            titre: "II. Rédaction d'un paragraphe argumentatif",
+            texte: "Exemple (CI 1, Texte 1) :\nLa vision de la femme traditionnelle s'observe à travers l'accomplissement du devoir familial/filial envers sa mère et la société et l'accomplissement du devoir conjugal envers son mari et la société.\nLes raisons de l'accomplissement du devoir familial se manifestent par : « Tu es donc toujours aussi rétive ! » et « Tu as donc définitivement décidée de m'humilier… » → phrases exclamative et déclarative traduisant l'injonction à la fille. De même, l'impératif dans « Viens, suis ta mère » impose et ordonne. Par le biais de ces analyses, la femme doit respecter l'autorité de sa mère et exécuter ses décisions."
+          }
+        ]
+      },
+      {
+        numero: 4,
+        titre: "Rédaction d'un centre d'intérêt",
+        habiletes: [
+          "Rédiger un centre d'intérêt complet avec phrase introductive, paragraphes et conclusion partielle"
+        ],
+        contenu: [
+          {
+            titre: "I. Définition",
+            texte: "La rédaction du centre d'intérêt débute toujours par une phrase introductive annonçant le CI. Elle fait appel à des connecteurs logiques et organisateurs textuels pour assurer la cohérence entre les paragraphes."
+          },
+          {
+            titre: "II. Rédaction d'un centre d'intérêt (exemple)",
+            texte: "CI 1 – La vision de la femme traditionnelle :\nSous-thème 1 : accomplissement du devoir familial/filial.\nSous-thème 2 : accomplissement du devoir conjugal.\nConclusion partielle : « Pour tout dire, la femme traditionnelle est caractérisée par des valeurs morales qui la rendent digne et méritante que sont le respect et la soumission. Qu'en est-il de la vision de la femme moderne ? »"
+          }
+        ]
+      },
+      {
+        numero: 5,
+        titre: "Rédaction d'une introduction et d'une conclusion",
+        habiletes: [
+          "Rédiger l'introduction",
+          "Rédiger la conclusion"
+        ],
+        contenu: [
+          {
+            titre: "I. L'introduction",
+            texte: "Elle comprend trois parties rédigées en un seul paragraphe :\n1. Le contexte général (amorce) : approche thématique, mouvement littéraire, contexte social/politique, ou citation.\n2. La présentation du texte : auteur (nom, nationalité, époque), œuvre (titre, genre, date), texte (nature, tonalité), idée générale.\n3. L'annonce du plan : rappel des centres d'intérêt."
+          },
+          {
+            titre: "II. La conclusion",
+            texte: "Elle comprend trois parties :\n1. Bilan du devoir : synthèse des deux centres d'intérêt.\n2. Jugement critique : position personnelle sur le thème développé.\n3. Ouverture : rapprochement avec un autre texte traitant du même thème."
+          }
+        ]
+      },
+      {
+        numero: 6,
+        titre: "Rédaction du commentaire composé",
+        habiletes: [
+          "Rédiger le commentaire composé complet"
+        ],
+        contenu: [
+          {
+            titre: "I. Identification des parties du libellé",
+            texte: "Le libellé comprend : la tâche, les centres d'intérêt et leur explication."
+          },
+          {
+            titre: "II. Plan détaillé",
+            texte: "1. Introduction : contexte général, présentation du texte, annonce du plan.\n2. Développement : CI 1 + CI 2 (fond et forme liés).\n3. Conclusion : bilan, jugement critique, ouverture."
+          },
+          {
+            titre: "III. Technique de rédaction",
+            texte: "Le commentaire composé se rédige sans dissocier le fond de la forme. Chaque analyse stylistique est immédiatement interprétée et reliée au sens global du texte."
+          }
+        ]
+      }
+    ]
+  }
+];
+
+app.get('/api/fiches', (req, res) => {
+  const { classe, matiere } = req.query;
+  let result = FICHES;
+  if (classe) result = result.filter(f => f.classe === classe);
+  if (matiere) result = result.filter(f => f.matiere === matiere);
+  res.json(result);
+});
+
 app.post('/api/claude', async (req, res) => {
   try {
     const body = {
