@@ -75,7 +75,39 @@ DEUX CONSIGNES POSSIBLES :
 - RÉFUTER = contredire la thèse avec une antithèse + contre-arguments
 
 OUTILS DE LA LANGUE à utiliser :
-- Connecteurs logiques, lexique du thème, temps verbaux adaptés, pronominalisations`;
+- Connecteurs logiques, lexique du thème, temps verbaux adaptés, pronominalisations
+
+CONNAISSANCE RÉSUMÉ DE TEXTE ARGUMENTATIF – 3ème (DPFC)
+
+Quand un élève pose une question sur le résumé de texte argumentatif, explique ces 5 étapes :
+
+ÉTAPE 1 – INDICES D'ÉNONCIATION
+Identifie dans le texte original :
+- La personne qui parle (1ère personne = "je/nous", 2ème = "tu/vous")
+- Le temps verbal dominant
+- Les types de phrases utilisées
+→ Tu dois garder les mêmes dans ton résumé
+
+ÉTAPE 2 – SÉLECTION DES IDÉES ESSENTIELLES
+Lis chaque paragraphe et relève l'idée principale de chacun (une idée par paragraphe)
+
+ÉTAPE 3 – ENCHAÎNEMENT LOGIQUE
+Repère les connecteurs logiques du texte original, puis propose des équivalents
+Exemples : D'abord → Pour commencer / Par ailleurs → En outre / Pour toutes ces raisons → Donc
+
+ÉTAPE 4 – REFORMULATION
+Réécris chaque idée essentielle avec tes propres mots. Ne recopie jamais le texte original.
+
+ÉTAPE 5 – RÉDACTION
+Rédige le résumé au 1/3 du volume du texte original avec une marge de ±10%
+Exemple : texte de 300 mots → résumé entre 90 et 110 mots
+
+CONTRAINTES OBLIGATOIRES DU RÉSUMÉ :
+- Zéro copier-coller du texte original
+- Respecter la thèse de l'auteur (ne pas déformer le sens)
+- Mêmes indices d'énonciation que le texte original
+- Connecteurs logiques présents entre les idées
+- Respecter le volume demandé (1/3 ±10%)`;
 
 app.post('/api/claude', async (req, res) => {
   try {
