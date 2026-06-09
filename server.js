@@ -142,7 +142,118 @@ CONTRAINTES OBLIGATOIRES :
 - Ne pas porter de jugement personnel
 - Pas de titre dans le résumé
 - Pas de mots familiers, pas d'abréviations
-- Mentionner le nombre de mots à la fin`;
+- Mentionner le nombre de mots à la fin
+
+CONNAISSANCE TEXTE EXPLICATIF – 4ème (DPFC)
+
+DÉFINITION
+Un texte explicatif sert à donner des explications sur un phénomène naturel, scientifique ou socioculturel.
+Deux types : phénomène naturel (pluie, inondation, germination...) et pratiques socioculturelles (fête, mariage traditionnel, cérémonie...).
+
+PROCÉDÉS D'ÉCRITURE (à utiliser obligatoirement) :
+- Lexique spécialisé propre au thème
+- Mots/expressions explicatifs : c'est-à-dire, en d'autres termes...
+- Mots de liaison : d'abord, ensuite, enfin...
+- Ton neutre et objectif : présent de vérité (indicatif ou infinitif)
+- Ponctuation explicative : deux points (:), parenthèses, points de suspension
+- Subordonnées relatives explicatives
+- Présentatifs
+- Exemples et données chiffrées
+
+STRUCTURE :
+1. INTRODUCTION (3 éléments)
+   - La généralité ou définition du thème
+   - Montrer l'importance du sujet
+   - Annoncer le plan ou le déroulement
+
+2. DÉVELOPPEMENT (pour chaque paragraphe)
+   - L'argument
+   - L'explication de l'argument
+   - L'illustration ou exemple
+   - La transition
+
+3. CONCLUSION
+   - Rappeler brièvement les acquis du développement
+   - Faire des observations
+
+CONNAISSANCE COMPTE RENDU DE RÉUNION – 4ème (DPFC)
+
+DÉFINITION
+Un compte rendu de réunion est un rapport complet rédigé après une réunion.
+
+PRÉSENTATION FORMELLE (12 éléments obligatoires dans l'ordre) :
+1. L'entête
+2. L'intitulé
+3. La date
+4. Le lieu
+5. L'heure
+6. Le nom du responsable
+7. Le rapporteur
+8. Les membres présents
+9. Les membres absents
+10. L'ordre du jour
+11. Le déroulement de la réunion
+12. La signature du rapporteur
+
+RÉDACTION :
+- Débute par une phrase d'introduction mentionnant la nature, la date, l'heure et le lieu de la réunion
+- Résume brièvement chaque intervention en signalant l'auteur
+- Pour les débats : reprendre l'idée générale sans entrer dans les détails
+- Se termine par une formule constatant l'épuisement de l'ordre du jour et l'heure de la levée de séance
+
+CONNAISSANCE DIALOGUE ARGUMENTATIF – 4ème (DPFC)
+
+DÉFINITION
+Un dialogue argumentatif est un échange entre deux ou plusieurs personnes qui ne partagent pas le même point de vue. Son but : raisonner et soutenir un point de vue pour convaincre.
+
+DEUX TYPES :
+A) Exprimer un point de vue personnel (discours direct, les personnages parlent eux-mêmes)
+B) Rapporter des points de vue (un narrateur rapporte la discussion)
+
+STRUCTURE COMMUNE (3 parties) :
+1. INTRODUCTION
+   - Sujet de discussion
+   - Nommer les interlocuteurs
+   - Préciser les différents points de vue
+   - Préciser le lieu et le moment
+
+2. DÉVELOPPEMENT
+   - Les interlocuteurs interviennent l'un après l'autre
+   - Chaque argumentation : thèse → arguments → illustration
+   - Pour le type B : mentionner l'intervention du narrateur
+
+3. CONCLUSION
+   - Type A : dire sur quelle note le dialogue s'est achevé (accord ou désaccord)
+   - Type B : le narrateur fait le bilan des échanges
+
+OUTILS DE LA LANGUE :
+- Indices de la personne (1re et 2e personne)
+- Marques du dialogue : tirets, alinéas, discours direct
+- Types et formes de phrases
+- Temps verbaux : présent, passé simple, imparfait
+- Verbes interlocuteurs et verbes introducteurs
+
+CONNAISSANCE LETTRE OFFICIELLE – 4ème (DPFC)
+
+DÉFINITION
+Une lettre officielle est une lettre adressée à une autorité compétente pour demander une information, un emploi, une pièce administrative...
+
+CARACTÉRISTIQUES :
+- Structure formelle stricte
+- Niveau de langue soutenu
+- Ton respectueux et formel
+- Mise en page et typographie soignées
+
+9 PARTIES OBLIGATOIRES (dans l'ordre) :
+1. Le lieu et la date
+2. Le nom et l'adresse de l'émetteur
+3. La nomination du récepteur (À Monsieur le...)
+4. L'objet de la lettre
+5. La formule d'appel (Monsieur le...)
+6. Le corps de la lettre (la demande)
+7. La formule de politesse
+8. Les pièces jointes (P.J.)
+9. La signature`;
 app.post('/api/claude', async (req, res) => {
   try {
     const body = {
