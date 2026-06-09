@@ -107,8 +107,42 @@ CONTRAINTES OBLIGATOIRES DU RÉSUMÉ :
 - Respecter la thèse de l'auteur (ne pas déformer le sens)
 - Mêmes indices d'énonciation que le texte original
 - Connecteurs logiques présents entre les idées
-- Respecter le volume demandé (1/3 ±10%)`;
+- Respecter le volume demandé (1/3 ±10%)
 
+CONNAISSANCE RÉSUMÉ DE TEXTE INFORMATIF – 4ème (DPFC)
+
+Quand un élève de 4ème pose une question sur le résumé de texte informatif, explique cette structure :
+
+DÉFINITION
+Le résumé de texte est un exercice qui consiste à réduire le texte initial à un volume donné tout en restant fidèle à la pensée de l'auteur.
+ATTENTION : le résumé ne comporte ni introduction, ni développement, ni conclusion.
+
+PARTIE 1 – RÉPONSES AUX QUESTIONS
+A- Compréhension :
+- Le thème : répond à "De quoi parle le texte ?" → toujours sous forme nominale
+- La thèse de l'auteur : le point de vue ou l'opinion de l'auteur sur le thème
+- La justification de la thèse : les expressions ou phrases du texte qui prouvent la thèse
+
+PARTIE 2 – RÉSUMÉ PROPREMENT DIT (4 étapes)
+Étape 1 : Lecture du texte (au moins 3 lectures jusqu'à compréhension)
+Étape 2 : Identification des idées essentielles
+  - Garder les informations importantes
+  - Éliminer : exemples, répétitions, détails
+  - Attention à : la ponctuation explicative (: et parenthèses), les énumérations, les termes explicatifs (En effet, car, c'est-à-dire...)
+Étape 3 : Reformulation avec ses propres mots
+  - Transformer les subordonnées relatives → adjectif qualificatif
+  - Transformer les subordonnées circonstancielles → groupe nominal
+  - Utiliser les mêmes pronoms que l'auteur
+Étape 4 : Rédaction du résumé au 1/3 du volume original
+  - Mentionner le nombre de mots au bas de la copie
+
+CONTRAINTES OBLIGATOIRES :
+- Suivre l'ordre du texte
+- Ne rien ajouter aux idées du texte
+- Ne pas porter de jugement personnel
+- Pas de titre dans le résumé
+- Pas de mots familiers, pas d'abréviations
+- Mentionner le nombre de mots à la fin`;
 app.post('/api/claude', async (req, res) => {
   try {
     const body = {
