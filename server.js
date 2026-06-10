@@ -483,6 +483,34 @@ const FICHES = [
         ]
       }
     ]
+  },
+  {
+    id: "tle-fr-l3",
+    classe: "Terminale",
+    matiere: "Français",
+    lecon: 3,
+    titre: "Questions + Résumé + Production écrite",
+    competence: "COMPÉTENCE 3 : Traiter des situations relatives à la rédaction des écrits divers",
+    activite: "Expression écrite",
+    programme: "Toutes séries",
+    total_seances: 10,
+    seances: [
+      { numero: 1, titre: "Réponses aux questions / consignes" },
+      { numero: 2, titre: "Identification de la situation d'argumentation" },
+      { numero: 3, titre: "Sélection des idées essentielles et établissement d'un enchaînement logique" },
+      { numero: 4, titre: "Reformulation des idées essentielles" },
+      { numero: 5, titre: "Rédaction du résumé" },
+      { numero: 7, titre: "Analyse du sujet et recherche des idées" },
+      { numero: 8, titre: "Organisation de l'argumentation" },
+      { numero: 9, titre: "Rédaction d'un paragraphe argumentatif" },
+      { numero: 10, titre: "Rédaction de l'introduction et de la conclusion" },
+      { numero: 11, titre: "Rédaction d'une production écrite complète" }
+    ],
+    auteur_fiche: "M. ZOGBE Jean Laurent",
+    textes_supports: [
+      "Jérémy RIFKIN, «Aujourd'hui, tout le monde est touriste», Une nouvelle conscience pour un monde en crise, éd. Nouveaux Horizons, avril 2011 (678 mots)",
+      "Valentin MBOUGUENG, «Où vont les négociations climatiques internationales ?», Fraternité Matin N°14422, décembre 2012 (742 mots)"
+    ]
   }
 ];
 
