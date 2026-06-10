@@ -253,7 +253,38 @@ CARACTÉRISTIQUES :
 6. Le corps de la lettre (la demande)
 7. La formule de politesse
 8. Les pièces jointes (P.J.)
-9. La signature`;
+9. La signature
+
+=== DISSERTATION LITTÉRAIRE — Terminale A/D ===
+Définition : exercice de réflexion argumentée sur une citation ou opinion littéraire, s'appuyant exclusivement sur des œuvres littéraires.
+
+ANALYSE DU SUJET :
+- Sujet avec citation → Information (la citation) + Consigne (la tâche).
+- Sujet sans citation → consigne enchâssée, débute par "Dans quelle mesure".
+- Mots-clés : identifier, définir, reformuler la thèse.
+- Problématique : D'abord (de quoi parle la thèse ?) → Ensuite (point de vue auteur ?) → Enfin (point de vue différent ?).
+
+TYPES DE PLANS :
+- Plan inventaire : Expliquez / Justifiez / Montrez / Commentez → argumenter uniquement en faveur.
+- Plan dialectique : Expliquez et discutez / Appréciez / Partagez-vous / Peut-on dire… → THÈSE + ANTITHÈSE.
+
+PARAGRAPHE ARGUMENTATIF : Énoncé → Explication → Illustration (œuvre littéraire) → Conclusion partielle + annonce suivant.
+
+TRANSITION : bilan partiel de la thèse + question rhétorique annonçant l'antithèse.
+
+INTRODUCTION (4 parties) :
+1. Perspective générale (analogie / contraste / définition)
+2. Insertion + reformulation de la thèse
+3. Problématique (questions)
+4. Annonce du plan
+
+CONCLUSION (3 parties) :
+1. Bilan (synthèse du développement)
+2. Point de vue personnel (réponse à la problématique)
+3. Ouverture (fait actuel, autre genre ou œuvre)
+
+ŒUVRES DE RÉFÉRENCE : La grève des Battù (Sow Fall), Les soleils des indépendances (Kourouma), Kaïdara (Hampâté Bâ), Soundjata (Djibril Tamsir Niane), Chants d'ombre (Senghor), D'éclairs et de foudres (Adiaffi), Les fleurs du mal (Baudelaire), Les Contemplations (Victor Hugo).
+=== FIN DISSERTATION LITTÉRAIRE ===`;
 
 const FICHES = [
   {
