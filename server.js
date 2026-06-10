@@ -257,6 +257,75 @@ CARACTÉRISTIQUES :
 
 const FICHES = [
   {
+    id: "tle-fr-dissertation-litteraire",
+    classe: "Terminale",
+    matiere: "Français",
+    competence: "Compétence 3 : Traiter des situations relatives à la rédaction des écrits divers",
+    activite: "Expression écrite",
+    lecon: "Leçon 1 : La dissertation littéraire",
+    seances: [
+      {
+        numero: 1,
+        titre: "Analyse du sujet",
+        habiletes: ["Identifier les différents types de sujets","Distinguer les deux parties de chaque sujet : l'information et la consigne","Analyser les mots-clés et leur sens","Reformuler chaque sujet","Dégager la problématique"],
+        contenu: [
+          { titre: "I. Définition", texte: "La dissertation littéraire est un exercice de réflexion sur une idée, une citation, une opinion portant sur une problématique littéraire. Elle n'emprunte ses connaissances qu'au seul domaine de la littérature." },
+          { titre: "II. Analyse du sujet", texte: "1. Types de sujets :\na. Sujet avec citation : L'information (la citation/point de vue d'un auteur) + La consigne (les tâches à accomplir).\nb. Sujet sans citation : la consigne est enchâssée dans l'information ; débute généralement par « Dans quelle mesure ».\n\n2. Les mots-clés : les identifier et définir leur sens.\n\n3. Reformulation de la thèse : reprendre la thèse dans un autre langage en gardant le sens.\n\n4. La problématique : ensemble des problèmes dégagés du sujet. Démarche : D'abord (de quoi parle la thèse ?) → Ensuite (quel est le point de vue de l'auteur ?) → Enfin (existe-t-il un point de vue différent ?)." }
+        ]
+      },
+      {
+        numero: 2,
+        titre: "Recherche des idées",
+        habiletes: ["Identifier les composantes de chaque partie à rédiger","Rechercher les arguments et les illustrations pour la thèse et l'antithèse"],
+        contenu: [
+          { titre: "I. La recherche des idées", texte: "Activité consistant à interroger sa culture littéraire pour trouver les arguments qui soutiennent la thèse. Recenser les idées au brouillon et les illustrer avec des exemples précis tirés d'œuvres littéraires.\n\n1. La thèse : arguments + exemples qui approuvent l'affirmation de l'auteur.\n2. L'antithèse : arguments + exemples qui montrent les limites ou les autres aspects de l'affirmation." }
+        ]
+      },
+      {
+        numero: 3,
+        titre: "Élaboration du plan",
+        habiletes: ["Identifier les composantes de chaque partie","Rechercher arguments et illustrations","Construire les paragraphes argumentatifs et les transitions"],
+        contenu: [
+          { titre: "I. Les types de plans", texte: "1. Plan inventaire/explicatif : argumentation en faveur de la thèse uniquement. Mots-clés dans le libellé : Expliquez / Justifiez / Montrez / Commentez.\n\n2. Plan dialectique : deux parties — thèse (approuver) + antithèse (nuancer/limites). Mots-clés : Expliquez et discutez / Appréciez / Analysez / Partagez-vous / Peut-on dire… / Que vous inspire…" },
+          { titre: "II. Construction du plan", texte: "1. Paragraphe argumentatif : Énoncé de l'argument → Explication → Illustration (1 ou 2 exemples d'œuvres littéraires) → Conclusion partielle + annonce de l'argument suivant.\n\n2. La transition : conclure la thèse par un bilan partiel + annoncer l'antithèse par une question rhétorique." }
+        ]
+      },
+      {
+        numero: 4,
+        titre: "Rédaction d'une partie du développement",
+        habiletes: ["Identifier les composantes de chaque partie","Énoncer l'argument","Expliquer l'argument","Illustrer avec un ou deux exemple(s)","Conclure le paragraphe"],
+        contenu: [
+          { titre: "I. Structure du développement", texte: "- Phrase introductive énonçant l'idée directrice de la thèse\n- 3 paragraphes argumentatifs (argument + explication + exemple + conclusion partielle)\n- Transition (bilan partiel + annonce de l'antithèse)\n- Phrase introductive énonçant l'idée directrice de l'antithèse\n- 3 paragraphes argumentatifs\n- Phrase conclusive de l'antithèse\n\nConnecteurs logiques utiles : D'abord / En effet / Cela se justifie dans… / Cependant / En outre / Au vu de ce qui précède…" }
+        ]
+      },
+      {
+        numero: 5,
+        titre: "Rédaction d'une introduction et d'une conclusion",
+        habiletes: ["Identifier les composantes de l'introduction et de la conclusion","Rédiger une introduction complète","Rédiger une conclusion complète"],
+        contenu: [
+          { titre: "I. Introduction (4 parties)", texte: "1. Perspective générale : amener le sujet dans un contexte général — par analogie (idée voisine), par contraste (idée opposée) ou par définition.\n2. Insertion + reformulation de la thèse : citer l'affirmation de l'auteur et la reformuler.\n3. Problématique : reprendre sous forme de questions les problèmes posés par le sujet.\n4. Annonce du plan : indiquer la démarche (thèse puis antithèse)." },
+          { titre: "II. Conclusion (3 parties)", texte: "1. Bilan : synthèse de tout ce qui a été dit dans le développement.\n2. Point de vue personnel : appréciation et réponse claire à la problématique posée en introduction.\n3. Ouverture : mise en rapport avec un fait actuel, un genre littéraire, une autre œuvre ou une grande problématique littéraire." }
+        ]
+      },
+      {
+        numero: 6,
+        titre: "Rédaction d'une dissertation littéraire partielle",
+        habiletes: ["Introduire","Élaborer des paragraphes argumentatifs","Conclure","Appliquer toutes les techniques de la dissertation littéraire"],
+        contenu: [
+          { titre: "I. Rédaction partielle", texte: "Application complète : rédiger une dissertation intégrant introduction + développement (thèse + transition + antithèse) + conclusion. Respecter la structure complète avec connecteurs logiques, exemples littéraires précis et transitions soignées." }
+        ]
+      },
+      {
+        numero: 7,
+        titre: "Remédiation",
+        habiletes: ["Appliquer toutes les techniques de la dissertation littéraire sur un nouveau sujet","Corriger les erreurs identifiées lors des séances précédentes"],
+        contenu: [
+          { titre: "I. Remédiation — Sujet sur la poésie", texte: "Travail collectif sur un nouveau sujet. Démarche complète :\n1. Explication des mots-clés de la thèse\n2. Reformulation de la thèse\n3. Introduction (généralité → thèse → problématique → annonce du plan)\n4. Développement : thèse (3 arguments illustrés) + transition + antithèse (3 arguments illustrés)\n5. Conclusion (bilan + point de vue + ouverture)\n\nŒuvres africaines de référence : La grève des Battù (Sow Fall), Les soleils des indépendances (Kourouma), Kaïdara (Hampâté Bâ), Soundjata (Djibril Tamsir Niane), Chants d'ombre (Senghor), D'éclairs et de foudres (Adiaffi), Assémien Déhilé (Bernard Dadié)." }
+        ]
+      }
+    ]
+  },
+  {
     id: "tle-fr-commentaire-compose",
     classe: "Terminale",
     matiere: "Français",
