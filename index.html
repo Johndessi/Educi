@@ -4857,6 +4857,131 @@ LANGUE ET STYLE /3 :
 □ Style clair et phrases bien construites (+1)
 □ Vocabulaire littéraire approprié (+0,5)`;
     }
+    // === LEÇON 3 TERMINALE : Questions + Résumé + Production écrite ===
+    if (exercice === "resume_argumentatif_terminale" || exercice === "tle_fr_l3_resume") {
+      grille = {
+        titre: "Grille de correction – Résumé de texte argumentatif (Terminale)",
+        bareme_total: 8,
+        criteres: [
+          {
+            label: "Respect du volume (1/4 ± 10%)",
+            points: 2,
+            indicateurs: [
+              "Le résumé respecte le quart du volume initial avec une tolérance de ±10%",
+              "Le nombre de mots est mentionné en bas du résumé",
+              "(-1 pt si hors tolérance ; -0,5 pt si nombre de mots absent)"
+            ]
+          },
+          {
+            label: "Fidélité aux idées du texte",
+            points: 2,
+            indicateurs: [
+              "Toutes les idées essentielles sont présentes",
+              "Aucune idée personnelle ajoutée",
+              "La thèse de l'auteur est correctement restituée",
+              "(-0,5 pt par idée essentielle manquante ou déformée)"
+            ]
+          },
+          {
+            label: "Reformulation (non-plagiat)",
+            points: 2,
+            indicateurs: [
+              "Les idées sont reformulées avec les propres mots de l'élève",
+              "Aucun copier-coller du texte original",
+              "Vocabulaire varié, synonymes utilisés correctement",
+              "(-1 pt si reformulation insuffisante / copier-coller)"
+            ]
+          },
+          {
+            label: "Enchaînement logique et cohérence",
+            points: 1,
+            indicateurs: [
+              "Les connecteurs logiques sont utilisés correctement",
+              "Le résumé se présente en un seul bloc (pas de subdivisions)",
+              "La progression des idées est logique"
+            ]
+          },
+          {
+            label: "Langue (orthographe, grammaire, syntaxe)",
+            points: 1,
+            indicateurs: [
+              "Phrase bien construites, syntaxe correcte",
+              "Orthographe et accords respectés",
+              "(-0,25 pt par faute, max -1 pt)"
+            ]
+          }
+        ],
+        conseils_prof: "Vérifier que le résumé est en un seul bloc sans titre ni numérotation. S'assurer que le nombre de mots est indiqué. Pénaliser tout ajout d'opinion personnelle.",
+        exemple_modele: "Texte RIFKIN résumé en 153 mots : L'industrie du voyage et du tourisme occupe une place prépondérante dans l'économie mondiale. Car à l'origine, l'on ne voyageait que dans le cadre du travail..."
+      };
+    }
+
+    if (exercice === "production_ecrite_argumentatif_terminale" || exercice === "tle_fr_l3_production") {
+      grille = {
+        titre: "Grille de correction – Production écrite argumentative (Terminale)",
+        bareme_total: 8,
+        criteres: [
+          {
+            label: "Introduction",
+            points: 1,
+            indicateurs: [
+              "Phrase d'accroche : nom de l'auteur + source + citation entre guillemets",
+              "Annonce claire de la prise de position (étayer ou réfuter)",
+              "(-0,5 pt si citation mal formulée ; -0,5 pt si prise de position absente)"
+            ]
+          },
+          {
+            label: "Arguments (pertinence et quantité)",
+            points: 3,
+            indicateurs: [
+              "Au moins 3 arguments clairs, cohérents avec la thèse",
+              "Chaque argument est en rapport direct avec le sujet",
+              "Les arguments sont distincts (pas de répétition)",
+              "(1 pt par argument valide, max 3 pts)"
+            ]
+          },
+          {
+            label: "Illustration des arguments",
+            points: 2,
+            indicateurs: [
+              "Chaque argument est illustré par un exemple concret et pertinent",
+              "Les exemples sont bien introduits (Par exemple / Nous avons pour illustration)",
+              "(-0,5 pt par exemple absent ou hors-sujet)"
+            ]
+          },
+          {
+            label: "Structure du paragraphe argumentatif",
+            points: 1,
+            indicateurs: [
+              "Chaque paragraphe suit : Annonce → Explication → Illustration → Mini-conclusion",
+              "Connecteurs logiques correctement utilisés (D'abord, Ensuite, En outre, Enfin, Car, En effet)",
+              "Transitions entre paragraphes assurées"
+            ]
+          },
+          {
+            label: "Conclusion",
+            points: 0.5,
+            indicateurs: [
+              "Bilan de l'argumentation",
+              "Ouverture (facultative mais valorisée)",
+              "(-0,25 pt si bilan absent)"
+            ]
+          },
+          {
+            label: "Langue (orthographe, grammaire, style)",
+            points: 0.5,
+            indicateurs: [
+              "Phrases correctement construites",
+              "Orthographe et accords respectés",
+              "Registre soutenu, vocabulaire varié",
+              "(-0,25 pt par faute grave, max -0,5 pt)"
+            ]
+          }
+        ],
+        conseils_prof: "Vérifier que l'élève a bien compris la différence entre étayer (appuyer) et réfuter (contester). S'assurer que la citation du sujet figure dans l'introduction. Valoriser les exemples africains et ivoiriens.",
+        rappel_methode: "Étayer = développer la thèse de l'auteur. Réfuter = la contester. Structure obligatoire : Introduction → Développement (paragraphes argumentatifs) → Conclusion."
+      };
+    }
     if (file.type.startsWith('image/')) {
       const base64 = await fileToBase64(file);
       messages = [{ role: 'user', content: [
