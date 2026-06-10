@@ -4827,6 +4827,36 @@ Structure ta correction ainsi :
 4. 📊 Note estimée sur 20
 
 Utilise un langage adapté au niveau ${classe}.`;
+    if (matiere === 'Français' && (userMessage.toLowerCase().includes('dissertation'))) {
+      systemPrompt += `\n\nGRILLE CORRECTION DISSERTATION LITTÉRAIRE (Terminale A/D) — NOTE /20 :
+
+INTRODUCTION /4 :
+□ Perspective générale présente et en rapport avec le sujet (+1)
+□ Thèse insérée et reformulée correctement (+1)
+□ Problématique formulée sous forme de questions (+1)
+□ Annonce du plan claire (+1)
+
+DÉVELOPPEMENT /10 :
+□ Phrase introductive de la thèse (+0,5)
+□ 3 arguments de la thèse énoncés et expliqués (+1,5)
+□ 3 exemples d'œuvres littéraires pour la thèse (+1,5)
+□ Transition correcte (bilan partiel + annonce antithèse) (+1)
+□ Phrase introductive de l'antithèse (+0,5)
+□ 3 arguments de l'antithèse énoncés et expliqués (+1,5)
+□ 3 exemples d'œuvres littéraires pour l'antithèse (+1,5)
+□ Phrase conclusive de l'antithèse (+1)
+
+CONCLUSION /3 :
+□ Bilan (synthèse du développement) (+1)
+□ Point de vue personnel (réponse à la problématique) (+1)
+□ Ouverture pertinente (+1)
+
+LANGUE ET STYLE /3 :
+□ Orthographe et grammaire (-0,5 par faute grave, max -1,5)
+□ Connecteurs logiques bien utilisés (+1)
+□ Style clair et phrases bien construites (+1)
+□ Vocabulaire littéraire approprié (+0,5)`;
+    }
     if (file.type.startsWith('image/')) {
       const base64 = await fileToBase64(file);
       messages = [{ role: 'user', content: [
