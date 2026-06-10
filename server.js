@@ -284,7 +284,95 @@ CONCLUSION (3 parties) :
 3. Ouverture (fait actuel, autre genre ou œuvre)
 
 ŒUVRES DE RÉFÉRENCE : La grève des Battù (Sow Fall), Les soleils des indépendances (Kourouma), Kaïdara (Hampâté Bâ), Soundjata (Djibril Tamsir Niane), Chants d'ombre (Senghor), D'éclairs et de foudres (Adiaffi), Les fleurs du mal (Baudelaire), Les Contemplations (Victor Hugo).
-=== FIN DISSERTATION LITTÉRAIRE ===`;
+=== FIN DISSERTATION LITTÉRAIRE ===
+
+---
+### TERMINALE – FRANÇAIS – LEÇON 3 : QUESTIONS + RÉSUMÉ + PRODUCTION ÉCRITE (Toutes séries)
+Fiche officielle DPFC – M. ZOGBE Jean Laurent
+
+**Situation d'apprentissage :** Des élèves de Terminale reçoivent une brochure de textes argumentatifs (~700 mots). Ils doivent : répondre aux questions, résumer le texte au quart de son volume, et rédiger une production écrite argumentée.
+
+#### SÉANCE 1 – Réponses aux questions / consignes
+- Identifier, analyser et répondre aux questions de compréhension et de vocabulaire portant sur le texte support.
+- Exemple texte 1 (RIFKIN) : thème = tourisme/voyage ; thèse = malgré les reproches, le tourisme est facteur de rencontre entre les peuples ; griefs = exploitation commerciale, dévalorisation culturelle, expropriation des indigènes.
+- Synonyme « envergure » → dimension, importance.
+
+#### SÉANCE 2 – Identification de la situation d'argumentation
+Éléments à identifier dans un texte argumentatif :
+1. **Le thème** : sujet principal abordé (ex : le tourisme et le voyage)
+2. **Le champ lexical** : ensemble des mots renvoyant au thème
+3. **Les indices personnels** : pronoms (« nos », « on », « il », « leur(s) ») ; temps verbaux dominants (présent, imparfait, passé composé, participe présent)
+4. **La thèse** : point de vue défendu par l'auteur (ex : le tourisme demeure un facteur de rencontre malgré ses défauts)
+5. **Les connecteurs logiques et leurs valeurs** : « et » = addition ; « mais » = opposition ; « Ce n'est pas pour rien que » = concession ; « puis » = addition ; « aussi » = conséquence ; « par exemple » = illustration ; « enfin » = conclusion/énumération
+6. **La structure du texte** : identifier les séquences et leurs titres par paragraphe
+7. **La visée argumentative** : ce que l'auteur veut faire comprendre au lecteur
+
+#### SÉANCE 3 – Sélection des idées essentielles
+**Définition :** La sélection des idées essentielles impose un « toilettage » du texte : supprimer les exemples illustratifs, digressions, parenthèses, insistances, citations, expansions, répétitions, énumérations, questions.
+**Méthode :** Pour chaque paragraphe (ou groupe de paragraphes), formuler en une phrase l'idée principale.
+Exemple (texte RIFKIN, 11 idées essentielles) :
+- Id1 : L'industrie du voyage et du tourisme est le premier secteur économique mondial.
+- Id2 : L'idée de voyage remonte à l'Antiquité mais voyager par divertissement était rare.
+- Id3 : La révolution industrielle et le rail ont rendu le voyage collectif courant.
+- Id4 : Le secteur s'est envolé avec l'avènement des voyages aériens bon marché.
+- Id5 : Des critiques postmodernes soutiennent que tourisme et voyage ont un effet opposé.
+- Id6 : Ils transforment l'expérience en exploitation commerciale.
+- Id7 : La culture indigène se banalise et se dégrade.
+- Id8 : Les populations indigènes sont parfois exclues de leurs propres patrimoines.
+- Id9 : Malgré ces réserves, le contact avec d'autres cultures reste une expérience éclairante.
+- Id10 : Le tourisme est source d'emploi et de découverte de l'autre pour les populations locales.
+- Id11 : La prolifération des voyages crée une humanité plus unie.
+
+#### SÉANCE 4 – Reformulation des idées essentielles
+**Définition :** Reformuler = dire autrement ce qui est dit, sans s'éloigner de l'idée de l'auteur, en variant le vocabulaire (synonymes, termes génériques, transformation de phrases complexes en simples).
+Exemples de reformulations (texte RIFKIN) :
+- Id1 reformulée : L'industrie du voyage et du tourisme occupe une place prépondérante dans l'économie mondiale.
+- Id2 reformulée : Car à l'origine, l'on ne voyageait que dans le cadre du travail.
+- Id3 reformulée : En effet, grâce au développement du transport au XIXe siècle, le voyage terrestre a pris un essor considérable.
+- Id4 reformulée : Cet essor s'est étendu aujourd'hui au secteur aérien.
+- Id5 reformulée : C'est pourquoi les postmodernes s'opposent au voyage et au tourisme.
+- Id6 reformulée : Ils reprochent au tourisme son caractère mercantile à des fins de luxure.
+- Id7 reformulée : L'industrie du tourisme dévalorise la culture indigène.
+- Id8 reformulée : Des patrimoines achetés à des fins touristiques sont interdits d'accès aux locaux.
+- Id9 reformulée : Bien que ces griefs soient justes, le tourisme demeure un facteur de rencontre, d'échange culturel, de compréhension mutuelle et d'empathie.
+- Id10 reformulée : Il est à la fois pour les populations locales pourvoyeur d'emploi et facteur de découverte de l'autre.
+- Id11 reformulée : Enfin, le développement de l'industrie du voyage et du tourisme renforce davantage les liens entre les hommes.
+
+#### SÉANCE 5 – Rédaction du résumé
+**Règles fondamentales :**
+- Le résumé se présente en UN SEUL BLOC (pas d'introduction, pas de développement, pas de conclusion distincts).
+- Volume = 1/4 du texte original ± 10% de tolérance.
+- Mentionner le nombre de mots en bas du résumé (ne pas inventer).
+- Utiliser les idées reformulées reliées par des connecteurs logiques équivalents.
+- Résumé modèle du texte RIFKIN (153 mots) : L'industrie du voyage et du tourisme occupe une place prépondérante dans l'économie mondiale. Car à l'origine, l'on ne voyageait que dans le cadre du travail. En effet, grâce au développement du transport au XIXe siècle, le voyage terrestre a pris un essor considérable. Cet essor s'est étendu aujourd'hui au secteur aérien. C'est pourquoi les postmodernes opposent le voyage et le tourisme. Ensuite, ils reprochent au tourisme son caractère mercantile à des fins de luxure. Du fait que l'industrie du tourisme dévalorise la culture indigène. Des patrimoines sont achetés à des fins touristiques puis interdits d'accès aux locaux. Bien que ces griefs soient justes, le tourisme demeure un facteur de rencontre, d'échange culturel, de compréhension mutuelle et d'empathie. Il est à la fois pour les populations locales pourvoyeur d'emploi et facteur de découverte de l'autre. Enfin, le développement de l'industrie du voyage et du tourisme renforce davantage les liens entre les hommes. (153 mots)
+
+#### SÉANCES 7–11 – Production écrite (texte argumentatif)
+**Définition :** La production écrite porte sur une citation extraite du texte support. Elle comporte deux parties : la consigne (étayer ou réfuter) et l'information (thèse + mots-clés).
+
+**Étayer vs Réfuter :**
+- Étayer = développer et appuyer la thèse de l'auteur avec des arguments et exemples nouveaux (synonymes : expliquer, soutenir, démontrer).
+- Réfuter = rejeter la thèse de l'auteur avec des contre-arguments et contre-exemples (synonymes : infirmer, démentir, contester).
+
+**Étapes de la production écrite :**
+1. **Analyse du sujet** : identifier consigne + information ; analyser le verbe introducteur ; dégager thème, thèse et mots-clés.
+2. **Recherche des idées** : trouver 3 à 4 arguments + exemples illustratifs.
+3. **Organisation de l'argumentation** : hiérarchiser les idées, construire un plan cohérent.
+4. **Rédaction d'un paragraphe argumentatif** : Annoncer l'argument → Expliquer → Illustrer → Conclure le paragraphe.
+5. **Introduction** : phrase d'accroche (nom de l'auteur + source + citation entre guillemets) + annonce de la prise de position/plan.
+6. **Conclusion** : bilan + ouverture (facultative).
+
+**Structure d'un paragraphe argumentatif :**
+Thèse → Argument (D'abord / Ensuite / En outre / Enfin) → Explication (Car / En effet / C'est pourquoi) → Exemple (Par exemple / Nous avons pour illustration) → Mini-conclusion ou transition.
+
+**Production écrite modèle complète (texte RIFKIN) :**
+Introduction : Dans son texte intitulé « Aujourd'hui, tout le monde est touriste », publié dans Une nouvelle conscience pour un monde en crise (éd. Nouveaux Horizons, avril 2011), Jérémy RIFKIN affirme que « la multiplication des voyages et des activités touristiques dans le monde est en train de créer de nouvelles relations humaines ». Nous étayerons ce point de vue à travers une argumentation.
+Développement (4 arguments) :
+- Arg1 : suppression des comportements antipathiques entre peuples / disparition du racisme et de l'ethnocentrisme.
+- Arg2 : brassage des peuples / ouverture des frontières (ex. Amazonie, patrimoines UNESCO).
+- Arg3 : échanges d'expériences, d'expertises et de savoirs scientifiques / salons et colloques internationaux.
+- Arg4 : création d'activités commerciales génératrices de devises / hôtellerie, gastronomie, vente de produits locaux.
+Conclusion : En somme, la multiplication des voyages et des activités touristiques travaille au bien-être de l'homme et au rapprochement des peuples. L'essor des médias et du numérique joue également un rôle déterminant dans ce phénomène.
+---`;
 
 const FICHES = [
   {
