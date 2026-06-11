@@ -1042,6 +1042,41 @@ const FICHES = [
       { titre: "La délinquance juvénile : la part des responsabilités", auteur: "Kebe Yacouba", source: "L'Enquête, Fraternité Matin", nbMots: 411, ratioResume: "1/4" },
       { titre: "Le travail",                                            auteur: "Camille Jullian", source: "Jeune Afrique, Nov. 2008",   nbMots: 592, ratioResume: "1/3" }
     ]
+  },
+  {
+    id: "seconde-fr-commentaire-compose",
+    classe: "2nde",
+    matiere: "Français",
+    competence: "Compétence 3 : Traiter des situations relatives à la rédaction des écrits divers",
+    activite: "Expression écrite",
+    lecon: "Leçon 2 : Le commentaire composé",
+    programme: "Toutes séries",
+    particularite: "Commentaire composé partiel (introduction + 1 centre d'intérêt uniquement, conformément au programme de 2nde)",
+    total_seances: 6,
+    seances: [
+      { numero: 1, titre: "Analyse du libellé et construction du sens du texte", habiletes: "Définir le commentaire composé (étude du fond et de la forme), analyser le libellé (tâche + centres d'intérêt), construire le sens du texte (type/nature : récit, dialogue, discours, description, portrait, poème ; tonalité ; thème ; idée générale), repérer les indices textuels (procédés grammaticaux, figures de style) et les interpréter" },
+      { numero: 2, titre: "Organisation des centres d'intérêt",                  habiletes: "Identifier les centres d'intérêt selon l'ordre du libellé, dégager 3-4 sous-titres (sous-thèmes) par regroupement des indices textuels selon leur sens, construire le tableau du plan détaillé (sous-titres / repérages-indices textuels / analyses / interprétations) pour le premier centre d'intérêt, rédiger une phrase conclusive et transitionnelle" },
+      { numero: 3, titre: "Rédaction d'un paragraphe argumentatif",              habiletes: "Identifier les composantes d'un paragraphe argumentatif (idée directrice/sous-thème, explication, illustration par un ou deux indices textuels tirés du texte support, conclusion + annonce du sous-thème suivant) et rédiger un tel paragraphe" },
+      { numero: 4, titre: "Rédaction d'un centre d'intérêt",                     habiletes: "Rédiger un centre d'intérêt complet : phrase introductive annonçant le centre d'intérêt, enchaînement de paragraphes argumentatifs reliés par des connecteurs logiques/organisateurs textuels, conclusion partielle et transition vers le centre d'intérêt suivant" },
+      { numero: 5, titre: "Rédaction d'une introduction",                        habiletes: "Rédiger une introduction en un seul paragraphe comprenant : le contexte général/l'amorce (approche thématique, biographique, littéraire...), la présentation du texte (auteur, œuvre, genre, date de publication, nature/tonalité/idée générale du texte), et l'annonce du plan/des centres d'intérêt" },
+      { numero: 6, titre: "Rédaction d'un commentaire composé partiel",          habiletes: "Identifier les parties du libellé (tâche + centres d'intérêt), élaborer le plan détaillé (introduction + développement limité au centre d'intérêt 1 pour la 2nde), rédiger un commentaire composé partiel complet : introduction + premier centre d'intérêt, en exploitant le texte sans dissocier le fond de la forme" }
+    ],
+    textes_supports: [
+      {
+        titre: "Les enfants de la rue",
+        auteur: "Sylvain Kean Zoh",
+        oeuvre: "Le printemps de la fleur fanée",
+        source: "éditions NEI/CEDA, 2009",
+        consigne: "Vous ferez de ce texte un commentaire composé. Vous étudierez comment l'auteur relate la marche épique du narrateur-personnage tout en faisant transparaître un bel avenir pour les enfants de la rue.",
+        centresInteret: ["La marche épique du narrateur-personnage", "Le bel avenir pour les enfants de la rue"]
+      },
+      {
+        titre: "La Plaie (extrait)",
+        auteur: "Malick Fall",
+        source: "Albin Michel, 1967",
+        consigne: "Vous ferez un commentaire composé de ce texte. Vous montrerez comment à travers le style, l'auteur fait de la condition du narrateur une situation pathétique."
+      }
+    ]
   }
 ];
 
