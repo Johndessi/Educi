@@ -796,6 +796,33 @@ const FICHES = [
         ]
       }
     ]
+  },
+  {
+    id: "premiere-fr-l2",
+    classe: "1ère",
+    matiere: "Français",
+    lecon: 2,
+    titre: "Questions + Résumé + Production écrite",
+    competence: "Compétence 3 : Traiter des situations relatives à la rédaction des écrits divers",
+    activite: "Expression écrite",
+    programme: "Toutes séries",
+    total_seances: 10,
+    seances: [
+      { numero: 1,  titre: "Réponses aux questions/consignes",                       habiletes: "Identifier, analyser et répondre aux consignes de compréhension d'un texte argumentatif (thème, thèse, problèmes, idée générale)" },
+      { numero: 2,  titre: "Identification de la situation d'argumentation",          habiletes: "Identifier le thème, la thèse, les indices d'énonciation, les temps verbaux, les connecteurs logiques, la structure du texte et déterminer la visée argumentative" },
+      { numero: 3,  titre: "Sélection des idées essentielles et enchaînement logique",habiletes: "Identifier les connecteurs logiques, distinguer thèse/arguments/exemples, sélectionner les idées essentielles et établir un enchaînement logique entre elles" },
+      { numero: 4,  titre: "Reformulation des idées essentielles",                    habiletes: "Utiliser les techniques de réduction de texte (termes génériques, synonymes, transformation de phrases complexes en phrases simples) pour reformuler les idées essentielles" },
+      { numero: 5,  titre: "Rédaction du résumé",                                     habiletes: "Appliquer la technique du résumé, rédiger le résumé en un seul bloc sans introduction/développement/conclusion, respecter le nombre de mots et la marge de tolérance de ±10%" },
+      { numero: 7,  titre: "Analyse du sujet et recherche des idées",                 habiletes: "Identifier la composition du sujet (information + consigne), examiner thème/thèse/mots-clés, distinguer étayer et réfuter, reformuler la thèse, rechercher des arguments liés au sujet" },
+      { numero: 8,  titre: "Organisation de l'argumentation",                         habiletes: "Classer les arguments et les illustrer par des exemples, élaborer le plan du développement" },
+      { numero: 9,  titre: "Rédaction d'un paragraphe argumentatif",                  habiletes: "Identifier les composantes d'un paragraphe argumentatif (annoncer, expliquer, illustrer, conclure l'argument) et rédiger un paragraphe complet" },
+      { numero: 10, titre: "Rédaction de l'introduction et de la conclusion",         habiletes: "Identifier les composantes de l'introduction (accroche : auteur, source, citation + annonce de la prise de position) et de la conclusion (bilan + ouverture facultative), rédiger les deux" },
+      { numero: 11, titre: "Rédaction d'une production écrite complète",              habiletes: "Rédiger une production écrite argumentative complète (introduction, développement structuré en paragraphes argumentatifs, conclusion) à partir d'une citation tirée du texte support" }
+    ],
+    textes_supports: [
+      { titre: "Du tourisme mondial",         auteur: "E. Mestiri",   source: "Le Monde, 20 septembre 1985",                          nbMots: 599 },
+      { titre: "La conservation de la nature",auteur: "Jean Dorst",   source: "La nature dé-naturée, Ed. Le Seuil, Points, 1970",      nbMots: 608 }
+    ]
   }
 ];
 
