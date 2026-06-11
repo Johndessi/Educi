@@ -599,6 +599,151 @@ const FICHES = [
       "Jérémy RIFKIN, «Aujourd'hui, tout le monde est touriste», Une nouvelle conscience pour un monde en crise, éd. Nouveaux Horizons, avril 2011 (678 mots)",
       "Valentin MBOUGUENG, «Où vont les négociations climatiques internationales ?», Fraternité Matin N°14422, décembre 2012 (742 mots)"
     ]
+  },
+  {
+    id: "premiere-fr-commentaire-compose",
+    classe: "1ère",
+    matiere: "Français",
+    competence: "Compétence 3 : Traiter des situations relatives à la rédaction des écrits divers",
+    activite: "Expression écrite",
+    lecon: "Leçon 1 : Le commentaire composé",
+    programme: "Toutes séries",
+    situation: "Au cours de leurs recherches à la bibliothèque, des élèves de la Première découvrent dans un ouvrage un sujet de commentaire composé. Curieux de comprendre le fonctionnement de cet exercice, ces élèves s'organisent pour analyser le libellé, identifier les centres d'intérêt, rechercher et organiser les idées en vue de rédiger le commentaire composé.",
+    textes_supports: [
+      "Texte 1 : extrait narratif sur l'immigration clandestine (personnage Viepp, voyage vers l'Europe)",
+      "Texte 2 : poème « Rose noire » (portrait de la femme noire et influence du temps sur sa beauté)"
+    ],
+    seances: [
+      {
+        numero: 1,
+        titre: "Analyse du libellé et construction du sens du texte",
+        habiletes: [
+          "Identifier les différents centres d'intérêt",
+          "Expliquer les centres d'intérêt",
+          "Relever les indices textuels pertinents du texte",
+          "Analyser leur(s) effet(s) de sens",
+          "Construire le sens du texte (type, tonalité, thème, idée générale)"
+        ],
+        contenu: [
+          {
+            titre: "I. Définition",
+            texte: "Le commentaire composé est un exercice argumenté visant à mettre en valeur la qualité d'un texte. Il fait appel au fond (les idées) et à la forme (procédés grammaticaux, figures de style…). Commenter, c'est révéler la signification profonde d'un texte en allant au-delà de l'explicite."
+          },
+          {
+            titre: "II. Analyse du libellé",
+            texte: "Le libellé comprend deux composantes :\n1. La tâche : indique le travail à accomplir (ex. : « Faites un commentaire composé de ce texte »).\n2. Les centres d'intérêt (CI) : indiquent les grandes orientations du développement. Chaque CI est un thème à exploiter à l'aide d'indices textuels (procédés grammaticaux, figures de style…)."
+          },
+          {
+            titre: "III. Construction du sens du texte",
+            texte: "1. Le type ou la nature du texte : récit, dialogue, discours, description, portrait, poème…\n2. La tonalité : sentiment ou impression ressenti après la lecture (lyrique, épique, tragique, comique…).\n3. Le thème : ce dont parle le texte.\n4. L'idée générale : ce que dit l'auteur à propos du thème."
+          },
+          {
+            titre: "IV. Les indices textuels",
+            texte: "Ce sont les éléments pertinents sélectionnés en fonction des centres d'intérêt. Types d'indices :\n- Lexicaux : champ lexical, niveau de langue, mots connotés.\n- Grammaticaux : types et formes de phrases, modes et temps verbaux, pronoms.\n- Stylistiques : figures de style (comparaison, métaphore, hyperbole, anaphore…).\n- D'énonciation : pronoms personnels, marques de subjectivité."
+          }
+        ]
+      },
+      {
+        numero: 2,
+        titre: "Organisation des centres d'intérêt",
+        habiletes: [
+          "Organiser les centres d'intérêt selon les indices textuels relevés",
+          "Élaborer le plan détaillé : sous-titres, idées convergentes, moyens utilisés"
+        ],
+        contenu: [
+          {
+            titre: "I. Organisation des centres d'intérêt",
+            texte: "Les indices textuels relevés sont répartis selon les centres d'intérêt annoncés dans le libellé. Étapes :\n1. La recherche des sous-titres : regrouper les interprétations voisines pour dégager 2 à 3 sous-thèmes par CI.\n2. Le plan détaillé : repérer les citations illustrant chaque CI, indiquer les techniques littéraires et leurs interprétations, regrouper les interprétations convergentes en sous-parties (2 minimum, 4 maximum).\n3. Vérifier la cohérence : chaque sous-partie doit être illustrée par un indice textuel précis tiré du texte support."
+          }
+        ]
+      },
+      {
+        numero: 3,
+        titre: "Rédaction d'un paragraphe",
+        habiletes: [
+          "Identifier les composantes d'un paragraphe argumentatif",
+          "Rédiger l'idée directrice",
+          "Rédiger l'explication et l'illustration",
+          "Rédiger la transition vers le paragraphe suivant"
+        ],
+        contenu: [
+          {
+            titre: "I. Les composantes d'un paragraphe argumentatif",
+            texte: "1. L'idée directrice (sous-thème) : l'argument développé dans le paragraphe, énoncé en une phrase claire.\n2. L'explication : dire ce que l'idée directrice signifie exactement, pourquoi elle apparaît dans le texte.\n3. L'illustration : un ou deux indices textuels (citations) tirés du texte, suivis de leur analyse stylistique et interprétation.\n4. La conclusion du sous-thème et annonce du suivant : reprendre l'idée développée et établir le lien logique avec le paragraphe suivant."
+          },
+          {
+            titre: "II. Rédaction d'un paragraphe (exemple)",
+            texte: "Exemple sur le texte 1 (immigration clandestine) :\nIdée directrice : Le désespoir pousse le personnage à risquer sa vie pour rejoindre l'Europe.\nExplication : Viepp incarne la détresse de millions de migrants qui fuient misère et instabilité en cherchant une vie meilleure.\nIllustration : [indice textuel du texte] → analyse de la figure de style ou du procédé grammatical → interprétation.\nTransition : Si le désespoir explique ce départ, qu'en est-il des conditions du voyage lui-même ?"
+          }
+        ]
+      },
+      {
+        numero: 4,
+        titre: "Rédaction d'un centre d'intérêt",
+        habiletes: [
+          "Rédiger la phrase introductive du centre d'intérêt",
+          "Enchaîner plusieurs paragraphes argumentatifs avec cohérence",
+          "Rédiger la conclusion partielle du centre d'intérêt"
+        ],
+        contenu: [
+          {
+            titre: "I. Structure d'un centre d'intérêt",
+            texte: "Un centre d'intérêt (CI) se compose de :\n1. Une phrase introductive : annonce le thème du CI à l'aide d'un connecteur logique (Premièrement / En premier lieu / D'emblée…).\n2. Les paragraphes argumentatifs : 2 à 4 sous-thèmes, chacun rédigé selon la méthode vue en séance 3.\n3. Une conclusion partielle : synthèse du CI + question rhétorique ou annonce du CI suivant."
+          },
+          {
+            titre: "II. Exemple de rédaction d'un CI (texte 2 – « Rose noire »)",
+            texte: "CI 1 – Le portrait de la femme noire :\nPhrase introductive : « Dans un premier temps, le poète dresse le portrait physique et moral de la femme noire. »\nSous-thème 1 : beauté physique → indices textuels → analyse → interprétation.\nSous-thème 2 : force intérieure → indices textuels → analyse → interprétation.\nConclusion partielle : « En définitive, la femme noire est célébrée dans toute sa splendeur. Mais cette beauté est-elle éternelle ? »"
+          }
+        ]
+      },
+      {
+        numero: 5,
+        titre: "Rédaction d'une introduction et d'une conclusion",
+        habiletes: [
+          "Rédiger l'introduction (amorce, présentation du texte, annonce du plan)",
+          "Rédiger la conclusion (bilan, jugement critique, ouverture)"
+        ],
+        contenu: [
+          {
+            titre: "I. L'introduction",
+            texte: "Elle se rédige en un seul paragraphe et comprend trois parties :\n1. L'amorce (contexte général) : approche thématique, mouvement littéraire, contexte social/culturel ou citation en rapport avec le texte.\n2. La présentation du texte : auteur (nom, nationalité, époque), œuvre (titre, genre, date de publication), nature du texte, tonalité dominante, idée générale.\n3. L'annonce du plan : rappel des centres d'intérêt dans l'ordre du développement."
+          },
+          {
+            titre: "II. La conclusion",
+            texte: "Elle comprend trois parties :\n1. Le bilan : synthèse des deux (ou trois) centres d'intérêt développés.\n2. Le jugement critique : prise de position personnelle sur le thème ou la valeur du texte.\n3. L'ouverture : rapprochement avec un autre texte traitant du même thème, ou élargissement à une problématique plus large."
+          }
+        ]
+      },
+      {
+        numero: 6,
+        titre: "Rédaction du commentaire composé (texte 1)",
+        habiletes: [
+          "Identifier les parties du libellé",
+          "Élaborer le plan détaillé",
+          "Rédiger intégralement le commentaire composé du texte support 1 (immigration clandestine)"
+        ],
+        contenu: [
+          {
+            titre: "I. Application complète – Texte 1",
+            texte: "Texte support : extrait narratif sur l'immigration clandestine (personnage Viepp, voyage vers l'Europe).\n1. Analyse du libellé : identifier la tâche et les centres d'intérêt.\n2. Plan détaillé : organiser les indices textuels par CI, élaborer les sous-thèmes.\n3. Rédaction : Introduction → CI 1 (paragraphes + conclusion partielle) → CI 2 (paragraphes + conclusion partielle) → Conclusion.\nLe commentaire composé lie fond et forme à chaque analyse : tout procédé stylistique doit être immédiatement interprété et relié au sens global du texte."
+          }
+        ]
+      },
+      {
+        numero: 7,
+        titre: "Rédaction du commentaire composé (texte 2 – transfert de compétence)",
+        habiletes: [
+          "Transférer les compétences acquises sur un nouveau texte",
+          "Rédiger intégralement le commentaire composé du texte support 2 (« Rose noire »)"
+        ],
+        contenu: [
+          {
+            titre: "I. Application complète – Texte 2",
+            texte: "Texte support : poème « Rose noire » — portrait de la femme noire et influence du temps sur sa beauté.\n1. Analyse du libellé : identifier la tâche et les centres d'intérêt spécifiques au texte poétique.\n2. Spécificités du poème : versification (vers, rimes, strophes), figures de style dominantes (métaphore, personnification, comparaison), registre lyrique.\n3. Plan détaillé et rédaction complète : Introduction → CI 1 → CI 2 → Conclusion.\nCette séance constitue un transfert de compétence : l'élève applique seul la démarche complète sur un texte de nature différente (poétique vs narratif)."
+          }
+        ]
+      }
+    ]
   }
 ];
 
