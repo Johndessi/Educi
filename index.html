@@ -5150,6 +5150,129 @@ Structure ta correction ainsi :
         rappel_methode: "Étayer = soutenir la thèse de l'auteur avec de nouveaux arguments. Réfuter = la contester. Résumé = 1/4 du texte original ±10%, un seul bloc, nombre de mots obligatoire. Introduction = accroche (auteur + source + citation) + annonce de position."
       };
     }
+    // === 2nde Toutes séries : Questions + Résumé + Production écrite ===
+    if (exercice === "questions_resume_production_seconde" || exercice === "seconde_fr_resume") {
+      grille = {
+        titre: "Grille de correction – Questions + Résumé + Production écrite (2nde)",
+        bareme_total: 20,
+        criteres: [
+          {
+            label: "I. Questions – Identification du thème (1 pt)",
+            points: 1,
+            indicateurs: [
+              "Le thème principal du texte est correctement identifié",
+              "La réponse est rédigée en phrase complète",
+              "(-0,5 pt si réponse incomplète ou hors sujet)"
+            ]
+          },
+          {
+            label: "I. Questions – Thèse et thèse contraire (1 pt)",
+            points: 1,
+            indicateurs: [
+              "La thèse de l'auteur est correctement identifiée ou reformulée",
+              "La thèse contraire est mentionnée si demandée",
+              "(-0,5 pt si thèse déformée ou absente)"
+            ]
+          },
+          {
+            label: "I. Questions – Visée argumentative / problèmes (1 pt)",
+            points: 1,
+            indicateurs: [
+              "La visée argumentative ou les perspectives/problèmes dégagés sont correctement formulés",
+              "La réponse s'appuie sur des éléments précis du texte",
+              "(-0,5 pt si réponse vague ou inexacte)"
+            ]
+          },
+          {
+            label: "I. Questions – Explication d'expression en contexte (1 pt)",
+            points: 1,
+            indicateurs: [
+              "L'expression est expliquée dans le sens que lui donne l'auteur dans ce texte précis",
+              "La réponse est rédigée en phrase complète sans recopier l'expression telle quelle",
+              "(-1 pt si explication hors contexte ou non rédigée)"
+            ]
+          },
+          {
+            label: "II. Résumé – Fond : idées essentielles (4 pts)",
+            points: 4,
+            indicateurs: [
+              "Toutes les idées essentielles du texte sont présentes dans le résumé",
+              "Le schéma argumentatif (thèse + arguments) est respecté",
+              "Aucun contresens, aucune opinion personnelle ajoutée",
+              "(-0,5 pt par idée essentielle manquante ou déformée)"
+            ]
+          },
+          {
+            label: "II. Résumé – Toilettage réussi (1,5 pt)",
+            points: 1.5,
+            indicateurs: [
+              "Absence d'exemples illustratifs, digressions, énumérations et citations recopiées du texte",
+              "Absence de chiffres, répétitions et explications dispensables",
+              "(-0,5 pt par élément dispensable présent)"
+            ]
+          },
+          {
+            label: "II. Résumé – Reformulation personnelle (1,5 pt)",
+            points: 1.5,
+            indicateurs: [
+              "Les idées sont reformulées avec un vocabulaire personnel (synonymes, mots englobants, phrases simplifiées)",
+              "La syntaxe du texte original est transformée radicalement (aucun recopiage de structure)",
+              "(-1 pt si reformulation insuffisante ou syntaxe recopiée)"
+            ]
+          },
+          {
+            label: "II. Résumé – Volume et présentation (1 pt)",
+            points: 1,
+            indicateurs: [
+              "Volume respecté : 1/4 ou 1/3 du texte original selon la consigne, avec ±10% de tolérance",
+              "Nombre de mots indiqué en fin de résumé",
+              "Résumé présenté en un seul bloc sans sous-titres ni numérotation",
+              "(-0,5 pt par tranche de 10% de dépassement supplémentaire)"
+            ]
+          },
+          {
+            label: "III. Production – Introduction (1,5 pt)",
+            points: 1.5,
+            indicateurs: [
+              "Phrase d'accrochage complète : auteur + titre/source + date de publication",
+              "Insertion de la thèse à étayer/réfuter/discuter (citation ou reformulation fidèle)",
+              "Annonce claire du plan / de la prise de position",
+              "(-0,5 pt par composante absente)"
+            ]
+          },
+          {
+            label: "III. Production – Développement (4 pts)",
+            points: 4,
+            indicateurs: [
+              "Arguments pertinents et variés, issus de domaines différents (social, éducatif, économique, familial…)",
+              "Chaque argument est accompagné d'une explication et d'un exemple concret",
+              "Les arguments sont cohérents avec la prise de position (étayer, réfuter ou discuter)",
+              "(2 pts par argument valide et bien développé, max 4 pts)"
+            ]
+          },
+          {
+            label: "III. Production – Structure et connecteurs (1,5 pt)",
+            points: 1.5,
+            indicateurs: [
+              "Chaque paragraphe suit la structure : argument → explication → exemple",
+              "Connecteurs logiques correctement utilisés entre les paragraphes et à l'intérieur",
+              "(-0,5 pt par paragraphe mal structuré ou connecteur manquant)"
+            ]
+          },
+          {
+            label: "III. Production – Conclusion (1 pt)",
+            points: 1,
+            indicateurs: [
+              "Bilan synthétisant les arguments développés",
+              "Ouverture pertinente actualisant le sujet",
+              "(-0,5 pt si bilan absent ; ouverture non pénalisante si absente)"
+            ]
+          }
+        ],
+        conseils_prof: "Vérifier que le résumé est en un seul bloc sans titre ni numérotation et que le nombre de mots est indiqué. Contrôler que le toilettage a bien éliminé les éléments dispensables et que la reformulation transforme réellement la syntaxe originale. S'assurer que l'introduction contient la phrase d'accrochage complète avec auteur, source et date.",
+        rappel_methode: "Étayer = soutenir la thèse. Réfuter = la rejeter. Discuter = soutenir puis réfuter. Résumé = 1/4 ou 1/3 ±10%, un seul bloc, nombre de mots obligatoire. Reformulation = transformer la syntaxe radicalement (interdiction de recopier la structure du texte)."
+      };
+    }
     if (file.type.startsWith('image/')) {
       const base64 = await fileToBase64(file);
       messages = [{ role: 'user', content: [
