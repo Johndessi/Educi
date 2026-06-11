@@ -4895,6 +4895,43 @@ Structure ta correction ainsi :
 3. 💡 Conseils personnalisés sur la méthode du commentaire composé (libellé, indices textuels, organisation des CI)
 4. 📊 Note /20 avec détail par section`;
     }
+    // === 1ère : Dissertation littéraire ===
+    if (matiere === 'Français' && classe.includes('1ère')) {
+      systemPrompt += `\n\nGRILLE CORRECTION DISSERTATION LITTÉRAIRE (1ère) — NOTE /20 :
+
+INTRODUCTION /3 :
+□ Généralité/amenée du sujet pertinente (par analogie, contraste ou définition) (+1)
+□ Énoncé du sujet correct (citation reproduite ou reformulée fidèlement, mention de l'auteur si donné) (+1)
+□ Problématique claire + annonce du plan cohérente avec le type de sujet (inventaire ou dialectique) (+1)
+
+DÉVELOPPEMENT /13 :
+□ Respect du type de plan exigé par la consigne (inventaire/explicatif ou dialectique thèse/antithèse) (+2)
+□ Pertinence et nombre suffisant d'arguments en lien direct avec le sujet et la problématique (+4)
+□ Qualité des illustrations : exemples précis et exacts tirés d'œuvres littéraires (de préférence africaines), avec mention de l'œuvre et/ou de l'auteur (+4)
+□ Structure des paragraphes argumentatifs (énoncé, explication, illustration, conclusion de l'argument) (+2)
+□ Présence et qualité de la transition entre les parties (conclusion partielle + annonce de la suite) (+1)
+
+CONCLUSION /3 :
+□ Bilan synthétique cohérent avec le développement (+1,5)
+□ Jugement/point de vue personnel répondant à la problématique de l'introduction (+1)
+□ Ouverture pertinente si présente (+0,5 — bonus qualitatif, non pénalisant si absente)
+
+LANGUE ET EXPRESSION /1 :
+□ Correction grammaticale et orthographique, vocabulaire littéraire précis, fluidité des connecteurs logiques (+1)
+
+📋 CHECKLIST MÉTHODE :
+✓ Le type de plan (inventaire ou dialectique) est-il bien respecté ?
+✓ Chaque argument est-il illustré par un exemple littéraire précis (œuvre + auteur) ?
+✓ Chaque paragraphe suit-il : énoncé → explication → illustration → conclusion ?
+✓ La transition est-elle présente entre les deux parties du plan dialectique ?
+✓ L'introduction est-elle rédigée en un seul paragraphe avec les 4 composantes ?
+
+Structure ta correction ainsi :
+1. ✅ Points forts (introduction, développement, conclusion, langue)
+2. ❌ Points à améliorer section par section
+3. 💡 Conseils personnalisés sur la méthode (plan, arguments, exemples littéraires africains pertinents à suggérer si manquants)
+4. 📊 Note /20 avec détail par section`;
+    }
     // === LEÇON 3 TERMINALE : Questions + Résumé + Production écrite ===
     if (exercice === "resume_argumentatif_terminale" || exercice === "tle_fr_l3_resume") {
       grille = {
