@@ -458,7 +458,64 @@ EXEMPLE DE RÉFÉRENCE — INTRODUCTION : "Dans son texte intitulé 'Du tourisme
 EXEMPLE DE RÉFÉRENCE — CONCLUSION : "De ce qui précède, nous retenons que sur le plan économique, ce tourisme nécessite de gros moyens et entraine la cherté de la vie. Il y a lieu donc que cette forme de tourisme change."
 
 Quand un élève demande de l'aide sur cette leçon (1ère, Questions + Résumé + Production écrite), guide-le étape par étape selon cette méthodologie, en t'appuyant sur les exemples ci-dessus comme modèles de référence sans les recopier tels quels pour son propre texte.
-=== FIN 1ère Leçon 2 : Questions + Résumé + Production écrite ===`;
+=== FIN 1ère Leçon 2 : Questions + Résumé + Production écrite ===
+
+---
+=== 1ère Toutes séries — Leçon 3 : La dissertation littéraire ===
+
+DÉFINITION
+La dissertation littéraire est un exercice de réflexion sur une idée, une citation ou une opinion portant sur une problématique littéraire. Elle n'emprunte ses connaissances qu'au domaine de la littérature (œuvres, auteurs, courants, genres).
+
+I. ANALYSE DU SUJET
+1. Types de sujets :
+   - Sujet AVEC citation : composé de l'information (la citation, le point de vue d'un auteur/critique) et de la consigne (les tâches à faire, indiquant le plan à suivre : expliquez, discutez, etc.)
+   - Sujet SANS citation : la consigne est enchâssée dans l'information (ex : « Le personnage de roman donne au lecteur un accès privilégié à la connaissance du cœur humain. Dans quelle mesure ? »)
+2. Éléments essentiels (mots-clés) : identifier et analyser le sens des mots-clés du sujet (ex : « littérature négro-africaine », « remise en cause », « remise en place »).
+3. Reformulation du sujet : reprendre le sujet avec d'autres mots en gardant le sens (ex : « La littérature négro-africaine est une littérature qui critique, dénonce pour corriger. »)
+4. La problématique : se poser 3 questions successives —
+   - D'abord : de quoi parle le sujet ? Quel est le problème soulevé ? (le problème)
+   - Ensuite : qu'en dit l'auteur ? Quel est son point de vue ? (la thèse)
+   - Enfin : existe-t-il un point de vue différent ou opposé ? (l'antithèse)
+
+II. RECHERCHE DES IDÉES
+Interroger sa culture littéraire pour trouver des arguments soutenant la thèse, puis l'antithèse, et les illustrer systématiquement par des exemples précis tirés d'œuvres littéraires (africaines de préférence) lues ou étudiées. Chaque argument doit être accompagné d'au moins un exemple concret (titre de l'œuvre, auteur, élément précis de l'intrigue ou de la forme).
+
+III. ÉLABORATION DU PLAN
+1. Types de plans :
+   - Plan inventaire/explicatif : argumentation pour expliquer le bien-fondé d'une affirmation. Mots-clés du libellé : expliquez, justifiez, montrez, commentez.
+   - Plan dialectique : thèse (montrer la véracité de l'affirmation) + antithèse (montrer les limites/insuffisances). Mots-clés : appréciez, analysez, discutez, commentez et discutez, partagez-vous cette affirmation, approuvez-vous, que vous inspire…
+2. Construction du plan : organiser arguments et exemples en paragraphes hiérarchisés avec transitions entre les parties.
+3. Le paragraphe argumentatif comporte : énoncé de l'argument → explication → illustration par 1-2 exemples précis → conclusion de l'argument et annonce du suivant (connecteurs : d'abord, en outre, ensuite, enfin…).
+4. La transition entre deux parties conclut la première ET annonce la deuxième (conclusion partielle + question ouvrant sur la suite).
+
+IV. RÉDACTION DU DÉVELOPPEMENT
+Structure pour un plan dialectique :
+- Phrase introductive énonçant l'idée directrice de la 1ère partie (la thèse)
+- 1er, 2e, 3e paragraphes argumentatifs (argument + 1-2 exemples chacun)
+- Phrase conclusive et transitionnelle (bilan partiel + annonce de la 2e partie)
+- Phrase introductive énonçant l'idée directrice de la 2e partie (l'antithèse)
+- Paragraphes argumentatifs de la 2e partie
+- Phrase conclusive de la 2e partie
+
+EXEMPLE DE RÉFÉRENCE (paragraphe argumentatif) : « La littérature négro-africaine est un moyen de critique et de dénonciation de certaines pratiques telles que l'excision (énoncé). Celle-ci existe encore dans certaines contrées africaines (explication). Fatou Kéita en parle dans son œuvre Rebelle qui décrit les souffrances causées par les mutilations génitales pour inviter la société à mettre fin à cette pratique (illustration). Ceci, en vue d'amener les défenseurs de cette pratique à changer de comportement (conclusion de l'argument). »
+
+V. RÉDACTION DE L'INTRODUCTION
+Composantes :
+1. Généralités/perspective générale : amener le sujet par analogie (idée voisine plus générale), par contraste (idée opposée), ou par une définition orientée.
+2. Énoncé du sujet : reproduire la citation textuellement si courte, ou la reformuler avec ses expressions clés si longue.
+3. La problématique : reprendre sous forme de questions les problèmes soulevés (peut servir d'annonce du plan).
+4. Annonce du plan : présenter la démarche du développement.
+
+EXEMPLE DE RÉFÉRENCE : « La question de la fonction de la littérature a toujours été diversement appréciée dans le monde littéraire. Si pour les uns, la littérature négro-africaine a une dimension purement ludique, didactique ou lyrique, pour les autres, elle est un combat, une lutte, un engagement. [Auteur cité] s'inscrit dans cette dernière vision en affirmant : "citation". Autrement dit, [reformulation]. Ainsi, le sujet pose ici le problème de [problème]. Dès lors, dans quelles mesures… ? N'aborde-t-elle pas aussi d'autres questions ? Telles sont les préoccupations auxquelles nous tenterons de répondre. »
+
+VI. RÉDACTION DE LA CONCLUSION
+Composantes (dans l'ordre) :
+1. Le bilan : synthèse de ce qui a été démontré dans le développement.
+2. Le jugement/point de vue personnel : avis personnel de l'élève répondant à la problématique.
+3. L'ouverture (facultative) : mise en relation avec un fait actuel, un genre littéraire, une œuvre, ou une grande problématique littéraire.
+
+Quand un élève demande de l'aide sur cette leçon (1ère, dissertation littéraire), guide-le étape par étape selon cette méthodologie, en l'aidant notamment à trouver des arguments et des exemples tirés d'œuvres littéraires africaines pertinentes pour son sujet, sans imposer systématiquement les exemples cités ci-dessus.
+=== FIN 1ère Leçon 3 : La dissertation littéraire ===`;
 
 const FICHES = [
   {
