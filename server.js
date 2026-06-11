@@ -857,6 +857,39 @@ const FICHES = [
       { titre: "Du tourisme mondial",         auteur: "E. Mestiri",   source: "Le Monde, 20 septembre 1985",                          nbMots: 599 },
       { titre: "La conservation de la nature",auteur: "Jean Dorst",   source: "La nature dé-naturée, Ed. Le Seuil, Points, 1970",      nbMots: 608 }
     ]
+  },
+  {
+    id: "premiere-fr-dissertation-litteraire",
+    classe: "1ère",
+    matiere: "Français",
+    competence: "Compétence 3 : Traiter des situations relatives à la rédaction des écrits divers",
+    activite: "Expression écrite",
+    lecon: "Leçon 3 : La dissertation littéraire",
+    programme: "Toutes séries",
+    total_seances: 6,
+    sujets: [
+      {
+        numero: 1,
+        citation: "La littérature négro-africaine est une littérature de remise en cause et de remise en place.",
+        auteurCitation: "Emmanuel Dongala",
+        consigne: "Dans un développement argumenté et illustré d'exemples précis tirés d'œuvres littéraires lues ou étudiées, expliquez et discutez ces propos.",
+        typePlan: "dialectique (thèse/antithèse)"
+      },
+      {
+        numero: 2,
+        citation: "Romanciers révolutionnaires, poètes militants, dramaturges engagés, tout a été dit pour célébrer la littérature. Et pourtant l'écrivain n'est qu'un moustique qui bourdonne autour d'une pyramide.",
+        consigne: "Dans un développement organisé et illustré d'exemples tirés d'œuvres littéraires étudiées ou lues, dites ce que vous inspire cette opinion.",
+        typePlan: "dialectique"
+      }
+    ],
+    seances: [
+      { numero: 1, titre: "Analyse du sujet",                             habiletes: "Définir la dissertation littéraire, distinguer les types de sujets (avec citation : information + consigne ; sans citation : consigne enchâssée), identifier les éléments essentiels (mots-clés) et leur sens, reformuler le sujet, dégager la problématique (problème, thèse, antithèse)" },
+      { numero: 2, titre: "Recherche des idées",                          habiletes: "Mobiliser sa culture littéraire pour trouver des arguments soutenant la thèse et l'antithèse, illustrer chaque argument par des exemples précis tirés d'œuvres littéraires africaines" },
+      { numero: 3, titre: "Élaboration du plan",                          habiletes: "Distinguer le plan inventaire/explicatif (expliquez, justifiez, montrez, commentez) et le plan dialectique (appréciez, discutez, partagez-vous), construire le plan en organisant arguments et exemples en paragraphes argumentatifs (énoncé, explication, illustration, conclusion/transition), identifier les transitions entre parties" },
+      { numero: 4, titre: "Rédaction d'une partie du développement",      habiletes: "Rédiger une partie du développement en respectant sa structure : phrase introductive énonçant l'idée directrice, paragraphes argumentatifs (argument + 1-2 exemples chacun), phrase conclusive et transitionnelle" },
+      { numero: 5, titre: "Rédaction d'une introduction et d'une conclusion", habiletes: "Rédiger une introduction (généralités/perspective générale, énoncé du sujet/citation, problématique, annonce du plan) et une conclusion (bilan, jugement personnel, ouverture)" },
+      { numero: 6, titre: "Rédaction d'une dissertation littéraire complète",  habiletes: "Rédiger une dissertation littéraire intégrale (introduction, développement structuré en deux parties thèse/antithèse avec paragraphes argumentatifs et exemples, conclusion)" }
+    ]
   }
 ];
 
