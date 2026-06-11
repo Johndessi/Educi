@@ -4827,7 +4827,7 @@ Structure ta correction ainsi :
 4. 📊 Note estimée sur 20
 
 Utilise un langage adapté au niveau ${classe}.`;
-    if (matiere === 'Français' && (userMessage.toLowerCase().includes('dissertation'))) {
+    if (matiere === 'Français' && (file.name.toLowerCase().includes('dissertation') || classe.toLowerCase().includes('tle') || classe.toLowerCase().includes('terminale'))) {
       systemPrompt += `\n\nGRILLE CORRECTION DISSERTATION LITTÉRAIRE (Terminale A/D) — NOTE /20 :
 
 INTRODUCTION /4 :
@@ -4856,6 +4856,44 @@ LANGUE ET STYLE /3 :
 □ Connecteurs logiques bien utilisés (+1)
 □ Style clair et phrases bien construites (+1)
 □ Vocabulaire littéraire approprié (+0,5)`;
+    }
+    // === 1ère : Commentaire composé ===
+    if (matiere === 'Français' && classe.includes('1ère')) {
+      systemPrompt += `\n\nGRILLE CORRECTION COMMENTAIRE COMPOSÉ (1ère) — NOTE /20 :
+
+INTRODUCTION /4 :
+□ Amorce/contexte général pertinent et en rapport avec le texte (+1)
+□ Présentation du texte : auteur, œuvre, nature/titre du texte, tonalité (+2)
+□ Annonce claire du plan / des centres d'intérêt (+1)
+
+DÉVELOPPEMENT /12 (6 pts par centre d'intérêt) :
+□ CI 1 – Identification correcte des sous-thèmes (+2)
+□ CI 1 – Citations d'indices textuels pertinents et variés (+2)
+□ CI 1 – Analyse/interprétation reliant indice → sens du CI (+2)
+□ CI 2 – Identification correcte des sous-thèmes (+2)
+□ CI 2 – Citations d'indices textuels pertinents et variés (+2)
+□ CI 2 – Analyse/interprétation reliant indice → sens du CI (+2)
+
+CONCLUSION /3 :
+□ Bilan synthétique des centres d'intérêt traités (+1)
+□ Jugement critique / point de vue personnel argumenté (+1)
+□ Ouverture pertinente vers une autre œuvre ou texte (+1)
+
+EXPRESSION ET LANGUE /1 :
+□ Correction grammaticale et orthographique, fluidité, paragraphes bien délimités (+1)
+
+📋 CHECKLIST MÉTHODE :
+✓ Le fond et la forme sont-ils analysés ensemble (pas dissociés) ?
+✓ Chaque indice textuel cité est-il immédiatement interprété ?
+✓ Les paragraphes suivent-ils : idée directrice → explication → illustration → transition ?
+✓ L'introduction est-elle rédigée en un seul paragraphe ?
+✓ Les connecteurs logiques assurent-ils la cohérence entre les parties ?
+
+Structure ta correction ainsi :
+1. ✅ Points forts (introduction, développement, conclusion, langue)
+2. ❌ Points à améliorer section par section
+3. 💡 Conseils personnalisés sur la méthode du commentaire composé (libellé, indices textuels, organisation des CI)
+4. 📊 Note /20 avec détail par section`;
     }
     // === LEÇON 3 TERMINALE : Questions + Résumé + Production écrite ===
     if (exercice === "resume_argumentatif_terminale" || exercice === "tle_fr_l3_resume") {
