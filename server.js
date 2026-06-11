@@ -947,6 +947,31 @@ const FICHES = [
       { numero: 5, titre: "Rédaction d'une introduction et d'une conclusion", habiletes: "Rédiger une introduction (généralités/perspective générale, énoncé du sujet/citation, problématique, annonce du plan) et une conclusion (bilan, jugement personnel, ouverture)" },
       { numero: 6, titre: "Rédaction d'une dissertation littéraire complète",  habiletes: "Rédiger une dissertation littéraire intégrale (introduction, développement structuré en deux parties thèse/antithèse avec paragraphes argumentatifs et exemples, conclusion)" }
     ]
+  },
+  {
+    id: "seconde-fr-questions-resume-production",
+    classe: "2nde",
+    matiere: "Français",
+    competence: "Compétence 3 : Traiter des situations relatives à la rédaction des écrits divers",
+    activite: "Expression écrite",
+    lecon: "Leçon : Questions + Résumé + Production écrite",
+    programme: "Toutes séries",
+    total_seances: 9,
+    seances: [
+      { numero: 1, titre: "Répondre aux consignes/questions",                               habiletes: "Présenter l'exercice (questions de compréhension, résumé, production écrite), identifier les types de questions (système énonciatif, organisation lexicale, organisation argumentative) et y répondre correctement" },
+      { numero: 2, titre: "Identifier la situation d'argumentation",                        habiletes: "Identifier le thème, le champ lexical lié au thème, la thèse, le champ lexical lié à la thèse (arguments), la thèse contraire, les indices d'énonciation, la structure du texte (séquences) et la visée argumentative" },
+      { numero: 3, titre: "Sélection des idées essentielles et enchaînement logique",       habiletes: "'Toiletter' le texte en éliminant exemples, digressions, parenthèses, répétitions, énumérations, comparaisons, chiffres et explications ; identifier les connecteurs logiques, distinguer thèse/arguments/exemples, sélectionner les idées essentielles et établir un enchaînement logique entre elles" },
+      { numero: 4, titre: "Reformuler les idées essentielles",                              habiletes: "Reformuler les idées essentielles en utilisant synonymes, adjectifs à la place de compléments ou de relatives, adverbes à la place de groupes prépositionnels, mots englobants à la place d'énumérations, phrases simples à la place de phrases complexes, ponctuation à la place de connecteurs, participe présent ou proposition infinitive, et en changeant la nature ou la voix des mots/verbes" },
+      { numero: 5, titre: "Rédiger collectivement le résumé",                               habiletes: "Rédiger le résumé à partir des idées essentielles reformulées, en respectant la technique et les contraintes du résumé ainsi que le schéma argumentatif de base" },
+      { numero: 6, titre: "Production d'un texte argumentatif - Analyse du sujet et recherche des idées", habiletes: "Analyser le sujet (information : pensée/citation/thème/thèse/mots-clés ; consigne : étayer, réfuter ou discuter), rechercher des idées en variant les domaines (social, éducatif, économique, familial, conjugal, etc.)" },
+      { numero: 7, titre: "Organiser les arguments",                                        habiletes: "Organiser l'argumentation en classant les arguments et leurs exemples de manière cohérente, identifier les composantes d'un paragraphe argumentatif (argument, explication, exemple) et rédiger des paragraphes argumentatifs" },
+      { numero: 8, titre: "Rédiger l'introduction et la conclusion",                        habiletes: "Rédiger une introduction (phrase d'accrochage avec auteur/titre/source/date, insertion de la thèse à étayer/réfuter, annonce du plan) et une conclusion (bilan + ouverture)" },
+      { numero: 9, titre: "Rédiger un texte argumentatif",                                  habiletes: "Rédiger un texte argumentatif complet (introduction, développement en paragraphes argumentatifs, conclusion)" }
+    ],
+    textes_supports: [
+      { titre: "La délinquance juvénile : la part des responsabilités", auteur: "Kebe Yacouba", source: "L'Enquête, Fraternité Matin", nbMots: 411, ratioResume: "1/4" },
+      { titre: "Le travail",                                            auteur: "Camille Jullian", source: "Jeune Afrique, Nov. 2008",   nbMots: 592, ratioResume: "1/3" }
+    ]
   }
 ];
 
