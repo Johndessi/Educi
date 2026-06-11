@@ -372,7 +372,59 @@ Développement (4 arguments) :
 - Arg3 : échanges d'expériences, d'expertises et de savoirs scientifiques / salons et colloques internationaux.
 - Arg4 : création d'activités commerciales génératrices de devises / hôtellerie, gastronomie, vente de produits locaux.
 Conclusion : En somme, la multiplication des voyages et des activités touristiques travaille au bien-être de l'homme et au rapprochement des peuples. L'essor des médias et du numérique joue également un rôle déterminant dans ce phénomène.
----`;
+---
+
+=== 1ère – FRANÇAIS – COMMENTAIRE COMPOSÉ (Toutes séries) ===
+
+I. DÉFINITION
+Le commentaire composé est un exercice argumenté visant à mettre en valeur la qualité d'un texte, en faisant appel au fond (les idées) et à la forme (procédés grammaticaux, figures de style). Il révèle la signification profonde du texte au-delà de l'explicite.
+
+II. ANALYSE DU LIBELLÉ
+Le libellé comprend deux composantes :
+1. La tâche : indique le type de travail demandé (ex. « Faites un commentaire composé de ce texte »).
+2. Les centres d'intérêt (généralement deux) : indiquent les grandes orientations du développement. Chaque CI est un thème à exploiter en s'appuyant sur des indices textuels pertinents.
+
+III. CONSTRUCTION DU SENS DU TEXTE
+1. Type/nature du texte : récit, dialogue, discours, description, portrait, poème...
+2. Tonalité : sentiment/impression dominant après lecture (pathétique, lyrique, réaliste, ironique...).
+3. Thème : ce dont parle le texte.
+4. Idée générale : ce que l'auteur dit à propos du thème, l'opinion développée.
+
+IV. LES INDICES TEXTUELS
+Éléments pertinents sélectionnés selon les centres d'intérêt pour être analysés et interprétés :
+- Indices lexicaux (champs lexicaux)
+- Procédés grammaticaux (types/formes de phrases, temps verbaux)
+- Figures de style (comparaison, métaphore, antithèse, oxymore, personnification, hyperbole…)
+Tous les indices ne sont pas forcément présents dans chaque texte.
+
+V. ORGANISATION DES CENTRES D'INTÉRÊT
+Identifier les CI dans l'ordre du libellé, répartir les indices textuels selon les CI, regrouper les interprétations convergentes en sous-thèmes (2 à 4 sous-parties par CI). Pour chaque sous-thème : repérer les citations, indiquer les techniques littéraires et leur interprétation sous forme de phrases nominales.
+
+VI. RÉDACTION D'UN PARAGRAPHE ARGUMENTATIF
+Composantes obligatoires :
+1. Idée directrice (le sous-thème)
+2. Explication du sous-thème
+3. Illustration par un ou deux indices textuels du texte support
+4. Conclusion du sous-thème + annonce du sous-thème suivant (transition)
+Tout changement d'idée = nouveau paragraphe.
+
+VII. RÉDACTION D'UN CENTRE D'INTÉRÊT
+Commence par une phrase introductive annonçant le CI, puis enchaîne les paragraphes argumentatifs de chaque sous-thème avec des connecteurs logiques/organisateurs textuels pour assurer la cohérence.
+
+VIII. L'INTRODUCTION (un seul paragraphe, 3 parties liées)
+1. Contexte général/amorce : approche thématique, mouvement littéraire, contexte socio-historique, ou citation.
+2. Présentation du texte : auteur (nom, époque, courant), œuvre (titre, genre, date), texte (nature, titre, tonalité), idée générale.
+3. Annonce du plan : rappel des centres d'intérêt qui seront étudiés.
+
+IX. LA CONCLUSION
+1. Bilan du devoir : synthèse des centres d'intérêt traités.
+2. Jugement critique : point de vue personnel sur le sujet/thème.
+3. Ouverture : rapprochement avec un autre texte/œuvre traitant un thème similaire.
+
+X. MÉTHODE GLOBALE DE RÉDACTION
+Le commentaire composé se rédige sans dissocier le fond (les idées) de la forme (les procédés). Chaque indice textuel cité doit être immédiatement suivi de son interprétation reliée au sous-thème puis au centre d'intérêt.
+
+=== FIN COMMENTAIRE COMPOSÉ 1ère ===`;
 
 const FICHES = [
   {
