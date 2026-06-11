@@ -5020,6 +5020,99 @@ Structure ta correction ainsi :
         rappel_methode: "Étayer = développer la thèse de l'auteur. Réfuter = la contester. Structure obligatoire : Introduction → Développement (paragraphes argumentatifs) → Conclusion."
       };
     }
+    // === 1ère Toutes séries : Questions + Résumé + Production écrite ===
+    if (exercice === "questions_resume_production_premiere" || exercice === "premiere_fr_l2") {
+      grille = {
+        titre: "Grille de correction – Questions + Résumé + Production écrite (1ère)",
+        bareme_total: 20,
+        criteres: [
+          {
+            label: "I. Questions de compréhension (4 pts)",
+            points: 4,
+            indicateurs: [
+              "Identification correcte du thème (+1)",
+              "Reformulation/identification fidèle de la thèse de l'auteur (+1)",
+              "Identification des problèmes / idées clés demandés, avec justification si exigée (+1)",
+              "Explication en contexte d'une expression du texte (+1)",
+              "(Adapter la répartition si nombre de questions différent, total = 4 pts)"
+            ]
+          },
+          {
+            label: "II. Résumé – Fond (4 pts)",
+            points: 4,
+            indicateurs: [
+              "Présence des idées essentielles du texte, fidèles à la pensée de l'auteur",
+              "Aucun contresens ni ajout d'opinion personnelle",
+              "(-0,5 pt par idée essentielle manquante ou déformée)"
+            ]
+          },
+          {
+            label: "II. Résumé – Forme (2 pts)",
+            points: 2,
+            indicateurs: [
+              "Résumé rédigé en un seul bloc (sans introduction/développement/conclusion séparés)",
+              "Enchaînement logique des idées avec connecteurs appropriés",
+              "(-1 pt si le résumé est découpé en parties)"
+            ]
+          },
+          {
+            label: "II. Résumé – Reformulation personnelle (1 pt)",
+            points: 1,
+            indicateurs: [
+              "Vocabulaire reformulé, pas de recopiage de phrases entières du texte original",
+              "(-1 pt si reformulation insuffisante / copier-coller manifeste)"
+            ]
+          },
+          {
+            label: "II. Résumé – Nombre de mots (1 pt)",
+            points: 1,
+            indicateurs: [
+              "Quart du texte original respecté avec marge de tolérance de ±10%",
+              "Nombre de mots mentionné entre parenthèses en fin de résumé",
+              "(-0,5 pt par tranche de 10% supplémentaire de dépassement)"
+            ]
+          },
+          {
+            label: "III. Production écrite – Introduction (1,5 pt)",
+            points: 1.5,
+            indicateurs: [
+              "Accroche complète : nom de l'auteur + source/date + citation entre guillemets",
+              "Annonce claire de la prise de position (étayer ou réfuter)",
+              "(-0,5 pt si citation absente ou mal formulée ; -0,5 pt si prise de position absente)"
+            ]
+          },
+          {
+            label: "III. Production écrite – Développement (4 pts)",
+            points: 4,
+            indicateurs: [
+              "Au moins 2 arguments pertinents et liés au thème/thèse du sujet",
+              "Chaque argument structuré : annonce → explication → illustration par exemple",
+              "(2 pts par argument valide, max 4 pts)"
+            ]
+          },
+          {
+            label: "III. Production écrite – Cohérence et progression (1,5 pt)",
+            points: 1.5,
+            indicateurs: [
+              "Connecteurs logiques appropriés entre les paragraphes",
+              "Absence de contradiction avec la thèse à étayer ou réfuter",
+              "(-0,5 pt par rupture logique ou contradiction)"
+            ]
+          },
+          {
+            label: "III. Production écrite – Conclusion (1 pt)",
+            points: 1,
+            indicateurs: [
+              "Bilan synthétique cohérent avec le développement",
+              "Ouverture valorisée si présente (bonus qualitatif)",
+              "(-0,5 pt si bilan absent)"
+            ]
+          }
+        ],
+        conseils_prof: "Vérifier que le résumé est en un seul bloc sans titre ni numérotation et que le nombre de mots est indiqué. S'assurer que l'introduction de la production écrite contient la citation entre guillemets avec auteur et source. Pénaliser tout ajout d'opinion personnelle dans le résumé. Valoriser les exemples ivoiriens et africains dans la production.",
+        rappel_methode: "Étayer = soutenir la thèse de l'auteur avec de nouveaux arguments. Réfuter = la contester. Résumé = 1/4 du texte original ±10%, un seul bloc, nombre de mots obligatoire. Introduction = accroche (auteur + source + citation) + annonce de position."
+      };
+    }
     if (file.type.startsWith('image/')) {
       const base64 = await fileToBase64(file);
       messages = [{ role: 'user', content: [
