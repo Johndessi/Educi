@@ -515,7 +515,77 @@ Composantes (dans l'ordre) :
 3. L'ouverture (facultative) : mise en relation avec un fait actuel, un genre littéraire, une œuvre, ou une grande problématique littéraire.
 
 Quand un élève demande de l'aide sur cette leçon (1ère, dissertation littéraire), guide-le étape par étape selon cette méthodologie, en l'aidant notamment à trouver des arguments et des exemples tirés d'œuvres littéraires africaines pertinentes pour son sujet, sans imposer systématiquement les exemples cités ci-dessus.
-=== FIN 1ère Leçon 3 : La dissertation littéraire ===`;
+=== FIN 1ère Leçon 3 : La dissertation littéraire ===
+
+---
+=== 2nde Toutes séries — Leçon : Questions + Résumé + Production écrite ===
+
+DÉFINITION
+Le résumé de texte argumentatif comprend trois parties : I. Questions de compréhension, II. Résumé, III. Production écrite. Un texte argumentatif est un texte dans lequel l'auteur soutient, défend ou réfute une idée avec des arguments et des exemples.
+
+I. QUESTIONS DE COMPRÉHENSION
+Les questions portent sur : le système énonciatif (thème, thèse, antithèse, visée argumentative), l'organisation lexicale (expressions à expliquer en contexte) et l'organisation argumentative (structure du texte, connecteurs logiques). Les réponses doivent être correctement rédigées en phrases complètes.
+
+II. RÉSUMÉ — MÉTHODOLOGIE EN 4 ÉTAPES
+
+1. Identification de la situation d'argumentation : repérer
+   - le thème (sujet principal du texte)
+   - le champ lexical lié au thème (mots/groupes de mots renvoyant au thème)
+   - la thèse (point de vue défendu par l'auteur)
+   - le champ lexical lié à la thèse (les arguments qui la soutiennent)
+   - la thèse contraire (l'opinion opposée à celle de l'auteur, si elle existe)
+   - les indices d'énonciation (marques de personne « je »/« nous » = jugement personnel de l'auteur ; « il » = point de vue général)
+   - la structure du texte (découpage en séquences argumentatives)
+   - la visée argumentative (ce que l'auteur cherche à faire évoluer chez le lecteur : conception ou comportement)
+
+2. Sélection des idées essentielles : "toiletter" le texte en éliminant ce qui est dispensable — exemples illustratifs, digressions, parenthèses, insistances, citations, expansions, répétitions, énumérations, questions, comparaisons/métaphores, chiffres, explications. Pour cela : identifier les connecteurs logiques qui structurent les séquences argumentatives, distinguer thèse/arguments/exemples, puis sélectionner une idée essentielle par paragraphe (parfois plusieurs).
+
+3. Enchaînement logique entre les idées essentielles : relier les idées essentielles sélectionnées avec des connecteurs logiques équivalents à ceux du texte original, en respectant le schéma argumentatif.
+
+4. Reformulation des idées essentielles : reformuler avec une expression personnelle en gardant le sens, en utilisant :
+   - des synonymes ou équivalents (ex : "le système socio-économique" → "la société")
+   - un adjectif à la place d'un complément du nom (ex : "de la société" → "social")
+   - un adverbe à la place d'un groupe nominal prépositionnel (ex : "avec une grande rapidité" → "rapidement")
+   - un adjectif à la place d'une proposition relative (ex : "les parents qui abandonnent leurs enfants" → "les parents coupables" ; "le village où je suis né" → "le village natal")
+   - un mot englobant/générique à la place d'une énumération (ex : "à la vie, à l'éducation, à la nourriture, au logement" → "des droits" ; "la radio, la télévision, la presse écrite" → "les médias")
+   - une phrase simple à la place d'une phrase complexe (ex : "Les élèves attendent que le professeur les félicite" → "Les élèves attendent la félicitation du professeur")
+   - un signe de ponctuation à la place d'une subordination/connecteur (ex : "Étant donné la pluie diluvienne qui tombait, il ne sortit pas" → "Une pluie diluvienne tombait : il ne sortit pas")
+   - un participe présent à la place d'une subordonnée circonstancielle (ex : "puisqu'elle était arrivée la première" → "étant la première")
+   - une proposition infinitive à la place d'une subordonnée complétive (ex : "voyait que sa fin arrivait" → "voyait sa fin arriver")
+   - un changement de nature du mot (ex : "réaménager" → "réaménagement") ou de voix du verbe (ex : "les résultats sont attendus par les élèves" → "les élèves attendent leurs résultats")
+   IMPORTANT : il est interdit de reproduire la syntaxe du texte original — il faut la transformer radicalement.
+
+5. Rédaction du résumé : à partir des idées reformulées, rédiger en respectant le schéma argumentatif de base, le quart (ou le tiers, selon la consigne) du volume initial, avec une marge de tolérance de ±10%, en un seul bloc, et indiquer le nombre de mots.
+
+III. PRODUCTION ÉCRITE — MÉTHODOLOGIE
+La production écrite est la partie "culturelle" du devoir : les arguments et exemples peuvent provenir de la culture personnelle de l'élève, pas uniquement des œuvres au programme.
+
+1. Analyse du sujet : le sujet comporte une information (pensée/citation/thème/thèse/mots-clés) et une consigne. Trois verbes possibles :
+   - Étayer : soutenir, montrer la véracité/le bien-fondé de l'affirmation
+   - Réfuter : rejeter, s'opposer en montrant les insuffisances
+   - Discuter : soutenir PUIS réfuter l'affirmation (plan dialectique)
+
+2. Recherche des idées : trouver des arguments et exemples en variant les domaines (social, éducatif, économique, familial, conjugal, politique, sportif, sécuritaire, vestimentaire, intellectuel, etc.), chaque idée associée à un exemple concret.
+
+3. Organisation de l'argumentation : classer les arguments et exemples de manière cohérente — c'est l'élaboration du plan du développement.
+
+4. Le paragraphe argumentatif comprend : l'argument (l'idée), l'explication de l'argument, et l'exemple qui l'illustre.
+
+5. Introduction (3 parties) :
+   - Phrase d'accrochage : nom de l'auteur, titre de l'œuvre/du texte, source, date de publication
+   - Insertion de la thèse à étayer/réfuter/discuter : annoncer la citation tirée du texte de base
+   - Annonce du plan : la prise de position qui annonce le plan du devoir
+
+6. Conclusion (2 parties) :
+   - Le bilan : synthèse de ce qui a été développé
+   - L'ouverture : élargir la citation pour son actualisation
+
+EXEMPLE DE RÉFÉRENCE — INTRODUCTION : "Camille Jullian, dans une rubrique publiée dans Jeune Afrique de novembre 2008, affirme : « La délinquance juvénile n'est pas seulement un phénomène engendré par le système socio-économique mais aussi par la démission des parents. » Dans un développement argumenté et organisé, nous tenterons d'étayer le point de vue de l'auteur."
+
+EXEMPLE DE RÉFÉRENCE — CONCLUSION : "Au terme de notre analyse, nous pouvons retenir que la délinquance juvénile constitue une préoccupation non seulement pour la société mais aussi pour les parents (bilan). L'État doit prendre des mesures adéquates pour enrayer ce phénomène (ouverture)."
+
+Quand un élève de 2nde demande de l'aide sur cette leçon, guide-le étape par étape selon cette méthodologie, en l'aidant en particulier sur le "toilettage" du texte et les techniques de reformulation, qui sont les points les plus délicats à ce niveau.
+=== FIN 2nde : Questions + Résumé + Production écrite ===`;
 
 const FICHES = [
   {
