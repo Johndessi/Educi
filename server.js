@@ -424,7 +424,41 @@ IX. LA CONCLUSION
 X. MÉTHODE GLOBALE DE RÉDACTION
 Le commentaire composé se rédige sans dissocier le fond (les idées) de la forme (les procédés). Chaque indice textuel cité doit être immédiatement suivi de son interprétation reliée au sous-thème puis au centre d'intérêt.
 
-=== FIN COMMENTAIRE COMPOSÉ 1ère ===`;
+=== FIN COMMENTAIRE COMPOSÉ 1ère ===
+
+---
+=== 1ère Toutes séries — Leçon 2 : Questions + Résumé + Production écrite ===
+
+DÉFINITION
+Le résumé de texte argumentatif (ou contraction de texte) consiste à réduire le volume initial d'un texte au 1/4 en se basant sur les idées essentielles, reformulées dans les mots de l'élève. L'exercice complet comprend trois parties : I. Questions de compréhension, II. Résumé, III. Production écrite (étayer ou réfuter une thèse).
+
+I. QUESTIONS DE COMPRÉHENSION (4 points)
+Identifier le thème, reformuler/identifier la thèse, dégager les problèmes ou la visée argumentative, expliquer en contexte une expression du texte. Les réponses doivent être justifiées par des références précises au texte (lignes citées) quand demandé.
+
+II. RÉSUMÉ — MÉTHODOLOGIE EN 4 ÉTAPES
+1. Identification de la situation d'argumentation : repérer le thème, la thèse, les indices d'énonciation (pronoms personnels — je/nous/on/vous/il —, temps verbaux dominants), les connecteurs logiques et leur valeur (addition, cause, conséquence, opposition, etc.), la structure du texte (découpage en séquences/paragraphes avec un titre par paragraphe), le champ lexical de la thèse, et la visée argumentative de l'auteur.
+2. Sélection des idées essentielles et enchaînement logique : pour chaque paragraphe, extraire l'idée essentielle (souvent 1 à 2 par paragraphe), puis relier ces idées entre elles à l'aide de connecteurs logiques appropriés (en effet, en outre, cependant, aussi, mais, ainsi, car, etc.) qui respectent la logique argumentative du texte.
+3. Reformulation : reformuler chaque idée essentielle avec un vocabulaire personnel (synonymes, termes génériques, transformation de phrases complexes en phrases simples), sans s'éloigner du sens voulu par l'auteur.
+4. Rédaction du résumé final : le résumé se présente en UN SEUL BLOC, sans introduction, ni développement, ni conclusion séparés. Il doit respecter le quart du nombre de mots du texte original avec une marge de tolérance de ±10%, et indiquer le nombre de mots du résumé à la fin entre parenthèses. Ne jamais inventer un nombre de mots.
+
+EXEMPLE DE RÉFÉRENCE (Texte support 1 "Du tourisme mondial", 599 mots → résumé attendu autour de 135-165 mots) :
+"Les pays pauvres ont mis beaucoup d'espoir dans le développement du tourisme mondial dans les années 60. En effet, ils ont vu l'occasion pour s'enrichir. En outre, les gens se sont énormément déplacés. Cependant, la majorité des touristes sont issus des pays riches et cherchent à favoriser des échanges, surtout au niveau économique. Aussi, la publicité que font les spécialistes du secteur donne au pays pauvre une image de rêve qui contraste de la réalité. Mais, sur le plan social, ce tourisme n'offre pas d'emploi durable dans le tiers monde pauvre. Et sur le plan économique, ce tourisme nécessite de gros moyens et entraine la cherté de la vie. Ainsi, il y a lieu donc que cette forme de tourisme change. Car il est impérieux que les pays du tiers monde pauvre soient au centre de ce tourisme afin d'en bénéficier. (141 mots)"
+
+III. PRODUCTION ÉCRITE — MÉTHODOLOGIE EN 5 ÉTAPES
+1. Analyse du sujet : le sujet comporte deux parties — la consigne (verbe introducteur : "étayer" = développer/soutenir la thèse de l'auteur avec de nouveaux arguments et exemples ; "réfuter" = rejeter/contredire la thèse avec des contre-arguments) et l'information (la citation/thèse à traiter). Identifier le thème du sujet, la thèse, et reformuler la thèse avec d'autres mots.
+2. Recherche des idées : trouver au moins 2 arguments en lien avec le thème et le point de vue à défendre (ou réfuter), chacun développé en quelques phrases.
+3. Organisation de l'argumentation : classer les arguments dans un ordre logique (du plus simple au plus complexe, ou du plus général au plus spécifique) et associer un exemple concret à chaque argument.
+4. Rédaction des paragraphes argumentatifs : chaque paragraphe doit comporter 4 composantes — annoncer l'argument (avec un connecteur : d'abord, en outre, enfin...), l'expliquer, l'illustrer par un ou deux exemples, et le conclure si nécessaire.
+5. Rédaction de l'introduction et de la conclusion :
+   - Introduction : phrase d'accroche obligatoire (nom de l'auteur + source/date de la citation + citation entre guillemets), suivie de l'annonce de la prise de position (étayer ou réfuter) à travers une argumentation.
+   - Conclusion : un bilan (synthèse de l'argumentation développée) + une ouverture facultative (élargissement du débat).
+
+EXEMPLE DE RÉFÉRENCE — INTRODUCTION : "Dans son texte intitulé 'Du tourisme mondial', publié dans Le Monde, paru le 20 septembre 1985, Ezzedine Mestiri affirme qu'« il est nécessaire de modifier les conditions du tourisme mondial. » Nous étayerons ce point de vue à travers une argumentation."
+
+EXEMPLE DE RÉFÉRENCE — CONCLUSION : "De ce qui précède, nous retenons que sur le plan économique, ce tourisme nécessite de gros moyens et entraine la cherté de la vie. Il y a lieu donc que cette forme de tourisme change."
+
+Quand un élève demande de l'aide sur cette leçon (1ère, Questions + Résumé + Production écrite), guide-le étape par étape selon cette méthodologie, en t'appuyant sur les exemples ci-dessus comme modèles de référence sans les recopier tels quels pour son propre texte.
+=== FIN 1ère Leçon 2 : Questions + Résumé + Production écrite ===`;
 
 const FICHES = [
   {
