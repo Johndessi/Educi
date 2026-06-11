@@ -585,7 +585,59 @@ EXEMPLE DE RÉFÉRENCE — INTRODUCTION : "Camille Jullian, dans une rubrique pu
 EXEMPLE DE RÉFÉRENCE — CONCLUSION : "Au terme de notre analyse, nous pouvons retenir que la délinquance juvénile constitue une préoccupation non seulement pour la société mais aussi pour les parents (bilan). L'État doit prendre des mesures adéquates pour enrayer ce phénomène (ouverture)."
 
 Quand un élève de 2nde demande de l'aide sur cette leçon, guide-le étape par étape selon cette méthodologie, en l'aidant en particulier sur le "toilettage" du texte et les techniques de reformulation, qui sont les points les plus délicats à ce niveau.
-=== FIN 2nde : Questions + Résumé + Production écrite ===`;
+=== FIN 2nde : Questions + Résumé + Production écrite ===
+
+---
+=== 2nde Toutes séries — Leçon 2 : Le commentaire composé (version partielle) ===
+
+DÉFINITION
+Le commentaire composé est un exercice argumenté visant à mettre en valeur la qualité d'un texte, en faisant appel au fond (les idées) ET à la forme (procédés grammaticaux, figures de style...). Il s'agit de révéler la signification profonde d'un texte en allant au-delà de l'explicite.
+
+IMPORTANT — SPÉCIFICITÉ 2nde : contrairement à la 1ère et la Terminale où le commentaire composé est complet (introduction + 2 centres d'intérêt + conclusion), en 2nde le commentaire composé est PARTIEL : il se limite à l'introduction + UN SEUL centre d'intérêt (le premier indiqué dans le libellé). Pas de conclusion générale exigée à ce niveau, seulement une conclusion partielle/transition à la fin du centre d'intérêt traité.
+
+I. ANALYSE DU LIBELLÉ
+Le libellé comprend deux composantes :
+1. La tâche : indique le type de travail (« Vous ferez de ce texte un commentaire composé »), généralement la première phrase.
+2. Les centres d'intérêt : généralement deux, ils indiquent les grandes orientations du développement. Chaque CI est un thème à exploiter en s'appuyant sur les indices textuels pertinents. En 2nde, seul le premier centre d'intérêt sera développé.
+
+II. CONSTRUCTION DU SENS DU TEXTE
+1. Le type/la nature du texte : récit, dialogue, discours, description, portrait, poème...
+2. La tonalité : le sentiment/l'impression dégagé par le texte (lyrique, pathétique, comique, tragique, épique...).
+3. Le thème : ce dont parle le texte.
+4. L'idée générale : ce que l'auteur dit à propos du thème, l'opinion qu'il développe.
+
+III. LES INDICES TEXTUELS
+Éléments pertinents du texte sélectionnés selon les centres d'intérêt, à analyser et interpréter : indices d'énonciation, indices lexicaux, procédés grammaticaux (types de phrases : nominale, impérative, déclarative...), figures de style (antithèse, énumération, métaphore, etc.). Tous ne sont pas forcément présents dans chaque texte.
+
+IV. ORGANISATION DU CENTRE D'INTÉRÊT 1
+1. Recherche des sous-titres : regrouper les indices textuels interprétés par proximité de sens pour dégager 3 à 4 sous-thèmes.
+2. Plan détaillé — tableau à 4 colonnes pour le CI 1 :
+   | Sous-titres | Repérages/indices textuels (Que dit l'auteur ?) | Analyses (Comment le dit-il ?) | Interprétations (Pourquoi le dit-il ?) |
+3. Conclure par une phrase conclusive (bilan partiel) + transition annonçant (sans le développer) le second CI.
+
+V. LE PARAGRAPHE ARGUMENTATIF
+Chaque sous-titre devient un paragraphe comprenant :
+- une idée directrice (le sous-thème = argument)
+- l'explication du sous-thème
+- l'illustration par un ou deux indices textuels (citations du texte support, jamais d'exemples extérieurs)
+- la conclusion du sous-thème + annonce du sous-thème suivant
+Tout changement d'idée = changement de paragraphe.
+
+VI. RÉDACTION D'UN CENTRE D'INTÉRÊT
+Phrase introductive annonçant le CI → paragraphes argumentatifs successifs (un par sous-titre) reliés par des connecteurs (d'abord, en outre, enfin...) → conclusion partielle (bilan) + transition vers le CI suivant.
+
+VII. RÉDACTION DE L'INTRODUCTION
+Un seul paragraphe, 3 parties liées :
+1. Le contexte général/l'amorce : approche thématique, littéraire ou biographique.
+2. La présentation du texte : auteur (nom, nationalité, époque), œuvre (titre, genre, date, maison d'édition), texte (nature, titre, tonalité, idée générale).
+3. L'annonce du plan : rappel des centres d'intérêt (les deux peuvent être annoncés même si seul le premier est développé en 2nde).
+
+EXEMPLE DE RÉFÉRENCE — INTRODUCTION : "Le phénomène des enfants de la rue, un fléau social, a maintes fois été dépeint par bon nombre d'écrivains de la seconde génération, parmi lesquels s'inscrit Sylvain Kean Zoh, écrivain ivoirien et auteur de Le printemps de la fleur fanée, œuvre parue en 2009 aux éditions NEI/CEDA. C'est cette œuvre qui abrite le texte soumis à notre étude. Dans ce récit à l'élan pathétique, l'auteur jette un regard rétrospectif sur sa vie d'enfant de la rue. Ainsi, sous la forme d'un commentaire composé, sans dissocier le fond de la forme, nous montrerons d'une part la marche épique du narrateur-personnage et d'autre part le bel avenir qu'il fait transparaître pour les enfants de la rue."
+
+EXEMPLE DE RÉFÉRENCE — STRUCTURE CI 1 : phrase introductive → "D'abord, [sous-thème 1]..." (paragraphe avec citations et analyses) → "En outre, [sous-thème 2]..." → "Enfin, [sous-thème 3]..." → conclusion partielle ("Au regard de ce qui précède, nous pouvons dire que...") + transition vers le CI 2.
+
+Quand un élève de 2nde demande de l'aide sur cette leçon, rappelle-lui systématiquement que le commentaire composé en 2nde se limite à l'introduction + le premier centre d'intérêt, et guide-le étape par étape : analyse du libellé → construction du sens → repérage et interprétation des indices textuels → organisation en sous-titres → rédaction.
+=== FIN 2nde Leçon 2 : Le commentaire composé ===`;
 
 const FICHES = [
   {
