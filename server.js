@@ -1257,6 +1257,7 @@ if (MONGODB_URI) {
     .then(async () => {
       console.log('✅ MongoDB connecté');
       await migrerDepuisJSON();
+      await migrerSuggestionsDepuisJSON();
     })
     .catch(err => console.error('❌ Connexion MongoDB échouée :', err.message));
 } else {
@@ -1477,34 +1478,45 @@ app.post('/api/admin/reset-appareils', async (req, res) => {
 });
 
 // === SUGGESTIONS UTILISATEURS ===
-const SUGGESTIONS_PATH = path.join(__dirname, 'suggestions.json');
+const SUGGESTIONS_PATH   = path.join(__dirname, 'suggestions.json'); // conservé pour migration initiale
 const CATEGORIES_VALIDES = ['bug', 'idee', 'contenu', 'autre'];
 
-function chargerSuggestions() {
+const SuggestionSchema = new mongoose.Schema({
+  id:        { type: String, required: true, unique: true },
+  telephone: { type: String },
+  categorie: { type: String },
+  message:   { type: String },
+  date:      { type: Date, default: Date.now },
+  statut:    { type: String, default: 'nouveau' }
+}, { timestamps: false });
+const Suggestion = mongoose.model('Suggestion', SuggestionSchema);
+
+async function migrerSuggestionsDepuisJSON() {
   try {
-    if (!fs.existsSync(SUGGESTIONS_PATH)) {
-      fs.writeFileSync(SUGGESTIONS_PATH, '[]');
-      return [];
+    const count = await Suggestion.countDocuments();
+    if (count > 0) {
+      console.log(`📦 Collection suggestions déjà peuplée (${count} entrée(s)) — migration ignorée`);
+      return;
     }
-    return JSON.parse(fs.readFileSync(SUGGESTIONS_PATH, 'utf8'));
-  } catch (e) {
-    console.error('Erreur lecture suggestions.json:', e.message);
-    return [];
+    if (!fs.existsSync(SUGGESTIONS_PATH)) return;
+    const raw = JSON.parse(fs.readFileSync(SUGGESTIONS_PATH, 'utf8'));
+    if (!Array.isArray(raw) || raw.length === 0) return;
+    const docs = raw.map(s => ({
+      id:        s.id,
+      telephone: s.telephone,
+      categorie: s.categorie,
+      message:   s.message,
+      date:      s.date ? new Date(s.date) : new Date(),
+      statut:    s.statut || 'nouveau'
+    }));
+    await Suggestion.insertMany(docs, { ordered: false });
+    console.log(`📥 ${docs.length} suggestion(s) migrée(s) depuis suggestions.json`);
+  } catch (err) {
+    console.error('❌ Erreur migration suggestions.json → MongoDB :', err.message);
   }
 }
 
-function sauvegarderSuggestions() {
-  try {
-    fs.writeFileSync(SUGGESTIONS_PATH, JSON.stringify(suggestions, null, 2));
-  } catch (e) {
-    console.error('Erreur écriture suggestions.json:', e.message);
-  }
-}
-
-const suggestions = chargerSuggestions();
-console.log(`📂 ${suggestions.length} suggestion(s) chargée(s) depuis suggestions.json`);
-
-app.post('/api/suggestions', (req, res) => {
+app.post('/api/suggestions', async (req, res) => {
   const { telephone, categorie, message } = req.body || {};
   if (!telephone || String(telephone).trim() === '')
     return res.status(400).json({ error: 'Le champ téléphone est requis.' });
@@ -1515,38 +1527,58 @@ app.post('/api/suggestions', (req, res) => {
   if (String(message).trim().length > 1000)
     return res.status(400).json({ error: 'Le message ne doit pas dépasser 1000 caractères.' });
 
-  const suggestion = {
-    id: Date.now().toString(36) + Math.random().toString(36).slice(2),
-    telephone: String(telephone).trim(),
-    categorie,
-    message: String(message).trim(),
-    date: new Date().toISOString(),
-    statut: 'nouveau'
-  };
-  suggestions.push(suggestion);
-  sauvegarderSuggestions();
-  res.json({ success: true });
+  try {
+    await Suggestion.create({
+      id:        Date.now().toString(36) + Math.random().toString(36).slice(2),
+      telephone: String(telephone).trim(),
+      categorie,
+      message:   String(message).trim(),
+      date:      new Date(),
+      statut:    'nouveau'
+    });
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Erreur POST suggestions :', err.message);
+    res.status(500).json({ error: 'Erreur serveur.' });
+  }
 });
 
-app.get('/api/suggestions', (req, res) => {
+app.get('/api/suggestions', async (req, res) => {
   if (req.query.key !== ADMIN_KEY)
     return res.status(401).json({ error: 'Clé invalide' });
-  const triees = [...suggestions].sort((a, b) => new Date(b.date) - new Date(a.date));
-  res.json(triees);
+  try {
+    const docs = await Suggestion.find().sort({ date: -1 });
+    res.json(docs.map(s => ({
+      id:        s.id,
+      telephone: s.telephone,
+      categorie: s.categorie,
+      message:   s.message,
+      date:      s.date,
+      statut:    s.statut
+    })));
+  } catch (err) {
+    console.error('Erreur GET suggestions :', err.message);
+    res.status(500).json({ error: 'Erreur serveur.' });
+  }
 });
 
-app.patch('/api/suggestions/:id', (req, res) => {
+app.patch('/api/suggestions/:id', async (req, res) => {
   if (req.query.key !== ADMIN_KEY)
     return res.status(401).json({ error: 'Clé invalide' });
   const { statut } = req.body || {};
   if (!['nouveau', 'lu', 'traite'].includes(statut))
     return res.status(400).json({ error: 'Statut invalide. Valeurs acceptées : nouveau, lu, traite.' });
-  const idx = suggestions.findIndex(s => s.id === req.params.id);
-  if (idx === -1)
-    return res.status(404).json({ error: 'Suggestion introuvable.' });
-  suggestions[idx].statut = statut;
-  sauvegarderSuggestions();
-  res.json({ success: true });
+  try {
+    const result = await Suggestion.findOneAndUpdate(
+      { id: req.params.id },
+      { statut }
+    );
+    if (!result) return res.status(404).json({ error: 'Suggestion introuvable.' });
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Erreur PATCH suggestions :', err.message);
+    res.status(500).json({ error: 'Erreur serveur.' });
+  }
 });
 
 app.get('*', (req, res) => {
