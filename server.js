@@ -1402,6 +1402,79 @@ app.get('/api/admin/stats', (req, res) => {
   });
 });
 
+// === SUGGESTIONS UTILISATEURS ===
+const SUGGESTIONS_PATH = path.join(__dirname, 'suggestions.json');
+const CATEGORIES_VALIDES = ['bug', 'idee', 'contenu', 'autre'];
+
+function chargerSuggestions() {
+  try {
+    if (!fs.existsSync(SUGGESTIONS_PATH)) {
+      fs.writeFileSync(SUGGESTIONS_PATH, '[]');
+      return [];
+    }
+    return JSON.parse(fs.readFileSync(SUGGESTIONS_PATH, 'utf8'));
+  } catch (e) {
+    console.error('Erreur lecture suggestions.json:', e.message);
+    return [];
+  }
+}
+
+function sauvegarderSuggestions() {
+  try {
+    fs.writeFileSync(SUGGESTIONS_PATH, JSON.stringify(suggestions, null, 2));
+  } catch (e) {
+    console.error('Erreur écriture suggestions.json:', e.message);
+  }
+}
+
+const suggestions = chargerSuggestions();
+console.log(`📂 ${suggestions.length} suggestion(s) chargée(s) depuis suggestions.json`);
+
+app.post('/api/suggestions', (req, res) => {
+  const { telephone, categorie, message } = req.body || {};
+  if (!telephone || String(telephone).trim() === '')
+    return res.status(400).json({ error: 'Le champ téléphone est requis.' });
+  if (!CATEGORIES_VALIDES.includes(categorie))
+    return res.status(400).json({ error: `Catégorie invalide. Valeurs acceptées : ${CATEGORIES_VALIDES.join(', ')}.` });
+  if (!message || String(message).trim().length < 5)
+    return res.status(400).json({ error: 'Le message doit contenir au moins 5 caractères.' });
+  if (String(message).trim().length > 1000)
+    return res.status(400).json({ error: 'Le message ne doit pas dépasser 1000 caractères.' });
+
+  const suggestion = {
+    id: Date.now().toString(36) + Math.random().toString(36).slice(2),
+    telephone: String(telephone).trim(),
+    categorie,
+    message: String(message).trim(),
+    date: new Date().toISOString(),
+    statut: 'nouveau'
+  };
+  suggestions.push(suggestion);
+  sauvegarderSuggestions();
+  res.json({ success: true });
+});
+
+app.get('/api/suggestions', (req, res) => {
+  if (req.query.key !== ADMIN_KEY)
+    return res.status(401).json({ error: 'Clé invalide' });
+  const triees = [...suggestions].sort((a, b) => new Date(b.date) - new Date(a.date));
+  res.json(triees);
+});
+
+app.patch('/api/suggestions/:id', (req, res) => {
+  if (req.query.key !== ADMIN_KEY)
+    return res.status(401).json({ error: 'Clé invalide' });
+  const { statut } = req.body || {};
+  if (!['nouveau', 'lu', 'traite'].includes(statut))
+    return res.status(400).json({ error: 'Statut invalide. Valeurs acceptées : nouveau, lu, traite.' });
+  const idx = suggestions.findIndex(s => s.id === req.params.id);
+  if (idx === -1)
+    return res.status(404).json({ error: 'Suggestion introuvable.' });
+  suggestions[idx].statut = statut;
+  sauvegarderSuggestions();
+  res.json({ success: true });
+});
+
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
