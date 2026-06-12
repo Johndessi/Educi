@@ -6223,6 +6223,108 @@ function _adminRender(data) {
     '<th>Téléphone</th><th>Forfait</th><th>Expiration</th><th>Restant</th>' +
     '</tr></thead><tbody>' + rows + '</tbody></table>';
 }
+
+// === SUGGESTIONS UTILISATEURS ===
+let _suggestionCategorie = null;
+const _suggestionPlaceholders = {
+  bug:     'Décrivez le problème rencontré et à quel moment il survient...',
+  idee:    "Décrivez votre idée d'amélioration pour EduCI...",
+  contenu: 'Quel contenu manque-t-il ? (leçon, exercice, classe, niveau...)',
+  autre:   'Écrivez votre message au Professeur 👩🏾‍🏫...'
+};
+
+function ouvrirSuggestions() {
+  document.getElementById('modal-suggestions').style.display = 'flex';
+}
+
+function fermerSuggestions() {
+  document.getElementById('modal-suggestions').style.display = 'none';
+  _suggestionCategorie = null;
+  const ta = document.getElementById('suggestion-message');
+  ta.value = '';
+  ta.placeholder = 'Sélectionnez une catégorie puis décrivez votre suggestion...';
+  document.getElementById('suggestion-count').textContent = '0';
+  document.getElementById('suggestion-error').style.display = 'none';
+  document.getElementById('suggestion-success').style.display = 'none';
+  const btn = document.getElementById('suggestion-submit');
+  btn.style.display = '';
+  btn.disabled = false;
+  btn.textContent = 'Envoyer au Professeur 👩🏾‍🏫';
+  ['bug','idee','contenu','autre'].forEach(c => {
+    const el = document.getElementById('cat-' + c);
+    if (el) { el.style.background = '#21262D'; el.style.borderColor = '#30363D'; el.style.color = '#E6EDF3'; }
+  });
+}
+
+function selectionnerCategorie(cat) {
+  _suggestionCategorie = cat;
+  ['bug','idee','contenu','autre'].forEach(c => {
+    const el = document.getElementById('cat-' + c);
+    if (!el) return;
+    if (c === cat) {
+      el.style.background = 'rgba(0,154,68,0.18)';
+      el.style.borderColor = '#009A44';
+      el.style.color = '#4ADE80';
+    } else {
+      el.style.background = '#21262D';
+      el.style.borderColor = '#30363D';
+      el.style.color = '#E6EDF3';
+    }
+  });
+  document.getElementById('suggestion-message').placeholder = _suggestionPlaceholders[cat] || '';
+  document.getElementById('suggestion-error').style.display = 'none';
+}
+
+function compterCaracteresSuggestion() {
+  document.getElementById('suggestion-count').textContent =
+    document.getElementById('suggestion-message').value.length;
+}
+
+async function envoyerSuggestion() {
+  const message = document.getElementById('suggestion-message').value.trim();
+  const errEl   = document.getElementById('suggestion-error');
+  const okEl    = document.getElementById('suggestion-success');
+  const btn     = document.getElementById('suggestion-submit');
+  errEl.style.display = 'none';
+  okEl.style.display  = 'none';
+  if (!_suggestionCategorie) {
+    errEl.textContent = 'Veuillez sélectionner une catégorie.';
+    errEl.style.display = 'block';
+    return;
+  }
+  if (message.length < 5) {
+    errEl.textContent = 'Votre message doit contenir au moins 5 caractères.';
+    errEl.style.display = 'block';
+    return;
+  }
+  const telephone = localStorage.getItem('educi_tel') || '';
+  btn.disabled = true;
+  btn.textContent = 'Envoi en cours…';
+  try {
+    const resp = await fetch('/api/suggestions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ telephone, categorie: _suggestionCategorie, message })
+    });
+    const data = await resp.json();
+    if (resp.ok && data.success) {
+      okEl.textContent = 'Merci ! Votre suggestion a été transmise au Professeur 👩🏾‍🏫';
+      okEl.style.display = 'block';
+      btn.style.display = 'none';
+      setTimeout(fermerSuggestions, 2000);
+    } else {
+      errEl.textContent = data.error || 'Une erreur est survenue. Veuillez réessayer.';
+      errEl.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Envoyer au Professeur 👩🏾‍🏫';
+    }
+  } catch (_) {
+    errEl.textContent = 'Impossible de contacter le serveur. Vérifiez votre connexion.';
+    errEl.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = 'Envoyer au Professeur 👩🏾‍🏫';
+  }
+}
 </script>
 <!-- MODAL PAIEMENT SMS -->
 <div id="modal-paiement-sms" style="display:none;position:fixed;inset:0;z-index:99999;
@@ -6277,6 +6379,95 @@ function _adminRender(data) {
          align-items:center;justify-content:center;gap:6px">
   💬 Aide
 </button>
+
+<!-- BOUTON FLOTTANT SUGGESTIONS -->
+<button id="btn-suggestions" onclick="ouvrirSuggestions()"
+  title="Envoyer une suggestion au Professeur"
+  style="position:fixed;bottom:24px;left:16px;z-index:9999;
+         width:52px;height:52px;border-radius:50%;border:none;cursor:pointer;
+         background:#009A44;color:white;font-size:22px;
+         box-shadow:0 4px 16px rgba(0,154,68,0.45);
+         display:flex;align-items:center;justify-content:center">
+  💡
+</button>
+
+<!-- MODAL SUGGESTIONS -->
+<div id="modal-suggestions"
+  style="display:none;position:fixed;inset:0;z-index:99997;
+         background:rgba(0,0,0,0.85);align-items:center;justify-content:center;padding:20px"
+  onclick="if(event.target===this)fermerSuggestions()">
+  <div style="background:#161B22;border:1px solid #30363D;border-radius:20px;
+              padding:28px 24px;width:100%;max-width:400px;box-sizing:border-box;
+              max-height:90vh;overflow-y:auto">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px">
+      <div style="font-family:'Syne',sans-serif;font-size:15px;font-weight:800;
+                  color:white;line-height:1.4;padding-right:12px">
+        Une idée, un bug, un contenu manquant ?<br>
+        <span style="color:#4ADE80">Dites-le au Professeur 👩🏾‍🏫</span>
+      </div>
+      <button onclick="fermerSuggestions()"
+        style="background:none;border:none;color:#8B949E;font-size:20px;
+               cursor:pointer;padding:0;flex-shrink:0;line-height:1">✕</button>
+    </div>
+
+    <div style="font-size:11px;color:#8B949E;margin-bottom:8px;font-weight:700;
+                text-transform:uppercase;letter-spacing:0.6px">Catégorie</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px">
+      <button id="cat-bug" onclick="selectionnerCategorie('bug')"
+        style="background:#21262D;border:1px solid #30363D;border-radius:10px;
+               padding:10px 8px;color:#E6EDF3;cursor:pointer;font-size:13px;
+               font-family:'Syne',sans-serif;font-weight:600;text-align:left">
+        🐛 Bug / problème
+      </button>
+      <button id="cat-idee" onclick="selectionnerCategorie('idee')"
+        style="background:#21262D;border:1px solid #30363D;border-radius:10px;
+               padding:10px 8px;color:#E6EDF3;cursor:pointer;font-size:13px;
+               font-family:'Syne',sans-serif;font-weight:600;text-align:left">
+        💡 Idée
+      </button>
+      <button id="cat-contenu" onclick="selectionnerCategorie('contenu')"
+        style="background:#21262D;border:1px solid #30363D;border-radius:10px;
+               padding:10px 8px;color:#E6EDF3;cursor:pointer;font-size:13px;
+               font-family:'Syne',sans-serif;font-weight:600;text-align:left">
+        📚 Contenu manquant
+      </button>
+      <button id="cat-autre" onclick="selectionnerCategorie('autre')"
+        style="background:#21262D;border:1px solid #30363D;border-radius:10px;
+               padding:10px 8px;color:#E6EDF3;cursor:pointer;font-size:13px;
+               font-family:'Syne',sans-serif;font-weight:600;text-align:left">
+        💬 Autre
+      </button>
+    </div>
+
+    <textarea id="suggestion-message"
+      placeholder="Sélectionnez une catégorie puis décrivez votre suggestion..."
+      oninput="compterCaracteresSuggestion()"
+      maxlength="1000"
+      style="width:100%;min-height:110px;background:#21262D;border:1px solid #30363D;
+             border-radius:12px;padding:12px;color:#E6EDF3;font-size:14px;
+             font-family:'Syne',sans-serif;resize:vertical;box-sizing:border-box;
+             outline:none;line-height:1.5"></textarea>
+    <div style="text-align:right;font-size:11px;color:#8B949E;margin-top:4px;margin-bottom:14px">
+      <span id="suggestion-count">0</span>/1000
+    </div>
+
+    <div id="suggestion-error"
+      style="display:none;background:#2D1B1B;border:1px solid #8B1A1A;
+             border-radius:10px;padding:10px 14px;color:#F97316;
+             font-size:13px;margin-bottom:12px"></div>
+    <div id="suggestion-success"
+      style="display:none;background:#0D2818;border:1px solid #009A44;
+             border-radius:10px;padding:10px 14px;color:#4ADE80;
+             font-size:13px;text-align:center;margin-bottom:12px"></div>
+
+    <button id="suggestion-submit" onclick="envoyerSuggestion()"
+      style="width:100%;background:#009A44;color:white;border:none;border-radius:12px;
+             padding:14px;font-family:'Syne',sans-serif;font-size:15px;font-weight:700;
+             cursor:pointer;box-shadow:0 4px 16px rgba(0,154,68,0.35)">
+      Envoyer au Professeur 👩🏾‍🏫
+    </button>
+  </div>
+</div>
 
 <!-- MODAL AIDE AGENT SUPPORT -->
 <div id="modal-aide" style="display:none;position:fixed;inset:0;z-index:99998;
