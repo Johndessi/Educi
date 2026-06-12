@@ -1209,7 +1209,8 @@ app.post('/support', async (req, res) => {
 });
 
 // === ABONNEMENTS KKIAPAY ===
-const ADMIN_KEY = process.env.ADMIN_KEY || 'EDUCI_ADMIN_2026';
+const ADMIN_KEY      = process.env.ADMIN_KEY || 'EDUCI_ADMIN_2026';
+const LIMITE_APPAREILS = 3;
 
 // Persistance JSON
 const DB_PATH = path.join(__dirname, 'abonnements.json');
@@ -1380,12 +1381,12 @@ app.get('/verifier-acces', (req, res) => {
 
   const deviceId = (req.query.device_id || '').trim();
   if (deviceId) {
-    if (!sub.devices) sub.devices = [];
-    if (!sub.devices.includes(deviceId)) {
-      if (sub.devices.length >= 3) {
-        return res.json({ acces: false, device_limit: true });
+    if (!Array.isArray(sub.appareils)) sub.appareils = [];
+    if (!sub.appareils.includes(deviceId)) {
+      if (sub.appareils.length >= LIMITE_APPAREILS) {
+        return res.json({ abonneActif: true, appareilAutorise: false });
       }
-      sub.devices.push(deviceId);
+      sub.appareils.push(deviceId);
       sauvegarder();
     }
   }

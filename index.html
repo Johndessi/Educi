@@ -4476,7 +4476,7 @@ async function authStep1() {
       debloquerApp();
       return;
     }
-    if (data.device_limit) {
+    if (data.abonneActif && data.appareilAutorise === false) {
       document.getElementById('auth-tel-err').textContent = _DEVICE_LIMIT_MSG;
       return;
     }
@@ -4541,7 +4541,7 @@ async function _pollVerif(tel, tries) {
       window.history.replaceState({}, '', '/');
       return;
     }
-    if (data.device_limit) {
+    if (data.abonneActif && data.appareilAutorise === false) {
       document.getElementById('auth-check-msg').textContent = _DEVICE_LIMIT_MSG;
       return;
     }
@@ -4601,7 +4601,7 @@ async function startApp() {
         const data = await r.json();
         if (data.acces) {
           _saveAcces({ tel: savedTel, forfait: data.forfait, expiry: data.expiry });
-        } else if (data.device_limit) {
+        } else if (data.abonneActif && data.appareilAutorise === false) {
           _hideLoading();
           showPaywall(_DEVICE_LIMIT_MSG);
           if (currentClasse) applyClasse(currentClasse);
