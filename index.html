@@ -383,6 +383,13 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
 .adm-days-ok { color: #34d399; font-weight: 600; }
 .adm-days-warn { color: #fbbf24; font-weight: 600; }
 .adm-days-crit { color: #f87171; font-weight: 600; }
+.adm-badge-nouveau { background: rgba(247,127,0,0.15); color: #F77F00; }
+.adm-badge-lu      { background: rgba(139,148,158,0.15); color: #8B949E; }
+.adm-badge-traite  { background: rgba(48,54,61,0.55); color: #556170; }
+.adm-badge-cat-bug     { background: rgba(248,113,113,0.12); color: #f87171; }
+.adm-badge-cat-idee    { background: rgba(251,191,36,0.12); color: #fbbf24; }
+.adm-badge-cat-contenu { background: rgba(96,165,250,0.12); color: #60a5fa; }
+.adm-badge-cat-autre   { background: rgba(167,139,250,0.12); color: #a78bfa; }
 .adm-empty { text-align: center; padding: 40px 20px; color: #8B949E; font-size: 14px; }
 .adm-err { color: #f87171; font-size: 13px; margin-top: 8px; min-height: 18px; text-align: center; }
 @media (max-width: 360px) {
@@ -529,6 +536,15 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
         <span id="adm-updated" style="font-size:11px;color:#8B949E;font-weight:400"></span>
       </div>
       <div id="adm-table-wrap">
+        <div class="adm-empty">Chargement…</div>
+      </div>
+
+      <!-- Suggestions -->
+      <div class="adm-section-title" style="margin-top:32px">
+        <span>💡 Suggestions</span>
+        <span id="adm-sugg-badge" style="font-size:11px;font-weight:400"></span>
+      </div>
+      <div id="adm-sugg-wrap">
         <div class="adm-empty">Chargement…</div>
       </div>
 
@@ -6160,6 +6176,7 @@ async function _adminFetch(key) {
     // Mettre la clé dans l'URL sans recharger
     window.history.replaceState({}, '', '/admin?key=' + encodeURIComponent(key));
     _adminRender(data);
+    _adminSuggFetch(key);
     _adminShowDashboard();
   } catch(e) {
     document.getElementById('adm-login-err').textContent = 'Erreur de connexion.';
@@ -6222,6 +6239,107 @@ function _adminRender(data) {
     '<table class="adm-table"><thead><tr>' +
     '<th>Téléphone</th><th>Forfait</th><th>Expiration</th><th>Restant</th>' +
     '</tr></thead><tbody>' + rows + '</tbody></table>';
+}
+
+// === ADMIN SUGGESTIONS ===
+const _suggCatIcons  = { bug: '🐛', idee: '💡', contenu: '📚', autre: '💬' };
+const _suggCatLabels = { bug: 'Bug', idee: 'Idée', contenu: 'Contenu', autre: 'Autre' };
+const _suggStatutOrder = { nouveau: 0, lu: 1, traite: 2 };
+
+function _adminSuggFormatDate(iso) {
+  try {
+    const d = new Date(iso);
+    return d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
+      + ' à ' + d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+  } catch(_) { return iso; }
+}
+
+async function _adminSuggFetch(key) {
+  const wrap = document.getElementById('adm-sugg-wrap');
+  wrap.innerHTML = '<div class="adm-empty">Chargement…</div>';
+  try {
+    const r = await fetch('/api/suggestions?key=' + encodeURIComponent(key));
+    if (r.status === 401) { wrap.innerHTML = '<div class="adm-empty">Accès refusé.</div>'; return; }
+    const suggs = await r.json();
+    _adminSuggRender(suggs, key);
+  } catch(_) {
+    wrap.innerHTML = '<div class="adm-empty" style="color:#f87171">Erreur de chargement des suggestions.</div>';
+  }
+}
+
+function _adminSuggRender(suggs, key) {
+  const wrap  = document.getElementById('adm-sugg-wrap');
+  const badge = document.getElementById('adm-sugg-badge');
+
+  const sorted = [...suggs].sort(function(a, b) {
+    var so = (_suggStatutOrder[a.statut] ?? 3) - (_suggStatutOrder[b.statut] ?? 3);
+    return so !== 0 ? so : new Date(b.date) - new Date(a.date);
+  });
+
+  var nbNouveaux = suggs.filter(function(s) { return s.statut === 'nouveau'; }).length;
+  if (nbNouveaux > 0) {
+    badge.textContent = nbNouveaux + ' nouvelle' + (nbNouveaux > 1 ? 's' : '');
+    badge.style.color = '#F77F00';
+  } else {
+    badge.textContent = suggs.length + ' au total';
+    badge.style.color = '#8B949E';
+  }
+
+  if (sorted.length === 0) {
+    wrap.innerHTML = '<div class="adm-empty">Aucune suggestion pour le moment.</div>';
+    return;
+  }
+
+  wrap.innerHTML = sorted.map(function(s) {
+    var icon      = _suggCatIcons[s.categorie]  || '💬';
+    var catLabel  = _suggCatLabels[s.categorie] || s.categorie;
+    var tel       = _adminMaskPhone(s.telephone || '—');
+    var statutCls = s.statut === 'traite' ? 'adm-badge-traite'
+                  : s.statut === 'lu'     ? 'adm-badge-lu'
+                  :                         'adm-badge-nouveau';
+    var statutLbl = s.statut === 'traite' ? 'Traité'
+                  : s.statut === 'lu'     ? 'Lu'
+                  :                         'Nouveau';
+    var msg = (s.message || '')
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    var esc = JSON.stringify(s.id);
+    var keyEsc = JSON.stringify(key);
+    var actions = '';
+    if (s.statut === 'nouveau') {
+      actions =
+        '<button class="adm-btn-sm" onclick="_adminSuggChangeStatut(' + esc + ',\'lu\',' + keyEsc + ')">✓ Lu</button>' +
+        '<button class="adm-btn-sm" onclick="_adminSuggChangeStatut(' + esc + ',\'traite\',' + keyEsc + ')">✓✓ Traité</button>';
+    } else if (s.statut === 'lu') {
+      actions =
+        '<button class="adm-btn-sm" onclick="_adminSuggChangeStatut(' + esc + ',\'traite\',' + keyEsc + ')">✓✓ Traité</button>';
+    }
+    return '<div style="background:#21262D;border:1px solid #30363D;border-radius:12px;' +
+           'padding:14px 16px;margin-bottom:10px">' +
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">' +
+        '<div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">' +
+          '<span class="adm-badge adm-badge-cat-' + s.categorie + '">' + icon + ' ' + catLabel + '</span>' +
+          '<span class="adm-badge ' + statutCls + '">' + statutLbl + '</span>' +
+        '</div>' +
+        '<div style="font-size:11px;color:#8B949E;white-space:nowrap;margin-left:8px;flex-shrink:0">' +
+          _adminSuggFormatDate(s.date) +
+        '</div>' +
+      '</div>' +
+      '<div style="font-size:11px;color:#8B949E;margin-bottom:8px;font-family:monospace">' + tel + '</div>' +
+      '<div style="font-size:13px;color:#E6EDF3;line-height:1.6;white-space:pre-wrap;word-break:break-word">' + msg + '</div>' +
+      (actions ? '<div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap">' + actions + '</div>' : '') +
+    '</div>';
+  }).join('');
+}
+
+async function _adminSuggChangeStatut(id, statut, key) {
+  try {
+    const r = await fetch('/api/suggestions/' + encodeURIComponent(id) + '?key=' + encodeURIComponent(key), {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ statut })
+    });
+    if (r.ok) _adminSuggFetch(key);
+  } catch(_) {}
 }
 
 // === SUGGESTIONS UTILISATEURS ===
