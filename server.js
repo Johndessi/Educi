@@ -1377,6 +1377,19 @@ app.get('/verifier-acces', (req, res) => {
   const sub = abonnes.get(tel);
   if (!sub) return res.json({ acces: false });
   if (new Date() > new Date(sub.expiry)) { abonnes.delete(tel); sauvegarder(); return res.json({ acces: false }); }
+
+  const deviceId = (req.query.device_id || '').trim();
+  if (deviceId) {
+    if (!sub.devices) sub.devices = [];
+    if (!sub.devices.includes(deviceId)) {
+      if (sub.devices.length >= 3) {
+        return res.json({ acces: false, device_limit: true });
+      }
+      sub.devices.push(deviceId);
+      sauvegarder();
+    }
+  }
+
   res.json({ acces: true, forfait: sub.forfait, expiry: sub.expiry });
 });
 

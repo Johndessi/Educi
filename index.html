@@ -4443,6 +4443,23 @@ function _saveAcces(data) {
   }));
 }
 
+function getDeviceId() {
+  let id = localStorage.getItem('educi_device_id');
+  if (!id) {
+    try { id = crypto.randomUUID(); } catch(_) {
+      id = Date.now().toString(36) + Math.random().toString(36).slice(2) + Math.random().toString(36).slice(2);
+    }
+    localStorage.setItem('educi_device_id', id);
+  }
+  return id;
+}
+
+function _buildAccesUrl(tel) {
+  return '/verifier-acces?tel=' + encodeURIComponent(tel) + '&device_id=' + encodeURIComponent(getDeviceId());
+}
+
+const _DEVICE_LIMIT_MSG = 'Cet abonnement est déjà actif sur 3 appareils. Pour profiter des fonctionnalités du Professeur sur cet appareil, abonnez-vous avec votre propre numéro 📲';
+
 async function authStep1() {
   const tel = (document.getElementById('auth-tel').value || '').trim();
   if (!tel || tel.replace(/\D/g,'').length < 8) {
@@ -4451,12 +4468,16 @@ async function authStep1() {
   }
   _authTel = tel;
   try {
-    const r = await fetch('/verifier-acces?tel=' + encodeURIComponent(tel));
+    const r = await fetch(_buildAccesUrl(tel));
     const data = await r.json();
     if (data.acces) {
       _saveAcces({ tel, forfait: data.forfait, expiry: data.expiry });
       localStorage.setItem('educi_tel', tel);
       debloquerApp();
+      return;
+    }
+    if (data.device_limit) {
+      document.getElementById('auth-tel-err').textContent = _DEVICE_LIMIT_MSG;
       return;
     }
   } catch(_) {}
@@ -4511,13 +4532,17 @@ async function _pollVerif(tel, tries) {
     return;
   }
   try {
-    const r = await fetch('/verifier-acces?tel=' + encodeURIComponent(tel));
+    const r = await fetch(_buildAccesUrl(tel));
     const data = await r.json();
     if (data.acces) {
       console.log('Accès confirmé —', data.forfait, 'expire le', data.expiry);
       _saveAcces({ tel, forfait: data.forfait, expiry: data.expiry });
       debloquerApp();
       window.history.replaceState({}, '', '/');
+      return;
+    }
+    if (data.device_limit) {
+      document.getElementById('auth-check-msg').textContent = _DEVICE_LIMIT_MSG;
       return;
     }
     console.log('Accès refusé — nouvelle tentative dans 2s');
@@ -4572,9 +4597,17 @@ async function startApp() {
     const savedTel = localStorage.getItem('educi_tel');
     if (savedTel) {
       try {
-        const r = await fetch('/verifier-acces?tel=' + encodeURIComponent(savedTel));
+        const r = await fetch(_buildAccesUrl(savedTel));
         const data = await r.json();
-        if (data.acces) _saveAcces({ tel: savedTel, forfait: data.forfait, expiry: data.expiry });
+        if (data.acces) {
+          _saveAcces({ tel: savedTel, forfait: data.forfait, expiry: data.expiry });
+        } else if (data.device_limit) {
+          _hideLoading();
+          showPaywall(_DEVICE_LIMIT_MSG);
+          if (currentClasse) applyClasse(currentClasse);
+          initCorrection();
+          return;
+        }
       } catch(_) {}
       debloquerApp();
     } else {
