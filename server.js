@@ -1,6 +1,7 @@
- const express = require('express');
-const path = require('path');
-const fs   = require('fs');
+ const express  = require('express');
+const path      = require('path');
+const fs        = require('fs');
+const mongoose  = require('mongoose');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -1212,32 +1213,55 @@ app.post('/support', async (req, res) => {
 const ADMIN_KEY      = process.env.ADMIN_KEY || 'EDUCI_ADMIN_2026';
 const LIMITE_APPAREILS = 3;
 
-// Persistance JSON
+// Persistance MongoDB (abonnements.json conservé pour migration initiale uniquement)
 const DB_PATH = path.join(__dirname, 'abonnements.json');
 
-function chargerAbonnes() {
+const AbonnementSchema = new mongoose.Schema({
+  telephone: { type: String, required: true, unique: true },
+  forfait:   { type: String },
+  expiry:    { type: Date },
+  appareils: { type: [String], default: [] },
+  source:    { type: String }
+}, { timestamps: true });
+const Abonnement = mongoose.model('Abonnement', AbonnementSchema);
+
+async function migrerDepuisJSON() {
   try {
-    if (!fs.existsSync(DB_PATH)) return new Map();
-    const data = JSON.parse(fs.readFileSync(DB_PATH, 'utf8'));
-    return new Map(Object.entries(data));
-  } catch (e) {
-    console.error('Erreur lecture abonnements.json:', e.message);
-    return new Map();
+    const count = await Abonnement.countDocuments();
+    if (count > 0) {
+      console.log(`📦 MongoDB déjà peuplée (${count} abonné(s)) — migration ignorée`);
+      return;
+    }
+    if (!fs.existsSync(DB_PATH)) return;
+    const raw     = JSON.parse(fs.readFileSync(DB_PATH, 'utf8'));
+    const entries = Object.entries(raw);
+    if (entries.length === 0) return;
+    const docs = entries.map(([tel, sub]) => ({
+      telephone: tel,
+      forfait:   sub.forfait,
+      expiry:    sub.expiry ? new Date(sub.expiry) : undefined,
+      appareils: Array.isArray(sub.appareils) ? sub.appareils
+               : Array.isArray(sub.devices)   ? sub.devices : [],
+      source:    sub.source
+    }));
+    await Abonnement.insertMany(docs, { ordered: false });
+    console.log(`✅ Migration : ${docs.length} abonné(s) importé(s) depuis abonnements.json`);
+  } catch (err) {
+    console.error('❌ Erreur migration abonnements.json → MongoDB :', err.message);
   }
 }
 
-function sauvegarder() {
-  try {
-    const obj = {};
-    for (const [tel, sub] of abonnes.entries()) obj[tel] = sub;
-    fs.writeFileSync(DB_PATH, JSON.stringify(obj, null, 2));
-  } catch (e) {
-    console.error('Erreur écriture abonnements.json:', e.message);
-  }
+const MONGODB_URI = process.env.MONGODB_URI;
+if (MONGODB_URI) {
+  mongoose.connect(MONGODB_URI)
+    .then(async () => {
+      console.log('✅ MongoDB connecté');
+      await migrerDepuisJSON();
+    })
+    .catch(err => console.error('❌ Connexion MongoDB échouée :', err.message));
+} else {
+  console.warn('⚠️  MONGODB_URI non définie — les routes abonnements nécessitent MongoDB');
 }
-
-const abonnes = chargerAbonnes();
-console.log(`📂 ${abonnes.size} abonnement(s) chargé(s) depuis abonnements.json`);
 const FORFAITS = {
   mensuel:     { prix: 500,  jours: 30,  label: '1 mois'  },
   trimestriel: { prix: 1200, jours: 90,  label: '3 mois'  },
@@ -1270,8 +1294,11 @@ app.post('/webhook-kkiapay', async (req, res) => {
       if (telephone && FORFAITS[forfait]) {
         const tel    = telephone.replace(/\D/g, '');
         const expiry = new Date(Date.now() + FORFAITS[forfait].jours * 86400000);
-        abonnes.set(tel, { forfait, expiry });
-        sauvegarder();
+        await Abonnement.findOneAndUpdate(
+          { telephone: tel },
+          { forfait, expiry },
+          { upsert: true, new: true, setDefaultsOnInsert: true }
+        );
         console.log(`✅ Abonnement activé : ${tel} → ${forfait} → ${expiry.toISOString()}`);
       }
     }
@@ -1290,7 +1317,7 @@ function normaliserTel(t) {
 // === PAIEMENT MANUEL SMS (Make.com) ===
 const SMS_SECRET = process.env.SMS_WEBHOOK_SECRET || 'EDUCI_SMS_2026';
 
-app.post('/webhook-sms', (req, res) => {
+app.post('/webhook-sms', async (req, res) => {
   console.log('WEBHOOK RECU:', JSON.stringify(req.body));
   const body = (typeof req.body === 'object' && req.body !== null) ? req.body : {};
   console.log('📦 Body reçu complet :', JSON.stringify(body));
@@ -1364,68 +1391,89 @@ app.post('/webhook-sms', (req, res) => {
 
   const tel    = normaliserTel(telephone);
   const expiry = new Date(Date.now() + FORFAITS[forfait].jours * 86400000);
-  abonnes.set(tel, { forfait, expiry, source: 'sms' });
-  sauvegarder();
+  try {
+    await Abonnement.findOneAndUpdate(
+      { telephone: tel },
+      { forfait, expiry, source: 'sms' },
+      { upsert: true, new: true, setDefaultsOnInsert: true }
+    );
+  } catch (dbErr) {
+    console.error('Erreur MongoDB webhook-sms :', dbErr.message);
+  }
 
   console.log(`✅ SMS Paiement : ${tel} → ${forfait} → ${expiry.toISOString()}`);
   res.json({ success: true, forfait, expiry });
 });
 // ==========================================
 // Vérification accès élève
-app.get('/verifier-acces', (req, res) => {
+app.get('/verifier-acces', async (req, res) => {
   const tel = normaliserTel(req.query.tel || '');
   if (!tel) return res.json({ acces: false });
-  const sub = abonnes.get(tel);
-  if (!sub) return res.json({ acces: false });
-  if (new Date() > new Date(sub.expiry)) { abonnes.delete(tel); sauvegarder(); return res.json({ acces: false }); }
+  try {
+    const sub = await Abonnement.findOne({ telephone: tel });
+    if (!sub) return res.json({ acces: false });
+    if (new Date() > sub.expiry) {
+      await Abonnement.deleteOne({ telephone: tel });
+      return res.json({ acces: false });
+    }
 
-  const deviceId = (req.query.device_id || '').trim();
-  if (deviceId) {
-    if (!Array.isArray(sub.appareils)) sub.appareils = [];
-    if (!sub.appareils.includes(deviceId)) {
+    const deviceId = (req.query.device_id || '').trim();
+    if (deviceId && !sub.appareils.includes(deviceId)) {
       if (sub.appareils.length >= LIMITE_APPAREILS) {
         return res.json({ abonneActif: true, appareilAutorise: false });
       }
-      sub.appareils.push(deviceId);
-      sauvegarder();
+      await Abonnement.updateOne({ telephone: tel }, { $push: { appareils: deviceId } });
     }
-  }
 
-  res.json({ acces: true, forfait: sub.forfait, expiry: sub.expiry });
+    res.json({ acces: true, forfait: sub.forfait, expiry: sub.expiry });
+  } catch (err) {
+    console.error('Erreur verifier-acces :', err.message);
+    res.json({ acces: false });
+  }
 });
 
 // Dashboard admin
-app.get('/api/admin/stats', (req, res) => {
+app.get('/api/admin/stats', async (req, res) => {
   if (req.query.key !== ADMIN_KEY)
     return res.status(401).json({ error: 'Clé invalide' });
-  const now  = new Date();
-  const list = [];
-  let revenus = 0;
-  let purge = false;
-  for (const [tel, sub] of abonnes.entries()) {
-    if (new Date(sub.expiry) < now) { abonnes.delete(tel); purge = true; continue; }
-    const jours_restants = Math.ceil((new Date(sub.expiry) - now) / 86400000);
-    list.push({ telephone: tel, forfait: sub.forfait, expiry: sub.expiry, jours_restants, nb_appareils: (sub.appareils || []).length });
-    revenus += FORFAITS[sub.forfait]?.prix || 0;
+  try {
+    const now = new Date();
+    await Abonnement.deleteMany({ expiry: { $lte: now } });
+    const subs = await Abonnement.find({ expiry: { $gt: now } });
+    const list = subs.map(sub => {
+      const jours_restants = Math.ceil((sub.expiry - now) / 86400000);
+      return {
+        telephone:    sub.telephone,
+        forfait:      sub.forfait,
+        expiry:       sub.expiry,
+        jours_restants,
+        nb_appareils: (sub.appareils || []).length
+      };
+    });
+    const revenus = list.reduce((acc, a) => acc + (FORFAITS[a.forfait]?.prix || 0), 0);
+    res.json({ abonnes: list, total_abonnes: list.length, revenus_estimes: revenus });
+  } catch (err) {
+    console.error('Erreur admin/stats :', err.message);
+    res.status(500).json({ error: 'Erreur serveur' });
   }
-  if (purge) sauvegarder();
-  res.json({
-    abonnes: list,
-    total_abonnes: list.length,
-    revenus_estimes: revenus
-  });
 });
 
-app.post('/api/admin/reset-appareils', (req, res) => {
+app.post('/api/admin/reset-appareils', async (req, res) => {
   if (req.query.key !== ADMIN_KEY)
     return res.status(401).json({ error: 'Clé invalide' });
   const tel = normaliserTel(req.body?.telephone || '');
   if (!tel) return res.status(400).json({ error: 'Numéro de téléphone requis.' });
-  const sub = abonnes.get(tel);
-  if (!sub) return res.status(404).json({ error: 'Abonné introuvable.' });
-  sub.appareils = [];
-  sauvegarder();
-  res.json({ success: true });
+  try {
+    const result = await Abonnement.findOneAndUpdate(
+      { telephone: tel },
+      { appareils: [] }
+    );
+    if (!result) return res.status(404).json({ error: 'Abonné introuvable.' });
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Erreur reset-appareils :', err.message);
+    res.status(500).json({ error: 'Erreur serveur' });
+  }
 });
 
 // === SUGGESTIONS UTILISATEURS ===
