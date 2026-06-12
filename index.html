@@ -6259,19 +6259,46 @@ function _adminRender(data) {
     wrap.innerHTML = '<div class="adm-empty">Aucun abonné actif pour le moment.</div>';
     return;
   }
+  var key = (document.getElementById('adm-key-input').value || '').trim();
   var rows = data.abonnes.map(function(a) {
     var dc = _adminDaysClass(a.jours_restants);
+    var telEsc = JSON.stringify(a.telephone);
+    var keyEsc = JSON.stringify(key);
     return '<tr>' +
       '<td style="font-family:monospace">' + _adminMaskPhone(a.telephone) + '</td>' +
       '<td><span class="adm-badge adm-badge-' + a.forfait + '">' + a.forfait + '</span></td>' +
       '<td>' + _adminFormatDate(a.expiry) + '</td>' +
       '<td class="' + dc + '">' + a.jours_restants + 'j</td>' +
+      '<td style="white-space:nowrap">' +
+        '<span style="font-size:12px;color:#8B949E">📱 ' + (a.nb_appareils || 0) + '/3</span>' +
+        ' <button class="adm-btn-sm" style="font-size:11px"' +
+          ' onclick="_adminResetAppareils(' + telEsc + ',' + keyEsc + ')">Réinitialiser</button>' +
+      '</td>' +
     '</tr>';
   }).join('');
   wrap.innerHTML =
     '<table class="adm-table"><thead><tr>' +
-    '<th>Téléphone</th><th>Forfait</th><th>Expiration</th><th>Restant</th>' +
+    '<th>Téléphone</th><th>Forfait</th><th>Expiration</th><th>Restant</th><th>Appareils</th>' +
     '</tr></thead><tbody>' + rows + '</tbody></table>';
+}
+
+async function _adminResetAppareils(tel, key) {
+  if (!confirm('Êtes-vous sûr ? Cela permettra à 3 nouveaux appareils de se connecter avec ce numéro.')) return;
+  try {
+    const r = await fetch('/api/admin/reset-appareils?key=' + encodeURIComponent(key), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ telephone: tel })
+    });
+    if (r.ok) {
+      _adminFetch(key);
+    } else {
+      const d = await r.json();
+      alert(d.error || 'Erreur lors de la réinitialisation.');
+    }
+  } catch(_) {
+    alert('Erreur de connexion.');
+  }
 }
 
 // === ADMIN SUGGESTIONS ===

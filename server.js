@@ -1405,7 +1405,7 @@ app.get('/api/admin/stats', (req, res) => {
   for (const [tel, sub] of abonnes.entries()) {
     if (new Date(sub.expiry) < now) { abonnes.delete(tel); purge = true; continue; }
     const jours_restants = Math.ceil((new Date(sub.expiry) - now) / 86400000);
-    list.push({ telephone: tel, forfait: sub.forfait, expiry: sub.expiry, jours_restants });
+    list.push({ telephone: tel, forfait: sub.forfait, expiry: sub.expiry, jours_restants, nb_appareils: (sub.appareils || []).length });
     revenus += FORFAITS[sub.forfait]?.prix || 0;
   }
   if (purge) sauvegarder();
@@ -1414,6 +1414,18 @@ app.get('/api/admin/stats', (req, res) => {
     total_abonnes: list.length,
     revenus_estimes: revenus
   });
+});
+
+app.post('/api/admin/reset-appareils', (req, res) => {
+  if (req.query.key !== ADMIN_KEY)
+    return res.status(401).json({ error: 'Clé invalide' });
+  const tel = normaliserTel(req.body?.telephone || '');
+  if (!tel) return res.status(400).json({ error: 'Numéro de téléphone requis.' });
+  const sub = abonnes.get(tel);
+  if (!sub) return res.status(404).json({ error: 'Abonné introuvable.' });
+  sub.appareils = [];
+  sauvegarder();
+  res.json({ success: true });
 });
 
 // === SUGGESTIONS UTILISATEURS ===
