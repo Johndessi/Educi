@@ -5273,6 +5273,109 @@ Structure ta correction ainsi :
         rappel_methode: "Étayer = soutenir la thèse. Réfuter = la rejeter. Discuter = soutenir puis réfuter. Résumé = 1/4 ou 1/3 ±10%, un seul bloc, nombre de mots obligatoire. Reformulation = transformer la syntaxe radicalement (interdiction de recopier la structure du texte)."
       };
     }
+    // === 2nde : Commentaire composé partiel ===
+    if (exercice === "commentaire_compose_seconde" || exercice === "seconde_fr_cc") {
+      grille = {
+        titre: "Grille de correction – Commentaire composé partiel (2nde)",
+        bareme_total: 20,
+        criteres: [
+          {
+            label: "I. Introduction – Amorce/contexte général (2 pts)",
+            points: 2,
+            indicateurs: [
+              "L'amorce est pertinente et en lien direct avec le texte (approche thématique, biographique ou littéraire)",
+              "Elle permet d'amener naturellement la présentation du texte",
+              "(-1 pt si l'amorce est hors sujet ; -0,5 pt si elle est trop générale ou non reliée au texte)"
+            ]
+          },
+          {
+            label: "I. Introduction – Présentation du texte (2 pts)",
+            points: 2,
+            indicateurs: [
+              "Auteur (nom, nationalité/époque si pertinent) correctement mentionné",
+              "Œuvre (titre, genre, date de publication, source/édition) présentée",
+              "Texte présenté : nature, tonalité dominante, idée générale",
+              "(-0,5 pt par élément manquant ou inexact)"
+            ]
+          },
+          {
+            label: "I. Introduction – Annonce du plan (2 pts)",
+            points: 2,
+            indicateurs: [
+              "Les centres d'intérêt sont clairement annoncés dans l'ordre du libellé",
+              "L'annonce est intégrée à l'introduction en une phrase cohérente",
+              "(-1 pt si les CI ne correspondent pas au libellé ; -0,5 pt si l'annonce est absente ou maladroite)"
+            ]
+          },
+          {
+            label: "II. CI 1 – Phrase introductive (1 pt)",
+            points: 1,
+            indicateurs: [
+              "Une phrase introductive annonce clairement le centre d'intérêt avant les paragraphes",
+              "(-1 pt si absente)"
+            ]
+          },
+          {
+            label: "II. CI 1 – Pertinence des sous-titres/paragraphes (3 pts)",
+            points: 3,
+            indicateurs: [
+              "3 à 4 paragraphes argumentatifs correspondent bien aux sous-thèmes du CI 1",
+              "Chaque paragraphe développe une idée directrice distincte et pertinente",
+              "(-1 pt par paragraphe hors sujet ou manquant)"
+            ]
+          },
+          {
+            label: "II. CI 1 – Repérage des indices textuels (3 pts)",
+            points: 3,
+            indicateurs: [
+              "Les citations sont exactes et tirées du texte support (pas d'exemples extérieurs)",
+              "Les indices sont variés : procédés grammaticaux, figures de style, indices lexicaux ou d'énonciation",
+              "Chaque paragraphe s'appuie sur au moins un indice textuel cité",
+              "(-0,5 pt par citation inexacte ou absente)"
+            ]
+          },
+          {
+            label: "II. CI 1 – Qualité de l'analyse (2 pts)",
+            points: 2,
+            indicateurs: [
+              "Les procédés et figures de style relevés sont correctement identifiés et nommés",
+              "L'analyse répond à la question : Comment l'auteur dit-il cela ?",
+              "(-0,5 pt par procédé mal identifié ou non nommé)"
+            ]
+          },
+          {
+            label: "II. CI 1 – Qualité de l'interprétation (2 pts)",
+            points: 2,
+            indicateurs: [
+              "L'interprétation établit un lien pertinent entre l'indice analysé et le sens du CI",
+              "Elle répond à la question : Pourquoi l'auteur dit-il cela ? Quel effet produit-il ?",
+              "(-0,5 pt par interprétation absente ou non reliée au CI)"
+            ]
+          },
+          {
+            label: "II. CI 1 – Cohérence et conclusion partielle (1 pt)",
+            points: 1,
+            indicateurs: [
+              "Des connecteurs logiques assurent la progression entre les paragraphes (d'abord, en outre, enfin…)",
+              "Une conclusion partielle (bilan du CI 1) est présente",
+              "Une transition annonce le centre d'intérêt 2 (même s'il n'est pas développé en 2nde)",
+              "(-0,5 pt si conclusion partielle absente ; -0,5 pt si connecteurs manquants)"
+            ]
+          },
+          {
+            label: "III. Langue et expression (2 pts)",
+            points: 2,
+            indicateurs: [
+              "Correction grammaticale et orthographique",
+              "Vocabulaire d'analyse littéraire approprié (tonalité, procédés, figures de style…)",
+              "(-0,25 pt par faute grave, max -1 pt ; -0,5 pt si vocabulaire littéraire absent)"
+            ]
+          }
+        ],
+        conseils_prof: "Rappeler avec bienveillance que le commentaire composé en 2nde se limite à l'introduction + le premier centre d'intérêt : si l'élève a développé un 2e CI, valoriser l'effort sans pénaliser lourdement, mais lui indiquer que ce n'est pas exigé à ce niveau. Vérifier que les citations sont tirées du texte support et jamais inventées. S'assurer que l'analyse (comment ?) et l'interprétation (pourquoi ?) sont bien distinguées.",
+        rappel_methode: "Commentaire composé 2nde = PARTIEL : introduction + 1 seul CI. Chaque paragraphe : idée directrice → explication → citation du texte → analyse du procédé → interprétation → transition. Les exemples viennent uniquement du texte support, jamais de l'extérieur."
+      };
+    }
     if (file.type.startsWith('image/')) {
       const base64 = await fileToBase64(file);
       messages = [{ role: 'user', content: [
