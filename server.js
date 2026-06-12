@@ -1147,20 +1147,32 @@ app.post('/api/claude', async (req, res) => {
       ...req.body,
       model: 'claude-haiku-4-5-20251001',
       max_tokens: req.body.max_tokens || 1024,
-      system: SYSTEM_PROMPT
+      system: [
+        {
+          type: 'text',
+          text: SYSTEM_PROMPT,
+          cache_control: { type: 'ephemeral' }
+        }
+      ]
     };
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'x-api-key': process.env.ANTHROPIC_API_KEY,
-        'anthropic-version': '2023-06-01'
+        'anthropic-version': '2023-06-01',
+        'anthropic-beta': 'prompt-caching-2024-07-31'
       },
       body: JSON.stringify(body)
     });
     const data = await response.json();
     console.log('Status:', response.status);
     if (!response.ok) console.error('Erreur API:', data);
+    if (data.usage) {
+      const created = data.usage.cache_creation_input_tokens || 0;
+      const read    = data.usage.cache_read_input_tokens    || 0;
+      if (created || read) console.log(`📦 Cache /api/claude : ${created} tokens créés, ${read} tokens lus`);
+    }
     res.json(data);
   } catch (error) {
     console.error('Erreur serveur:', error.message);
@@ -1186,12 +1198,19 @@ app.post('/support', async (req, res) => {
       headers: {
         'Content-Type': 'application/json',
         'x-api-key': process.env.ANTHROPIC_API_KEY,
-        'anthropic-version': '2023-06-01'
+        'anthropic-version': '2023-06-01',
+        'anthropic-beta': 'prompt-caching-2024-07-31'
       },
       body: JSON.stringify({
         model: 'claude-haiku-4-5-20251001',
         max_tokens: 1024,
-        system: SUPPORT_PROMPT,
+        system: [
+          {
+            type: 'text',
+            text: SUPPORT_PROMPT,
+            cache_control: { type: 'ephemeral' }
+          }
+        ],
         messages: [{ role: 'user', content: userMessage }]
       })
     });
@@ -1201,6 +1220,11 @@ app.post('/support', async (req, res) => {
       return res.status(502).json({ error: 'Erreur lors de la réponse IA.' });
     }
     const reponse = data.content?.[0]?.text || '';
+    if (data.usage) {
+      const created = data.usage.cache_creation_input_tokens || 0;
+      const read    = data.usage.cache_read_input_tokens    || 0;
+      if (created || read) console.log(`📦 Cache /support : ${created} tokens créés, ${read} tokens lus`);
+    }
     console.log(`📚 Support [${telephone || 'inconnu'}] ${classe || ''} ${matiere || ''} → ${reponse.slice(0,60)}…`);
     res.json({ reponse });
   } catch (err) {
