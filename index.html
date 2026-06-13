@@ -4708,6 +4708,8 @@ async function corrigerDevoir() {
   document.getElementById('btn-corriger').disabled = true;
   try {
     let messages;
+    let exercice;
+    let grille;
     const systemPrompt = `Tu es un professeur expérimenté en Côte d'Ivoire, spécialiste de ${matiere} pour la classe de ${classe}. Corrige le devoir de l'élève avec bienveillance et précision selon les programmes DPFC officiels.
 
 ${matiere === 'Français' ? `
