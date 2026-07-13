@@ -1,7 +1,9 @@
- const express  = require('express');
-const path      = require('path');
-const fs        = require('fs');
-const mongoose  = require('mongoose');
+const express    = require('express');
+const path       = require('path');
+const fs         = require('fs');
+const mongoose   = require('mongoose');
+const puppeteer  = require('puppeteer-core');
+const chromium   = require('@sparticuz/chromium');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -1609,6 +1611,61 @@ app.patch('/api/suggestions/:id', async (req, res) => {
     res.status(500).json({ error: 'Erreur serveur.' });
   }
 });
+
+// === GÉNÉRATION PDF SERVEUR (Puppeteer) =====================================
+let _browser = null;
+async function getBrowser() {
+  if (_browser) return _browser;
+  _browser = await puppeteer.launch({
+    args: chromium.args,
+    defaultViewport: chromium.defaultViewport,
+    executablePath: await chromium.executablePath(),
+    headless: chromium.headless
+  });
+  _browser.on('disconnected', () => { _browser = null; });
+  return _browser;
+}
+
+app.post('/api/pdf', async (req, res) => {
+  const { title = '', subtitle = '', bodyHTML = '' } = req.body;
+  let page;
+  try {
+    const browser = await getBrowser();
+    page = await browser.newPage();
+    await page.setContent(`<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>${title}</title>
+<style>
+  body { margin: 2cm; font-family: "Times New Roman", serif;
+         font-size: 12pt; line-height: 2; color: black; background: white; }
+  h1   { font-size: 18pt; font-weight: bold; margin-bottom: 4pt; }
+  h2   { font-size: 13pt; font-weight: bold; margin-bottom: 8pt; color: #333; }
+  hr   { border: none; border-top: 1px solid #999; margin: 12pt 0; }
+  *    { background: none !important; color: black !important; box-shadow: none !important; }
+</style>
+</head>
+<body>
+<h1>${title}</h1>
+<h2>${subtitle}</h2>
+<hr>
+${bodyHTML}
+</body>
+</html>`, { waitUntil: 'networkidle0' });
+    const pdf = await page.pdf({ format: 'A4', printBackground: true });
+    const filename = (title || 'document').replace(/[^a-z0-9]/gi, '_').toLowerCase() + '.pdf';
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+    res.send(pdf);
+  } catch (err) {
+    console.error('Erreur /api/pdf :', err.message);
+    res.status(500).json({ error: 'Génération PDF échouée : ' + err.message });
+  } finally {
+    if (page) await page.close().catch(() => {});
+  }
+});
+// =============================================================================
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
