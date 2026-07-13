@@ -3,7 +3,7 @@ const path       = require('path');
 const fs         = require('fs');
 const mongoose   = require('mongoose');
 const puppeteer  = require('puppeteer-core');
-const chromium   = require('@sparticuz/chromium');
+const chromium   = require('@sparticuz/chromium').default;
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -1618,9 +1618,8 @@ async function getBrowser() {
   if (_browser) return _browser;
   _browser = await puppeteer.launch({
     args: chromium.args,
-    defaultViewport: chromium.defaultViewport,
     executablePath: await chromium.executablePath(),
-    headless: chromium.headless
+    headless: true
   });
   _browser.on('disconnected', () => { _browser = null; });
   return _browser;
@@ -1653,7 +1652,8 @@ app.post('/api/pdf', async (req, res) => {
 ${bodyHTML}
 </body>
 </html>`, { waitUntil: 'networkidle0' });
-    const pdf = await page.pdf({ format: 'A4', printBackground: true });
+    const pdfData = await page.pdf({ format: 'A4', printBackground: true });
+    const pdf = Buffer.isBuffer(pdfData) ? pdfData : Buffer.from(pdfData);
     const filename = (title || 'document').replace(/[^a-z0-9]/gi, '_').toLowerCase() + '.pdf';
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
