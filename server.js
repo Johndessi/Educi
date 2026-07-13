@@ -39,14 +39,15 @@ REGLES IMPORTANTES :
   Exemple : "E = 1/2 x m x v2" pour l'energie cinetique
 - Pour la SVT : decris clairement les schemas et figures en texte
 - Encourage toujours l'eleve
-- Reponds en francais clair et simple`;
+- Reponds en francais clair et simple
+- Si tu annonces un nombre de parties, sous-parties ou types (ex. "les quatre types de..."), tu DOIS imperativement toutes les developper, dans l'ordre annonce, sans en sauter aucune. Verifie ce compte avant de terminer ta reponse.`;
 
 app.post('/api/claude', async (req, res) => {
   try {
     const body = {
       ...req.body,
       model: 'claude-haiku-4-5-20251001',
-      max_tokens: req.body.max_tokens || 1024,
+      max_tokens: req.body.max_tokens || 4096,
       system: SYSTEM_PROMPT
     };
     const response = await fetch('https://api.anthropic.com/v1/messages', {
