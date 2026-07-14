@@ -84,7 +84,7 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
 .nav-icon { font-size: 22px; }
 
 /* PAGES */
-.page { display: none; padding: 20px 16px 90px; }
+.page { display: none; padding: 20px 16px 160px; }
 .page.active { display: block; }
 
 /* HOME PAGE */
@@ -1061,7 +1061,7 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
 <!-- DICO OVERLAY (mot cliqué dans une leçon) -->
 <div id="dico-overlay" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:400;
      background:var(--card);border-top:2px solid var(--orange);
-     border-radius:20px 20px 0 0;padding:20px;max-height:72vh;
+     border-radius:20px 20px 0 0;padding:20px 20px 140px;max-height:72vh;
      overflow-y:auto;box-shadow:0 -6px 40px rgba(0,0,0,0.6)">
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
     <div id="dico-overlay-mot" style="font-family:'Syne',sans-serif;font-size:20px;
@@ -6843,7 +6843,7 @@ function _renderDico(data) {
 
   // --- Definition ---
   if (data.definition) {
-    const badge = data.definition.verifiee ? '✅ Définition vérifiée' : '✨ Définition IA';
+    const badge = data.definition.verifiee ? 'Définition vérifiée' : 'Définition';
     html += `<div style="background:var(--card2);border-radius:12px;padding:14px;margin-bottom:14px">
       <div style="color:var(--muted);font-size:11px;margin-bottom:6px">${badge}</div>
       <div style="font-size:14px;line-height:1.6">${data.definition.texte}</div>
