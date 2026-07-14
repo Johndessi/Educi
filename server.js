@@ -5,6 +5,10 @@ const mongoose   = require('mongoose');
 const puppeteer  = require('puppeteer-core');
 const chromium   = require('@sparticuz/chromium').default;
 
+const GENDER_DICT = require('french-words-gender-lefff/dist/words.json');
+const FrenchVerbs = require('french-verbs');
+const VERB_LEFFF  = require('french-verbs-lefff/dist/conjugations.json');
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -1522,6 +1526,13 @@ const SuggestionSchema = new mongoose.Schema({
 }, { timestamps: false });
 const Suggestion = mongoose.model('Suggestion', SuggestionSchema);
 
+const DefinitionSchema = new mongoose.Schema({
+  mot:        { type: String, required: true, unique: true },
+  definition: { type: String },
+  verifiee:   { type: Boolean, default: false }
+}, { timestamps: true });
+const Definition = mongoose.model('Definition', DefinitionSchema);
+
 async function migrerSuggestionsDepuisJSON() {
   try {
     const count = await Suggestion.countDocuments();
@@ -1611,6 +1622,53 @@ app.patch('/api/suggestions/:id', async (req, res) => {
     res.status(500).json({ error: 'Erreur serveur.' });
   }
 });
+
+// === DICTIONNAIRE ============================================================
+app.get('/api/dictionnaire/:mot', async (req, res) => {
+  const motBrut = req.params.mot.trim().toLowerCase().slice(0, 50);
+  const motCle  = motBrut.normalize('NFD').replace(/[̀-ͯ]/g, '');
+
+  let definition = null;
+  try {
+    const doc = await Definition.findOne({ mot: motBrut });
+    if (doc) definition = { texte: doc.definition, verifiee: doc.verifiee };
+  } catch (_) {}
+
+  const genre = GENDER_DICT[motBrut] || GENDER_DICT[motCle] || null;
+
+  const verbKey = VERB_LEFFF[motBrut] ? motBrut : (VERB_LEFFF[motCle] ? motCle : null);
+  const estVerbe = !!verbKey;
+  let conjugaisons = null;
+
+  if (verbKey) {
+    const aux = FrenchVerbs.alwaysAuxEtre(verbKey) ? 'ETRE' : 'AVOIR';
+    const PRONOMS = ['je', 'tu', 'il/elle', 'nous', 'vous', 'ils/elles'];
+    const TEMPS = [
+      { key: 'PRESENT',              label: 'Présent',              compose: false },
+      { key: 'IMPARFAIT',            label: 'Imparfait',            compose: false },
+      { key: 'FUTUR',                label: 'Futur',                compose: false },
+      { key: 'PASSE_COMPOSE',        label: 'Passé composé',        compose: true  },
+      { key: 'CONDITIONNEL_PRESENT', label: 'Conditionnel présent', compose: false },
+    ];
+    conjugaisons = {};
+    for (const t of TEMPS) {
+      const formes = [];
+      for (let p = 0; p < 6; p++) {
+        try {
+          const forme = FrenchVerbs.getConjugation(
+            VERB_LEFFF, verbKey, t.key, p,
+            t.compose ? { aux } : undefined
+          );
+          formes.push(PRONOMS[p] + ' ' + forme);
+        } catch (_) { formes.push(null); }
+      }
+      conjugaisons[t.key] = { label: t.label, formes };
+    }
+  }
+
+  res.json({ mot: motBrut, genre, estVerbe, conjugaisons, definition });
+});
+// =============================================================================
 
 // === GÉNÉRATION PDF SERVEUR (Puppeteer) =====================================
 let _browser = null;

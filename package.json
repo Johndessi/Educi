@@ -9,6 +9,9 @@
   "dependencies": {
     "@sparticuz/chromium": "^149.0.0",
     "express": "^4.18.2",
+    "french-verbs": "^5.4.0",
+    "french-verbs-lefff": "^3.4.0",
+    "french-words-gender-lefff": "^3.4.0",
     "mongoose": "^9.7.0",
     "puppeteer-core": "^25.3.0"
   }

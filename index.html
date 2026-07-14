@@ -459,6 +459,15 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
   50%  { width: 60%; margin-left: 20%;  }
   100% { width: 0%;  margin-left: 100%; }
 }
+.mot-cliquable {
+  border-bottom: 1px dotted var(--orange);
+  cursor: pointer;
+  transition: color 0.15s;
+}
+.mot-cliquable:hover { color: var(--orange); }
+#dico-overlay {
+  transition: transform 0.25s ease;
+}
 </style>
 </head>
 <body>
@@ -899,6 +908,24 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
     <div id="profil-content"></div>
   </div>
 
+  <!-- PAGE: DICO -->
+  <div class="page" id="page-dico">
+    <div style="padding-bottom:8px">
+      <h2 style="font-family:'Syne',sans-serif;color:var(--orange)">📖 Dictionnaire</h2>
+      <p style="color:var(--muted);font-size:13px;margin-top:4px">Genre, conjugaison et définition des mots</p>
+    </div>
+    <div style="display:flex;gap:8px;margin:12px 0">
+      <input id="dico-input" type="text" placeholder="Rechercher un mot..."
+        style="flex:1;padding:12px 16px;background:var(--card);border:1px solid var(--border);
+               border-radius:12px;color:var(--text);font-size:15px;outline:none;width:0"
+        onkeydown="if(event.key==='Enter')rechercherMot(this.value)" />
+      <button onclick="rechercherMot(document.getElementById('dico-input').value)"
+        style="padding:12px 18px;background:var(--orange);color:white;border:none;
+               border-radius:12px;font-weight:700;font-size:15px;cursor:pointer;flex-shrink:0">→</button>
+    </div>
+    <div id="dico-result" style="margin-top:8px"></div>
+  </div>
+
   <!-- NAV -->
   <nav class="nav">
     <button class="nav-item active" onclick="showPage('home')" id="nav-home">
@@ -915,6 +942,9 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
     </button>
     <button class="nav-item" onclick="showPage('profil');renderProfil()" id="nav-profil">
       <span class="nav-icon">👤</span>Profil
+    </button>
+    <button class="nav-item" onclick="ouvrirDico()" id="nav-dico">
+      <span class="nav-icon">📖</span>Dico
     </button>
   </nav>
 </div>
@@ -1026,6 +1056,21 @@ h1,h2,h3 { font-family: 'Syne', sans-serif; }
       </button>
     </div>
   </div>
+</div>
+
+<!-- DICO OVERLAY (mot cliqué dans une leçon) -->
+<div id="dico-overlay" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:400;
+     background:var(--card);border-top:2px solid var(--orange);
+     border-radius:20px 20px 0 0;padding:20px;max-height:72vh;
+     overflow-y:auto;box-shadow:0 -6px 40px rgba(0,0,0,0.6)">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+    <div id="dico-overlay-mot" style="font-family:'Syne',sans-serif;font-size:20px;
+         font-weight:700;color:var(--orange)"></div>
+    <button onclick="document.getElementById('dico-overlay').style.display='none'"
+      style="padding:6px 12px;background:var(--card2);border:1px solid var(--border);
+             border-radius:8px;color:var(--muted);cursor:pointer;font-size:14px">✕</button>
+  </div>
+  <div id="dico-overlay-content"></div>
 </div>
 
 
@@ -5777,6 +5822,7 @@ async function genFicheDPFC() {
     });
     html += `</div>`;
     el.innerHTML = html;
+    rendreMotsCliquables(el);
     btn.textContent = '🔼 Masquer la fiche';
     btn.disabled = false;
   } catch(e) {
@@ -5901,6 +5947,7 @@ async function explainLesson(matiere, titre, classe) {
     const data = await resp.json();
     const text = data.content?.[0]?.text || "Désolé, une erreur s'est produite.";
     document.getElementById('ai-content').innerHTML = `<div class="ai-text">${marked.parse(text)}</div>`;
+    rendreMotsCliquables(document.getElementById('ai-content'));
   } catch(e) {
     document.getElementById('ai-content').innerHTML = `<div style="color:var(--muted)">⚠️ Connexion requise pour le Professeur.</div>`;
   }
@@ -6726,6 +6773,114 @@ async function envoyerAide() {
     rep.style.display = 'block';
   }
   btn.disabled = false; btn.style.opacity = '1';
+}
+
+// === DICTIONNAIRE ===
+function ouvrirDico() {
+  showPage('dico');
+  const inp = document.getElementById('dico-input');
+  if (inp) inp.focus();
+}
+
+async function rechercherMot(mot) {
+  mot = (mot || '').trim();
+  if (!mot) return;
+  const el = document.getElementById('dico-result');
+  el.innerHTML = '<div style="color:var(--muted);font-size:14px">Recherche en cours...</div>';
+  try {
+    const r = await fetch('/api/dictionnaire/' + encodeURIComponent(mot));
+    const data = await r.json();
+    el.innerHTML = _renderDico(data);
+  } catch (e) {
+    el.innerHTML = '<div style="color:red;font-size:14px">Erreur : ' + e.message + '</div>';
+  }
+}
+
+async function _afficherDicoOverlay(mot) {
+  const overlay = document.getElementById('dico-overlay');
+  const motEl   = document.getElementById('dico-overlay-mot');
+  const contEl  = document.getElementById('dico-overlay-content');
+  motEl.textContent = mot;
+  contEl.innerHTML  = '<div style="color:var(--muted);font-size:14px">Recherche...</div>';
+  overlay.style.display = 'block';
+  try {
+    const r = await fetch('/api/dictionnaire/' + encodeURIComponent(mot));
+    const data = await r.json();
+    contEl.innerHTML = _renderDico(data);
+  } catch (e) {
+    contEl.innerHTML = '<div style="color:red;font-size:14px">Erreur : ' + e.message + '</div>';
+  }
+}
+
+function _renderDico(data) {
+  let html = '';
+  if (data.genre) {
+    const isMasc = data.genre === 'M';
+    const gLabel = isMasc ? 'masculin' : 'féminin';
+    const gColor = isMasc ? '#4B8BFF' : '#FF6B9D';
+    html += `<div style="margin-bottom:14px">
+      <span style="background:${gColor}22;color:${gColor};padding:5px 12px;
+             border-radius:20px;font-size:13px;font-weight:600">${gLabel}</span>
+    </div>`;
+  }
+  if (data.definition) {
+    const badge = data.definition.verifiee ? '✅ Définition vérifiée' : '📝 Définition';
+    html += `<div style="background:var(--card2);border-radius:12px;padding:14px;margin-bottom:14px">
+      <div style="color:var(--muted);font-size:11px;margin-bottom:6px">${badge}</div>
+      <div style="font-size:14px;line-height:1.6">${data.definition.texte}</div>
+    </div>`;
+  }
+  if (data.estVerbe && data.conjugaisons) {
+    html += '<div style="font-family:\'Syne\',sans-serif;font-weight:700;margin-bottom:10px;font-size:15px">Conjugaison</div>';
+    for (const [, tense] of Object.entries(data.conjugaisons)) {
+      html += `<div style="margin-bottom:14px">
+        <div style="color:var(--orange);font-weight:600;font-size:13px;margin-bottom:6px">${tense.label}</div>
+        <div style="background:var(--card2);border-radius:10px;padding:10px 12px;
+             display:grid;grid-template-columns:1fr 1fr;gap:4px">`;
+      for (const forme of tense.formes) {
+        if (forme) html += `<div style="font-size:13px;padding:3px 0">${forme}</div>`;
+      }
+      html += '</div></div>';
+    }
+  }
+  if (!data.genre && !data.estVerbe && !data.definition) {
+    html = '<div style="color:var(--muted);font-size:14px;padding:12px 0">Mot introuvable dans le lexique.</div>';
+  }
+  return html;
+}
+
+function rendreMotsCliquables(el) {
+  if (!el) return;
+  const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+  const nodes  = [];
+  let node;
+  while ((node = walker.nextNode())) nodes.push(node);
+
+  const SKIP = new Set(['SCRIPT', 'STYLE', 'INPUT', 'TEXTAREA', 'BUTTON', 'A']);
+  nodes.forEach(textNode => {
+    const parent = textNode.parentNode;
+    if (!parent || SKIP.has(parent.tagName)) return;
+    if (parent.classList && parent.classList.contains('mot-cliquable')) return;
+
+    const text = textNode.textContent;
+    if (!/[a-zA-ZÀ-ÿ]{4,}/.test(text)) return;
+
+    const frag  = document.createDocumentFragment();
+    const parts = text.split(/([a-zA-ZÀ-ÿÀ-ɏ]{4,})/);
+    parts.forEach((part, i) => {
+      if (i % 2 === 1) {
+        const span = document.createElement('span');
+        span.className = 'mot-cliquable';
+        span.textContent = part;
+        const m = part.toLowerCase();
+        span.onclick = () => _afficherDicoOverlay(m);
+        frag.appendChild(span);
+      } else {
+        frag.appendChild(document.createTextNode(part));
+      }
+    });
+    parent.replaceChild(frag, textNode);
+  });
 }
 </script>
 </body>
