@@ -1659,7 +1659,9 @@ app.get('/api/dictionnaire/:mot', async (req, res) => {
             VERB_LEFFF, verbKey, t.key, p,
             t.compose ? { aux } : undefined
           );
-          formes.push(PRONOMS[p] + ' ' + forme);
+          let f = PRONOMS[p] + ' ' + forme;
+          if (/^je [aeiouéèêëàâîïôùû]/i.test(f)) f = "j'" + f.slice(3);
+          formes.push(f);
         } catch (_) { formes.push(null); }
       }
       conjugaisons[t.key] = { label: t.label, formes };
