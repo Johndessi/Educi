@@ -1529,6 +1529,7 @@ const Suggestion = mongoose.model('Suggestion', SuggestionSchema);
 const DefinitionSchema = new mongoose.Schema({
   mot:        { type: String, required: true, unique: true },
   definition: { type: String },
+  nature:     { type: String },
   verifiee:   { type: Boolean, default: false }
 }, { timestamps: true });
 const Definition = mongoose.model('Definition', DefinitionSchema);
@@ -1624,22 +1625,51 @@ app.patch('/api/suggestions/:id', async (req, res) => {
 });
 
 // === DICTIONNAIRE ============================================================
+async function getDefIA(mot) {
+  if (!process.env.ANTHROPIC_API_KEY) return null;
+  try {
+    const r = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': process.env.ANTHROPIC_API_KEY,
+        'anthropic-version': '2023-06-01'
+      },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 200,
+        messages: [{
+          role: 'user',
+          content: `Dictionnaire français. Pour le mot "${mot}", réponds UNIQUEMENT avec ce JSON (sans texte autour) :
+{"nature":"nom|verbe|adjectif|adverbe|préposition|conjonction|article|pronom|interjection","definition":"définition courte (1-2 phrases max, en français simple)","inconnu":false}
+
+Si ce n'est pas un mot français reconnu (mot inventé, suite de lettres sans sens), réponds :
+{"nature":null,"definition":null,"inconnu":true}`
+        }]
+      })
+    });
+    const d = await r.json();
+    const text = (d.content?.[0]?.text || '').trim();
+    const match = text.match(/\{[\s\S]*\}/);
+    if (!match) return null;
+    return JSON.parse(match[0]);
+  } catch (_) { return null; }
+}
+
 app.get('/api/dictionnaire/:mot', async (req, res) => {
   const motBrut = req.params.mot.trim().toLowerCase().slice(0, 50);
   const motCle  = motBrut.normalize('NFD').replace(/[̀-ͯ]/g, '');
 
-  let definition = null;
-  try {
-    const doc = await Definition.findOne({ mot: motBrut });
-    if (doc) definition = { texte: doc.definition, verifiee: doc.verifiee };
-  } catch (_) {}
-
-  const genre = GENDER_DICT[motBrut] || GENDER_DICT[motCle] || null;
-
+  // --- Lefff lookups (synchronous, in-memory) ---
+  const genre   = GENDER_DICT[motBrut] || GENDER_DICT[motCle] || null;
   const verbKey = VERB_LEFFF[motBrut] ? motBrut : (VERB_LEFFF[motCle] ? motCle : null);
   const estVerbe = !!verbKey;
-  let conjugaisons = null;
 
+  // Initial nature from Lefff (may be refined by AI or MongoDB)
+  let nature = estVerbe ? 'verbe' : (genre ? 'nom' : null);
+
+  // --- Conjugation ---
+  let conjugaisons = null;
   if (verbKey) {
     const aux = FrenchVerbs.alwaysAuxEtre(verbKey) ? 'ETRE' : 'AVOIR';
     const PRONOMS = ['je', 'tu', 'il/elle', 'nous', 'vous', 'ils/elles'];
@@ -1668,7 +1698,35 @@ app.get('/api/dictionnaire/:mot', async (req, res) => {
     }
   }
 
-  res.json({ mot: motBrut, genre, estVerbe, conjugaisons, definition });
+  // --- Definition + refined nature: MongoDB cache → AI ---
+  let definition = null;
+  let cached = false;
+  try {
+    const doc = await Definition.findOne({ mot: motBrut });
+    if (doc) {
+      cached = true;
+      if (doc.nature)     nature     = doc.nature;
+      if (doc.definition) definition = { texte: doc.definition, verifiee: doc.verifiee };
+    }
+  } catch (_) {}
+
+  if (!cached) {
+    const ai = await getDefIA(motBrut);
+    if (ai && !ai.inconnu && ai.definition) {
+      if (ai.nature) nature = ai.nature;
+      definition = { texte: ai.definition, verifiee: false };
+      // Cache result (fire-and-forget)
+      Definition.findOneAndUpdate(
+        { mot: motBrut },
+        { mot: motBrut, definition: ai.definition, nature: ai.nature || nature, verifiee: false },
+        { upsert: true }
+      ).catch(() => {});
+    }
+    // ai===null (API unavailable) or ai.inconnu===true → leave definition null
+    // "Mot introuvable" condition: nature===null && !estVerbe && !definition
+  }
+
+  res.json({ mot: motBrut, genre, nature, estVerbe, conjugaisons, definition });
 });
 // =============================================================================
 

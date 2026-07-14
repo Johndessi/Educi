@@ -6813,23 +6813,44 @@ async function _afficherDicoOverlay(mot) {
 }
 
 function _renderDico(data) {
+  const NATURE_COLOR = {
+    'nom':          '#4B8BFF',
+    'verbe':        '#FF6B35',
+    'adjectif':     '#8B5CF6',
+    'adverbe':      '#009A44',
+    'pronom':       '#FF9500',
+    'article':      '#8B949E',
+    'préposition':  '#8B949E',
+    'conjonction':  '#8B949E',
+    'interjection': '#FF3B30',
+  };
+  const col = (data.nature && NATURE_COLOR[data.nature]) || '#8B949E';
+
   let html = '';
-  if (data.genre) {
-    const isMasc = data.genre === 'M';
-    const gLabel = isMasc ? 'masculin' : 'féminin';
-    const gColor = isMasc ? '#4B8BFF' : '#FF6B9D';
-    html += `<div style="margin-bottom:14px">
-      <span style="background:${gColor}22;color:${gColor};padding:5px 12px;
-             border-radius:20px;font-size:13px;font-weight:600">${gLabel}</span>
+
+  // --- Nature + genre badge ---
+  if (data.nature || data.genre) {
+    let label = data.nature || '';
+    if (data.genre) {
+      const gLabel = data.genre === 'M' ? 'masculin' : 'féminin';
+      label = label ? label + ' ' + gLabel : gLabel;
+    }
+    html += `<div style="margin-bottom:14px;display:flex;gap:8px;flex-wrap:wrap">
+      <span style="background:${col}22;color:${col};padding:5px 14px;
+             border-radius:20px;font-size:13px;font-weight:600">${label}</span>
     </div>`;
   }
+
+  // --- Definition ---
   if (data.definition) {
-    const badge = data.definition.verifiee ? '✅ Définition vérifiée' : '📝 Définition';
+    const badge = data.definition.verifiee ? '✅ Définition vérifiée' : '✨ Définition IA';
     html += `<div style="background:var(--card2);border-radius:12px;padding:14px;margin-bottom:14px">
       <div style="color:var(--muted);font-size:11px;margin-bottom:6px">${badge}</div>
       <div style="font-size:14px;line-height:1.6">${data.definition.texte}</div>
     </div>`;
   }
+
+  // --- Conjugaison ---
   if (data.estVerbe && data.conjugaisons) {
     html += '<div style="font-family:\'Syne\',sans-serif;font-weight:700;margin-bottom:10px;font-size:15px">Conjugaison</div>';
     for (const [, tense] of Object.entries(data.conjugaisons)) {
@@ -6843,9 +6864,12 @@ function _renderDico(data) {
       html += '</div></div>';
     }
   }
-  if (!data.genre && !data.estVerbe && !data.definition) {
-    html = '<div style="color:var(--muted);font-size:14px;padding:12px 0">Mot introuvable dans le lexique.</div>';
+
+  // --- Mot introuvable : uniquement si l'IA elle-même n'a rien retourné ---
+  if (!data.nature && !data.estVerbe && !data.definition) {
+    html = '<div style="color:var(--muted);font-size:14px;padding:12px 0">Mot introuvable dans le lexique français.</div>';
   }
+
   return html;
 }
 
