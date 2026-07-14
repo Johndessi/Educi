@@ -1,7 +1,8 @@
 [{
   "relation": ["delegate_permission/common.handle_all_urls"],
   "target": {
-    "namespace": "web",
-    "site": "https://educi-qstl.onrender.com"
+    "namespace": "android_app",
+    "package_name": "com.johndessi.educi",
+    "sha256_cert_fingerprints": ["E9:3F:6C:AE:91:48:4F:85:C3:94:D1:0B:86:27:D2:22:3A:3B:DC:7F:62:CD:04:CA:A1:B7:7F:7E:5B:C2:56:CC"]
   }
 }]
