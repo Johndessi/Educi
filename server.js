@@ -38,6 +38,11 @@ app.get('/.well-known/assetlinks.json', (req, res) => {
   res.sendFile(path.join(__dirname, '.well-known', 'assetlinks.json'));
 });
 
+app.get('/confidentialite', (req, res) => {
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  res.sendFile(path.join(__dirname, 'confidentialite.html'));
+});
+
 app.use('/icons', express.static(path.join(__dirname, 'icons'), { maxAge: '7d' }));
 // ---------------------------------------------------
 
