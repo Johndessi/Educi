@@ -5746,6 +5746,12 @@ const _PERIODE_LECON = new RegExp(
   '|(?:1st|2nd|3rd)\\s+term' +
   '|tout au long de l\'ann[ée]e)' +
   '(?:\\s*\\([^)]*\\))?$', 'i');
+// Reste sans valeur informative : un nom de classe seul, ou uniquement des durées
+// (« Tle A1: 13h • Tle A2: 15h »). Un tel reste est traité comme vide.
+const _CLASSE_LECON = '(?:[3-6][èe]me|2nde(?:\\s+[AC])?|1[èe]re(?:\\s+(?:A1|A2|C|D))?|Tle(?:\\s+(?:A1|A2|C|D))?|Terminale(?:\\s+(?:A1|A2|C|D))?)';
+const _DUREE_LECON  = '(?:' + _CLASSE_LECON + '\\s*:\\s*)?\\d+(?:[,.]\\d+)?\\s*h';
+const _RESTE_VIDE_LECON = new RegExp(
+  '^(?:' + _CLASSE_LECON + '|' + _DUREE_LECON + '(?:\\s*[•–,-]\\s*' + _DUREE_LECON + ')*)$', 'i');
 function sousTitreLecon(l) {
   const brut = String(l.sub || l.trimestre || '').trim();
   // Segments alternés : [texte, séparateur, texte, …] ; séparateur = « – », « - » ou « • » entourés d'espaces
@@ -5754,7 +5760,8 @@ function sousTitreLecon(l) {
     parts.pop();   // segment de période
     parts.pop();   // séparateur qui le précédait
   }
-  return parts.join('').trim();
+  const reste = parts.join('').trim();
+  return _RESTE_VIDE_LECON.test(reste) ? '' : reste;
 }
 
 function renderLecons(lecons) {
