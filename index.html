@@ -5735,18 +5735,43 @@ function openMatiere(i) {
 }
 
 // === LEÇONS ===
+// Sous-titre affiché sous une leçon : l.sub (ou l.trimestre) privé de ses
+// segments finaux de période (mois, trimestre, « tout au long de l'année »),
+// durée entre parenthèses comprise. Les données DATA ne sont pas modifiées.
+const _MOIS_LECON = '(?:janvier|f[ée]vrier|mars|avril|mai|juin|septembre|octobre|novembre|d[ée]cembre|april|may)';
+const _RANG_TRIM  = '(?:1er|2[èe]me|3[èe]me)';
+const _PERIODE_LECON = new RegExp(
+  '^(?:' + _MOIS_LECON + '(?:\\s*/\\s*' + _MOIS_LECON + ')*' +
+  '|' + _RANG_TRIM + '(?:\\s*(?:,|/|et)\\s*' + _RANG_TRIM + ')*\\s+trimestre' +
+  '|(?:1st|2nd|3rd)\\s+term' +
+  '|tout au long de l\'ann[ée]e)' +
+  '(?:\\s*\\([^)]*\\))?$', 'i');
+function sousTitreLecon(l) {
+  const brut = String(l.sub || l.trimestre || '').trim();
+  // Segments alternés : [texte, séparateur, texte, …] ; séparateur = « – », « - » ou « • » entourés d'espaces
+  const parts = brut.split(/(\s+[–•-]\s+)/);
+  while (parts.length && _PERIODE_LECON.test(parts[parts.length - 1].trim())) {
+    parts.pop();   // segment de période
+    parts.pop();   // séparateur qui le précédait
+  }
+  return parts.join('').trim();
+}
+
 function renderLecons(lecons) {
   const list = document.getElementById('lesson-list');
-  list.innerHTML = lecons.map((l, i) => `
+  list.innerHTML = lecons.map((l, i) => {
+    const st = sousTitreLecon(l);
+    return `
     <div class="lesson-item" onclick="openLesson(${i})">
       <div class="lesson-num">${i+1}</div>
       <div class="lesson-text">
         <div class="lesson-title-text">${l.title}</div>
-        <div class="lesson-subtitle">${l.sub || l.trimestre || ''}</div>
+        ${st ? `<div class="lesson-subtitle">${st}</div>` : ''}
       </div>
       <span style="color:var(--muted);font-size:16px">👩🏾‍🏫</span>
     </div>
-  `).join('');
+  `;
+  }).join('');
 }
 
 function openLesson(i) {
