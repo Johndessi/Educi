@@ -1,6 +1,7 @@
 const express    = require('express');
 const path       = require('path');
 const fs         = require('fs');
+const crypto     = require('crypto');
 const mongoose   = require('mongoose');
 const puppeteer  = require('puppeteer-core');
 const chromium   = require('@sparticuz/chromium').default;
@@ -44,9 +45,13 @@ app.get('/confidentialite', (req, res) => {
 });
 
 app.use('/icons', express.static(path.join(__dirname, 'icons'), { maxAge: '7d' }));
-// ---------------------------------------------------
 
-app.use(express.static(__dirname));
+// index.html est servi explicitement ; aucun autre fichier du dossier n'est exposé
+// (pas de express.static sur la racine du projet).
+app.get(['/', '/index.html'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+// ---------------------------------------------------
 
 const SYSTEM_PROMPT = `Tu es le Professeur d'EduCI, application educative ivoirienne. Tu aides les eleves du secondaire (3ème, Terminale A, C et D) à comprendre leurs cours.
 
@@ -1250,7 +1255,42 @@ app.post('/support', async (req, res) => {
 });
 
 // === ABONNEMENTS KKIAPAY ===
-const ADMIN_KEY      = process.env.ADMIN_KEY || 'EDUCI_ADMIN_2026';
+// Secrets : aucune valeur par défaut. Absents en production → démarrage refusé ;
+// absents en local → les routes concernées répondent 503.
+const ADMIN_KEY      = process.env.ADMIN_KEY || '';
+const EN_PRODUCTION  = Boolean(process.env.RENDER) || process.env.NODE_ENV === 'production';
+const SECRETS_MANQUANTS = ['ADMIN_KEY', 'SMS_WEBHOOK_SECRET'].filter(nom => !process.env[nom]);
+if (SECRETS_MANQUANTS.length) {
+  if (EN_PRODUCTION) {
+    console.error(`❌ Démarrage refusé : variable(s) d'environnement manquante(s) : ${SECRETS_MANQUANTS.join(', ')}. ` +
+      `Définis-les dans Render (Environment) puis redéploie.`);
+    process.exit(1);
+  }
+  console.warn(`⚠️  ${SECRETS_MANQUANTS.join(', ')} non définie(s) — mode local : les routes concernées répondent 503.`);
+}
+
+// Comparaison en temps constant (hash SHA-256 des deux côtés : longueurs égales)
+function cleValide(fournie, attendue) {
+  if (!attendue || typeof fournie !== 'string' || !fournie) return false;
+  const a = crypto.createHash('sha256').update(fournie).digest();
+  const b = crypto.createHash('sha256').update(attendue).digest();
+  return crypto.timingSafeEqual(a, b);
+}
+
+// Clé admin : en-tête x-admin-key ou paramètre ?key= (compatibilité).
+// Renvoie true si autorisé, sinon envoie la réponse d'erreur et renvoie false.
+function autoriserAdmin(req, res) {
+  if (!ADMIN_KEY) {
+    res.status(503).json({ error: 'Administration non configurée sur ce serveur.' });
+    return false;
+  }
+  const fournie = req.get('x-admin-key') || req.query.key;
+  if (!cleValide(typeof fournie === 'string' ? fournie : '', ADMIN_KEY)) {
+    res.status(401).json({ error: 'Clé invalide' });
+    return false;
+  }
+  return true;
+}
 const LIMITE_APPAREILS = 3;
 
 // Persistance MongoDB (abonnements.json conservé pour migration initiale uniquement)
@@ -1356,9 +1396,10 @@ function normaliserTel(t) {
 }
 
 // === PAIEMENT MANUEL SMS (Make.com) ===
-const SMS_SECRET = process.env.SMS_WEBHOOK_SECRET || 'EDUCI_SMS_2026';
+const SMS_SECRET = process.env.SMS_WEBHOOK_SECRET || '';
 
 app.post('/webhook-sms', async (req, res) => {
+  if (!SMS_SECRET) return res.status(503).json({ error: 'Webhook SMS non configuré sur ce serveur.' });
   console.log('WEBHOOK RECU:', JSON.stringify(req.body));
   const body = (typeof req.body === 'object' && req.body !== null) ? req.body : {};
   console.log('📦 Body reçu complet :', JSON.stringify(body));
@@ -1475,8 +1516,7 @@ app.get('/verifier-acces', async (req, res) => {
 
 // Dashboard admin
 app.get('/api/admin/stats', async (req, res) => {
-  if (req.query.key !== ADMIN_KEY)
-    return res.status(401).json({ error: 'Clé invalide' });
+  if (!autoriserAdmin(req, res)) return;
   try {
     const now = new Date();
     await Abonnement.deleteMany({ expiry: { $lte: now } });
@@ -1500,8 +1540,7 @@ app.get('/api/admin/stats', async (req, res) => {
 });
 
 app.post('/api/admin/reset-appareils', async (req, res) => {
-  if (req.query.key !== ADMIN_KEY)
-    return res.status(401).json({ error: 'Clé invalide' });
+  if (!autoriserAdmin(req, res)) return;
   const tel = normaliserTel(req.body?.telephone || '');
   if (!tel) return res.status(400).json({ error: 'Numéro de téléphone requis.' });
   try {
@@ -1592,8 +1631,7 @@ app.post('/api/suggestions', async (req, res) => {
 });
 
 app.get('/api/suggestions', async (req, res) => {
-  if (req.query.key !== ADMIN_KEY)
-    return res.status(401).json({ error: 'Clé invalide' });
+  if (!autoriserAdmin(req, res)) return;
   try {
     const docs = await Suggestion.find().sort({ date: -1 });
     res.json(docs.map(s => ({
@@ -1611,8 +1649,7 @@ app.get('/api/suggestions', async (req, res) => {
 });
 
 app.patch('/api/suggestions/:id', async (req, res) => {
-  if (req.query.key !== ADMIN_KEY)
-    return res.status(401).json({ error: 'Clé invalide' });
+  if (!autoriserAdmin(req, res)) return;
   const { statut } = req.body || {};
   if (!['nouveau', 'lu', 'traite'].includes(statut))
     return res.status(400).json({ error: 'Statut invalide. Valeurs acceptées : nouveau, lu, traite.' });
@@ -1790,7 +1827,15 @@ ${bodyHTML}
 });
 // =============================================================================
 
+// Repli de l'application monopage (ex. /admin) : seules les adresses de pages reçoivent
+// index.html. Fichier (extension), segment caché (.git, .env…) ou dossier interne → 404.
+const DOSSIERS_INTERNES = ['node_modules', 'scripts', 'test', 'tests'];
 app.get('*', (req, res) => {
+  const segments = req.path.split('/').filter(Boolean);
+  const estFichier = /\.[^/]*$/.test(req.path) || segments.some(seg => seg.startsWith('.'));
+  if (estFichier || DOSSIERS_INTERNES.includes(segments[0])) {
+    return res.status(404).type('text/plain').send('Not found');
+  }
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
