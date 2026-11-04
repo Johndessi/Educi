@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "node --test test/sous-titre-lecon.test.js"
+    "test": "node --test test/sous-titre-lecon.test.js test/sw-version.test.js"
   },
   "dependencies": {
     "@sparticuz/chromium": "^149.0.0",

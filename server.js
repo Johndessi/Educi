@@ -27,10 +27,14 @@ app.get('/manifest.json', (req, res) => {
   res.sendFile(path.join(__dirname, 'manifest.json'));
 });
 
+// sw.js est servi avec une version calculée au démarrage (voir sw-version.js)
+const { sourceSW } = require('./sw-version');
+const SW = sourceSW(__dirname);
+console.log(`Service worker : version ${SW.version}`);
 app.get('/sw.js', (req, res) => {
   res.setHeader('Content-Type', 'application/javascript');
   res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-  res.sendFile(path.join(__dirname, 'sw.js'));
+  res.send(SW.source);
 });
 
 app.get('/.well-known/assetlinks.json', (req, res) => {
