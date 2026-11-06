@@ -89,6 +89,21 @@ async function requete(base, chemin, { methode = 'GET', entetes = {}, corps } = 
     const st = await p.catch(e => 'erreur ' + e.name);
     ok(attendu(st), `${st} ${nom}${st === 500 ? ' (clé acceptée ; 500 = pas de MongoDB en local)' : ''}`);
   }
+  console.log('\n— Webhook SMS (Authorization: Bearer <secret>)');
+  // Corps vide : une requête authentifiée passe le contrôle et s'arrête à la validation (400, sans base)
+  const sms = (entetes, chemin = '/webhook-sms', corps = {}) => requete(base, chemin, { methode: 'POST', corps, entetes });
+  for (const [nom, st, attendu] of [
+    ['sans en-tête', await sms({}), 401],
+    ['Bearer + mauvaise valeur', await sms({ authorization: `Bearer ${mauvaise}` }), 401],
+    ['secret sans « Bearer »', await sms({ authorization: FAUX_SMS }), 401],
+    ['secret en ?key=', await sms({}, `/webhook-sms?key=${FAUX_SMS}`), 401],
+    ['secret dans le corps', await sms({}, '/webhook-sms', { secret: FAUX_SMS }), 401],
+    ['clé admin à la place du secret', await sms({ authorization: `Bearer ${FAUX_ADMIN}` }), 401],
+    ['corps du bouton « J\'ai payé » sans secret', await sms({}, '/webhook-sms', { telephone: '0700000000', forfait: 'mensuel', montant: '500', statut: 'en_attente' }), 401],
+    ['Bearer + bon secret (corps vide → 400)', await sms({ authorization: `Bearer ${FAUX_SMS}` }), 400],
+    ['bearer en minuscules + bon secret', await sms({ authorization: `bearer ${FAUX_SMS}` }), 400],
+  ]) ok(st === attendu, `${st} ${nom} (attendu ${attendu})`);
+
   await arreter(s);
   ok(!s.sortie().includes(FAUX_ADMIN) && !s.sortie().includes(FAUX_SMS), 'aucun secret dans les logs du serveur');
 
