@@ -2,6 +2,7 @@ const express    = require('express');
 const path       = require('path');
 const fs         = require('fs');
 const crypto     = require('crypto');
+const { analyserSms } = require('./paiement-sms');
 const mongoose   = require('mongoose');
 const puppeteer  = require('puppeteer-core');
 const chromium   = require('@sparticuz/chromium').default;
@@ -1422,111 +1423,48 @@ function forfaitPourMontant(montant) {
   return Object.keys(FORFAITS).find(f => montant >= FORFAITS[f].prix && montant <= FORFAITS[f].prix + 99) || null;
 }
 
-// Clé de déduplication : référence de transaction trouvée dans le SMS (ou fournie
-// dans le corps), sinon empreinte du texte complet du SMS. null si aucune des deux.
-function cleTransaction(smsTexte, referenceFournie) {
-  const ref = referenceFournie ||
-    ((smsTexte || '').match(/(?:trans(?:action)?\s*id|id\s*(?:de\s*)?transaction|r[ée]f(?:[ée]rence)?)\s*[:.]?\s*([A-Z0-9][A-Z0-9.\-]{5,})/i) || [])[1];
+// Clé de déduplication : référence de transaction du SMS, sinon empreinte du texte complet.
+function cleTransaction(smsTexte, reference) {
   const sha = t => crypto.createHash('sha256').update(t).digest('hex');
-  if (ref) return { cle: 'ref:' + sha(String(ref).trim().toUpperCase()), origine: 'reference' };
-  if (smsTexte) return { cle: 'sms:' + sha(smsTexte.replace(/\s+/g, ' ').trim()), origine: 'texte' };
-  return null;
+  if (reference) return { cle: 'ref:' + sha(String(reference).trim().toUpperCase()), origine: 'reference' };
+  return { cle: 'sms:' + sha(smsTexte.replace(/\s+/g, ' ').trim()), origine: 'texte' };
+}
+
+// Refus journalisé : code et raison uniquement (jamais de secret, d'en-tête, de numéro ni de texte)
+function refuserSms(res, code, raison, extra = {}) {
+  console.warn(`⛔ /webhook-sms ${code} — ${raison}`);
+  return res.status(code).json({ error: raison, ...extra });
 }
 
 app.post('/webhook-sms', async (req, res) => {
   if (!SMS_SECRET) return res.status(503).json({ error: 'Webhook SMS non configuré sur ce serveur.' });
-  // Vérifié avant toute journalisation ; ni le secret ni l'en-tête ne sont journalisés
-  if (!secretSmsValide(req)) return res.status(401).json({ error: 'Non autorisé' });
-  console.log('WEBHOOK RECU:', JSON.stringify(req.body));
+  // Vérifié avant toute lecture du corps ; ni le secret ni l'en-tête ne sont journalisés
+  if (!secretSmsValide(req)) return refuserSms(res, 401, 'secret absent ou invalide');
+
+  // Texte du SMS : champ texte (recommandé), message, msg, ou montant contenant le SMS.
+  // Le numéro activé est toujours lu dans le texte (« recu de <NOM> <numéro> »),
+  // jamais dans un champ séparé (telephone, from).
   const body = (typeof req.body === 'object' && req.body !== null) ? req.body : {};
-  console.log('📦 Body reçu complet :', JSON.stringify(body));
+  const champ = [body.texte, body.message, body.msg, body.montant].find(v => typeof v === 'string' && /[A-Za-z]/.test(v));
+  const smsTexte = champ || '';
 
-  // Nettoyage du champ montant : supprime sauts de ligne et caractères de contrôle
-  const montantBrut = (body.montant || '').replace(/[\r\n\t]/g, ' ').trim();
+  const sms = analyserSms(smsTexte);
+  if (!sms.ok) return refuserSms(res, 400, sms.raison);
 
-  let telephone = null;
-  let montantNum = 0;
-  let smsTexte  = null;   // texte du SMS reçu, pour la déduplication
+  const forfait = forfaitPourMontant(sms.montant);
+  if (!forfait) return refuserSms(res, 400, 'Montant non reconnu', { montant_recu: sms.montant });
 
-  // Extrait le montant depuis une chaîne SMS (essaie FCFA d'abord, puis F CFA)
-  function extraireMontant(str) {
-    const m1 = str.match(/(\d+(?:\.\d+)?)\s*FCFA/i);
-    if (m1) return parseInt(m1[1]);
-    const m2 = str.match(/(\d[\d\s]*)\s*F(?:\s?CFA)?(?:\s|$)/i);
-    return m2 ? parseInt(m2[1].replace(/\s/g, '')) : 0;
-  }
-
-  // Extrait le numéro expéditeur depuis un SMS ("du 07 12 24..." ou format ivoirien)
-  function extraireTel(str) {
-    const mDu  = str.match(/du\s+([\d\s]+)/i);
-    if (mDu) return mDu[1].replace(/\s/g, '');
-    const mTel = str.match(/(?:225)?([05701]\d{8})/);
-    return mTel ? mTel[1] : null;
-  }
-
-  // Cas 0 : SMS Forwarder (x-www-form-urlencoded) — champs msg + from
-  if (body.msg && body.from) {
-    const sms = String(body.msg).replace(/[\r\n\t]/g, ' ').trim();
-    console.log('📲 SMS Forwarder reçu — from:', body.from, '| msg:', sms);
-    smsTexte   = sms;
-    telephone  = String(body.from).replace(/[\s\-+]/g, '');
-    montantNum = extraireMontant(sms);
-  }
-  // Cas 1 : body structuré avec telephone + montant
-  else if ((body.telephone || body.telephone_eleve) && montantBrut) {
-    telephone = body.telephone_eleve || body.telephone;
-    const montantStr = String(montantBrut);
-    if (/[A-Za-z]/.test(montantStr)) {
-      // montant contient un SMS complet
-      console.log('📩 montant traité comme SMS brut :', montantStr);
-      smsTexte   = montantStr;
-      montantNum = extraireMontant(montantStr);
-    } else {
-      montantNum = parseInt(montantStr.replace(/\D/g, '')) || 0;
-    }
-  }
-  // Cas 2 : SMS brut dans body.texte ou body.message
-  else if (body.texte || body.message) {
-    const sms = body.texte || body.message;
-    console.log('📩 SMS brut reçu :', sms);
-    smsTexte   = String(sms);
-    montantNum = extraireMontant(sms);
-    telephone  = extraireTel(sms);
-  }
-  else {
-    return res.status(400).json({ error: 'Données manquantes : telephone+montant ou texte SMS requis' });
-  }
-
-  if (!telephone) {
-    return res.status(400).json({ error: 'Numéro de téléphone introuvable' });
-  }
-
-  // Déterminer le forfait selon le montant (plage pour absorber les frais)
-  const forfait = forfaitPourMontant(montantNum);
-
-  if (!forfait) {
-    console.warn(`⚠️ Montant non reconnu : ${montantNum} FCFA — SMS:`, body.texte || body.message || montantBrut);
-    return res.status(400).json({ error: 'Montant non reconnu', montant_recu: montantNum });
-  }
-
-  const transaction = cleTransaction(smsTexte, body.reference || body.transaction_id);
-  if (!transaction) {
-    return res.status(400).json({ error: 'Référence de transaction ou texte du SMS requis' });
-  }
-
-  const tel    = normaliserTel(telephone);
+  const transaction = cleTransaction(smsTexte, sms.reference);
+  const tel    = normaliserTel(sms.telephone);
   const expiry = new Date(Date.now() + FORFAITS[forfait].jours * 86400000);
   // Enregistrer la transaction AVANT d'activer : l'index unique rejette un doublon,
   // y compris deux requêtes simultanées.
   try {
     await TransactionSms.init();
-    await TransactionSms.create({ ...transaction, forfait, montant: montantNum });
+    await TransactionSms.create({ ...transaction, forfait, montant: sms.montant });
   } catch (dbErr) {
-    if (dbErr.code === 11000) {
-      console.warn(`⚠️ SMS déjà traité (${transaction.origine}) — aucune nouvelle activation`);
-      return res.status(409).json({ error: 'Transaction déjà traitée' });
-    }
-    console.error('Erreur MongoDB webhook-sms (transaction) :', dbErr.message);
+    if (dbErr.code === 11000) return refuserSms(res, 409, `transaction déjà traitée (${transaction.origine})`);
+    console.error('Erreur MongoDB webhook-sms (transaction) :', dbErr.name, dbErr.code ?? '');
     return res.status(500).json({ error: 'Erreur serveur' });
   }
   try {
@@ -1536,13 +1474,14 @@ app.post('/webhook-sms', async (req, res) => {
       { upsert: true, new: true, setDefaultsOnInsert: true }
     );
   } catch (dbErr) {
-    console.error('Erreur MongoDB webhook-sms :', dbErr.message);
+    // Pas de dbErr.message : il peut contenir le numéro (ex. clé en double)
+    console.error('Erreur MongoDB webhook-sms (abonnement) :', dbErr.name, dbErr.code ?? '');
     // Activation échouée : libérer la transaction pour qu'un nouvel envoi soit possible
     await TransactionSms.deleteOne({ cle: transaction.cle }).catch(() => {});
     return res.status(500).json({ error: 'Erreur serveur' });
   }
 
-  console.log(`✅ SMS Paiement : ${tel} → ${forfait} → ${expiry.toISOString()}`);
+  console.log(`✅ /webhook-sms 200 — abonnement ${forfait} activé jusqu'au ${expiry.toISOString().slice(0, 10)}`);
   res.json({ success: true, forfait, expiry });
 });
 // ==========================================
