@@ -2,7 +2,7 @@
 //   "Transfert de 500.00F recu\nde SECKA 0700000000.\nRef :PP261106.0208.D00000.\nSolde : 555.00F. …"
 // Aucune fonction de ce module ne journalise quoi que ce soit.
 
-const ESPACES = /[\s  ]/g;   // espaces, y compris insécables (U+00A0, U+202F)
+const ESPACES = /[\s\u00A0\u202F]/g;   // espaces, y compris insécables (U+00A0, U+202F)
 
 // Partie du SMS avant « Solde » : le solde du compte ne doit jamais être lu comme montant.
 function avantSolde(texte) {
@@ -13,7 +13,7 @@ function avantSolde(texte) {
 // Montant en FCFA (entier) lu juste après « Transfert de ». 0 si absent ou illisible.
 // Formats : 500F, 500.00F, 2500.00F, 2 500.00F, 2.500F, 2,500.00F (espaces insécables acceptés).
 function extraireMontant(texte) {
-  const m = /transfert\s+de\s+(\d[\d\s  .,]*?)\s*F/i.exec(avantSolde(String(texte || '')));
+  const m = /transfert\s+de\s+(\d[\d\s\u00A0\u202F.,]*?)\s*F/i.exec(avantSolde(String(texte || '')));
   if (!m) return 0;
   let brut = m[1].replace(ESPACES, '');
   // Décimales : séparateur suivi de 1 ou 2 chiffres en fin de nombre (500.00, 2,500.00)
@@ -27,7 +27,7 @@ function extraireMontant(texte) {
 // Numéro du payeur, lu juste après « recu de <NOM> » (nom de un ou plusieurs mots).
 // Renvoie exactement 10 chiffres (préfixe 225 retiré), sinon null : jamais de troncature.
 function extraireTel(texte) {
-  const m = /re[çc]u\s+de\s+[^\d+]*?(\+?\d[\d\s  ]*\d)/i.exec(avantSolde(String(texte || '')));
+  const m = /re[çc]u\s+de\s+[^\d+]*?(\+?\d[\d\s\u00A0\u202F]*\d)/i.exec(avantSolde(String(texte || '')));
   if (!m) return null;
   let chiffres = m[1].replace(/\D/g, '');
   if (chiffres.length === 13 && chiffres.startsWith('225')) chiffres = chiffres.slice(3);
