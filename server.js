@@ -1398,8 +1398,45 @@ function normaliserTel(t) {
 // === PAIEMENT MANUEL SMS (Make.com) ===
 const SMS_SECRET = process.env.SMS_WEBHOOK_SECRET || '';
 
+// Transactions SMS déjà traitées : l'index unique sur `cle` empêche qu'un même SMS
+// (même référence de transaction, ou à défaut même texte) active deux fois un abonnement.
+// Seule une empreinte SHA-256 est conservée : ni texte du SMS ni numéro de téléphone.
+const TransactionSmsSchema = new mongoose.Schema({
+  cle:     { type: String, required: true, unique: true },
+  origine: { type: String },   // 'reference' ou 'texte'
+  forfait: { type: String },
+  montant: { type: Number },
+  date:    { type: Date, default: Date.now }
+});
+const TransactionSms = mongoose.model('TransactionSms', TransactionSmsSchema);
+
+// Secret attendu dans l'en-tête « Authorization: Bearer <secret> »
+function secretSmsValide(req) {
+  const m = /^Bearer\s+(.+)$/i.exec(req.get('authorization') || '');
+  return cleValide(m ? m[1].trim() : '', SMS_SECRET);
+}
+
+// Forfait correspondant au montant : prix exact du forfait, jusqu'à +99 FCFA de frais
+function forfaitPourMontant(montant) {
+  if (!Number.isInteger(montant)) return null;
+  return Object.keys(FORFAITS).find(f => montant >= FORFAITS[f].prix && montant <= FORFAITS[f].prix + 99) || null;
+}
+
+// Clé de déduplication : référence de transaction trouvée dans le SMS (ou fournie
+// dans le corps), sinon empreinte du texte complet du SMS. null si aucune des deux.
+function cleTransaction(smsTexte, referenceFournie) {
+  const ref = referenceFournie ||
+    ((smsTexte || '').match(/(?:trans(?:action)?\s*id|id\s*(?:de\s*)?transaction|r[ée]f(?:[ée]rence)?)\s*[:.]?\s*([A-Z0-9][A-Z0-9.\-]{5,})/i) || [])[1];
+  const sha = t => crypto.createHash('sha256').update(t).digest('hex');
+  if (ref) return { cle: 'ref:' + sha(String(ref).trim().toUpperCase()), origine: 'reference' };
+  if (smsTexte) return { cle: 'sms:' + sha(smsTexte.replace(/\s+/g, ' ').trim()), origine: 'texte' };
+  return null;
+}
+
 app.post('/webhook-sms', async (req, res) => {
   if (!SMS_SECRET) return res.status(503).json({ error: 'Webhook SMS non configuré sur ce serveur.' });
+  // Vérifié avant toute journalisation ; ni le secret ni l'en-tête ne sont journalisés
+  if (!secretSmsValide(req)) return res.status(401).json({ error: 'Non autorisé' });
   console.log('WEBHOOK RECU:', JSON.stringify(req.body));
   const body = (typeof req.body === 'object' && req.body !== null) ? req.body : {};
   console.log('📦 Body reçu complet :', JSON.stringify(body));
@@ -1409,6 +1446,7 @@ app.post('/webhook-sms', async (req, res) => {
 
   let telephone = null;
   let montantNum = 0;
+  let smsTexte  = null;   // texte du SMS reçu, pour la déduplication
 
   // Extrait le montant depuis une chaîne SMS (essaie FCFA d'abord, puis F CFA)
   function extraireMontant(str) {
@@ -1430,6 +1468,7 @@ app.post('/webhook-sms', async (req, res) => {
   if (body.msg && body.from) {
     const sms = String(body.msg).replace(/[\r\n\t]/g, ' ').trim();
     console.log('📲 SMS Forwarder reçu — from:', body.from, '| msg:', sms);
+    smsTexte   = sms;
     telephone  = String(body.from).replace(/[\s\-+]/g, '');
     montantNum = extraireMontant(sms);
   }
@@ -1440,6 +1479,7 @@ app.post('/webhook-sms', async (req, res) => {
     if (/[A-Za-z]/.test(montantStr)) {
       // montant contient un SMS complet
       console.log('📩 montant traité comme SMS brut :', montantStr);
+      smsTexte   = montantStr;
       montantNum = extraireMontant(montantStr);
     } else {
       montantNum = parseInt(montantStr.replace(/\D/g, '')) || 0;
@@ -1449,6 +1489,7 @@ app.post('/webhook-sms', async (req, res) => {
   else if (body.texte || body.message) {
     const sms = body.texte || body.message;
     console.log('📩 SMS brut reçu :', sms);
+    smsTexte   = String(sms);
     montantNum = extraireMontant(sms);
     telephone  = extraireTel(sms);
   }
@@ -1461,18 +1502,33 @@ app.post('/webhook-sms', async (req, res) => {
   }
 
   // Déterminer le forfait selon le montant (plage pour absorber les frais)
-  let forfait = null;
-  if      (montantNum >= 500  && montantNum <= 599)  forfait = 'mensuel';
-  else if (montantNum >= 1200 && montantNum <= 1299) forfait = 'trimestriel';
-  else if (montantNum >= 4000 && montantNum <= 4099) forfait = 'annuel';
+  const forfait = forfaitPourMontant(montantNum);
 
   if (!forfait) {
     console.warn(`⚠️ Montant non reconnu : ${montantNum} FCFA — SMS:`, body.texte || body.message || montantBrut);
     return res.status(400).json({ error: 'Montant non reconnu', montant_recu: montantNum });
   }
 
+  const transaction = cleTransaction(smsTexte, body.reference || body.transaction_id);
+  if (!transaction) {
+    return res.status(400).json({ error: 'Référence de transaction ou texte du SMS requis' });
+  }
+
   const tel    = normaliserTel(telephone);
   const expiry = new Date(Date.now() + FORFAITS[forfait].jours * 86400000);
+  // Enregistrer la transaction AVANT d'activer : l'index unique rejette un doublon,
+  // y compris deux requêtes simultanées.
+  try {
+    await TransactionSms.init();
+    await TransactionSms.create({ ...transaction, forfait, montant: montantNum });
+  } catch (dbErr) {
+    if (dbErr.code === 11000) {
+      console.warn(`⚠️ SMS déjà traité (${transaction.origine}) — aucune nouvelle activation`);
+      return res.status(409).json({ error: 'Transaction déjà traitée' });
+    }
+    console.error('Erreur MongoDB webhook-sms (transaction) :', dbErr.message);
+    return res.status(500).json({ error: 'Erreur serveur' });
+  }
   try {
     await Abonnement.findOneAndUpdate(
       { telephone: tel },
@@ -1481,6 +1537,9 @@ app.post('/webhook-sms', async (req, res) => {
     );
   } catch (dbErr) {
     console.error('Erreur MongoDB webhook-sms :', dbErr.message);
+    // Activation échouée : libérer la transaction pour qu'un nouvel envoi soit possible
+    await TransactionSms.deleteOne({ cle: transaction.cle }).catch(() => {});
+    return res.status(500).json({ error: 'Erreur serveur' });
   }
 
   console.log(`✅ SMS Paiement : ${tel} → ${forfait} → ${expiry.toISOString()}`);
