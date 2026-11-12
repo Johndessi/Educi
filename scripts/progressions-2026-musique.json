@@ -1,0 +1,226 @@
+{
+ "source": "Éducation Musicale – progression DPFC 2026-2027 (PDF, 10 pages), via progressions_2026_2027_musique.json ; numérotation 1…N",
+ "effectifs": {
+  "6e": 14,
+  "5e": 15,
+  "4e": 16,
+  "3e": 15,
+  "2nde": 13,
+  "1ere": 15,
+  "Tle": 15
+ },
+ "classes": {
+  "6e": [
+   "6ème"
+  ],
+  "5e": [
+   "5ème"
+  ],
+  "4e": [
+   "4ème"
+  ],
+  "3e": [
+   "3ème"
+  ],
+  "2nde": [
+   "2nde A",
+   "2nde C"
+  ],
+  "1ere": [
+   "1ère A1",
+   "1ère A2",
+   "1ère C",
+   "1ère D"
+  ],
+  "Tle": [
+   "Tle A1",
+   "Tle A2",
+   "Tle C",
+   "Tle D"
+  ]
+ },
+ "listes": {
+  "6e": [
+   "L'Abidjanaise à l'unisson",
+   "Sol, La, Si",
+   "Rôle et importance de l'impôt",
+   "Les idiophones",
+   "Noire, Soupir, Blanche",
+   "Les membranophones",
+   "Les deux croches",
+   "Les modes de transmission au VIH/SIDA",
+   "Chanson populaire",
+   "Les instruments à vent ou aérophones",
+   "Sol, La, Si – DO, RE",
+   "Le témoin en temps de guerre",
+   "Les instruments à cordes ou cordophones",
+   "Chanson populaire (2)"
+  ],
+  "5e": [
+   "L'Abidjanaise à l'unisson",
+   "MI, FA, sol, la, si, do, ré",
+   "Les voix",
+   "Le contribuable",
+   "Le triolet de croches",
+   "Planifier son avenir sans le VIH/sida",
+   "Les instruments électriques",
+   "DO, RE, Mi, Fa, Sol, La, Si, Do, Ré",
+   "Les mesures simples : 2/4, 3/4, 4/4",
+   "Chanson populaire",
+   "Les xylophones",
+   "La malnutrition",
+   "La ronde, la pause et la ½ pause",
+   "L'orgue et les trompes",
+   "Les enfants soldats"
+  ],
+  "4e": [
+   "L'Abidjanaise à deux voix",
+   "La tonalité de DO M.",
+   "La musique Akyé",
+   "Les natures d'impôts",
+   "La noire pointée-croche",
+   "Retarder les rapports sexuels en vue de se préserver d'une grossesse à risques",
+   "La musique Bété",
+   "La tonalité de SOL M.",
+   "La musique mandingue",
+   "Chanson populaire",
+   "Le High life",
+   "Les intervalles simples ex (2nde 3ce 6te 7eme majeur et mineur)",
+   "La tonalité de FA M.",
+   "Croche-pointée-double croche",
+   "Les actes humanitaires",
+   "La samba"
+  ],
+  "3e": [
+   "L'Abidjanaise à 2 voix",
+   "La tonalité de la Min. (harmonique)",
+   "La musique des masques Wè, Dan et Gouro",
+   "Les mines anti-personnel",
+   "Le demi-soupir croche",
+   "Chanson populaire",
+   "Rôle et importance de l'impôt",
+   "La tonalité de Ré min. (harmonique)",
+   "Lutte contre les drogues et l'alcool dans la communauté",
+   "Chanson populaire (2)",
+   "La musique des fêtes de générations (fokwé, low, poro)",
+   "Les quatre doubles croches",
+   "Chanson populaire (3)",
+   "La musique rituelle et la préservation des valeurs traditionnelles ex (komian)",
+   "Le témoin en temps de guerre"
+  ],
+  "2nde": [
+   "L'Abidjanaise à l'unisson",
+   "La tonalité de DO M",
+   "La musique Sénoufo",
+   "Pourquoi payer l'impôt ?",
+   "Blanche - Soupir - Noire",
+   "La musique Baoulé",
+   "Chanson populaire",
+   "Les modes de transmissions au VIH/SIDA",
+   "Les intervalles simples Majeurs et mineurs / Justes et diminués",
+   "Deux croches",
+   "La musique du moyen âge en Europe",
+   "La musique de la renaissance en Europe",
+   "Chanson populaire (2)"
+  ],
+  "1ere": [
+   "L'Abidjanaise à 2 voix",
+   "La tonalité de SOL M",
+   "La musique d'initiation et la musique sacrée en C.I. (ex : les komians)",
+   "La notion de contribuable",
+   "Le triolet de croches",
+   "Les formes musicales vocales de la période classique en Europe",
+   "Les formes musicales instrumentales de la période classique en Europe",
+   "Les quatre doubles croches",
+   "Les fausses croyances dans la lutte contre le VIH/SIDA",
+   "La musique Yorouba du Bénin et du Nigéria",
+   "La tonalité de FA M",
+   "Jean Sébastien Bach",
+   "La noire pointée – croche",
+   "L. V. Beethoven et le début du XXè s",
+   "Chanson populaire"
+  ],
+  "Tle": [
+   "L'Abidjanaise à 4 voix",
+   "La tonalité de LA min.",
+   "La drummologie",
+   "Les natures d'impôt",
+   "Croche - deux double croches",
+   "Le lied et le poème symphonique",
+   "La tonalité de Ré min.",
+   "L'impact du VIH/SIDA sur la population",
+   "La mesure 6/8",
+   "Frantz Schubert et L. Hector Berlioz",
+   "Chanson populaire",
+   "La musique afro-américaine : le jazz",
+   "Deux doubles croches - croche",
+   "La musique électronique",
+   "La musique de la Chine et du Japon"
+  ]
+ },
+ "ecarts_avec_extraction": [
+  {
+   "classe": "6e",
+   "numero": 14,
+   "extrait": "Chanson populaire",
+   "retenu": "Chanson populaire (2)",
+   "motif": "chansons populaires numérotées"
+  },
+  {
+   "classe": "5e",
+   "numero": 9,
+   "extrait": "Les mesures simples : 2 3 4",
+   "retenu": "Les mesures simples : 2/4, 3/4, 4/4",
+   "motif": "fractions perdues à l'extraction (décision C)"
+  },
+  {
+   "classe": "3e",
+   "numero": 10,
+   "extrait": "Chanson populaire",
+   "retenu": "Chanson populaire (2)",
+   "motif": "chansons populaires numérotées"
+  },
+  {
+   "classe": "3e",
+   "numero": 13,
+   "extrait": "Chanson populaire",
+   "retenu": "Chanson populaire (3)",
+   "motif": "chansons populaires numérotées"
+  },
+  {
+   "classe": "2nde",
+   "numero": 13,
+   "extrait": "Chanson populaire",
+   "retenu": "Chanson populaire (2)",
+   "motif": "chansons populaires numérotées"
+  },
+  {
+   "classe": "1ere",
+   "numero": 9,
+   "extrait": "Les fausses croyances dans la lutte contre le SIH/SIDA",
+   "retenu": "Les fausses croyances dans la lutte contre le VIH/SIDA",
+   "motif": "coquille du PDF (décision B)"
+  },
+  {
+   "classe": "1ere",
+   "numero": 11,
+   "extrait": "La tonalité de FA Mean Sébastien Bach",
+   "retenu": "La tonalité de FA M",
+   "motif": "coquille du PDF (décision B)"
+  },
+  {
+   "classe": "Tle",
+   "numero": 9,
+   "extrait": "La mesure 6",
+   "retenu": "La mesure 6/8",
+   "motif": "fraction perdue à l'extraction (décision C)"
+  },
+  {
+   "classe": "Tle",
+   "numero": 11,
+   "extrait": "Chanson ordinaire",
+   "retenu": "Chanson populaire",
+   "motif": "coquille du PDF (décision B)"
+  }
+ ]
+}

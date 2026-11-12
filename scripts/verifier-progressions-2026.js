@@ -70,6 +70,17 @@ for (const classe of ['Tle A1', 'Tle A2']) {
   if ((DATA[classe]?.matieres || []).some(x => x.name === 'Physique-Chimie')) { echecs++; console.log(`✗ Physique-Chimie présente en ${classe}`); }
 }
 
+// Éducation Musicale : titres, ordre et effectifs (scripts/progressions-2026-musique.json)
+const MUS = JSON.parse(fs.readFileSync(path.join(__dirname, 'progressions-2026-musique.json'), 'utf8'));
+for (const [classePDF, liste] of Object.entries(MUS.listes)) {
+  if (liste.length !== MUS.effectifs[classePDF]) { echecs++; controles++; console.log(`✗ Éducation Musicale ${classePDF} : référence de ${liste.length} leçons au lieu de ${MUS.effectifs[classePDF]}`); }
+  for (const classe of MUS.classes[classePDF]) {
+    const m = (DATA[classe]?.matieres || []).filter(x => x.name === 'Éducation Musicale');
+    if (m.length !== 1) { echecs++; controles++; console.log(`✗ Éducation Musicale ${classe} : ${m.length} matière(s) au lieu de 1`); continue; }
+    comparer(`Éducation Musicale ${classe}`, liste, m[0].lecons);
+  }
+}
+
 // Une seule matière de musique par classe (doublon « Musique » / « Éducation Musicale » supprimé)
 let doublons = 0;
 for (const [classe, d] of Object.entries(DATA)) {
