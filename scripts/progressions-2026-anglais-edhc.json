@@ -1,0 +1,640 @@
+{
+ "source": "Progressions DPFC 2026-2027, Anglais et EDHC 1er cycle (consigne Anglais/EDHC + progressions_2026_2027_anglais_edhc.json), titres verbatim",
+ "classes": {
+  "6e": "6ème",
+  "5e": "5ème",
+  "4e": "4ème",
+  "3e": "3ème"
+ },
+ "listes": {
+  "Anglais": {
+   "6e": [
+    {
+     "theme": "À l'école (At school)",
+     "titre": "Les salutations (Greetings)"
+    },
+    {
+     "theme": "À l'école (At school)",
+     "titre": "Dans la salle de classe (In the classroom)"
+    },
+    {
+     "theme": "À l'école (At school)",
+     "titre": "Les nombres et les fournitures scolaires (Numbers and school things)"
+    },
+    {
+     "theme": "À la maison (At home)",
+     "titre": "La famille (My family)"
+    },
+    {
+     "theme": "À la maison (At home)",
+     "titre": "Les pièces d'une maison (My house)"
+    },
+    {
+     "theme": "À la maison (At home)",
+     "titre": "Dans la cuisine (In the kitchen)"
+    },
+    {
+     "theme": "L'heure et la date (Time and date)",
+     "titre": "La date (The date)"
+    },
+    {
+     "theme": "L'heure et la date (Time and date)",
+     "titre": "L'heure (The time)"
+    },
+    {
+     "theme": "L'heure et la date (Time and date)",
+     "titre": "L'emploi du temps (The time table)"
+    },
+    {
+     "theme": "Métiers et professions (Jobs and occupations)",
+     "titre": "Métiers et professions (Jobs and occupations)"
+    },
+    {
+     "theme": "Métiers et professions (Jobs and occupations)",
+     "titre": "Les outils de travail (Tools)"
+    },
+    {
+     "theme": "Métiers et professions (Jobs and occupations)",
+     "titre": "Lieux de travail (Work places)"
+    },
+    {
+     "theme": "Vêtements et couleurs (Clothes and colours)",
+     "titre": "Vêtements (Clothes)"
+    },
+    {
+     "theme": "Vêtements et couleurs (Clothes and colours)",
+     "titre": "Vêtements et couleurs (Clothes and colours)"
+    },
+    {
+     "theme": "Vêtements et couleurs (Clothes and colours)",
+     "titre": "Chez le marchand de vêtements (Buying clothes)"
+    },
+    {
+     "theme": "Nourriture et boissons (Food and drinks)",
+     "titre": "Repas et boissons (Meals and drinks)"
+    },
+    {
+     "theme": "Nourriture et boissons (Food and drinks)",
+     "titre": "Fruits et légumes (Fruit and vegetables)"
+    },
+    {
+     "theme": "Nourriture et boissons (Food and drinks)",
+     "titre": "Recettes de cuisine (Recipes)"
+    },
+    {
+     "theme": "Environnement et santé (Health and environment)",
+     "titre": "Les parties du corps et hygiène corporelle (Hygiene and the parts of the body)"
+    },
+    {
+     "theme": "Environnement et santé (Health and environment)",
+     "titre": "Insalubrité et maladies courantes (Insalubrity and common diseases)"
+    },
+    {
+     "theme": "Environnement et santé (Health and environment)",
+     "titre": "L'eau et la santé (Water and health)"
+    },
+    {
+     "theme": "Jeux et sports (Sports and games)",
+     "titre": "L'importance du sport (The importance of sport)"
+    },
+    {
+     "theme": "Jeux et sports (Sports and games)",
+     "titre": "La CAN (The ANC)"
+    },
+    {
+     "theme": "Jeux et sports (Sports and games)",
+     "titre": "Les jeux traditionnels (Traditional games)"
+    }
+   ],
+   "5e": [
+    {
+     "theme": "At school",
+     "titre": "Discover my school"
+    },
+    {
+     "theme": "At school",
+     "titre": "Life at collège Kasséré"
+    },
+    {
+     "theme": "At school",
+     "titre": "What do you learn at school?"
+    },
+    {
+     "theme": "At home",
+     "titre": "My family tree"
+    },
+    {
+     "theme": "At home",
+     "titre": "A Sunday with my family"
+    },
+    {
+     "theme": "At home",
+     "titre": "The “Tchonron” soup"
+    },
+    {
+     "theme": "Time and date",
+     "titre": "What's the weather like in December?"
+    },
+    {
+     "theme": "Time and date",
+     "titre": "Time is money!"
+    },
+    {
+     "theme": "Time and date",
+     "titre": "Adon's schedule"
+    },
+    {
+     "theme": "Jobs and occupations",
+     "titre": "What's your mother's job?"
+    },
+    {
+     "theme": "Jobs and occupations",
+     "titre": "What do you use a map for?"
+    },
+    {
+     "theme": "Jobs and occupations",
+     "titre": "Where does Aunt Enoh work?"
+    },
+    {
+     "theme": "Clothes and colours",
+     "titre": "At the market place"
+    },
+    {
+     "theme": "Clothes and colours",
+     "titre": "My favourite clothes"
+    },
+    {
+     "theme": "Clothes and colours",
+     "titre": "Can I help you?"
+    },
+    {
+     "theme": "Food and drinks",
+     "titre": "What's on the menu today?"
+    },
+    {
+     "theme": "Food and drinks",
+     "titre": "Keep fit with your diet"
+    },
+    {
+     "theme": "Food and drinks",
+     "titre": "What's your favourite meal?"
+    },
+    {
+     "theme": "Health and environment",
+     "titre": "I take care of my body"
+    },
+    {
+     "theme": "Health and environment",
+     "titre": "Keep your environment safe"
+    },
+    {
+     "theme": "Health and environment",
+     "titre": "Health and water"
+    },
+    {
+     "theme": "Sports and games",
+     "titre": "What do you know about basketball?"
+    },
+    {
+     "theme": "Sports and games",
+     "titre": "A football star"
+    },
+    {
+     "theme": "Sports and games",
+     "titre": "Be an active learner!"
+    }
+   ],
+   "4e": [
+    {
+     "theme": "Life at school",
+     "titre": "My last holidays (Souvenirs de vacances)"
+    },
+    {
+     "theme": "Life at school",
+     "titre": "We used to sing the national anthem (Souvenirs d'école)"
+    },
+    {
+     "theme": "Life at school",
+     "titre": "Work at school (Le travail à l'école)"
+    },
+    {
+     "theme": "Women at work",
+     "titre": "Rural women (La femme rurale)"
+    },
+    {
+     "theme": "Women at work",
+     "titre": "Women's rights and duties (Droits et devoirs de la femme)"
+    },
+    {
+     "theme": "Women at work",
+     "titre": "Girls must go to school (La jeune fille à l'école)"
+    },
+    {
+     "theme": "Travelling",
+     "titre": "Means of transport (Les moyens de transport)"
+    },
+    {
+     "theme": "Travelling",
+     "titre": "At the airport (À l'aéroport)"
+    },
+    {
+     "theme": "Travelling",
+     "titre": "Tourism (Le tourisme)"
+    },
+    {
+     "theme": "Fashion",
+     "titre": "What would you like to wear? (Vêtements modernes et vêtements traditionnels)"
+    },
+    {
+     "theme": "Fashion",
+     "titre": "At a fashion show (Défilé de mode)"
+    },
+    {
+     "theme": "Fashion",
+     "titre": "Keep your natural skin colour (Préserve ta couleur de peau)"
+    },
+    {
+     "theme": "City or village?",
+     "titre": "City life (À la ville)"
+    },
+    {
+     "theme": "City or village?",
+     "titre": "Is village life better? (Au village)"
+    },
+    {
+     "theme": "City or village?",
+     "titre": "Zoko moves to the city (L'exode rural)"
+    },
+    {
+     "theme": "Human rights",
+     "titre": "I know my rights (Les droits du citoyen)"
+    },
+    {
+     "theme": "Human rights",
+     "titre": "What are your duties? (Les devoirs du citoyen)"
+    },
+    {
+     "theme": "Human rights",
+     "titre": "Let's promote tolerance (La tolérance)"
+    },
+    {
+     "theme": "Hygiene and health",
+     "titre": "Endemic diseases (Les maladies endémiques)"
+    },
+    {
+     "theme": "Hygiene and health",
+     "titre": "Hygiene at school (L'hygiène à l'école)"
+    },
+    {
+     "theme": "Hygiene and health",
+     "titre": "HIV/AIDS (Le VIH/SIDA)"
+    },
+    {
+     "theme": "Information and Communication Technologies (ICTs)",
+     "titre": "Can you use a computer? (L'ordinateur)"
+    },
+    {
+     "theme": "Information and Communication Technologies (ICTs)",
+     "titre": "Look at my new smart phone (Le téléphone)"
+    },
+    {
+     "theme": "Information and Communication Technologies (ICTs)",
+     "titre": "The Internet (L'Internet)"
+    }
+   ],
+   "3e": [
+    {
+     "theme": "Life at school",
+     "titre": "My first holidays in my village (Souvenirs de vacances)"
+    },
+    {
+     "theme": "Life at school",
+     "titre": "Memories of school (Souvenirs d'école)"
+    },
+    {
+     "theme": "Life at school",
+     "titre": "School work (Le travail à l'école)"
+    },
+    {
+     "theme": "Women at work",
+     "titre": "Village women activities (La femme rurale)"
+    },
+    {
+     "theme": "Women at work",
+     "titre": "What are women's rights and duties? (Droits et devoirs de la femme)"
+    },
+    {
+     "theme": "Women at work",
+     "titre": "Girls at school (La jeune fille à l'école)"
+    },
+    {
+     "theme": "Travelling",
+     "titre": "Different means of transport (Les moyens de transport)"
+    },
+    {
+     "theme": "Travelling",
+     "titre": "Travelling by plane (À l'aéroport)"
+    },
+    {
+     "theme": "Travelling",
+     "titre": "Visiting the USA (À la découverte des États-Unis)"
+    },
+    {
+     "theme": "Fashion",
+     "titre": "Modern and traditional clothes (Vêtements modernes et vêtements traditionnels)"
+    },
+    {
+     "theme": "Fashion",
+     "titre": "Fashion show (Défilé de mode)"
+    },
+    {
+     "theme": "Fashion",
+     "titre": "Cosmetics (L'usage des produits cosmétiques)"
+    },
+    {
+     "theme": "City or village?",
+     "titre": "In the city (À la ville)"
+    },
+    {
+     "theme": "City or village?",
+     "titre": "Village life (Au village)"
+    },
+    {
+     "theme": "City or village?",
+     "titre": "Rural exodus (L'exode rural)"
+    },
+    {
+     "theme": "Human rights",
+     "titre": "My rights (Les droits du citoyen)"
+    },
+    {
+     "theme": "Human rights",
+     "titre": "My duties (Les devoirs du citoyen)"
+    },
+    {
+     "theme": "Human rights",
+     "titre": "Tolerance (La tolérance)"
+    },
+    {
+     "theme": "Hygiene and health",
+     "titre": "Is it an epidemic or a pandemic? (Les maladies endémiques)"
+    },
+    {
+     "theme": "Hygiene and health",
+     "titre": "Promoting hygiene at school (L'hygiène à l'école)"
+    },
+    {
+     "theme": "Hygiene and health",
+     "titre": "HIV-free Generation (Génération sans SIDA)"
+    },
+    {
+     "theme": "Information and Communication Technologies (ICTs)",
+     "titre": "The computer revolution (L'ordinateur)"
+    },
+    {
+     "theme": "Information and Communication Technologies (ICTs)",
+     "titre": "The cell phone (Le téléphone portable)"
+    },
+    {
+     "theme": "Information and Communication Technologies (ICTs)",
+     "titre": "The magic of the Internet (L'Internet)"
+    }
+   ]
+  },
+  "EDHC": {
+   "6e": [
+    {
+     "theme": "Compétence 1 : droits de l'homme, de l'enfant et DIH",
+     "titre": "Les droits à la survie et les droits à la protection de l'enfant"
+    },
+    {
+     "theme": "Compétence 1 : droits de l'homme, de l'enfant et DIH",
+     "titre": "Les droits humains"
+    },
+    {
+     "theme": "Compétence 1 : droits de l'homme, de l'enfant et DIH",
+     "titre": "Le droit international humanitaire (DIH)"
+    },
+    {
+     "theme": "Compétence 2 : règles de vie communautaire et principes de la démocratie",
+     "titre": "La Constitution"
+    },
+    {
+     "theme": "Compétence 2 : règles de vie communautaire et principes de la démocratie",
+     "titre": "Le Président de la République"
+    },
+    {
+     "theme": "Compétence 2 : règles de vie communautaire et principes de la démocratie",
+     "titre": "Les règles de vie en famille et en communauté"
+    },
+    {
+     "theme": "Compétence 2 : règles de vie communautaire et principes de la démocratie",
+     "titre": "Les principes de la démocratie"
+    },
+    {
+     "theme": "Compétence 3 : entrepreneuriat et éducation routière",
+     "titre": "Les règles de la circulation routière"
+    },
+    {
+     "theme": "Compétence 3 : entrepreneuriat et éducation routière",
+     "titre": "Le secteur primaire"
+    },
+    {
+     "theme": "Compétence 4 : puberté",
+     "titre": "La puberté"
+    },
+    {
+     "theme": "Compétence 4 : puberté",
+     "titre": "L'abstinence sexuelle"
+    },
+    {
+     "theme": "Compétence 5 : assainissement du cadre de vie",
+     "titre": "L'entretien du cadre de vie"
+    },
+    {
+     "theme": "Compétence 5 : assainissement du cadre de vie",
+     "titre": "L'entretien des latrines et des toilettes"
+    }
+   ],
+   "5e": [
+    {
+     "theme": "Compétence 1 : droits de l'homme, de l'enfant et DIH",
+     "titre": "Les droits au développement et les droits à la participation de l'enfant"
+    },
+    {
+     "theme": "Compétence 1 : droits de l'homme, de l'enfant et DIH",
+     "titre": "Les principes des droits humains"
+    },
+    {
+     "theme": "Compétence 1 : droits de l'homme, de l'enfant et DIH",
+     "titre": "Les règles de protection des victimes des conflits armés"
+    },
+    {
+     "theme": "Compétence 2 : règles de vie communautaire et principes de la démocratie",
+     "titre": "Le Parlement"
+    },
+    {
+     "theme": "Compétence 2 : règles de vie communautaire et principes de la démocratie",
+     "titre": "Les droits et les devoirs du citoyen"
+    },
+    {
+     "theme": "Compétence 2 : règles de vie communautaire et principes de la démocratie",
+     "titre": "Les principes de la démocratie dans les clubs et dans les associations"
+    },
+    {
+     "theme": "Compétence 2 : règles de vie communautaire et principes de la démocratie",
+     "titre": "L'entente entre les peuples"
+    },
+    {
+     "theme": "Compétence 3 : entrepreneuriat et éducation routière",
+     "titre": "Les engins à deux roues, les tricycles et les automobiles"
+    },
+    {
+     "theme": "Compétence 3 : entrepreneuriat et éducation routière",
+     "titre": "Les activités génératrices de revenus (AGR)"
+    },
+    {
+     "theme": "Compétence 4 : puberté",
+     "titre": "Les IST et le VIH/SIDA"
+    },
+    {
+     "theme": "Compétence 4 : puberté",
+     "titre": "Les grossesses précoces"
+    },
+    {
+     "theme": "Compétence 4 : puberté",
+     "titre": "La consommation de l'alcool et l'usage de la drogue"
+    },
+    {
+     "theme": "Compétence 5 : assainissement du cadre de vie",
+     "titre": "L'hygiène publique et l'assainissement"
+    },
+    {
+     "theme": "Compétence 5 : assainissement du cadre de vie",
+     "titre": "La gestion des ordures ménagères"
+    }
+   ],
+   "4e": [
+    {
+     "theme": "Compétence 1 : droits de l'homme, de l'enfant et DIH",
+     "titre": "La promotion des droits de l'enfant"
+    },
+    {
+     "theme": "Compétence 1 : droits de l'homme, de l'enfant et DIH",
+     "titre": "La lutte contre le recrutement des enfants soldats"
+    },
+    {
+     "theme": "Compétence 1 : droits de l'homme, de l'enfant et DIH",
+     "titre": "Les instruments et les mécanismes de protection contre les discriminations"
+    },
+    {
+     "theme": "Compétence 2 : règles de vie communautaire et principes de la démocratie",
+     "titre": "Les institutions consultatives : le CESEC, le Médiateur de la République et la CNRCTCI"
+    },
+    {
+     "theme": "Compétence 2 : règles de vie communautaire et principes de la démocratie",
+     "titre": "L'impôt"
+    },
+    {
+     "theme": "Compétence 2 : règles de vie communautaire et principes de la démocratie",
+     "titre": "Les organisations de la société civile"
+    },
+    {
+     "theme": "Compétence 3 : gestion des ressources, entrepreneuriat et vie communautaire",
+     "titre": "La gestion des ressources de la famille"
+    },
+    {
+     "theme": "Compétence 3 : gestion des ressources, entrepreneuriat et vie communautaire",
+     "titre": "L'entrepreneuriat"
+    },
+    {
+     "theme": "Compétence 3 : gestion des ressources, entrepreneuriat et vie communautaire",
+     "titre": "Les alliances interethniques : les Kwa et les Krou"
+    },
+    {
+     "theme": "Compétence 4 : préservation de la santé",
+     "titre": "Les comportements sexuels à risques"
+    },
+    {
+     "theme": "Compétence 4 : préservation de la santé",
+     "titre": "L'adolescence"
+    },
+    {
+     "theme": "Compétence 5 : préservation de l'environnement",
+     "titre": "La protection de l'environnement"
+    },
+    {
+     "theme": "Compétence 5 : préservation de l'environnement",
+     "titre": "L'entretien des points d'eau"
+    }
+   ],
+   "3e": [
+    {
+     "theme": "Compétence 1 : droits de l'homme, de l'enfant et DIH",
+     "titre": "Les devoirs des parents"
+    },
+    {
+     "theme": "Compétence 1 : droits de l'homme, de l'enfant et DIH",
+     "titre": "Les organisations humanitaires"
+    },
+    {
+     "theme": "Compétence 1 : droits de l'homme, de l'enfant et DIH",
+     "titre": "Les instruments et les mécanismes de protection contre les violences faites aux personnes vulnérables"
+    },
+    {
+     "theme": "Compétence 2 : citoyenneté et démocratie",
+     "titre": "Les partis politiques"
+    },
+    {
+     "theme": "Compétence 2 : citoyenneté et démocratie",
+     "titre": "Les institutions juridictionnelles"
+    },
+    {
+     "theme": "Compétence 2 : citoyenneté et démocratie",
+     "titre": "Le scrutin électoral"
+    },
+    {
+     "theme": "Compétence 2 : citoyenneté et démocratie",
+     "titre": "Le civisme fiscal"
+    },
+    {
+     "theme": "Compétence 3 : gestion des biens, entrepreneuriat et vie communautaire",
+     "titre": "La gestion des biens publics"
+    },
+    {
+     "theme": "Compétence 3 : gestion des biens, entrepreneuriat et vie communautaire",
+     "titre": "Le projet d'entreprise"
+    },
+    {
+     "theme": "Compétence 3 : gestion des biens, entrepreneuriat et vie communautaire",
+     "titre": "Les alliances interethniques : les Mandé et les Gour"
+    },
+    {
+     "theme": "Compétence 4 : préservation de la santé",
+     "titre": "Les maladies endémiques, l'automédication et les centres de santé"
+    },
+    {
+     "theme": "Compétence 4 : préservation de la santé",
+     "titre": "Le test de dépistage du VIH"
+    },
+    {
+     "theme": "Compétence 5 : préservation de l'environnement",
+     "titre": "Les parcs nationaux et les réserves forestières"
+    },
+    {
+     "theme": "Compétence 5 : préservation de l'environnement",
+     "titre": "La gestion de l'eau"
+    }
+   ]
+  }
+ },
+ "edhc_3e_sous_titres": {
+  "Compétence 2": "Compétence 2 – Citoyenneté et démocratie",
+  "Compétence 3": "Compétence 3 – Gestion des biens, entrepreneuriat et vie communautaire"
+ },
+ "notes": [
+  "Anglais : le thème officiel est le sous-titre de chaque leçon ; trimestre repris du thème, aucune heure",
+  "« La CAN (The ANC) » et « The “Tchonron” soup » repris tels quels",
+  "EDHC : seuls les sous-titres des compétences 2 et 3 de 3e sont alignés sur le programme ; les autres sous-titres sont inchangés"
+ ]
+}
