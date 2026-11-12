@@ -81,6 +81,27 @@ for (const [classePDF, liste] of Object.entries(MUS.listes)) {
   }
 }
 
+// Anglais et EDHC, 1er cycle (scripts/progressions-2026-anglais-edhc.json)
+const AE = JSON.parse(fs.readFileSync(path.join(__dirname, 'progressions-2026-anglais-edhc.json'), 'utf8'));
+for (const discipline of ['Anglais', 'EDHC']) {
+  for (const [classePDF, liste] of Object.entries(AE.listes[discipline])) {
+    const classe = AE.classes[classePDF];
+    const m = (DATA[classe]?.matieres || []).filter(x => x.name === discipline);
+    if (m.length !== 1) { echecs++; controles++; console.log(`✗ ${discipline} ${classe} : ${m.length} matière(s) au lieu de 1`); continue; }
+    comparer(`${discipline} ${classe}`, liste.map(x => x.titre), m[0].lecons);
+    // Sous-titres : thème officiel (Anglais) ; compétences 2 et 3 de 3e (EDHC)
+    // (EDHC 6e, 5e, 4e : sous-titres hors périmètre, non contrôlés)
+    if (discipline === 'EDHC' && classePDF !== '3e') continue;
+    const attendus = discipline === 'Anglais'
+      ? liste.map(x => x.theme)
+      : m[0].lecons.map(l => AE.edhc_3e_sous_titres[(l.sub || '').match(/^Compétence \d/)?.[0]] || l.sub);
+    controles++;
+    const faux = m[0].lecons.map((l, i) => l.sub === attendus[i] ? null : `  n°${i + 1} : sous-titre « ${l.sub} » / attendu « ${attendus[i]} »`).filter(Boolean);
+    if (faux.length) { echecs++; console.log(`✗ ${discipline} ${classe} sous-titres\n${faux.join('\n')}`); }
+    else console.log(`✓ ${discipline} ${classe} : sous-titres conformes`);
+  }
+}
+
 // Une seule matière de musique par classe (doublon « Musique » / « Éducation Musicale » supprimé)
 let doublons = 0;
 for (const [classe, d] of Object.entries(DATA)) {
