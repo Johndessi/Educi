@@ -70,5 +70,14 @@ for (const classe of ['Tle A1', 'Tle A2']) {
   if ((DATA[classe]?.matieres || []).some(x => x.name === 'Physique-Chimie')) { echecs++; console.log(`✗ Physique-Chimie présente en ${classe}`); }
 }
 
+// Une seule matière de musique par classe (doublon « Musique » / « Éducation Musicale » supprimé)
+let doublons = 0;
+for (const [classe, d] of Object.entries(DATA)) {
+  controles++;
+  const musique = (d.matieres || []).filter(x => /musi/i.test(x.name)).map(x => x.name);
+  if (musique.length > 1) { echecs++; doublons++; console.log(`✗ ${classe} : ${musique.length} matières musique (${musique.join(', ')})`); }
+}
+if (!doublons) console.log(`✓ musique : une seule matière dans chacune des ${Object.keys(DATA).length} classes`);
+
 console.log(`\n${controles - echecs}/${controles} contrôles conformes`);
 if (echecs) process.exitCode = 1;
