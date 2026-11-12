@@ -6794,7 +6794,7 @@ async function envoyerAide() {
   document.getElementById('aide-reponse').style.display = 'none';
   var tel  = localStorage.getItem('educi_tel') || sessionStorage.getItem('educi_tel') || '';
   var classe  = (typeof currentClasse  !== 'undefined' ? currentClasse  : '') || '';
-  var matiere = (typeof currentMatiere !== 'undefined' ? currentMatiere : '') || '';
+  var matiere = (typeof currentMatiere !== 'undefined' && currentMatiere && currentMatiere.name) || '';
   try {
     var r = await fetch('/support', {
       method: 'POST',
