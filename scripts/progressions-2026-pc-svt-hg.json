@@ -1,0 +1,1927 @@
+{
+  "source": "Progressions DPFC 2026-2027 (Physique-Chimie, SVT, Histoire-Géographie), données de la consigne du 12/11/2026",
+  "classes": {
+    "6e": [
+      "6ème"
+    ],
+    "5e": [
+      "5ème"
+    ],
+    "4e": [
+      "4ème"
+    ],
+    "3e": [
+      "3ème"
+    ],
+    "2de A": [
+      "2nde A"
+    ],
+    "2de C": [
+      "2nde C"
+    ],
+    "2de": [
+      "2nde A",
+      "2nde C"
+    ],
+    "1ère A": [
+      "1ère A1",
+      "1ère A2"
+    ],
+    "1ère": [
+      "1ère A1",
+      "1ère A2",
+      "1ère C",
+      "1ère D"
+    ],
+    "1ère C": [
+      "1ère C"
+    ],
+    "1ère D": [
+      "1ère D"
+    ],
+    "Tle A": [
+      "Tle A1",
+      "Tle A2"
+    ],
+    "Tle": [
+      "Tle A1",
+      "Tle A2",
+      "Tle C",
+      "Tle D"
+    ],
+    "Tle C": [
+      "Tle C"
+    ],
+    "Tle D": [
+      "Tle D"
+    ]
+  },
+  "listes": {
+    "Physique-Chimie": {
+      "6e": [
+        {
+          "theme": "Électricité",
+          "titre": "Le circuit électrique"
+        },
+        {
+          "theme": "Électricité",
+          "titre": "Commande d’un circuit électrique"
+        },
+        {
+          "theme": "Électricité",
+          "titre": "Court-circuit et protection des installations électriques"
+        },
+        {
+          "theme": "Propriétés physiques de la matière",
+          "titre": "Solides et liquides"
+        },
+        {
+          "theme": "Propriétés physiques de la matière",
+          "titre": "Les gaz"
+        },
+        {
+          "theme": "Propriétés physiques de la matière",
+          "titre": "Température d’un corps"
+        },
+        {
+          "theme": "Propriétés physiques de la matière",
+          "titre": "Les changements d’état de l’eau"
+        },
+        {
+          "theme": "Les combustions",
+          "titre": "Les constituants de l’air"
+        },
+        {
+          "theme": "Les combustions",
+          "titre": "Combustion d’un solide et d’un liquide dans l’air"
+        },
+        {
+          "theme": "Les combustions",
+          "titre": "Combustion d’un gaz dans l’air"
+        },
+        {
+          "theme": "Les combustions",
+          "titre": "Dangers des combustions"
+        },
+        {
+          "theme": "Mesure de grandeurs physiques",
+          "titre": "Volume d’un liquide et d’un solide"
+        },
+        {
+          "theme": "Mesure de grandeurs physiques",
+          "titre": "Masse d’un solide et d’un liquide"
+        }
+      ],
+      "5e": [
+        {
+          "theme": "Électricité",
+          "titre": "Adaptation d’un générateur à un récepteur"
+        },
+        {
+          "theme": "Électricité",
+          "titre": "Association de lampes électriques"
+        },
+        {
+          "theme": "Électricité",
+          "titre": "Association de piles en série"
+        },
+        {
+          "theme": "Mesure de grandeurs physiques",
+          "titre": "Intensité du courant électrique"
+        },
+        {
+          "theme": "Mesure de grandeurs physiques",
+          "titre": "Tension électrique"
+        },
+        {
+          "theme": "Mesure de grandeurs physiques",
+          "titre": "Pression atmosphérique"
+        },
+        {
+          "theme": "Mélanges et réactions chimiques",
+          "titre": "Les mélanges"
+        },
+        {
+          "theme": "Mélanges et réactions chimiques",
+          "titre": "Atomes et molécules"
+        },
+        {
+          "theme": "Mélanges et réactions chimiques",
+          "titre": "Combustion du carbone"
+        },
+        {
+          "theme": "Mélanges et réactions chimiques",
+          "titre": "Combustion du soufre"
+        },
+        {
+          "theme": "Propriétés physiques de la matière",
+          "titre": "Dilatation des solides"
+        },
+        {
+          "theme": "Propriétés physiques de la matière",
+          "titre": "Dilatation des liquides"
+        },
+        {
+          "theme": "Propriétés physiques de la matière",
+          "titre": "Dilatation des gaz"
+        }
+      ],
+      "4e": [
+        {
+          "theme": "Optique",
+          "titre": "Sources et récepteurs de lumière"
+        },
+        {
+          "theme": "Optique",
+          "titre": "Propagation de la lumière"
+        },
+        {
+          "theme": "Optique",
+          "titre": "Les phases de la Lune et les éclipses"
+        },
+        {
+          "theme": "Optique",
+          "titre": "Analyse et synthèse de la lumière blanche"
+        },
+        {
+          "theme": "Courants et tensions alternatifs",
+          "titre": "Aimant et bobine"
+        },
+        {
+          "theme": "Courants et tensions alternatifs",
+          "titre": "Production d’une tension alternative"
+        },
+        {
+          "theme": "Courants et tensions alternatifs",
+          "titre": "Tension alternative sinusoïdale"
+        },
+        {
+          "theme": "Courants et tensions alternatifs",
+          "titre": "Dangers du courant du secteur"
+        },
+        {
+          "theme": "Courants et tensions alternatifs",
+          "titre": "Transformation, redressement et lissage d’une tension alternative sinusoïdale"
+        },
+        {
+          "theme": "Les ions",
+          "titre": "Atomes et ions"
+        },
+        {
+          "theme": "Les ions",
+          "titre": "Transformation d’un métal en ion et inversement"
+        },
+        {
+          "theme": "Eau potable",
+          "titre": "Traitement de l’eau"
+        },
+        {
+          "theme": "Eau potable",
+          "titre": "Qualité de l’eau"
+        }
+      ],
+      "3e": [
+        {
+          "theme": "Mécanique",
+          "titre": "Masse et poids d’un corps"
+        },
+        {
+          "theme": "Mécanique",
+          "titre": "Les forces"
+        },
+        {
+          "theme": "Mécanique",
+          "titre": "Équilibre d’un solide soumis à deux forces"
+        },
+        {
+          "theme": "Mécanique",
+          "titre": "Travail et puissance mécaniques"
+        },
+        {
+          "theme": "Mécanique",
+          "titre": "Énergie mécanique"
+        },
+        {
+          "theme": "Les réactions chimiques",
+          "titre": "Électrolyse et synthèse de l’eau"
+        },
+        {
+          "theme": "Les réactions chimiques",
+          "titre": "Les alcanes"
+        },
+        {
+          "theme": "Les réactions chimiques",
+          "titre": "Oxydation des corps purs simples"
+        },
+        {
+          "theme": "Les réactions chimiques",
+          "titre": "Réduction des oxydes"
+        },
+        {
+          "theme": "Les réactions chimiques",
+          "titre": "Solutions acides, basiques et neutres"
+        },
+        {
+          "theme": "Optique",
+          "titre": "Les lentilles"
+        },
+        {
+          "theme": "Optique",
+          "titre": "Les défauts de l’œil et leurs corrections"
+        },
+        {
+          "theme": "Électricité",
+          "titre": "Puissance et énergie électriques"
+        },
+        {
+          "theme": "Électricité",
+          "titre": "Le conducteur ohmique"
+        }
+      ],
+      "2de A": [
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Le mouvement"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Actions mécaniques ou forces"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Équilibre d’un solide soumis à deux forces"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Le courant électrique"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Intensité d’un courant continu"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Tension électrique"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Étude expérimentale de quelques dipôles passifs"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Étude expérimentale d’un dipôle actif. Point de fonctionnement"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "L’élément chimique"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Structure de l’atome"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Classification périodique des éléments chimiques"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Ions et molécules"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Mole et grandeurs molaires"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Équation-bilan d’une réaction chimique"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Le chlorure de sodium"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Solutions aqueuses ioniques"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Tests d’identification de quelques ions"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Solutions acides et basiques. Mesures de pH"
+        }
+      ],
+      "2de C": [
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Le mouvement"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Actions mécaniques ou forces"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Équilibre d’un solide soumis à deux (02) forces, puis à trois (03) forces"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Équilibre d’un solide mobile autour d’un axe fixe"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Principe de l’inertie"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Quantité de mouvement"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Le courant électrique"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Intensité d’un courant continu"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Tension électrique"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Étude expérimentale de quelques dipôles passifs"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Étude expérimentale d’un dipôle actif. Point de fonctionnement"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Le transistor : un amplificateur de courant. La chaîne électronique"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "L’élément chimique"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Structure de l’atome"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Classification périodique des éléments chimiques"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Ions et molécules"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Mole et grandeurs molaires"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Équation-bilan d’une réaction chimique"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Le chlorure de sodium solide"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Solutions aqueuses ioniques"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Tests d’identification de quelques ions"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Solutions acides et basiques. Mesures de pH"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Réaction acido-basique. Dosage"
+        }
+      ],
+      "1ère A": [
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Étude d’un dipôle passif : cas d’un résistor"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Étude d’un dipôle actif : cas d’une pile. Loi de Pouillet"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Puissance et énergie électriques"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Principe de la production d’une tension alternative"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Travail et puissance d’une force constante dans le cas d’un mouvement de translation"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Énergie cinétique"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Énergie potentielle de pesanteur"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Énergie mécanique"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Les alcanes"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Les alcènes : cas de l’éthylène"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Pétroles et gaz naturels"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Réactions d’oxydo-réduction en solution aqueuse"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Classification qualitative des couples oxydant/réducteur"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Classification quantitative des couples oxydant/réducteur"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Étude de la pile Daniell"
+        }
+      ],
+      "1ère C": [
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Travail et puissance dans le cas d’un mouvement de translation"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Travail et puissance dans le cas d’un mouvement de rotation autour d’un axe fixe"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Énergie cinétique"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Énergie potentielle"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Énergie mécanique"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Champ électrostatique"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Énergie potentielle électrostatique"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Puissance et énergie électriques"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Le condensateur"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "L’amplificateur opérationnel"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Introduction à l’optique géométrique"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Réflexion et réfraction de la lumière blanche"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Les lentilles minces"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Généralités sur les composés organiques"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Hydrocarbures saturés : les alcanes"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Hydrocarbures insaturés : les alcènes et les alcynes"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Le benzène"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Pétrole et gaz naturels"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Quelques composés oxygénés"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "L’éthanol"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Estérification et hydrolyse d’un ester"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Réactions d’oxydoréduction en solution aqueuse"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Classification qualitative des couples oxydant / réducteur"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Classification quantitative des couples oxydant / réducteur"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Couples oxydant / réducteur en solution aqueuse. Dosage"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Oxydoréduction par voie sèche"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Électrolyse"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Corrosion et protection des métaux"
+        }
+      ],
+      "1ère D": [
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Travail et puissance d’une force constante dans le cas d’un mouvement de translation"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Énergie cinétique"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Énergie potentielle de pesanteur"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Énergie mécanique"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Champ électrostatique"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Énergie potentielle électrostatique"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Puissance et énergie électriques"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Le condensateur"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "L’amplificateur opérationnel"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Introduction à l’optique géométrique"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Réflexion, Réfraction de la lumière blanche"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Les lentilles minces"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Généralités sur les composés organiques"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Hydrocarbures saturés : les alcanes"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Hydrocarbures insaturés : les alcènes et les alcynes"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Le benzène"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Pétrole et gaz naturels"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Quelques composés oxygénés"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "L’éthanol"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Estérification et hydrolyse d’un ester"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Réactions d’oxydoréduction en solution aqueuse"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Classification qualitative des couples oxydant / réducteur"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Classification quantitative des couples oxydant / réducteur"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Couples oxydant / réducteur en solution aqueuse. Dosage"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Oxydoréduction par voie sèche"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Électrolyse"
+        }
+      ],
+      "Tle C": [
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Cinématique du point"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Mouvement du centre d’inertie d’un solide"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Interaction gravitationnelle"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Mouvements dans les champs g et E uniformes"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Oscillations mécaniques libres"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Champ magnétique"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Mouvement d’une particule chargée dans un champ magnétique uniforme"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Loi de Laplace"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Induction électromagnétique"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Auto-induction"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Montages dérivateur et intégrateur"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Oscillations électriques libres dans un circuit LC"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Circuit RLC en régime sinusoïdal forcé"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Résonance d’intensité d’un circuit RLC série"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Puissance en courant alternatif"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Modèle ondulatoire de la lumière"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Modèle corpusculaire de la lumière"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Réactions nucléaires spontanées"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Réactions nucléaires provoquées"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Les alcools"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Composés carbonylés : aldéhydes et cétones"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Acides carboxyliques et dérivés"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Fabrication d’un savon"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Solutions aqueuses. Notion de pH"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Acide fort – Base forte"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Acide faible – Base faible"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Couples acide/base – Classification"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Réactions acido-basiques. Solutions tampons"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Dosage acido-basique"
+        }
+      ],
+      "Tle D": [
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Cinématique du point"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Mouvement du centre d’inertie d’un solide"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Mouvements dans les champs (g et E) uniformes"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Oscillations mécaniques libres"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Champ magnétique"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Mouvement d’une particule chargée dans un champ magnétique uniforme"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Loi de Laplace"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Auto-induction"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Montages dérivateur et intégrateur"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Oscillations électriques libres dans un circuit LC"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Circuit RLC en régime sinusoïdal forcé"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Résonance d’intensité d’un circuit RLC série"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Puissance en courant alternatif"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Réactions nucléaires spontanées"
+        },
+        {
+          "theme": "PHYSIQUE",
+          "titre": "Réactions nucléaires provoquées"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Les alcools"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Composés carbonylés : aldéhydes et cétones"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Les amines"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Acides carboxyliques et dérivés"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Fabrication d’un savon"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Les acides α-aminés"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Solutions aqueuses. Notion de pH"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Acide fort – Base forte"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Acide faible – Base faible"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Couples acide/base – Classification"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Réactions acido-basiques. Solutions tampons"
+        },
+        {
+          "theme": "CHIMIE",
+          "titre": "Dosage acido-basique"
+        }
+      ]
+    },
+    "SVT": {
+      "6e": [
+        {
+          "theme": "Compétence 3 : dégradation et préservation de l’environnement",
+          "titre": "Les actions néfastes de l’Homme et leurs conséquences sur l’environnement"
+        },
+        {
+          "theme": "Compétence 3 : dégradation et préservation de l’environnement",
+          "titre": "La lutte contre la dégradation de l’environnement"
+        },
+        {
+          "theme": "Compétence 2 : facteurs de croissance chez les plantes à fleurs et les vertébrés",
+          "titre": "Les facteurs de croissance chez les plantes à fleurs"
+        },
+        {
+          "theme": "Compétence 2 : facteurs de croissance chez les plantes à fleurs et les vertébrés",
+          "titre": "L’influence des aliments sur la croissance des vertébrés"
+        },
+        {
+          "theme": "Compétence 1 : reproduction chez les plantes à fleurs et les vertébrés",
+          "titre": "La formation d’une graine"
+        },
+        {
+          "theme": "Compétence 1 : reproduction chez les plantes à fleurs et les vertébrés",
+          "titre": "La germination d’une graine"
+        },
+        {
+          "theme": "Compétence 1 : reproduction chez les plantes à fleurs et les vertébrés",
+          "titre": "La reproduction chez les mammifères"
+        },
+        {
+          "theme": "Compétence 1 : reproduction chez les plantes à fleurs et les vertébrés",
+          "titre": "La reproduction chez les oiseaux"
+        }
+      ],
+      "5e": [
+        {
+          "theme": "Compétence 3 : actions néfastes de certains invertébrés",
+          "titre": "Les conséquences de la prolifération du criquet"
+        },
+        {
+          "theme": "Compétence 3 : actions néfastes de certains invertébrés",
+          "titre": "Les conséquences de la prolifération du moustique"
+        },
+        {
+          "theme": "Compétence 3 : actions néfastes de certains invertébrés",
+          "titre": "La lutte contre le criquet et le moustique"
+        },
+        {
+          "theme": "Compétence 1 : reproduction des plantes sans fleurs et croissance des invertébrés",
+          "titre": "La reproduction chez les champignons à chapeau"
+        },
+        {
+          "theme": "Compétence 1 : reproduction des plantes sans fleurs et croissance des invertébrés",
+          "titre": "La croissance chez les insectes"
+        },
+        {
+          "theme": "Compétence 1 : reproduction des plantes sans fleurs et croissance des invertébrés",
+          "titre": "La croissance chez les mollusques"
+        },
+        {
+          "theme": "Compétence 2 : nutrition des plantes sans chlorophylle et des invertébrés",
+          "titre": "La nutrition des plantes sans chlorophylle"
+        },
+        {
+          "theme": "Compétence 2 : nutrition des plantes sans chlorophylle et des invertébrés",
+          "titre": "La nutrition des invertébrés"
+        }
+      ],
+      "4e": [
+        {
+          "theme": "Compétence 1 : reproduction chez l’Homme",
+          "titre": "Les différentes transformations du corps humain de l’enfance à l’adolescence"
+        },
+        {
+          "theme": "Compétence 1 : reproduction chez l’Homme",
+          "titre": "Le devenir des cellules sexuelles chez l’Homme"
+        },
+        {
+          "theme": "Compétence 2 : roches endogènes",
+          "titre": "La formation des roches endogènes"
+        },
+        {
+          "theme": "Compétence 2 : roches endogènes",
+          "titre": "La dégradation des roches endogènes"
+        },
+        {
+          "theme": "Compétence 3 : formation des sols et leurs caractéristiques",
+          "titre": "La formation des sols"
+        },
+        {
+          "theme": "Compétence 3 : formation des sols et leurs caractéristiques",
+          "titre": "Les textures des sols"
+        },
+        {
+          "theme": "Compétence 4 : eau et santé de l’Homme",
+          "titre": "Les maladies liées à l’eau"
+        },
+        {
+          "theme": "Compétence 4 : eau et santé de l’Homme",
+          "titre": "La lutte contre les maladies liées à l’eau"
+        },
+        {
+          "theme": "Compétence 4 : eau et santé de l’Homme",
+          "titre": "Le traitement de l’eau souillée"
+        }
+      ],
+      "3e": [
+        {
+          "theme": "Compétence 1 : nutrition chez l’Homme",
+          "titre": "Les aliments et l’Homme"
+        },
+        {
+          "theme": "Compétence 1 : nutrition chez l’Homme",
+          "titre": "La digestion des aliments"
+        },
+        {
+          "theme": "Compétence 1 : nutrition chez l’Homme",
+          "titre": "Le sang"
+        },
+        {
+          "theme": "Compétence 1 : nutrition chez l’Homme",
+          "titre": "La transfusion sanguine"
+        },
+        {
+          "theme": "Compétence 1 : nutrition chez l’Homme",
+          "titre": "La circulation sanguine"
+        },
+        {
+          "theme": "Compétence 2 : reproduction humaine et infection au VIH",
+          "titre": "Les grossesses précoces et les moyens de prévention"
+        },
+        {
+          "theme": "Compétence 2 : reproduction humaine et infection au VIH",
+          "titre": "L’infection au VIH"
+        },
+        {
+          "theme": "Compétence 3 : relations sols-plantes",
+          "titre": "Les caractéristiques d’un sol"
+        },
+        {
+          "theme": "Compétence 3 : relations sols-plantes",
+          "titre": "Les relations sols-plantes"
+        },
+        {
+          "theme": "Compétence 4 : dégradation, protection et amélioration des sols",
+          "titre": "La dégradation des sols"
+        },
+        {
+          "theme": "Compétence 4 : dégradation, protection et amélioration des sols",
+          "titre": "La protection et l’amélioration des sols"
+        }
+      ],
+      "2de A": [
+        {
+          "theme": "C1 – Thème 1 : transmission de l’information au niveau de l’organisme",
+          "titre": "La transmission d’un message nerveux"
+        },
+        {
+          "theme": "C1 – Thème 1 : transmission de l’information au niveau de l’organisme",
+          "titre": "La transmission d’un message hormonal"
+        },
+        {
+          "theme": "C1 – Thème 2 : l’Homme et l’environnement",
+          "titre": "Les grands ensembles environnementaux"
+        },
+        {
+          "theme": "C1 – Thème 2 : l’Homme et l’environnement",
+          "titre": "La production de la matière organique"
+        },
+        {
+          "theme": "C1 – Thème 2 : l’Homme et l’environnement",
+          "titre": "Le changement climatique"
+        },
+        {
+          "theme": "C3 – La nutrition et la santé de l’Homme",
+          "titre": "La diversité des comportements alimentaires de l’Homme"
+        },
+        {
+          "theme": "C3 – La nutrition et la santé de l’Homme",
+          "titre": "Les habitudes alimentaires et la santé de l’Homme"
+        },
+        {
+          "theme": "C2 – La reproduction cellulaire",
+          "titre": "La structure d’une cellule"
+        },
+        {
+          "theme": "C2 – La reproduction cellulaire",
+          "titre": "La reproduction conforme ou mitose"
+        }
+      ],
+      "2de C": [
+        {
+          "theme": "C4 – La nutrition minérale de la plante verte",
+          "titre": "L’absorption de l’eau par la plante verte"
+        },
+        {
+          "theme": "C4 – La nutrition minérale de la plante verte",
+          "titre": "L’influence des sels minéraux sur la croissance de la plante verte"
+        },
+        {
+          "theme": "C4 – La nutrition minérale de la plante verte",
+          "titre": "L’absorption des sels minéraux par la plante verte"
+        },
+        {
+          "theme": "C4 – La nutrition minérale de la plante verte",
+          "titre": "Le devenir des substances absorbées par la plante verte"
+        },
+        {
+          "theme": "C2 – Relations au sein d’un écosystème, influence de l’homme",
+          "titre": "Les relations entre les êtres vivants dans un écosystème"
+        },
+        {
+          "theme": "C2 – Relations au sein d’un écosystème, influence de l’homme",
+          "titre": "Le changement climatique"
+        },
+        {
+          "theme": "C3 – La reproduction de la cellule",
+          "titre": "L’organisation d’une cellule"
+        },
+        {
+          "theme": "C3 – La reproduction de la cellule",
+          "titre": "La division cellulaire"
+        },
+        {
+          "theme": "C3 – La reproduction de la cellule",
+          "titre": "L’évolution de l’équipement chromosomique d’une cellule au cours de la mitose"
+        },
+        {
+          "theme": "C1 – Structure géologique de la Côte d’Ivoire et devenir des roches",
+          "titre": "La structure géologique de la Côte d’Ivoire"
+        },
+        {
+          "theme": "C1 – Structure géologique de la Côte d’Ivoire et devenir des roches",
+          "titre": "L’altération chimique des roches magmatiques"
+        },
+        {
+          "theme": "C1 – Structure géologique de la Côte d’Ivoire et devenir des roches",
+          "titre": "La formation des roches sédimentaires"
+        },
+        {
+          "theme": "C1 – Structure géologique de la Côte d’Ivoire et devenir des roches",
+          "titre": "La formation des roches métamorphiques"
+        },
+        {
+          "theme": "C1 – Structure géologique de la Côte d’Ivoire et devenir des roches",
+          "titre": "Le devenir des roches métamorphiques"
+        }
+      ],
+      "1ère A": [
+        {
+          "theme": "C1 – Les réflexes et les troubles de comportement",
+          "titre": "Le réflexe conditionnel"
+        },
+        {
+          "theme": "C1 – Les réflexes et les troubles de comportement",
+          "titre": "Les effets des drogues sur le comportement"
+        },
+        {
+          "theme": "C2 – Thème 1 : reproduction humaine et vie familiale",
+          "titre": "Les anomalies chromosomiques"
+        },
+        {
+          "theme": "C2 – Thème 1 : reproduction humaine et vie familiale",
+          "titre": "Les cycles sexuels chez la femme"
+        },
+        {
+          "theme": "C2 – Thème 1 : reproduction humaine et vie familiale",
+          "titre": "La régulation des naissances"
+        },
+        {
+          "theme": "C2 – Thème 2 : transmission des caractères héréditaires chez l’Homme",
+          "titre": "La transmission d’un caractère héréditaire lié aux autosomes"
+        },
+        {
+          "theme": "C2 – Thème 2 : transmission des caractères héréditaires chez l’Homme",
+          "titre": "La transmission d’un caractère héréditaire lié aux chromosomes sexuels"
+        },
+        {
+          "theme": "C3 – Le devenir des nutriments dans l’organisme",
+          "titre": "La production d’énergie par la cellule"
+        },
+        {
+          "theme": "C3 – Le devenir des nutriments dans l’organisme",
+          "titre": "La mise en réserve des nutriments"
+        }
+      ],
+      "1ère C": [
+        {
+          "theme": "C3 – Thème 1 : la reproduction chez les mammifères",
+          "titre": "Le rôle et la structure des gonades des mammifères"
+        },
+        {
+          "theme": "C3 – Thème 1 : la reproduction chez les mammifères",
+          "titre": "La division méiotique"
+        },
+        {
+          "theme": "C3 – Thème 1 : la reproduction chez les mammifères",
+          "titre": "La gamétogénèse chez les mammifères"
+        },
+        {
+          "theme": "C3 – Thème 1 : la reproduction chez les mammifères",
+          "titre": "La fécondation chez les mammifères"
+        },
+        {
+          "theme": "C3 – Thème 2 : transmission des caractères héréditaires",
+          "titre": "La synthèse des protéines"
+        },
+        {
+          "theme": "C3 – Thème 2 : transmission des caractères héréditaires",
+          "titre": "La transmission d’un caractère héréditaire"
+        },
+        {
+          "theme": "C1 – Thème 1 : géodynamique interne",
+          "titre": "La structure interne du globe terrestre"
+        },
+        {
+          "theme": "C1 – Thème 1 : géodynamique interne",
+          "titre": "Les mouvements des plaques lithosphériques"
+        },
+        {
+          "theme": "C1 – Thème 2 : propriétés chimiques des sols",
+          "titre": "Les échanges d’ions au niveau du sol"
+        },
+        {
+          "theme": "C4 – La production de la matière organique",
+          "titre": "La photosynthèse"
+        },
+        {
+          "theme": "C2 – Les écosystèmes",
+          "titre": "L’écosystème naturel et l’écosystème agro-industriel"
+        }
+      ],
+      "1ère D": [
+        {
+          "theme": "C3 – Thème 1 : la reproduction chez les mammifères",
+          "titre": "Les fonctions des gonades"
+        },
+        {
+          "theme": "C3 – Thème 1 : la reproduction chez les mammifères",
+          "titre": "La division méiotique"
+        },
+        {
+          "theme": "C3 – Thème 1 : la reproduction chez les mammifères",
+          "titre": "La gamétogénèse"
+        },
+        {
+          "theme": "C3 – Thème 2 : transmission des caractères héréditaires",
+          "titre": "La transmission d’un caractère héréditaire : le monohybridisme"
+        },
+        {
+          "theme": "C3 – Thème 2 : transmission des caractères héréditaires",
+          "titre": "La synthèse des protéines"
+        },
+        {
+          "theme": "C1 – Thème 1 : géodynamique interne",
+          "titre": "Les activités internes du globe terrestre"
+        },
+        {
+          "theme": "C1 – Thème 1 : géodynamique interne",
+          "titre": "Les mouvements des plaques lithosphériques"
+        },
+        {
+          "theme": "C1 – Thème 2 : propriétés chimiques des sols",
+          "titre": "Les échanges d’ions au niveau du sol"
+        },
+        {
+          "theme": "C1 – Thème 2 : propriétés chimiques des sols",
+          "titre": "L’évolution des sols tropicaux"
+        },
+        {
+          "theme": "C2 – La communication nerveuse",
+          "titre": "Le réflexe inné"
+        },
+        {
+          "theme": "C4 – Production de la matière organique et son utilisation",
+          "titre": "La production de la matière organique"
+        },
+        {
+          "theme": "C4 – Production de la matière organique et son utilisation",
+          "titre": "La digestion des aliments"
+        },
+        {
+          "theme": "C4 – Production de la matière organique et son utilisation",
+          "titre": "L’absorption des nutriments"
+        }
+      ],
+      "Tle A": [
+        {
+          "theme": "C1 – La communication dans l’organisme",
+          "titre": "Les réactions émotionnelles chez l’Homme"
+        },
+        {
+          "theme": "C1 – La communication dans l’organisme",
+          "titre": "L’activité cérébrale chez l’Homme"
+        },
+        {
+          "theme": "C2 – Thème 1 : origine de la vie et évolution de la lignée humaine",
+          "titre": "L’origine de la vie"
+        },
+        {
+          "theme": "C2 – Thème 1 : origine de la vie et évolution de la lignée humaine",
+          "titre": "L’évolution de la lignée humaine"
+        },
+        {
+          "theme": "C2 – Thème 2 : transmission des caractères héréditaires chez l’Homme",
+          "titre": "L’hérédité du sexe et du groupe sanguin chez l’Homme"
+        },
+        {
+          "theme": "C2 – Thème 2 : transmission des caractères héréditaires chez l’Homme",
+          "titre": "Les prévisions génétiques"
+        },
+        {
+          "theme": "C3 – Le devenir des nutriments dans l’organisme",
+          "titre": "L’utilisation des nutriments : la biosynthèse des protéines"
+        }
+      ],
+      "Tle C": [
+        {
+          "theme": "C3 – Thème 1 : la reproduction chez l’Homme",
+          "titre": "Les cycles sexuels chez la femme"
+        },
+        {
+          "theme": "C3 – Thème 2 : transmission des caractères héréditaires",
+          "titre": "La transmission d’un caractère héréditaire chez l’Homme"
+        },
+        {
+          "theme": "C4 – Thème 1 : métabolisme énergétique et activité musculaire",
+          "titre": "La production d’énergie par la cellule"
+        },
+        {
+          "theme": "C4 – Thème 1 : métabolisme énergétique et activité musculaire",
+          "titre": "L’utilisation de l’énergie par la cellule musculaire"
+        },
+        {
+          "theme": "C4 – Thème 2 : défense de l’organisme et son dysfonctionnement",
+          "titre": "Le système de défense de l’organisme"
+        },
+        {
+          "theme": "C4 – Thème 2 : défense de l’organisme et son dysfonctionnement",
+          "titre": "L’infection de l’organisme par le VIH"
+        },
+        {
+          "theme": "C2 – La communication dans l’organisme",
+          "titre": "La communication nerveuse"
+        },
+        {
+          "theme": "C2 – La communication dans l’organisme",
+          "titre": "Les drogues et le système nerveux"
+        },
+        {
+          "theme": "C1 – Thème 1 : ressources énergétiques",
+          "titre": "La mise en place des gisements pétrolifères en Côte d’Ivoire"
+        },
+        {
+          "theme": "C1 – Thème 1 : ressources énergétiques",
+          "titre": "L’exploitation des gisements pétrolifères"
+        },
+        {
+          "theme": "C1 – Thème 2 : gestion des sols",
+          "titre": "L’amélioration de la fertilité du sol"
+        }
+      ],
+      "Tle D": [
+        {
+          "theme": "C3 – Thème 1 : reproduction chez les mammifères et les spermaphytes",
+          "titre": "Le devenir des cellules sexuelles chez les mammifères"
+        },
+        {
+          "theme": "C3 – Thème 1 : reproduction chez les mammifères et les spermaphytes",
+          "titre": "Le fonctionnement des organes sexuels chez l’Homme"
+        },
+        {
+          "theme": "C3 – Thème 1 : reproduction chez les mammifères et les spermaphytes",
+          "titre": "La reproduction chez les spermaphytes"
+        },
+        {
+          "theme": "C3 – Thème 2 : transmission des caractères héréditaires",
+          "titre": "La transmission d’un caractère héréditaire chez l’Homme"
+        },
+        {
+          "theme": "C3 – Thème 2 : transmission des caractères héréditaires",
+          "titre": "La transmission de deux caractères héréditaires chez les êtres vivants"
+        },
+        {
+          "theme": "C4 – Thème 1 : le milieu intérieur",
+          "titre": "Le maintien de la constance du milieu intérieur"
+        },
+        {
+          "theme": "C4 – Thème 2 : défense de l’organisme et son dysfonctionnement",
+          "titre": "Le système de défense de l’organisme"
+        },
+        {
+          "theme": "C4 – Thème 2 : défense de l’organisme et son dysfonctionnement",
+          "titre": "L’infection de l’organisme par le VIH"
+        },
+        {
+          "theme": "C2 – La communication dans l’organisme",
+          "titre": "Le réflexe conditionnel"
+        },
+        {
+          "theme": "C2 – La communication dans l’organisme",
+          "titre": "Le fonctionnement du tissu nerveux"
+        },
+        {
+          "theme": "C2 – La communication dans l’organisme",
+          "titre": "Le fonctionnement du muscle strié squelettique"
+        },
+        {
+          "theme": "C2 – La communication dans l’organisme",
+          "titre": "Le fonctionnement du cœur"
+        },
+        {
+          "theme": "C1 – Thème 1 : ressources minières",
+          "titre": "La mise en place des gisements miniers en Côte d’Ivoire"
+        },
+        {
+          "theme": "C1 – Thème 1 : ressources minières",
+          "titre": "L’exploitation des gisements miniers en Côte d’Ivoire"
+        },
+        {
+          "theme": "C1 – Thème 2 : gestion des sols",
+          "titre": "L’amélioration et la protection des sols"
+        }
+      ]
+    },
+    "Histoire": {
+      "6e": [
+        {
+          "theme": "Les bases de l’étude de l’histoire",
+          "titre": "L’histoire et son objet"
+        },
+        {
+          "theme": "Les bases de l’étude de l’histoire",
+          "titre": "Les sources de l’histoire"
+        },
+        {
+          "theme": "Les bases de l’étude de l’histoire",
+          "titre": "Les sources d’information et la dignité humaine en temps de guerre ou de violence"
+        },
+        {
+          "theme": "Les bases de l’étude de l’histoire",
+          "titre": "La notion de chronologie"
+        },
+        {
+          "theme": "Les bases de l’étude de l’histoire",
+          "titre": "Les grandes périodes de l’histoire"
+        },
+        {
+          "theme": "La préhistoire en Côte d’Ivoire",
+          "titre": "Le paléolithique ivoirien"
+        },
+        {
+          "theme": "La préhistoire en Côte d’Ivoire",
+          "titre": "La révolution du néolithique en Côte d’Ivoire"
+        },
+        {
+          "theme": "La préhistoire en Côte d’Ivoire",
+          "titre": "La métallurgie du fer en Côte d’Ivoire"
+        }
+      ],
+      "5e": [
+        {
+          "theme": "Le peuplement de la Côte d’Ivoire",
+          "titre": "Les premiers habitants de la Côte d’Ivoire"
+        },
+        {
+          "theme": "Le peuplement de la Côte d’Ivoire",
+          "titre": "Les premiers mouvements migratoires en Côte d’Ivoire"
+        },
+        {
+          "theme": "Évolution et traits de civilisation des peuples de ma région",
+          "titre": "L’origine et l’installation des peuples des régions de Côte d’Ivoire"
+        },
+        {
+          "theme": "Évolution et traits de civilisation des peuples de ma région",
+          "titre": "Les traits de civilisation des peuples des différentes régions de Côte d’Ivoire"
+        },
+        {
+          "theme": "Évolution et traits de civilisation des peuples de ma région",
+          "titre": "Les codes de réglementation des conflits dans les régions de Côte d’Ivoire et le Droit International Humanitaire"
+        }
+      ],
+      "4e": [
+        {
+          "theme": "Les peuples de Côte d’Ivoire et leurs contacts avec l’Europe du XVIe au XVIIIe siècle",
+          "titre": "La mise en place des peuples de Côte d’Ivoire du XVIe au XVIIIe siècle"
+        },
+        {
+          "theme": "Les peuples de Côte d’Ivoire et leurs contacts avec l’Europe du XVIe au XVIIIe siècle",
+          "titre": "L’organisation sociopolitique des peuples de Côte d’Ivoire"
+        },
+        {
+          "theme": "Les peuples de Côte d’Ivoire et leurs contacts avec l’Europe du XVIe au XVIIIe siècle",
+          "titre": "Les mécanismes de prévention et de résolution des conflits chez les peuples de Côte d’Ivoire"
+        },
+        {
+          "theme": "Les peuples de Côte d’Ivoire et leurs contacts avec l’Europe du XVIe au XVIIIe siècle",
+          "titre": "L’évolution des contacts entre la Côte d’Ivoire et l’Europe du XVIe au XVIIIe siècle"
+        },
+        {
+          "theme": "Les bouleversements sociopolitiques et économiques en Afrique et en Europe du XVIIe au XIXe siècle",
+          "titre": "La Traite négrière atlantique dans l’histoire de l’humanité"
+        },
+        {
+          "theme": "Les bouleversements sociopolitiques et économiques en Afrique et en Europe du XVIIe au XIXe siècle",
+          "titre": "La Révolution française de 1789"
+        },
+        {
+          "theme": "Les bouleversements sociopolitiques et économiques en Afrique et en Europe du XVIIe au XIXe siècle",
+          "titre": "La Révolution industrielle aux XVIIIe et XIXe siècles en Europe"
+        }
+      ],
+      "3e": [
+        {
+          "theme": "L’évolution sociopolitique de la Côte d’Ivoire et de l’Afrique du XIXe siècle à nos jours",
+          "titre": "Le mouvement impérialiste et la colonisation en Côte d’Ivoire"
+        },
+        {
+          "theme": "L’évolution sociopolitique de la Côte d’Ivoire et de l’Afrique du XIXe siècle à nos jours",
+          "titre": "L’accession de la Côte d’Ivoire à l’indépendance"
+        },
+        {
+          "theme": "L’évolution sociopolitique de la Côte d’Ivoire et de l’Afrique du XIXe siècle à nos jours",
+          "titre": "Causes et caractères des crises sociopolitiques de l’Afrique indépendante"
+        },
+        {
+          "theme": "L’évolution sociopolitique de la Côte d’Ivoire et de l’Afrique du XIXe siècle à nos jours",
+          "titre": "La crise rwandaise : de la guerre au génocide des Tutsi (1990-1994)"
+        },
+        {
+          "theme": "De la Seconde Guerre mondiale aux efforts de construction du monde et de l’Afrique",
+          "titre": "Les causes, les caractères et les conséquences de la deuxième guerre mondiale"
+        },
+        {
+          "theme": "De la Seconde Guerre mondiale aux efforts de construction du monde et de l’Afrique",
+          "titre": "L’Organisation des Nations Unies (ONU)"
+        },
+        {
+          "theme": "De la Seconde Guerre mondiale aux efforts de construction du monde et de l’Afrique",
+          "titre": "L’Union Africaine (UA)"
+        }
+      ],
+      "2de": [
+        {
+          "theme": "L’objet de l’histoire et la démarche historique",
+          "titre": "L’Histoire et la formation du citoyen"
+        },
+        {
+          "theme": "L’objet de l’histoire et la démarche historique",
+          "titre": "Les méthodes d’étude de l’histoire"
+        },
+        {
+          "theme": "L’objet de l’histoire et la démarche historique",
+          "titre": "La méthodologie de la dissertation, du commentaire de document et de la situation d’évaluation"
+        },
+        {
+          "theme": "Civilisations et échanges en Afrique et dans le reste du monde : de la préhistoire au XIXe siècle",
+          "titre": "La préhistoire en Afrique et dans le reste du monde"
+        },
+        {
+          "theme": "Civilisations et échanges en Afrique et dans le reste du monde : de la préhistoire au XIXe siècle",
+          "titre": "La civilisation de l’Égypte ancienne"
+        },
+        {
+          "theme": "Civilisations et échanges en Afrique et dans le reste du monde : de la préhistoire au XIXe siècle",
+          "titre": "La démocratie athénienne"
+        },
+        {
+          "theme": "Civilisations et échanges en Afrique et dans le reste du monde : de la préhistoire au XIXe siècle",
+          "titre": "La civilisation du Soudan Occidental au moyen-âge"
+        },
+        {
+          "theme": "Civilisations et échanges en Afrique et dans le reste du monde : de la préhistoire au XIXe siècle",
+          "titre": "Les traites des Noirs"
+        },
+        {
+          "theme": "Les civilisations des peuples de Côte d’Ivoire, des origines au XIXe siècle",
+          "titre": "La révolution du néolithique en Côte d’Ivoire"
+        },
+        {
+          "theme": "Les civilisations des peuples de Côte d’Ivoire, des origines au XIXe siècle",
+          "titre": "Les peuples de Côte d’Ivoire : diversité et unité"
+        }
+      ],
+      "1ère": [
+        {
+          "theme": "Le développement du capitalisme et l’industrialisation de l’Europe du XVIIIe au XIXe siècle",
+          "titre": "L’essor du capitalisme et ses conséquences"
+        },
+        {
+          "theme": "Le développement du capitalisme et l’industrialisation de l’Europe du XVIIIe au XIXe siècle",
+          "titre": "Les révolutions industrielles"
+        },
+        {
+          "theme": "L’impérialisme en Afrique du XIXe à la première moitié du XXe siècle",
+          "titre": "Le mouvement impérialiste et le congrès de Berlin"
+        },
+        {
+          "theme": "L’impérialisme en Afrique du XIXe à la première moitié du XXe siècle",
+          "titre": "Les résistances aux conquêtes territoriales : exemple de la Côte d’Ivoire de 1878 à 1920"
+        },
+        {
+          "theme": "L’impérialisme en Afrique du XIXe à la première moitié du XXe siècle",
+          "titre": "La colonisation et les résistances en Côte d’Ivoire de 1893 à 1946"
+        },
+        {
+          "theme": "Les guerres et les violences de masse du XXe siècle à nos jours",
+          "titre": "La première Guerre Mondiale : causes et conséquences"
+        },
+        {
+          "theme": "Les guerres et les violences de masse du XXe siècle à nos jours",
+          "titre": "La deuxième Guerre Mondiale : causes et conséquences"
+        },
+        {
+          "theme": "Les guerres et les violences de masse du XXe siècle à nos jours",
+          "titre": "Les violences de masse : les génocides du XXe siècle à nos jours"
+        }
+      ],
+      "Tle": [
+        {
+          "theme": "Les relations internationales de 1945 à nos jours",
+          "titre": "L’ONU"
+        },
+        {
+          "theme": "Les relations internationales de 1945 à nos jours",
+          "titre": "L’ère de la bipolarisation de 1947 à 1991"
+        },
+        {
+          "theme": "Les relations internationales de 1945 à nos jours",
+          "titre": "De la fin de la guerre froide vers un monde multipolaire"
+        },
+        {
+          "theme": "De la décolonisation aux efforts d’organisation de l’Afrique",
+          "titre": "La montée des nationalismes en Afrique"
+        },
+        {
+          "theme": "De la décolonisation aux efforts d’organisation de l’Afrique",
+          "titre": "L’accession de la Côte d’Ivoire à l’indépendance"
+        },
+        {
+          "theme": "De la décolonisation aux efforts d’organisation de l’Afrique",
+          "titre": "L’accession de l’Algérie à l’indépendance"
+        },
+        {
+          "theme": "De la décolonisation aux efforts d’organisation de l’Afrique",
+          "titre": "L’Union Africaine"
+        },
+        {
+          "theme": "Croyances et valeurs dans le monde d’aujourd’hui",
+          "titre": "Croyances et valeurs dominantes dans le monde occidental"
+        },
+        {
+          "theme": "Croyances et valeurs dans le monde d’aujourd’hui",
+          "titre": "Les mutations contemporaines de la civilisation négro-africaine"
+        }
+      ]
+    },
+    "Géographie": {
+      "6e": [
+        {
+          "theme": "Les bases de l’étude de la géographie",
+          "titre": "La géographie et son objet"
+        },
+        {
+          "theme": "Les bases de l’étude de la géographie",
+          "titre": "Le relief"
+        },
+        {
+          "theme": "Les bases de l’étude de la géographie",
+          "titre": "Le climat"
+        },
+        {
+          "theme": "Les bases de l’étude de la géographie",
+          "titre": "L’interrelation entre les sols, le climat et la végétation"
+        },
+        {
+          "theme": "Les bases de l’étude de la géographie",
+          "titre": "Les moyens de représentation de la terre"
+        },
+        {
+          "theme": "Les bases de l’étude de la géographie",
+          "titre": "Les mouvements de la terre et leurs influences sur la vie quotidienne"
+        },
+        {
+          "theme": "L’homme et son milieu local en Côte d’Ivoire",
+          "titre": "Population et environnement local"
+        },
+        {
+          "theme": "L’homme et son milieu local en Côte d’Ivoire",
+          "titre": "L’homme et le cycle de l’eau"
+        },
+        {
+          "theme": "L’homme et son milieu local en Côte d’Ivoire",
+          "titre": "L’importance de l’impôt dans le développement de ma région"
+        }
+      ],
+      "5e": [
+        {
+          "theme": "L’homme et son milieu en Côte d’Ivoire",
+          "titre": "Le milieu physique en Côte d’Ivoire et l’installation des populations"
+        },
+        {
+          "theme": "L’homme et son milieu en Côte d’Ivoire",
+          "titre": "La croissance démographique en Côte d’Ivoire"
+        },
+        {
+          "theme": "L’homme et son milieu en Côte d’Ivoire",
+          "titre": "L’eau dans le développement de la Côte d’Ivoire"
+        },
+        {
+          "theme": "Les conséquences des activités économiques sur l’environnement",
+          "titre": "Les conséquences des méthodes et techniques agricoles sur l’environnement"
+        },
+        {
+          "theme": "Les conséquences des activités économiques sur l’environnement",
+          "titre": "Les effets de la pollution industrielle et commerciale sur l’environnement"
+        },
+        {
+          "theme": "Les conséquences des activités économiques sur l’environnement",
+          "titre": "L’impôt et l’aménagement du territoire ivoirien"
+        }
+      ],
+      "4e": [
+        {
+          "theme": "L’organisation administrative dans le développement de la Côte d’Ivoire",
+          "titre": "La déconcentration administrative en Côte d’Ivoire"
+        },
+        {
+          "theme": "L’organisation administrative dans le développement de la Côte d’Ivoire",
+          "titre": "La décentralisation administrative en Côte d’Ivoire"
+        },
+        {
+          "theme": "L’organisation administrative dans le développement de la Côte d’Ivoire",
+          "titre": "Les insuffisances de l’organisation administrative dans le développement de la Côte d’Ivoire"
+        },
+        {
+          "theme": "Les regroupements économiques en Afrique et en Europe : exemples de la CEDEAO et de l’Union Européenne",
+          "titre": "La Communauté Économique des États de l’Afrique de l’Ouest (CEDEAO) : succès et limites"
+        },
+        {
+          "theme": "Les regroupements économiques en Afrique et en Europe : exemples de la CEDEAO et de l’Union Européenne",
+          "titre": "L’Union Européenne (U.E) : un exemple d’intégration régionale"
+        }
+      ],
+      "3e": [
+        {
+          "theme": "Étude économique de la Côte d’Ivoire",
+          "titre": "Les atouts du développement économique de la Côte d’Ivoire"
+        },
+        {
+          "theme": "Étude économique de la Côte d’Ivoire",
+          "titre": "Les secteurs d’activités économiques de la Côte d’Ivoire"
+        },
+        {
+          "theme": "Étude économique de la Côte d’Ivoire",
+          "titre": "Les problèmes du développement économique de la Côte d’Ivoire"
+        },
+        {
+          "theme": "L’Afrique face à la mondialisation",
+          "titre": "Étude économique de l’Afrique"
+        },
+        {
+          "theme": "L’Afrique face à la mondialisation",
+          "titre": "La place de l’Afrique dans la mondialisation"
+        }
+      ],
+      "2de": [
+        {
+          "theme": "La Terre, domaine privilégié de la géographie",
+          "titre": "La géographie : objet, intérêt et démarche"
+        },
+        {
+          "theme": "La Terre, domaine privilégié de la géographie",
+          "titre": "La planète terre"
+        },
+        {
+          "theme": "La Terre, domaine privilégié de la géographie",
+          "titre": "Les techniques de représentation de la terre"
+        },
+        {
+          "theme": "L’homme et son milieu en Côte d’Ivoire",
+          "titre": "Le milieu subéquatorial ivoirien"
+        },
+        {
+          "theme": "L’homme et son milieu en Côte d’Ivoire",
+          "titre": "Le milieu tropical ivoirien"
+        },
+        {
+          "theme": "L’homme et son milieu en Côte d’Ivoire",
+          "titre": "L’espace ivoirien : un environnement menacé"
+        },
+        {
+          "theme": "L’ingéniosité de l’homme dans la réalisation du développement durable (intitulé du thème tronqué dans le PDF)",
+          "titre": "Les grands milieux biogéographiques dans le monde"
+        },
+        {
+          "theme": "L’ingéniosité de l’homme dans la réalisation du développement durable (intitulé du thème tronqué dans le PDF)",
+          "titre": "Les problèmes environnementaux actuels"
+        }
+      ],
+      "1ère": [
+        {
+          "theme": "Dynamisme démographique de la Côte d’Ivoire et dans le monde",
+          "titre": "Dynamisme démographique et qualité de la vie en Côte d’Ivoire"
+        },
+        {
+          "theme": "Dynamisme démographique de la Côte d’Ivoire et dans le monde",
+          "titre": "La croissance démographique mondiale et ses conséquences"
+        },
+        {
+          "theme": "L’urbanisation dans le monde",
+          "titre": "L’urbanisation dans les pays en développement : l’exemple de la Côte d’Ivoire"
+        },
+        {
+          "theme": "L’urbanisation dans le monde",
+          "titre": "L’urbanisation dans les pays développés : l’exemple de la France"
+        },
+        {
+          "theme": "L’administration et l’aménagement du territoire ivoirien",
+          "titre": "L’organisation administrative de la Côte d’Ivoire"
+        },
+        {
+          "theme": "L’administration et l’aménagement du territoire ivoirien",
+          "titre": "L’aménagement du territoire ivoirien"
+        },
+        {
+          "theme": "Le processus de la mondialisation",
+          "titre": "La mondialisation : facteurs et acteurs"
+        },
+        {
+          "theme": "Le processus de la mondialisation",
+          "titre": "La mondialisation : manifestations et conséquences"
+        }
+      ],
+      "Tle": [
+        {
+          "theme": "La Côte d’Ivoire : étude économique",
+          "titre": "Les fondements du développement économique de la Côte d’Ivoire"
+        },
+        {
+          "theme": "La Côte d’Ivoire : étude économique",
+          "titre": "Les secteurs d’activités économiques de la Côte d’Ivoire"
+        },
+        {
+          "theme": "La Côte d’Ivoire : étude économique",
+          "titre": "Les problèmes de développement économique de la Côte d’Ivoire"
+        },
+        {
+          "theme": "La France : une puissance européenne et mondiale",
+          "titre": "Les fondements de l’économie de la France"
+        },
+        {
+          "theme": "La France : une puissance européenne et mondiale",
+          "titre": "La France : une économie dominée par le tertiaire"
+        },
+        {
+          "theme": "Regroupement et coopération économique",
+          "titre": "La CEDEAO : une organisation régionale à caractère économique"
+        },
+        {
+          "theme": "Regroupement et coopération économique",
+          "titre": "Les relations UE/ACP : une forme de coopération Nord-Sud"
+        }
+      ]
+    }
+  }
+}
