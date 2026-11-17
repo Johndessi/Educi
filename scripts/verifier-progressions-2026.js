@@ -102,6 +102,20 @@ for (const discipline of ['Anglais', 'EDHC']) {
   }
 }
 
+// Anglais, 2nd cycle : unités du programme ; Tle A1/A2 : les 4 compétences en sous-titre
+for (const [serie, liste] of Object.entries(AE.anglais_2nd_cycle.listes)) {
+  for (const classe of AE.anglais_2nd_cycle.classes[serie]) {
+    const m = (DATA[classe]?.matieres || []).filter(x => x.name === 'Anglais');
+    if (m.length !== 1) { echecs++; controles++; console.log(`✗ Anglais ${classe} : ${m.length} matière(s) au lieu de 1`); continue; }
+    comparer(`Anglais ${classe}`, liste, m[0].lecons);
+    if (serie !== 'Tle A') continue;
+    controles++;
+    const sans4 = m[0].lecons.map((l, i) => /^Speaking, Reading, Listening, Writing\b/.test(l.sub || '') ? null : `  n°${i + 1} : sous-titre « ${l.sub} »`).filter(Boolean);
+    if (sans4.length) { echecs++; console.log(`✗ Anglais ${classe} : compétences incomplètes\n${sans4.join('\n')}`); }
+    else console.log(`✓ Anglais ${classe} : les 4 compétences sur chaque unité`);
+  }
+}
+
 // Une seule matière de musique par classe (doublon « Musique » / « Éducation Musicale » supprimé)
 let doublons = 0;
 for (const [classe, d] of Object.entries(DATA)) {
