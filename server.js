@@ -1256,7 +1256,7 @@ app.post('/support', async (req, res) => {
   }
 });
 
-// === ABONNEMENTS KKIAPAY ===
+// === ABONNEMENTS ===
 // Secrets : aucune valeur par défaut. Absents en production → démarrage refusé ;
 // absents en local → les routes concernées répondent 503.
 const ADMIN_KEY      = process.env.ADMIN_KEY || '';
@@ -1351,44 +1351,6 @@ app.get('/api/forfaits', (req, res) => {
   res.json(FORFAITS);
 });
 
-const KKIAPAY_PRIVATE_KEY = process.env.KKIAPAY_PRIVATE_KEY;
-const KKIAPAY_SECRET      = process.env.KKIAPAY_SECRET;
-
-// Webhook Kkiapay — appelé automatiquement après paiement réussi
-app.post('/webhook-kkiapay', async (req, res) => {
-  res.sendStatus(200);
-  const { transactionId } = req.body;
-  if (!transactionId) return;
-  try {
-    const r = await fetch('https://api-sandbox.kkiapay.me/api/v1/transactions/status', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-private-key': KKIAPAY_PRIVATE_KEY,
-        'x-secret-key':  KKIAPAY_SECRET
-      },
-      body: JSON.stringify({ transactionId })
-    });
-    const data = await r.json();
-    if (data.status === 'SUCCESS') {
-      let meta = {};
-      try { meta = JSON.parse(data.metadata || '{}'); } catch(_) {}
-      const { telephone, forfait } = meta;
-      if (telephone && FORFAITS[forfait]) {
-        const tel    = telephone.replace(/\D/g, '');
-        const expiry = new Date(Date.now() + FORFAITS[forfait].jours * 86400000);
-        await Abonnement.findOneAndUpdate(
-          { telephone: tel },
-          { forfait, expiry },
-          { upsert: true, new: true, setDefaultsOnInsert: true }
-        );
-        console.log(`✅ Abonnement activé : ${tel} → ${forfait} → ${expiry.toISOString()}`);
-      }
-    }
-  } catch (err) {
-    console.error('Webhook Kkiapay error:', err.message);
-  }
-});
 // Normalise un numéro ivoirien : supprime +, espaces, tirets et le préfixe 225
 // → 0712243627 / +2250712243627 / 2250712243627 donnent tous "0712243627"
 function normaliserTel(t) {
