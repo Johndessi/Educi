@@ -89,6 +89,13 @@ for (const discipline of ['Anglais', 'EDHC']) {
     const m = (DATA[classe]?.matieres || []).filter(x => x.name === discipline);
     if (m.length !== 1) { echecs++; controles++; console.log(`✗ ${discipline} ${classe} : ${m.length} matière(s) au lieu de 1`); continue; }
     comparer(`${discipline} ${classe}`, liste.map(x => x.titre), m[0].lecons);
+    // EDHC : titres comparés aussi à la lettre (majuscules comprises)
+    if (discipline === 'EDHC') {
+      controles++;
+      const ecarts = liste.map((x, i) => (m[0].lecons[i]?.title || '').replace(/[’‘]/g, "'") === x.titre ? null : `  n°${i + 1} : « ${m[0].lecons[i]?.title} » / officiel « ${x.titre} »`).filter(Boolean);
+      if (ecarts.length) { echecs++; console.log(`✗ EDHC ${classe} : titres différents à la lettre\n${ecarts.join('\n')}`); }
+      else console.log(`✓ EDHC ${classe} : titres identiques à la lettre`);
+    }
     // Sous-titres : thème officiel (Anglais) ; compétences 2 et 3 de 3e (EDHC)
     // (EDHC 6e, 5e, 4e : sous-titres hors périmètre, non contrôlés)
     if (discipline === 'EDHC' && classePDF !== '3e') continue;
