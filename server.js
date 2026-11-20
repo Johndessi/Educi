@@ -3,6 +3,7 @@ const path       = require('path');
 const fs         = require('fs');
 const crypto     = require('crypto');
 const { analyserSms } = require('./paiement-sms');
+const { FORFAITS, forfaitPourMontant, pipelineProlongation } = require('./forfaits');
 const mongoose   = require('mongoose');
 const puppeteer  = require('puppeteer-core');
 const chromium   = require('@sparticuz/chromium').default;
@@ -1344,11 +1345,11 @@ if (MONGODB_URI) {
 } else {
   console.warn('⚠️  MONGODB_URI non définie — les routes abonnements nécessitent MongoDB');
 }
-const FORFAITS = {
-  mensuel:     { prix: 500,  jours: 30,  label: '1 mois'  },
-  trimestriel: { prix: 1200, jours: 90,  label: '3 mois'  },
-  annuel:      { prix: 4000, jours: 365, label: '1 an'    }
-};
+// Prix et durées : forfaits.js (seule définition). L'interface les lit ici.
+app.get('/api/forfaits', (req, res) => {
+  res.set('Cache-Control', 'no-store');
+  res.json(FORFAITS);
+});
 
 const KKIAPAY_PRIVATE_KEY = process.env.KKIAPAY_PRIVATE_KEY;
 const KKIAPAY_SECRET      = process.env.KKIAPAY_SECRET;
@@ -1417,12 +1418,6 @@ function secretSmsValide(req) {
   return cleValide(m ? m[1].trim() : '', SMS_SECRET);
 }
 
-// Forfait correspondant au montant : prix exact du forfait, jusqu'à +99 FCFA de frais
-function forfaitPourMontant(montant) {
-  if (!Number.isInteger(montant)) return null;
-  return Object.keys(FORFAITS).find(f => montant >= FORFAITS[f].prix && montant <= FORFAITS[f].prix + 99) || null;
-}
-
 // Clé de déduplication : référence de transaction du SMS, sinon empreinte du texte complet.
 function cleTransaction(smsTexte, reference) {
   const sha = t => crypto.createHash('sha256').update(t).digest('hex');
@@ -1456,7 +1451,6 @@ app.post('/webhook-sms', async (req, res) => {
 
   const transaction = cleTransaction(smsTexte, sms.reference);
   const tel    = normaliserTel(sms.telephone);
-  const expiry = new Date(Date.now() + FORFAITS[forfait].jours * 86400000);
   // Enregistrer la transaction AVANT d'activer : l'index unique rejette un doublon,
   // y compris deux requêtes simultanées.
   try {
@@ -1467,12 +1461,15 @@ app.post('/webhook-sms', async (req, res) => {
     console.error('Erreur MongoDB webhook-sms (transaction) :', dbErr.name, dbErr.code ?? '');
     return res.status(500).json({ error: 'Erreur serveur' });
   }
+  let expiry;
   try {
-    await Abonnement.findOneAndUpdate(
+    // Prolongation atomique : jours ajoutés à l'expiration en cours si elle est à venir, sinon à maintenant
+    const sub = await Abonnement.findOneAndUpdate(
       { telephone: tel },
-      { forfait, expiry, source: 'sms' },
-      { upsert: true, new: true, setDefaultsOnInsert: true }
+      pipelineProlongation(forfait, 'sms'),
+      { upsert: true, returnDocument: 'after', updatePipeline: true }
     );
+    expiry = sub.expiry;
   } catch (dbErr) {
     // Pas de dbErr.message : il peut contenir le numéro (ex. clé en double)
     console.error('Erreur MongoDB webhook-sms (abonnement) :', dbErr.name, dbErr.code ?? '');
