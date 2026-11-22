@@ -61,3 +61,15 @@ test('interface : aucun prix ni durée écrits en dur sur l\'écran des forfaits
     assert.match(ecran, new RegExp(`data-forfait-jours="${f}"`), f);
   }
 });
+
+test('interface : ouvrirPaiement est toujours appelé avec un forfait connu', () => {
+  const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+  // Tous les appels, hors définition de la fonction
+  const appels = [...html.matchAll(/(function\s+)?ouvrirPaiement\s*\(([^)]*)\)/g)].filter(m => !m[1]).map(m => m[2].trim());
+  assert.ok(appels.length > 0, 'aucun appel à ouvrirPaiement trouvé');
+  for (const arg of appels) {
+    assert.notStrictEqual(arg, '', 'ouvrirPaiement() appelé sans argument');
+    const cle = /^'(\w+)'$/.exec(arg)?.[1];
+    assert.ok(cle && cle in FORFAITS, `ouvrirPaiement(${arg}) : forfait inconnu`);
+  }
+});
